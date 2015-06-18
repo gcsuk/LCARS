@@ -8,7 +8,18 @@ function getTimeRemaining(targetTime) {
 	var rightNow = new Date();
 
 	if (_targetTime < rightNow) {
-	    window.location = "/";
+	    $.ajax({
+	        type: "POST",
+	        contentType: "application/json",
+	        data: "{ 'isEnabled':false,'targetDate':'June 1, 2050 00:00:00' }",
+	        url: "/Admin/UpdateAutoDeploy",
+	        success: function () {
+	            window.location = "/";
+	        },
+	        error: function (xhr, thrownError) {
+	            alert(thrownError);
+	        }
+	    });
 	}
 
 	var differenceDays = (_targetTime.getTime() - rightNow.getTime()) / 1000 / 60 / 60 / 24;
@@ -95,18 +106,3 @@ function setHighlight() {
 }
 
 setHighlight();
-
-function deactivateAutoDeploy(isEnabled) {
-	$.ajax({
-		type: "POST",
-		contentType: "application/json",
-		data: "{ 'isEnabled':'" + isEnabled + "','targetDate':'" + dependency + "' }",
-		url: "/Admin/UpdateAutoDeploy",
-		success: function () {
-			location.reload();
-		},
-		error: function (xhr, thrownError) {
-			alert(thrownError);
-		}
-	});
-}
