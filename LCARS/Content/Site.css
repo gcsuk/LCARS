@@ -1,0 +1,275 @@
+﻿@font-face {
+    font-family: lcars;
+    src: url(../fonts/tt0105m_.ttf)
+}
+
+@font-face {
+    font-family: lcarsslim;
+    src: url(../fonts/tt0106m0.ttf)
+}
+
+body {
+    padding-top: 5px;
+    padding-bottom: 20px;
+	background: black;
+	font-family: lcars;
+	font-size: 24px;
+	color: #000000
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+a {
+	color: #000000
+}
+
+.centerBar {
+	margin-bottom: 10px
+}
+
+.centerBarTop {
+	height: 19px;
+	margin-right: 5px
+}
+
+.centerBarBottom {
+	height: 18px;
+	margin-right: 5px
+}
+
+.leftBar {
+	position: relative;
+	width: 125px;
+	margin-top: 5px;
+	vertical-align: bottom
+}
+
+.bottomRightText {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+	width: 100%;
+	padding-right: 10px;
+	text-align: right
+  }
+
+.purple {
+	background-color: #cc99cc
+}
+
+.blue {
+	background-color: #9999ff
+}
+
+.red {
+	background-color: #cc6666
+}
+
+.orange {
+	background-color: #ff9900
+}
+
+.apricot {
+	background-color: #ff9966
+}
+
+.topLeftCorner {
+	width: 157px
+}
+
+.topLeftCorner > :first-child {
+	margin-bottom: 5px
+}
+
+.blueCornerTop {
+	background: url(../img/blueCornerTop.png) no-repeat;
+	height: 101px;
+	width: 152px
+}
+
+.blueCornerBottom {
+	background: url(../img/blueCornerBottom.png) no-repeat;
+	background-position: 15px;
+	height: 19px;
+	width: 157px
+}
+
+.redCornerTop {
+	background: url(../img/redCornerTop.png) no-repeat;
+	background-position: 13px;
+	height: 18px;
+	width: 157px
+}
+
+.redCornerBottom {
+	background: url(../img/redCornerBottom.png) no-repeat;
+	background-position: -2px;
+	height: 77px;
+}
+
+.topRight {
+	/*background: url(../img/topRight.png) no-repeat right;*/
+	height: 200px;
+	/*padding-top: 75px*/
+}
+
+.header {
+	color: #ff9900;
+	font-size: 65px;
+	font-family: lcarsslim;
+	text-align: right;
+	line-height: 1;
+	margin-top: 5px;
+	margin-right: 50px
+}
+
+.header span {
+	color: #ffffff;
+}
+
+table.digits {
+	width: 500px;
+	color: #ff9900;
+	font-size: 12px;
+	font-family: arial black;
+	text-align: right;
+	margin-top: 5px
+}
+
+table.digits tr.white {
+	color: #ffffff
+}
+
+.topRightButtons {
+	text-align: right
+}
+
+.topRightButton {
+	height: 54px;
+	width: 156px;
+	margin: 5px
+}
+
+.topRightButton.blueButton {
+	background-image: url("/img/blueButton.png")
+}
+
+.topRightButton.yellowButton {
+	background-image: url("/img/yellowButton.png")
+}
+
+.topRightButton.redButton {
+	background-image: url("/img/redButton.png")
+}
+
+.heightTall {
+	height: 150px
+}
+
+.heightMedium {
+	height: 100px
+}
+
+.heightShort {
+	height: 50px
+}
+
+.stats {
+	margin-top: 5px;
+	margin-left: 50px;
+	color: #ffffff;
+	font-size: 20px
+}
+
+.tenant {
+	border-top: solid 1px #ffffff
+}
+
+.status {
+	text-align: center
+}
+
+.statusBlue {
+	color: #9999ff
+}
+
+.statusAmber {
+	color: #ffcc99
+}
+
+.statusRed {
+	color: #cc6699
+}
+
+/* DESTRUCT */
+
+.destruct {
+	width: 800px;
+	margin: 20px;
+	text-align: center;
+	color: #940606;
+	position: relative -50px
+}
+
+.destruct-bar {
+	margin: 10px auto;
+	height: 20px;
+	background-color: #940606
+}
+
+.destruct-bar-large {
+	width: 800px
+}
+
+.destruct-bar-medium {
+	width: 700px
+}
+
+.destruct-bar-small {
+	width: 600px
+}
+
+.destruct-highlight {
+	background-color: #ff1313
+}
+
+.destruct-highlight-text {
+	color: #ff1313
+}
+
+.destruct-clock {
+	font-size: 120px;
+	line-height: 1
+}
+
+.destruct-admin {
+	margin: 50px
+}
+
+.destruct-admin span {
+	display: inline-block;
+	width: 125px;
+	color: #ffffff
+}
+
+	.destruct-admin input[type=submit] {
+		margin-top: 20px
+	}

@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Tenants>
+  <Tenant ID="1" Name="Bingo Godz">
+    <Dependencies>
+      <Dependency Name="Wallet">
+        <Environments>
+          <Environment Name="DEV01" Status="v2" />
+          <Environment Name="QA01" Status="v2" />
+          <Environment Name="QA02" Status="v2" />
+          <Environment Name="IN01" Status="v2" />
+          <Environment Name="PROD" Status="v2" />
+        </Environments>
+      </Dependency>
+      <Dependency Name="Profiles">
+        <Environments>
+          <Environment Name="DEV01" Status="v3" />
+          <Environment Name="QA01" Status="v3" />
+          <Environment Name="QA02" Status="v2" />
+          <Environment Name="IN01" Status="v3" />
+          <Environment Name="PROD" Status="v3" />
+        </Environments>
+      </Dependency>
+      <Dependency Name="Status">
+        <Environments>
+          <Environment Name="DEV01" Status="DOWN" />
+          <Environment Name="QA01" Status="ISSUES" />
+          <Environment Name="QA02" Status="ISSUES" />
+          <Environment Name="IN01" Status="OK" />
+          <Environment Name="PROD" Status="OK" />
+        </Environments>
+      </Dependency>
+    </Dependencies>
+  </Tenant>
+  <Tenant ID="2" Name="Bingo Stars">
+    <Dependencies>
+      <Dependency Name="Wallet">
+        <Environments>
+          <Environment Name="DEV01" Status="v3" />
+          <Environment Name="QA01" Status="v2" />
+          <Environment Name="QA02" Status="v3" />
+          <Environment Name="IN01" Status="v2" />
+          <Environment Name="PROD" Status="v3" />
+        </Environments>
+      </Dependency>
+      <Dependency Name="Profiles">
+        <Environments>
+          <Environment Name="DEV01" Status="v2" />
+          <Environment Name="QA01" Status="v2" />
+          <Environment Name="QA02" Status="v2" />
+          <Environment Name="IN01" Status="v3" />
+          <Environment Name="PROD" Status="v2" />
+        </Environments>
+      </Dependency>
+      <Dependency Name="Status">
+        <Environments>
+          <Environment Name="DEV01" Status="DOWN" />
+          <Environment Name="QA01" Status="ISSUES" />
+          <Environment Name="QA02" Status="ISSUES" />
+          <Environment Name="IN01" Status="OK" />
+          <Environment Name="PROD" Status="OK" />
+        </Environments>
+      </Dependency>
+    </Dependencies>
+  </Tenant>
+  <Tenant ID="3" Name="Grosvenor">
+    <Dependencies>
+      <Dependency Name="Wallet">
+        <Environments>
+          <Environment Name="DEV01" Status="v2" />
+          <Environment Name="QA01" Status="v2" />
+          <Environment Name="QA02" Status="v3" />
+          <Environment Name="IN01" Status="v2" />
+          <Environment Name="PROD" Status="v3" />
+        </Environments>
+      </Dependency>
+      <Dependency Name="Profiles">
+        <Environments>
+          <Environment Name="DEV01" Status="v3" />
+          <Environment Name="QA01" Status="v3" />
+          <Environment Name="QA02" Status="v3" />
+          <Environment Name="IN01" Status="v3" />
+          <Environment Name="PROD" Status="v2" />
+        </Environments>
+      </Dependency>
+      <Dependency Name="Status">
+        <Environments>
+          <Environment Name="DEV01" Status="DOWN" />
+          <Environment Name="QA01" Status="OK" />
+          <Environment Name="QA02" Status="ISSUES" />
+          <Environment Name="IN01" Status="DOWN" />
+          <Environment Name="PROD" Status="OK" />
+        </Environments>
+      </Dependency>
+    </Dependencies>
+  </Tenant>
+  <Tenant ID="4" Name="Slot Mob">
+    <Dependencies>
+      <Dependency Name="Wallet">
+        <Environments>
+          <Environment Name="DEV01" Status="v2" />
+          <Environment Name="QA01" Status="v1" />
+          <Environment Name="QA02" Status="v3" />
+          <Environment Name="IN01" Status="v2" />
+          <Environment Name="PROD" Status="v3" />
+        </Environments>
+      </Dependency>
+      <Dependency Name="Profiles">
+        <Environments>
+          <Environment Name="DEV01" Status="v3" />
+          <Environment Name="QA01" Status="v3" />
+          <Environment Name="QA02" Status="v2" />
+          <Environment Name="IN01" Status="v3" />
+          <Environment Name="PROD" Status="v2" />
+        </Environments>
+      </Dependency>
+      <Dependency Name="Status">
+        <Environments>
+          <Environment Name="DEV01" Status="DOWN" />
+          <Environment Name="QA01" Status="ISSUES" />
+          <Environment Name="QA02" Status="DOWN" />
+          <Environment Name="IN01" Status="OK" />
+          <Environment Name="PROD" Status="OK" />
+        </Environments>
+      </Dependency>
+    </Dependencies>
+  </Tenant>
+  <Tenant ID="5" Name="STV">
+    <Dependencies>
+      <Dependency Name="Wallet">
+        <Environments>
+          <Environment Name="DEV01" Status="v2" />
+          <Environment Name="QA01" Status="v2" />
+          <Environment Name="QA02" Status="v3" />
+          <Environment Name="IN01" Status="v2" />
+          <Environment Name="PROD" Status="v1" />
+        </Environments>
+      </Dependency>
+      <Dependency Name="Profiles">
+        <Environments>
+          <Environment Name="DEV01" Status="v3" />
+          <Environment Name="QA01" Status="v3" />
+          <Environment Name="QA02" Status="v2" />
+          <Environment Name="IN01" Status="v3" />
+          <Environment Name="PROD" Status="v3" />
+        </Environments>
+      </Dependency>
+      <Dependency Name="Status">
+        <Environments>
+          <Environment Name="DEV01" Status="DOWN" />
+          <Environment Name="QA01" Status="ISSUES" />
+          <Environment Name="QA02" Status="DOWN" />
+          <Environment Name="IN01" Status="OK" />
+          <Environment Name="PROD" Status="OK" />
+        </Environments>
+      </Dependency>
+    </Dependencies>
+  </Tenant>
+  <Tenant ID="6" Name="Health Bingo">
+    <Dependencies>
+      <Dependency Name="Wallet">
+        <Environments>
+          <Environment Name="DEV01" Status="v2" />
+          <Environment Name="QA01" Status="v2" />
+          <Environment Name="QA02" Status="v3" />
+          <Environment Name="IN01" Status="v2" />
+          <Environment Name="PROD" Status="v3" />
+        </Environments>
+      </Dependency>
+      <Dependency Name="Profiles">
+        <Environments>
+          <Environment Name="DEV01" Status="v3" />
+          <Environment Name="QA01" Status="v3" />
+          <Environment Name="QA02" Status="v2" />
+          <Environment Name="IN01" Status="v3" />
+          <Environment Name="PROD" Status="v2" />
+        </Environments>
+      </Dependency>
+      <Dependency Name="Status">
+        <Environments>
+          <Environment Name="DEV01" Status="DOWN" />
+          <Environment Name="QA01" Status="ISSUES" />
+          <Environment Name="QA02" Status="DOWN" />
+          <Environment Name="IN01" Status="OK" />
+          <Environment Name="PROD" Status="OK" />
+        </Environments>
+      </Dependency>
+    </Dependencies>
+  </Tenant>
+</Tenants>

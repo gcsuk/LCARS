@@ -1,0 +1,16 @@
+﻿@model LCARS.Models.AutoDeploy
+
+@using (Html.BeginForm())
+{
+	<div class="destruct-admin">
+		<div>
+			<span>Enabled</span> @Html.CheckBoxFor(m => m.IsEnabled)
+		</div>
+		<div>
+			<span>Target Date</span> @Html.TextBoxFor(m => m.TargetDate)
+		</div>
+		<div>
+			<input type="submit" name="save" value="Save" />
+		</div>
+	</div>
+}

@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	@RenderSection("refresh", false)
+	<title>Current Environment Status</title>
+	@Styles.Render("~/Content/css")
+	@Scripts.Render("~/bundles/modernizr")
+	@RenderSection("header", false)
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-2 topLeftCorner">
+				<div class="purple heightMedium" style="position: relative">
+					<div class="bottomRightText">
+						@DateTime.Now.ToString("dd-MM-yyyy")
+					</div>
+				</div>
+				<div class="blueCornerTop"></div>
+			</div>
+			<div class="col-lg-10 topRight">
+				<div class="row header">
+					LCARS OPERATIONS <span>ONLINE</span>
+				</div>
+				<div class="row">
+					<div class="col-lg-7">
+						<table class="digits">
+							<tr><td>2385</td><td>8578232</td><td>9</td><td>5789</td><td>3882</td><td>5893</td><td>9865</td><td>3489</td><td>2485</td><td>0846</td><td>9798</td><td>9629</td><td>29</td></tr>
+							<tr><td>2064</td><td>2064962</td><td>7</td><td>9776</td><td>626</td><td>1276</td><td>7612</td><td>126</td><td>97</td><td>6165</td><td>6626</td><td>876</td><td>74</td></tr>
+							<tr><td>34</td><td>279</td><td></td><td>89</td><td>6580</td><td>6547</td><td>6587</td><td>3465</td><td>867</td><td>2347</td><td>5762</td><td>4588</td><td>05</td></tr>
+							<tr class="white"><td>4768</td><td>8967248</td><td>7</td><td>9798</td><td>8969</td><td>476</td><td>9847</td><td>8476</td><td>9749</td><td>0982</td><td>8969</td><td>0247</td><td>89</td></tr>
+							<tr class="white"><td>685</td><td>3478</td><td>8</td><td>867</td><td>346</td><td>34</td><td>48</td><td>49</td><td>8</td><td>89</td><td>897</td><td>38</td><td></td></tr>
+							<tr><td>757</td><td>898990</td><td>8</td><td>200</td><td>285</td><td>923</td><td>9</td><td>387</td><td>238</td><td>578</td><td>875</td><td>87</td><td>9</td></tr>
+							<tr><td>484</td><td>947580</td><td>7</td><td>569</td><td>68</td><td>678</td><td>893</td><td>56</td><td>584</td><td>678</td><td>476</td><td>458</td><td>4</td></tr>
+						</table>
+					</div>
+					<div class="col-lg-5 topRightButtons">
+						<div class="row">
+							<div class="col-lg-6 topRightButton blueButton"><div class="bottomRightText">07-3215</div></div>
+							<div class="col-lg-6 topRightButton yellowButton"><div class="bottomRightText">08-5012</div></div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6 topRightButton yellowButton"><div class="bottomRightText">09-3123</div></div>
+							<div class="col-lg-6 topRightButton redButton"><div class="bottomRightText">10-2415</div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row centerBar">
+			<div class="col-lg-2 blueCornerBottom"></div>
+			<div class="col-lg-10">
+				<div class="row">
+					<div class="col-lg-4 centerBarTop blue"></div>
+					<div class="col-lg-1 centerBarTop orange"></div>
+					<div class="col-lg-2 centerBarTop purple"></div>
+					<div class="col-lg-3 centerBarTop purple"></div>
+					<div class="col-lg-1 centerBarTop red"></div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-2 redCornerTop"></div>
+			<div class="col-lg-10">
+				<div class="row">
+					<div class="col-lg-4 centerBarBottom red"></div>
+					<div class="col-lg-1 centerBarBottom orange"></div>
+					<div class="col-lg-2 centerBarBottom apricot"></div>
+					<div class="col-lg-3 centerBarBottom purple"></div>
+					<div class="col-lg-1 centerBarBottom orange"></div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-2">
+				<div class="redCornerBottom">
+
+				</div>
+				<div class="red heightTall leftBar">
+					<div class="bottomRightText">
+						<a href="/Admin/UpdateAutoDeploy">RELEASE</a>
+					</div>
+				</div>
+				<div class="orange heightShort leftBar">
+					<div class="bottomRightText">
+						<a href="/">STATUS</a>
+					</div>
+				</div>
+				<div class="apricot heightTall leftBar">
+					<div class="bottomRightText">
+						05-32456
+					</div>
+				</div>
+				<div class="blue heightTall leftBar">
+					<div class="bottomRightText">
+						06-15868
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-10">
+				@RenderBody()
+			</div>
+		</div>
+	</div>
+
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")
+	@Scripts.Render("~/bundles/knockout")
+	@RenderSection("scripts", false)
+</body>
+</html>
