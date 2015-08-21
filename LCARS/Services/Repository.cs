@@ -93,5 +93,16 @@ namespace LCARS.Services
 
 			doc.Save(fileName);
 		}
-	}
+
+        public IEnumerable<Build> GetBuildStatus(string fileName)
+        {
+            XDocument doc = XDocument.Load(fileName);
+
+            return doc.Root?.Elements("Build").Select(buildData => new Build
+            {
+                Name = buildData.Attribute("Name").Value,
+                Status = buildData.Element("Status").Value
+            }).ToList();
+        }
+    }
 }

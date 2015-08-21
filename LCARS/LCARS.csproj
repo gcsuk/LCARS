@@ -119,6 +119,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BuildController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Global.asax.cs">
@@ -126,6 +127,7 @@
     </Compile>
     <Compile Include="Models\AutoDeploy.cs" />
     <Compile Include="Models\Environment.cs" />
+    <Compile Include="Models\Build.cs" />
     <Compile Include="Models\Tenant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Domain.cs" />
@@ -133,10 +135,12 @@
     <Compile Include="Services\IRepository.cs" />
     <Compile Include="Services\Repository.cs" />
     <Compile Include="Models\Dependency.cs" />
+    <Compile Include="ViewModels\BuildStatus.cs" />
     <Compile Include="ViewModels\Status.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\AutoDeploy.xml" />
+    <Content Include="App_Data\Builds.xml" />
     <Content Include="App_Data\Status.xml" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -198,6 +202,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\AutoDeploy.cshtml" />
     <Content Include="Views\Admin\UpdateAutoDeploy.cshtml" />
+    <Content Include="Views\Build\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

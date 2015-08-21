@@ -13,5 +13,7 @@ namespace LCARS.Services
 		AutoDeploy GetAutoDeploySettings(string fileName);
 
 		void UpdateAutoDeploySettings(string fileName, bool isEnabled, string targetDate);
+
+	    IEnumerable<Build> GetBuildStatus(string fileName);
 	}
 }

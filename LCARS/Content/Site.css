@@ -273,3 +273,12 @@ table.digits tr.white {
 	.destruct-admin input[type=submit] {
 		margin-top: 20px
 	}
+
+.buildStatusRow {
+    margin: 30px 0 20px 0;
+    font-size: 24pt;
+}
+
+.buildStatusRow img {
+    height: 30px
+}

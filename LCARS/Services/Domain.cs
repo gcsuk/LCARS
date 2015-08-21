@@ -55,5 +55,10 @@ namespace LCARS.Services
 		{
 			_repository.UpdateAutoDeploySettings(fileName, isEnabled, targetDate);
 		}
-	}
+
+        public IEnumerable<Build> GetBuildStatus(string path)
+        {
+            return _repository.GetBuildStatus(path).ToList();
+        }
+    }
 }
