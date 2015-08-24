@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LCARS.Models;
 
@@ -12,6 +13,11 @@ namespace LCARS.Services
 		{
 			_repository = repository;
 		}
+
+	    public Board SelectBoard()
+	    {
+	       return (Board)new Random(Guid.NewGuid().GetHashCode()).Next(1, 3);
+	    }
 
 		public IEnumerable<Tenant> GetStatus(string path)
 		{

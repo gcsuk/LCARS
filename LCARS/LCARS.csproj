@@ -126,6 +126,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AutoDeploy.cs" />
+    <Compile Include="Models\Board.cs" />
     <Compile Include="Models\Environment.cs" />
     <Compile Include="Models\Build.cs" />
     <Compile Include="Models\Tenant.cs" />
