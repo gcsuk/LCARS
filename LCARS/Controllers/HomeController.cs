@@ -8,17 +8,17 @@ namespace LCARS.Controllers
 	public class HomeController : Controller
 	{
 		private readonly IDomain _domain;
-        private readonly Board _thisBoard;
+        private readonly Boards _thisBoard;
 
         public HomeController(IDomain domain)
 		{
 			_domain = domain;
-            _thisBoard = Board.Environment;
+            _thisBoard = Boards.Environment;
         }
 
 		public ActionResult Index()
 		{
-            Board randomBoard = _domain.SelectBoard();
+            Boards randomBoard = _domain.SelectBoard();
 
             if (_thisBoard != randomBoard)
             {

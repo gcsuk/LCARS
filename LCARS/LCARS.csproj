@@ -120,13 +120,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BuildController.cs" />
+    <Compile Include="Controllers\GitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AutoDeploy.cs" />
-    <Compile Include="Models\Board.cs" />
+    <Compile Include="Models\Boards.cs" />
     <Compile Include="Models\Environment.cs" />
     <Compile Include="Models\Build.cs" />
     <Compile Include="Models\Tenant.cs" />
@@ -183,6 +184,10 @@
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -204,6 +209,7 @@
     <Content Include="Views\Home\AutoDeploy.cshtml" />
     <Content Include="Views\Admin\UpdateAutoDeploy.cshtml" />
     <Content Include="Views\Build\Index.cshtml" />
+    <Content Include="Views\Git\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

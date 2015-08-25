@@ -5,7 +5,7 @@ namespace LCARS.Services
 {
 	public interface IDomain
 	{
-	    Board SelectBoard();
+	    Boards SelectBoard();
 
         IEnumerable<Tenant> GetStatus(string path);
 

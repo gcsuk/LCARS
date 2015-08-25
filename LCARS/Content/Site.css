@@ -282,3 +282,17 @@ table.digits tr.white {
 .buildStatusRow img {
     height: 30px
 }
+
+.git h1 {
+    padding-top: 10px;
+    font-size: 72pt;
+    text-align: center;
+    color: #ff0000
+}
+
+.git h2 {
+    padding-top: 10px;
+    font-size: 48pt;
+    text-align: center;
+    color: #ff0000
+}

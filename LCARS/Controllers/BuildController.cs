@@ -8,18 +8,18 @@ namespace LCARS.Controllers
     public class BuildController : Controller
     {
         private readonly IDomain _domain;
-        private readonly Board _thisBoard;
+        private readonly Boards _thisBoard;
 
         public BuildController(IDomain domain)
         {
             _domain = domain;
-            _thisBoard = Board.Build;
+            _thisBoard = Boards.Build;
         }
 
         // GET: Build
         public ActionResult Index()
         {
-            Board randomBoard = _domain.SelectBoard();
+            Boards randomBoard = _domain.SelectBoard();
 
             if (_thisBoard != randomBoard)
             {

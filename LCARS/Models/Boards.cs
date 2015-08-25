@@ -2,9 +2,10 @@
 
 namespace LCARS.Models
 {
-    public enum Board
+    public enum Boards
     {
         [Description("Home")] Environment = 1,
-        Build = 2
+        Build = 2,
+        Git = 3
     }
 }

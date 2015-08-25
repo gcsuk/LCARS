@@ -14,9 +14,9 @@ namespace LCARS.Services
 			_repository = repository;
 		}
 
-	    public Board SelectBoard()
+	    public Boards SelectBoard()
 	    {
-	       return (Board)new Random(Guid.NewGuid().GetHashCode()).Next(1, 3);
+	       return (Boards)new Random(Guid.NewGuid().GetHashCode()).Next(1, Enum.GetNames(typeof(Boards)).Length + 1);
 	    }
 
 		public IEnumerable<Tenant> GetStatus(string path)
