@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using LCARS.Models;
 using LCARS.Services;
 
@@ -17,8 +18,13 @@ namespace LCARS.Controllers
 
         // GET: Build
         [Route("Builds/{buildSet?}")]
-        public ActionResult Index(BuildSet buildSet = BuildSet.Cms)
+        public ActionResult Index(BuildSet buildSet = BuildSet.Random)
         {
+            if (buildSet == BuildSet.Random)
+            {
+                buildSet = (BuildSet)new Random(Guid.NewGuid().GetHashCode()).Next(1, Enum.GetNames(typeof(BuildSet)).Length);
+            }
+
             var buildStatus =
                 _domain.GetBuildStatus(Server.MapPath($@"~/App_Data/BuildSets/{buildSet.GetDescription()}.xml"));
 

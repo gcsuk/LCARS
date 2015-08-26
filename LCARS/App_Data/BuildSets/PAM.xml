@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Builds IsStatic="0">
+    <Build Name="Player Management Acceptance Tests (Private)">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1163)/statusIcon</Status>
+    </Build>
+    <Build Name="Player Management Acceptance Tests">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1148)/statusIcon</Status>
+    </Build>
+    <Build Name="Player Management (Private)">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1042)/statusIcon</Status>
+    </Build>
+    <Build Name="Player Management">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt943)/statusIcon</Status>
+    </Build>
+    <Build Name="BOS Host (Private)">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1191)/statusIcon</Status>
+    </Build>
+    <Build Name="BOS Host">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt871)/statusIcon</Status>
+    </Build>
+</Builds>

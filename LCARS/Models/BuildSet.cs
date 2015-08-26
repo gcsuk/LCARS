@@ -2,8 +2,9 @@
 {
     public enum BuildSet
     {
+        Random = 0,
         Cms = 1,
         Web = 2,
-        Pam = 3
+        PAM = 3
     }
 }

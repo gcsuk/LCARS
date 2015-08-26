@@ -143,6 +143,7 @@
     <Compile Include="ViewModels\Status.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\BuildSets\PAM.xml" />
     <Content Include="App_Data\RedAlert.xml" />
     <Content Include="App_Data\BuildSets\Web.xml" />
     <Content Include="App_Data\BuildSets\CMS.xml" />
@@ -215,6 +216,7 @@
     <Content Include="Views\Build\CMS.cshtml" />
     <Content Include="Views\Git\Index.cshtml" />
     <Content Include="Views\Build\Web.cshtml" />
+    <Content Include="Views\Build\PAM.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
