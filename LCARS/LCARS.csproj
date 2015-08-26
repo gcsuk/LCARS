@@ -126,7 +126,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AutoDeploy.cs" />
+    <Compile Include="Models\RedAlert.cs" />
     <Compile Include="Models\Boards.cs" />
     <Compile Include="Models\BuildSet.cs" />
     <Compile Include="Models\BuildStatus.cs" />
@@ -143,7 +143,7 @@
     <Compile Include="ViewModels\Status.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\AutoDeploy.xml" />
+    <Content Include="App_Data\RedAlert.xml" />
     <Content Include="App_Data\BuildSets\Web.xml" />
     <Content Include="App_Data\BuildSets\CMS.xml" />
     <Content Include="App_Data\Status.xml" />
@@ -180,7 +180,7 @@
     <Content Include="img\redCornerTopAlert.png" />
     <Content Include="img\topRight.png" />
     <Content Include="img\yellowButton.png" />
-    <Content Include="Scripts\autoDeploy.js" />
+    <Content Include="Scripts\redAlert.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
@@ -210,8 +210,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\AutoDeploy.cshtml" />
-    <Content Include="Views\Admin\UpdateAutoDeploy.cshtml" />
+    <Content Include="Views\Home\RedAlert.cshtml" />
+    <Content Include="Views\Admin\UpdateRedAlert.cshtml" />
     <Content Include="Views\Build\CMS.cshtml" />
     <Content Include="Views\Git\Index.cshtml" />
     <Content Include="Views\Build\Web.cshtml" />

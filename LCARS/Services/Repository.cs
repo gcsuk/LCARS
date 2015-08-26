@@ -71,23 +71,23 @@ namespace LCARS.Services
             doc.Save(fileName);
         }
 
-        public AutoDeploy GetAutoDeploySettings(string fileName)
+        public RedAlert GetRedAlertSettings(string fileName)
         {
             XDocument doc = XDocument.Load(fileName);
 
             if (doc.Root == null)
                 return null;
 
-            AutoDeploy autoDeploy = new AutoDeploy
+            RedAlert RedAlert = new RedAlert
             {
                 IsEnabled = doc.Root.Element("IsEnabled").Value == "1",
                 TargetDate = doc.Root.Element("TargetDate").Value,
             };
 
-            return autoDeploy;
+            return RedAlert;
         }
 
-        public void UpdateAutoDeploySettings(string fileName, bool isEnabled, string targetDate)
+        public void UpdateRedAlertSettings(string fileName, bool isEnabled, string targetDate)
         {
             XDocument doc = XDocument.Load(fileName);
 

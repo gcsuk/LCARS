@@ -28,15 +28,15 @@ namespace LCARS.Controllers
             Status vm = new Status
 		    {
 		        Tenants = _domain.GetStatus(Server.MapPath(@"~/App_Data/Status.xml")),
-		        IsAutoDeployEnabled = _domain.GetAutoDeploySettings(Server.MapPath(@"~/App_Data/AutoDeploy.xml")).IsEnabled
+		        IsRedAlertEnabled = _domain.GetRedAlertSettings(Server.MapPath(@"~/App_Data/RedAlert.xml")).IsEnabled
 		    };
 
 			return View(vm);
 		}
 
-		public ActionResult AutoDeploy()
+		public ActionResult RedAlert()
 		{
-			return View(_domain.GetAutoDeploySettings(Server.MapPath(@"~/App_Data/AutoDeploy.xml")));
+			return View(_domain.GetRedAlertSettings(Server.MapPath(@"~/App_Data/RedAlert.xml")));
 		}
 	}
 }

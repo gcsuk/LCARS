@@ -7,6 +7,6 @@ namespace LCARS.ViewModels
     {
         public IEnumerable<Tenant> Tenants { get; set; }
 
-        public bool IsAutoDeployEnabled { get; set; }
+        public bool IsRedAlertEnabled { get; set; }
     }
 }

@@ -19,19 +19,19 @@ namespace LCARS.Controllers
 			_domain.UpdateStatus(Server.MapPath(@"~/App_Data/Status.xml"), tenant, dependency, environment, currentStatus);
 		}
 
-		public ActionResult UpdateAutoDeploy()
+		public ActionResult UpdateRedAlert()
 		{
-			AutoDeploy vm = _domain.GetAutoDeploySettings(Server.MapPath(@"~/App_Data/AutoDeploy.xml"));
+			RedAlert vm = _domain.GetRedAlertSettings(Server.MapPath(@"~/App_Data/RedAlert.xml"));
 
 			return View(vm);
 		}
 
 		[HttpPost]
-		public ActionResult UpdateAutoDeploy(bool isEnabled, string targetDate)
+		public ActionResult UpdateRedAlert(bool isEnabled, string targetDate)
 		{
-			_domain.UpdateAutoDeploySettings(Server.MapPath(@"~/App_Data/AutoDeploy.xml"), isEnabled, targetDate);
+			_domain.UpdateRedAlertSettings(Server.MapPath(@"~/App_Data/RedAlert.xml"), isEnabled, targetDate);
 
-			return RedirectToAction(isEnabled ? "AutoDeploy" : "Index", "Home");
+			return RedirectToAction(isEnabled ? "RedAlert" : "Index", "Home");
 		}
     }
 }

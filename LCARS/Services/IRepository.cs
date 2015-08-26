@@ -9,9 +9,9 @@ namespace LCARS.Services
 
 		void UpdateStatus(string fileName, string tenant, string dependency, string environment, string status);
 
-		AutoDeploy GetAutoDeploySettings(string fileName);
+		RedAlert GetRedAlertSettings(string fileName);
 
-		void UpdateAutoDeploySettings(string fileName, bool isEnabled, string targetDate);
+		void UpdateRedAlertSettings(string fileName, bool isEnabled, string targetDate);
 
 	    BuildStatus GetBuildStatus(string fileName);
 	}

@@ -52,14 +52,14 @@ namespace LCARS.Services
 			}
 		}
 
-		public AutoDeploy GetAutoDeploySettings(string fileName)
+		public RedAlert GetRedAlertSettings(string fileName)
 		{
-			return _repository.GetAutoDeploySettings(fileName);
+			return _repository.GetRedAlertSettings(fileName);
 		}
 
-		public void UpdateAutoDeploySettings(string fileName, bool isEnabled, string targetDate)
+		public void UpdateRedAlertSettings(string fileName, bool isEnabled, string targetDate)
 		{
-			_repository.UpdateAutoDeploySettings(fileName, isEnabled, targetDate);
+			_repository.UpdateRedAlertSettings(fileName, isEnabled, targetDate);
 		}
 
         public BuildStatus GetBuildStatus(string path)

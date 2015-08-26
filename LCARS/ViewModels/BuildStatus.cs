@@ -7,6 +7,6 @@ namespace LCARS.ViewModels
     {
         public IEnumerable<Build> Builds { get; set; }
 
-        public bool IsAutoDeployEnabled { get; set; }
+        public bool IsRedAlertEnabled { get; set; }
     }
 }

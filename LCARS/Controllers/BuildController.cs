@@ -35,7 +35,7 @@ namespace LCARS.Controllers
             var vm = new ViewModels.BuildStatus
             {
                 Builds = buildStatus.Builds,
-                IsAutoDeployEnabled = _domain.GetAutoDeploySettings(Server.MapPath(@"~/App_Data/AutoDeploy.xml")).IsEnabled
+                IsRedAlertEnabled = _domain.GetRedAlertSettings(Server.MapPath(@"~/App_Data/RedAlert.xml")).IsEnabled
             };
 
             return View(buildSet.GetDescription(), vm);

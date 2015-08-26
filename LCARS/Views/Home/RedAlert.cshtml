@@ -1,4 +1,4 @@
-﻿@model LCARS.Models.AutoDeploy
+﻿@model LCARS.Models.RedAlert
 
 @section refresh
 {
@@ -24,6 +24,6 @@
 
 @section scripts
 {
-	<script type="text/javascript" src="~/Scripts/autoDeploy.js"></script>
+	<script type="text/javascript" src="~/Scripts/RedAlert.js"></script>
 	<script type="text/javascript">getTimeRemaining(@Model.IsEnabled.ToString().ToLower(), new Date("@(Model.TargetDate)"));</script>
 }
