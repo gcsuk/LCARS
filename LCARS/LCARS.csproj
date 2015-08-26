@@ -128,6 +128,8 @@
     </Compile>
     <Compile Include="Models\AutoDeploy.cs" />
     <Compile Include="Models\Boards.cs" />
+    <Compile Include="Models\BuildSet.cs" />
+    <Compile Include="Models\BuildStatus.cs" />
     <Compile Include="Models\Environment.cs" />
     <Compile Include="Models\Build.cs" />
     <Compile Include="Models\Tenant.cs" />
@@ -142,7 +144,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\AutoDeploy.xml" />
-    <Content Include="App_Data\Builds.xml" />
+    <Content Include="App_Data\BuildSets\Web.xml" />
+    <Content Include="App_Data\BuildSets\CMS.xml" />
     <Content Include="App_Data\Status.xml" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -188,6 +191,7 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\queryString.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -208,8 +212,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\AutoDeploy.cshtml" />
     <Content Include="Views\Admin\UpdateAutoDeploy.cshtml" />
-    <Content Include="Views\Build\Index.cshtml" />
+    <Content Include="Views\Build\CMS.cshtml" />
     <Content Include="Views\Git\Index.cshtml" />
+    <Content Include="Views\Build\Web.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

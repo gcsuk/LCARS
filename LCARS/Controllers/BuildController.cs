@@ -1,7 +1,6 @@
 ﻿using System.Web.Mvc;
 using LCARS.Models;
 using LCARS.Services;
-using LCARS.ViewModels;
 
 namespace LCARS.Controllers
 {
@@ -17,21 +16,29 @@ namespace LCARS.Controllers
         }
 
         // GET: Build
-        public ActionResult Index()
+        [Route("Builds/{buildSet?}")]
+        public ActionResult Index(BuildSet buildSet = BuildSet.Cms)
         {
-            Boards randomBoard = _domain.SelectBoard();
+            var buildStatus =
+                _domain.GetBuildStatus(Server.MapPath($@"~/App_Data/BuildSets/{buildSet.GetDescription()}.xml"));
 
-            if (_thisBoard != randomBoard)
+            if (!buildStatus.IsStatic)
             {
-                return RedirectToAction("Index", randomBoard.GetDescription());
+                Boards randomBoard = _domain.SelectBoard();
+
+                if (_thisBoard != randomBoard)
+                {
+                    return RedirectToAction("Index", randomBoard.GetDescription());
+                }
             }
 
-            var vm = new BuildStatus
+            var vm = new ViewModels.BuildStatus
             {
-                Builds = _domain.GetBuildStatus(Server.MapPath(@"~/App_Data/Builds.xml"))
+                Builds = buildStatus.Builds,
+                IsAutoDeployEnabled = _domain.GetAutoDeploySettings(Server.MapPath(@"~/App_Data/AutoDeploy.xml")).IsEnabled
             };
 
-            return View(vm);
+            return View(buildSet.GetDescription(), vm);
         }
     }
 }

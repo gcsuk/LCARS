@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Builds>
+<Builds IsStatic="0">
     <Build Name="Mercury">
         <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt76)/statusIcon</Status>
     </Build>

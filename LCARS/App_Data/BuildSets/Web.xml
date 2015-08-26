@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Builds IsStatic="1">
+    <Build Name="Base">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1166)/statusIcon</Status>
+    </Build>
+    <Build Name="21">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1366)/statusIcon</Status>
+    </Build>
+    <Build Name="Bingo Godz">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1092)/statusIcon</Status>
+    </Build>
+    <Build Name="Bingo Stars">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1091)/statusIcon</Status>
+    </Build>
+    <Build Name="Crown Bingo">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1338)/statusIcon</Status>
+    </Build>
+    <Build Name="Grosvenor">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1087)/statusIcon</Status>
+    </Build>
+    <Build Name="Health Bingo">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1093)/statusIcon</Status>
+    </Build>
+    <Build Name="High 5">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1420)/statusIcon</Status>
+    </Build>
+    <Build Name="Mecca Bingo">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1258)/statusIcon</Status>
+    </Build>
+    <Build Name="Pink Casino">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1319)/statusIcon</Status>
+    </Build>
+    <Build Name="Slot Boss">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1311)/statusIcon</Status>
+    </Build>
+    <Build Name="Slot Mob">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1094)/statusIcon</Status>
+    </Build>
+    <Build Name="STV">
+        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1095)/statusIcon</Status>
+    </Build>
+</Builds>

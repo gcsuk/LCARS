@@ -1,20 +1,27 @@
 ﻿var _targetTime;
 
-function getTimeRemaining(targetTime) {
+function getTimeRemaining(isEnabled, targetTime) {
 
 	if (targetTime != undefined)
 		_targetTime = targetTime;
 
 	var rightNow = new Date();
 
-	if (_targetTime < rightNow) {
+	if (!isEnabled || _targetTime < rightNow) {
 	    $.ajax({
 	        type: "POST",
 	        contentType: "application/json",
 	        data: "{ 'isEnabled':false,'targetDate':'June 1, 2050 00:00:00' }",
 	        url: "/Admin/UpdateAutoDeploy",
-	        success: function () {
-	            window.location = "/";
+	        success: function() {
+
+	            var returnUrl = getUrlVars()["returnUrl"];
+
+	            if (returnUrl == null) {
+	                window.location = "/";
+	            } else {
+	                window.location = "/" + returnUrl;
+	            }
 	        },
 	        error: function (xhr, thrownError) {
 	            alert(thrownError);
@@ -70,7 +77,7 @@ function getTimeRemaining(targetTime) {
 	$("#secondsRemaining").html(seconds);
 	$("#millisecondsRemaining").html(milliseconds);
 
-	setTimeout("getTimeRemaining()", 25);
+	setTimeout("getTimeRemaining(true)", 25);
 }
 
 var highlightNumber = 1;
