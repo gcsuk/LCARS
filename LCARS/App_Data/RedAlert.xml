@@ -2,4 +2,5 @@
 <RedAlert>
   <IsEnabled>0</IsEnabled>
   <TargetDate>June 1, 2050 00:00:00</TargetDate>
+  <AlertType>Beer</AlertType>
 </RedAlert>

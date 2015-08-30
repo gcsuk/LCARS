@@ -26,9 +26,9 @@ namespace LCARS.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update(bool isEnabled, string targetDate)
+        public ActionResult Update(bool isEnabled, string targetDate, string alertType)
         {
-            _domain.UpdateRedAlert(Server.MapPath(@"~/App_Data/RedAlert.xml"), isEnabled, targetDate);
+            _domain.UpdateRedAlert(Server.MapPath(@"~/App_Data/RedAlert.xml"), isEnabled, targetDate, alertType);
 
             return RedirectToAction("Index", isEnabled ? "RedAlert" : "Home");
         }

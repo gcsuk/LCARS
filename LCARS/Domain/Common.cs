@@ -22,9 +22,9 @@ namespace LCARS.Domain
             return _repository.GetRedAlert(fileName);
         }
 
-        public void UpdateRedAlert(string fileName, bool isEnabled, string targetDate)
+        public void UpdateRedAlert(string fileName, bool isEnabled, string targetDate, string alertType)
         {
-            _repository.UpdateRedAlert(fileName, isEnabled, targetDate);
+            _repository.UpdateRedAlert(fileName, isEnabled, targetDate, alertType);
         }
     }
 }

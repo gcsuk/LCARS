@@ -8,6 +8,6 @@ namespace LCARS.Domain
 
         RedAlert GetRedAlert(string fileName);
 
-        void UpdateRedAlert(string fileName, bool isEnabled, string targetDate);
+        void UpdateRedAlert(string fileName, bool isEnabled, string targetDate, string alertType);
     }
 }

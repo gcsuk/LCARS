@@ -16,10 +16,11 @@ namespace LCARS.Repository
             {
                 IsEnabled = doc.Root.Element("IsEnabled").Value == "1",
                 TargetDate = doc.Root.Element("TargetDate").Value,
+                AlertType = doc.Root.Element("AlertType").Value,
             };
         }
 
-        public void UpdateRedAlert(string fileName, bool isEnabled, string targetDate)
+        public void UpdateRedAlert(string fileName, bool isEnabled, string targetDate, string alertType)
         {
             XDocument doc = XDocument.Load(fileName);
 
@@ -28,6 +29,7 @@ namespace LCARS.Repository
 
             doc.Root.Element("IsEnabled").Value = (isEnabled ? "1" : "0");
             doc.Root.Element("TargetDate").Value = targetDate;
+            doc.Root.Element("AlertType").Value = alertType;
 
             doc.Save(fileName);
         }
