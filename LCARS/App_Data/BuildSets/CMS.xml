@@ -1,21 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Builds IsStatic="0">
-    <Build Name="Mercury">
-        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt76)/statusIcon</Status>
-    </Build>
-    <!--<Build Name="Mercury Deployment to IN01">
-        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt81)/statusIcon</Status>
-    </Build>-->
-    <Build Name="Mercury IN01 Integration Tests">
-        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt1194)/statusIcon</Status>
-    </Build>
-    <Build Name="Mercury Deployment to Dev01">
-        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt281)/statusIcon</Status>
-    </Build>
-    <Build Name="Zeus">
-        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt81)/statusIcon</Status>
-    </Build>
-    <Build Name="Zeus Deployment to Dev01">
-        <Status>http://teamcity.bedegaming.com/app/rest/builds/buildType:(id:bt594)/statusIcon</Status>
-    </Build>
+<Builds>
+    <Build Name="Mercury" TypeId="76" />
+    <Build Name="Mercury IN01 Integration Tests" TypeId="1194" />
+    <Build Name="Mercury Deployment to Dev01" TypeId="281" />
+    <Build Name="Zeus" TypeId="81" />
+    <Build Name="Zeus Deployment to Dev01" TypeId="594" />
 </Builds>

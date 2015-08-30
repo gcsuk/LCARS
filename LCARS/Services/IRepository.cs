@@ -13,6 +13,12 @@ namespace LCARS.Services
 
 		void UpdateRedAlertSettings(string fileName, bool isEnabled, string targetDate);
 
-	    BuildStatus GetBuildStatus(string fileName);
+	    IEnumerable<Build> GetBuilds(string fileName);
+
+	    Dictionary<int, int> GetBuildsRunning();
+
+        BuildProgress GetBuildProgress(int buildId);
+
+	    KeyValuePair<string, string> GetLastBuildStatus(int buildTypeId);
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using LCARS.Models;
 using LCARS.Services;
@@ -23,13 +24,7 @@ namespace LCARS.Controllers
             if (buildSet == BuildSet.Random)
             {
                 buildSet = (BuildSet)new Random(Guid.NewGuid().GetHashCode()).Next(1, Enum.GetNames(typeof(BuildSet)).Length);
-            }
 
-            var buildStatus =
-                _domain.GetBuildStatus(Server.MapPath($@"~/App_Data/BuildSets/{buildSet.GetDescription()}.xml"));
-
-            if (!buildStatus.IsStatic)
-            {
                 Boards randomBoard = _domain.SelectBoard();
 
                 if (_thisBoard != randomBoard)
@@ -38,13 +33,26 @@ namespace LCARS.Controllers
                 }
             }
 
+            var builds =
+                _domain.GetBuilds(Server.MapPath(string.Format(@"~/App_Data/BuildSets/{0}.xml", buildSet.GetDescription())));
+
             var vm = new ViewModels.BuildStatus
             {
-                Builds = buildStatus.Builds,
+                BuildSet = buildSet,
+                Builds = builds,
                 IsRedAlertEnabled = _domain.GetRedAlertSettings(Server.MapPath(@"~/App_Data/RedAlert.xml")).IsEnabled
             };
 
-            return View(buildSet.GetDescription(), vm);
+            return View(vm);
+        }
+
+        // GET: Build
+        [Route("Builds/Status/{buildId?}")]
+        public JsonResult GetStatus(IEnumerable<int> buildTypeIds)
+        {
+            var buildStatus = _domain.GetBuildStatus(buildTypeIds);
+
+            return Json(buildStatus, JsonRequestBehavior.AllowGet);
         }
     }
 }

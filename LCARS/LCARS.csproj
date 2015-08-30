@@ -126,6 +126,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BuildProgress.cs" />
     <Compile Include="Models\RedAlert.cs" />
     <Compile Include="Models\Boards.cs" />
     <Compile Include="Models\BuildSet.cs" />
@@ -144,10 +145,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\BuildSets\PAM.xml" />
+    <Content Include="App_Data\Creds.xml" />
     <Content Include="App_Data\RedAlert.xml" />
     <Content Include="App_Data\BuildSets\Web.xml" />
     <Content Include="App_Data\BuildSets\CMS.xml" />
-    <Content Include="App_Data\Status.xml" />
+    <Content Include="App_Data\Status.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -181,6 +185,7 @@
     <Content Include="img\redCornerTopAlert.png" />
     <Content Include="img\topRight.png" />
     <Content Include="img\yellowButton.png" />
+    <Content Include="Scripts\buildProgress.js" />
     <Content Include="Scripts\redAlert.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -213,10 +218,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\RedAlert.cshtml" />
     <Content Include="Views\Admin\UpdateRedAlert.cshtml" />
-    <Content Include="Views\Build\CMS.cshtml" />
     <Content Include="Views\Git\Index.cshtml" />
-    <Content Include="Views\Build\Web.cshtml" />
-    <Content Include="Views\Build\PAM.cshtml" />
+    <Content Include="Views\Build\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
