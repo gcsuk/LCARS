@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using LCARS.Models;
-using LCARS.Services;
 
 namespace LCARS.Domain
 {
     public class Builds : IBuilds
     {
-        private readonly IRepository _repository;
+        private readonly Repository.IBuilds _repository;
 
-        public Builds(IRepository repository)
+        public Builds(Repository.IBuilds repository)
         {
             _repository = repository;
         }

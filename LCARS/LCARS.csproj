@@ -141,8 +141,12 @@
     <Compile Include="Domain\Common.cs" />
     <Compile Include="Domain\ICommon.cs" />
     <Compile Include="Domain\IEnvironments.cs" />
-    <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\IEnvironments.cs" />
+    <Compile Include="Repository\IBuilds.cs" />
+    <Compile Include="Repository\ICommon.cs" />
+    <Compile Include="Repository\Environments.cs" />
+    <Compile Include="Repository\Builds.cs" />
+    <Compile Include="Repository\Common.cs" />
     <Compile Include="Models\Dependency.cs" />
     <Compile Include="ViewModels\BuildStatus.cs" />
     <Compile Include="ViewModels\Status.cs" />

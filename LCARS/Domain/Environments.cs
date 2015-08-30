@@ -1,27 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using LCARS.Models;
-using LCARS.Services;
 
 namespace LCARS.Domain
 {
     public class Environments : IEnvironments
     {
-        private readonly IRepository _repository;
+        private readonly Repository.IEnvironments _repository;
 
-        public Environments(IRepository repository)
+        public Environments(Repository.IEnvironments repository)
         {
             _repository = repository;
         }
 
         public IEnumerable<Tenant> Get(string path)
         {
-            return _repository.GetStatus(path).ToList();
+            return _repository.Get(path).ToList();
         }
 
         public void Update(string path, string tenant, string dependency, string environment, string currentStatus)
         {
-            _repository.UpdateStatus(path, tenant, dependency, environment, SetNewStatus(currentStatus));
+            _repository.Update(path, tenant, dependency, environment, SetNewStatus(currentStatus));
         }
 
         private static string SetNewStatus(string currentStatus)

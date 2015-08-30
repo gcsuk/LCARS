@@ -1,14 +1,13 @@
 ﻿using System;
 using LCARS.Models;
-using LCARS.Services;
 
 namespace LCARS.Domain
 {
     public class Common : ICommon
     {
-        private readonly IRepository _repository;
+        private readonly Repository.ICommon _repository;
 
-        public Common(IRepository repository)
+        public Common(Repository.ICommon repository)
         {
             _repository = repository;
         }
@@ -20,12 +19,12 @@ namespace LCARS.Domain
 
         public RedAlert GetRedAlert(string fileName)
         {
-            return _repository.GetRedAlertSettings(fileName);
+            return _repository.GetRedAlert(fileName);
         }
 
         public void UpdateRedAlert(string fileName, bool isEnabled, string targetDate)
         {
-            _repository.UpdateRedAlertSettings(fileName, isEnabled, targetDate);
+            _repository.UpdateRedAlert(fileName, isEnabled, targetDate);
         }
     }
 }
