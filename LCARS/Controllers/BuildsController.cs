@@ -6,13 +6,13 @@ using LCARS.Models;
 
 namespace LCARS.Controllers
 {
-    public class BuildController : Controller
+    public class BuildsController : Controller
     {
         private readonly ICommon _commonDomain;
         private readonly IBuilds _buildsDomain;
         private readonly Boards _thisBoard;
 
-        public BuildController(ICommon commonDomain, IBuilds buildsDomain)
+        public BuildsController(ICommon commonDomain, IBuilds buildsDomain)
         {
             _commonDomain = commonDomain;
             _buildsDomain = buildsDomain;

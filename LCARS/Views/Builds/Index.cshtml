@@ -1,0 +1,40 @@
+﻿@model LCARS.ViewModels.BuildStatus
+
+@section refresh
+{
+    @if (Model.IsRedAlertEnabled)
+    {
+        <meta http-equiv="refresh" content="0; /RedAlert?returnUrl=Builds/@(Model.BuildSet.GetDescription())">
+    }
+    else
+    {
+        <meta http-equiv="refresh" content="30">
+    }
+}
+
+@{
+    var colA = 5;
+    var colB = 7;
+
+    if (Model.Builds.Count() > 8)
+    {
+        colA = 2;
+        colB = 4;
+    }
+}
+
+<div class="stats">
+    <div class="row buildStatusRow">
+        @foreach (var build in Model.Builds)
+        {
+            <div class="col-lg-@(colA)">@build.Name</div>
+            <div data-typeid="@(build.TypeId.ToString())" class="build col-lg-@(colB)"></div>
+        }
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/statusBoard.js"></script>
+    <script type="text/javascript" src="~/Scripts/buildProgress.js"></script>
+}

@@ -118,7 +118,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\BuildController.cs" />
+    <Compile Include="Controllers\BuildsController.cs" />
     <Compile Include="Controllers\GitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RedAlertController.cs" />
@@ -227,7 +227,7 @@
     <Content Include="Views\Home\RedAlert.cshtml" />
     <Content Include="Views\RedAlert\Update.cshtml" />
     <Content Include="Views\Git\Index.cshtml" />
-    <Content Include="Views\Build\Index.cshtml" />
+    <Content Include="Views\Builds\Index.cshtml" />
     <Content Include="Views\RedAlert\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
