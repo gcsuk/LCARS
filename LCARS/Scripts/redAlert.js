@@ -12,7 +12,7 @@ function getTimeRemaining(isEnabled, targetTime) {
 	        type: "POST",
 	        contentType: "application/json",
 	        data: "{ 'isEnabled':false,'targetDate':'June 1, 2050 00:00:00' }",
-	        url: "/Admin/UpdateRedAlert",
+	        url: "/RedAlert/Update",
 	        success: function() {
 
 	            var returnUrl = getUrlVars()["returnUrl"];

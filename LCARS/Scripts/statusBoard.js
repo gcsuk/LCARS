@@ -3,7 +3,7 @@
 		type: "POST",
 		contentType: "application/json",
 		data: "{ 'tenant':'" + tenant + "','dependency':'" + dependency + "','environment':'" + environment + "','currentStatus':'" + currentStatus + "' }",
-		url: "/Admin/UpdateStatus",
+		url: "/Home/UpdateStatus",
 		success: function () {
 			location.reload();
 		},

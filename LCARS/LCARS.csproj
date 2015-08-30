@@ -118,10 +118,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BuildController.cs" />
     <Compile Include="Controllers\GitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RedAlertController.cs" />
+    <Compile Include="Domain\Builds.cs" />
+    <Compile Include="Domain\Environments.cs" />
+    <Compile Include="Domain\IBuilds.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -135,10 +138,11 @@
     <Compile Include="Models\Build.cs" />
     <Compile Include="Models\Tenant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Domain.cs" />
-    <Compile Include="Services\IDomain.cs" />
-    <Compile Include="Services\IRepository.cs" />
-    <Compile Include="Services\Repository.cs" />
+    <Compile Include="Domain\Common.cs" />
+    <Compile Include="Domain\ICommon.cs" />
+    <Compile Include="Domain\IEnvironments.cs" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\Repository.cs" />
     <Compile Include="Models\Dependency.cs" />
     <Compile Include="ViewModels\BuildStatus.cs" />
     <Compile Include="ViewModels\Status.cs" />
@@ -217,9 +221,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\RedAlert.cshtml" />
-    <Content Include="Views\Admin\UpdateRedAlert.cshtml" />
+    <Content Include="Views\RedAlert\Update.cshtml" />
     <Content Include="Views\Git\Index.cshtml" />
     <Content Include="Views\Build\Index.cshtml" />
+    <Content Include="Views\RedAlert\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
