@@ -36,12 +36,12 @@ RedAlert.xml
 &lt;RedAlert&gt;
   &lt;IsEnabled&gt;0&lt;/IsEnabled&gt;
   &lt;TargetDate&gt;June 1, 2050 00:00:00&lt;/TargetDate&gt;
-  <AlertType>Red</AlertType>
+  &lt;AlertType&gt;Red&lt;/AlertType&gt;
 &lt;/RedAlert&gt;
 
 Creds.xml (for Team City integration)
 
-<Credentials>
-  <Username>Username</Username>
-  <Password>Password</Password>
-</Credentials>
+&lt;Credentials&gt;
+  &lt;Username&gt;Username&lt;/Username&gt;
+  &lt;Password&gt;Password&lt;/Password&gt;
+&lt;/Credentials&gt;
