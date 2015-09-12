@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Autofac;
+using Autofac.Integration.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
-using Autofac;
-using Autofac.Integration.Mvc;
 
 namespace LCARS
 {
@@ -12,6 +13,11 @@ namespace LCARS
         public static void RegisterDependencies()
         {
             var credentials = GetCredentials();
+
+            if (string.IsNullOrWhiteSpace(credentials.Key))
+            {
+                throw new Exception("You must specify Team City credentials. See repository Readme for details.");
+            }
 
             var builder = new ContainerBuilder();
 
@@ -38,7 +44,14 @@ namespace LCARS
         // Cant put credentials on GitHub so segreated them into excluded XML file
         private static KeyValuePair<string, string> GetCredentials()
         {
-            var doc = XDocument.Load(HttpContext.Current.Server.MapPath(@"~/App_Data/Creds.xml"));
+            var credentialsFilePath = HttpContext.Current.Server.MapPath(@"~/App_Data/Creds.xml");
+
+            if (!System.IO.File.Exists(credentialsFilePath))
+            {
+                return new KeyValuePair<string, string>();
+            }
+
+            var doc = XDocument.Load(credentialsFilePath);
 
             return new KeyValuePair<string, string>(doc.Root.Element("Username").Value, doc.Root.Element("Password").Value);
         }
