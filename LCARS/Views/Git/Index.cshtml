@@ -9,20 +9,8 @@
     <h2 id="gitStatusDate"></h2>
 </div>
 
-@section scripts
+@section header
 {
-
-    <script>
-        function apiStatus(data) {
-
-            if (data.status === "good") {
-                window.location = "/";
-            } else {
-                $("#gitStatus").text("GitHub Status: " + data.status);
-                $("#gitStatusMessage").text(data.body);
-                $("#gitStatusDate").text(moment(data.created_on).format("DD MMMM YYYY hh:mm"));
-            }
-        }
-    </script>
+    <script type="text/javascript" src="~/Scripts/git.js"></script>
     <script src="https://status.github.com/api/last-message.json?callback=apiStatus"></script>
 }

@@ -194,6 +194,7 @@
     <Content Include="img\topRight.png" />
     <Content Include="img\yellowButton.png" />
     <Content Include="Scripts\buildProgress.js" />
+    <Content Include="Scripts\git.js" />
     <Content Include="Scripts\redAlert.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
