@@ -225,7 +225,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\RedAlert.cshtml" />
     <Content Include="Views\RedAlert\Update.cshtml" />
     <Content Include="Views\Git\Index.cshtml" />
     <Content Include="Views\Builds\Index.cshtml" />
