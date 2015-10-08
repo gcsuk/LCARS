@@ -24,7 +24,7 @@ function getTimeRemaining(isEnabled, targetTime) {
 	            }
 	        },
 	        error: function (xhr, thrownError) {
-	            alert(thrownError);
+	            location.reload();
 	        }
 	    });
 	}
