@@ -23,7 +23,7 @@ function getTimeRemaining(isEnabled, targetTime) {
 	                window.location = "/" + returnUrl;
 	            }
 	        },
-	        error: function (xhr, thrownError) {
+	        error: function () {
 	            location.reload();
 	        }
 	    });
@@ -44,7 +44,8 @@ function getTimeRemaining(isEnabled, targetTime) {
 	} else {
 		hours = hours.toString();
 	}
-	var minutes = Math.ceil(differenceMinutes - ((60 * Math.ceil(differenceHours) - 60)));
+
+	var minutes = Math.floor(differenceMinutes - ((60 * Math.ceil(differenceHours) - 60)));
 
 	if (minutes < 10) {
 		minutes = "0" + minutes;
@@ -52,7 +53,7 @@ function getTimeRemaining(isEnabled, targetTime) {
 		minutes = minutes.toString();
 	}
 
-	var seconds = Math.ceil(differenceSeconds - ((60 * Math.ceil(differenceMinutes) - 60)));
+	var seconds = Math.floor(differenceSeconds - ((60 * Math.ceil(differenceMinutes) - 60)));
 
 	if (seconds < 10) {
 		seconds = "0" + seconds;
