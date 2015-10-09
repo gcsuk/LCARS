@@ -25,7 +25,14 @@
 
                     $("*[data-typeid='" + value.TypeId + "']").html("<div class=\"buildStatusProgress " + value.Status.toLowerCase() + "\">" + value.Status + versionNumber + "</div>");
                 } else {
-                    $("*[data-typeid='" + value.TypeId + "']").html("<div class=\"buildStatusProgress\"><div style=\"width: " + value.Progress.Percentage + "%\">" + value.Progress.Percentage + "%</div></div>");
+
+                    var progressBackground = "buildingA";
+
+                    if ($("*[data-typeid='" + value.TypeId + "'] div").attr("class") == undefined || $("*[data-typeid='" + value.TypeId + "'] div").attr("class").indexOf("buildingA") > -1) {
+                        progressBackground = "buildingB";
+                    }
+
+                    $("*[data-typeid='" + value.TypeId + "']").html("<div class=\"buildStatusProgress " + progressBackground + "\">" + value.Progress.Percentage + "%</div>");
                 }
             });
         });

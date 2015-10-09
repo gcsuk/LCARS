@@ -288,7 +288,8 @@ table.digits tr.white {
     height: 35px;
     margin-bottom: 10px;
     text-align: center;
-    background-color: #fff
+    background-color: #fff;
+    color: #000
 }
 
     .buildStatusProgress div {
@@ -305,8 +306,20 @@ table.digits tr.white {
         background-color: #215321
     }
 
+    .buildStatusProgress.buildingA {
+        background-color: #FF9966
+    }
+
+    .buildStatusProgress.buildingB {
+        background-color: #FF9900
+    }
+
+    .buildStatusProgress.success {
+        background-color: #9999FF
+    }
+
     .buildStatusProgress.failure {
-        background-color: #ff0000
+        background-color: #CC6699
     }
 
 .git h1 {
