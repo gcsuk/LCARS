@@ -52,9 +52,27 @@ namespace LCARS.Controllers
         [Route("Builds/Status/{buildId?}")]
         public JsonResult GetStatus(IEnumerable<int> buildTypeIds)
         {
-            var buildStatus = _buildsDomain.GetBuildStatus(buildTypeIds);
+            try
+            {
+                var buildStatus = _buildsDomain.GetBuildStatus(buildTypeIds);
 
-            return Json(buildStatus, JsonRequestBehavior.AllowGet);
+                return Json(buildStatus, JsonRequestBehavior.AllowGet);
+            }
+            catch (System.Net.WebException)
+            {
+                var builds = new List<Build>();
+
+                foreach (int buildTypeId in buildTypeIds)
+                {
+                    builds.Add(new Build { TypeId = buildTypeId });
+                }
+
+                return Json(builds, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

@@ -11,7 +11,11 @@
         function (data) {
             $.each(data, function (index, value) {
 
-                if (value.Progress === null) {
+                if (value.Status == null) { // Can't connect to TC
+
+                    $("*[data-typeid='" + value.TypeId + "']").html("<div class=\"buildStatusProgress unreachable\">Unreachable</div>");
+
+                } else if (value.Progress === null) { // Not running
 
                     var versionNumber = "";
 
@@ -26,7 +30,7 @@
             });
         });
 
-    setTimeout("getProgress()", 100);
+    setTimeout("getProgress()", 1000);
 }
 
 getProgress();

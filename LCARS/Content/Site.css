@@ -297,6 +297,10 @@ table.digits tr.white {
         text-align: center;
     }
 
+    .buildStatusProgress.unreachable {
+        background-color: #694669
+    }
+
     .buildStatusProgress.success {
         background-color: #215321
     }

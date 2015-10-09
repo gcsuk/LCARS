@@ -107,6 +107,7 @@ namespace LCARS.Repository
             request.Credentials = cCache;
             request.PreAuthenticate = true;
             request.Method = WebRequestMethods.Http.Get;
+            request.Timeout = 2000;
 
             using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
             {
