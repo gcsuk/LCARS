@@ -11,7 +11,7 @@ function getTimeRemaining(isEnabled, targetTime) {
 	    $.ajax({
 	        type: "POST",
 	        contentType: "application/json",
-	        data: "{ 'isEnabled':false,'targetDate':'June 1, 2050 00:00:00' }",
+	        data: "{ 'isEnabled':false,'targetDate':'June 1, 2050 00:00:00', 'alertType': 'Beer' }",
 	        url: "/RedAlert/Update",
 	        success: function() {
 
