@@ -37,5 +37,5 @@ Settings.xml (for Team City and Octopus Deploy integration)
     &lt;Username&gt;Username&lt;/Username&gt;
     &lt;Password&gt;Password&lt;/Password&gt;
   &lt;/BuildServerCredentials&gt;
-  &lt;DeploymentServerPath&gt;http://od.ad.bedegaming.com/api/dashboard&lt;/DeploymentServerPath&gt;
+  &lt;DeploymentServerPath&gt;URL&lt;/DeploymentServerPath&gt;
 &lt;/Settings&gt;
