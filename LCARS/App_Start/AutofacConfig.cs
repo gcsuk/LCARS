@@ -1,10 +1,11 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
+using LCARS.ViewModels;
 
 namespace LCARS
 {
@@ -12,11 +13,12 @@ namespace LCARS
     {
         public static void RegisterDependencies()
         {
-            var credentials = GetCredentials();
+            // Cant put credentials on GitHub so segreated them into excluded XML file
+            var settings = GetSettings();
 
-            if (string.IsNullOrWhiteSpace(credentials.Key))
+            if (string.IsNullOrWhiteSpace(settings.BuildServerUsername))
             {
-                throw new Exception("You must specify Team City credentials. See repository Readme for details.");
+                throw new Exception("You must specify build server credentials. See repository Readme for details.");
             }
 
             var builder = new ContainerBuilder();
@@ -27,13 +29,17 @@ namespace LCARS
             builder.RegisterType<Domain.Common>().As<Domain.ICommon>();
             builder.RegisterType<Domain.Environments>().As<Domain.IEnvironments>();
             builder.RegisterType<Domain.Builds>().As<Domain.IBuilds>();
+            builder.RegisterType<Domain.Deployments>().As<Domain.IDeployments>();
 
             builder.RegisterType<Repository.Environments>().As<Repository.IEnvironments>();
             builder.RegisterType<Repository.Common>().As<Repository.ICommon>();
             builder.RegisterType<Repository.Builds>()
                 .As<Repository.IBuilds>()
-                .WithParameter("username", credentials.Key)
-                .WithParameter("password", credentials.Value);
+                .WithParameter("username", settings.BuildServerUsername)
+                .WithParameter("password", settings.BuildServerPassword);
+            builder.RegisterType<Repository.Deployments>()
+                .As<Repository.IDeployments>()
+                .WithParameter("deploymentServer", settings.DeploymentServerPath);
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
@@ -41,19 +47,23 @@ namespace LCARS
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
 
-        // Cant put credentials on GitHub so segreated them into excluded XML file
-        private static KeyValuePair<string, string> GetCredentials()
+        private static Settings GetSettings()
         {
-            var credentialsFilePath = HttpContext.Current.Server.MapPath(@"~/App_Data/Creds.xml");
+            var filePath = HttpContext.Current.Server.MapPath(@"~/App_Data/Settings.xml");
 
-            if (!System.IO.File.Exists(credentialsFilePath))
+            if (!File.Exists(filePath))
             {
-                return new KeyValuePair<string, string>();
+                throw new IOException("Settings file does not exist. Refer to ReadMe file for setup instructions.");
             }
 
-            var doc = XDocument.Load(credentialsFilePath);
+            var doc = XDocument.Load(filePath);
 
-            return new KeyValuePair<string, string>(doc.Root.Element("Username").Value, doc.Root.Element("Password").Value);
+            return new Settings
+            {
+                BuildServerUsername = doc.Root.Element("BuildServerCredentials").Element("Username").Value,
+                BuildServerPassword = doc.Root.Element("BuildServerCredentials").Element("Password").Value,
+                DeploymentServerPath = doc.Root.Element("DeploymentServerPath").Value
+            };
         }
     }
 }

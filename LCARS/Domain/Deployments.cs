@@ -1,0 +1,57 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using LCARS.ViewModels.Deployments;
+
+namespace LCARS.Domain
+{
+    public class Deployments : IDeployments
+    {
+        private readonly Repository.IDeployments _repository;
+
+        public Deployments(Repository.IDeployments repository)
+        {
+            _repository = repository;
+        }
+
+        public IEnumerable<Deployment> Get()
+        {
+            var deployments = _repository.Get();
+
+            deployments.Deploys.ForEach(d =>
+            {
+                d.Project = deployments.Projects.Single(e => e.Id == d.ProjectId).Name;
+                d.Environment = deployments.Environments.Single(e => e.Id == d.EnvironmentId).Name;
+            });
+
+            return deployments.Deploys.Select(deployment => new Deployment
+            {
+                ProjectGroupId = deployments.Projects.Single(g => g.Id == deployment.ProjectId).ProjectGroupId,
+                ProjectGroup = deployments.ProjectGroups.Single(pg => pg.Id == deployments.Projects.Single(g => g.Id == deployment.ProjectId).ProjectGroupId).Name,
+                ProjectId = deployment.ProjectId,
+                Project = deployment.Project,
+                EnvironmentId = deployment.EnvironmentId,
+                Environment = deployment.Environment,
+                CompletedTime = deployment.CompletedTime,
+                Duration = deployment.Duration,
+                State = deployment.State,
+                HasWarningsOrErrors = deployment.HasWarningsOrErrors,
+                ReleaseVersion = deployment.ReleaseVersion
+            }).ToList();
+        }
+
+        public IEnumerable<Environment> SetEnvironmentOrder(IEnumerable<Environment> environments, string preferencesFilePath)
+        {
+            var preferences = _repository.GetEnvironmentPreferences(preferencesFilePath);
+
+            foreach (var environment in environments.ToList())
+            {
+                var preference = preferences.SingleOrDefault(p => p.Id == environment.Id);
+
+                if (preference != null)
+                    environment.OrderId = preference.OrderId;
+            }
+
+            return environments.OrderBy(e => e.OrderId);
+        }
+    }
+}

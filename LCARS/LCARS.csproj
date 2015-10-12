@@ -119,10 +119,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BuildsController.cs" />
+    <Compile Include="Controllers\DeploymentsController.cs" />
     <Compile Include="Controllers\GitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RedAlertController.cs" />
     <Compile Include="Domain\Builds.cs" />
+    <Compile Include="Domain\IDeployments.cs" />
+    <Compile Include="Domain\Deployments.cs" />
     <Compile Include="Domain\Environments.cs" />
     <Compile Include="Domain\IBuilds.cs" />
     <Compile Include="ExtensionMethods.cs" />
@@ -130,17 +133,25 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BuildProgress.cs" />
+    <Compile Include="Models\Deployments\Deployments.cs" />
+    <Compile Include="Models\Deployments\ProjectGroup.cs" />
+    <Compile Include="Models\Deployments\Environment.cs" />
+    <Compile Include="Models\Deployments\Project.cs" />
+    <Compile Include="Models\Deployments\Deployment.cs" />
     <Compile Include="Models\RedAlert.cs" />
     <Compile Include="Models\Boards.cs" />
     <Compile Include="Models\BuildSet.cs" />
     <Compile Include="Models\BuildStatus.cs" />
     <Compile Include="Models\Environment.cs" />
     <Compile Include="Models\Build.cs" />
+    <Compile Include="ViewModels\Settings.cs" />
     <Compile Include="Models\Tenant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Common.cs" />
     <Compile Include="Domain\ICommon.cs" />
     <Compile Include="Domain\IEnvironments.cs" />
+    <Compile Include="Repository\IDeployments.cs" />
+    <Compile Include="Repository\Deployments.cs" />
     <Compile Include="Repository\IEnvironments.cs" />
     <Compile Include="Repository\IBuilds.cs" />
     <Compile Include="Repository\ICommon.cs" />
@@ -149,11 +160,17 @@
     <Compile Include="Repository\Common.cs" />
     <Compile Include="Models\Dependency.cs" />
     <Compile Include="ViewModels\BuildStatus.cs" />
+    <Compile Include="ViewModels\Deployments\DeploymentStatus.cs" />
+    <Compile Include="ViewModels\Deployments\Environment.cs" />
+    <Compile Include="ViewModels\Deployments\Project.cs" />
+    <Compile Include="ViewModels\Deployments\Deployment.cs" />
+    <Compile Include="ViewModels\Deployments\ProjectGroup.cs" />
     <Compile Include="ViewModels\Status.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\BuildSets\PAM.xml" />
-    <Content Include="App_Data\Creds.xml" />
+    <Content Include="App_Data\Settings.xml" />
+    <Content Include="App_Data\Deployments.xml" />
     <Content Include="App_Data\RedAlert.xml" />
     <Content Include="App_Data\BuildSets\Web.xml" />
     <Content Include="App_Data\BuildSets\CMS.xml" />
@@ -195,6 +212,7 @@
     <Content Include="img\yellowButton.png" />
     <Content Include="Scripts\buildProgress.js" />
     <Content Include="Scripts\git.js" />
+    <Content Include="Scripts\master.js" />
     <Content Include="Scripts\redAlert.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -211,6 +229,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\deployments.js" />
     <Content Include="Scripts\statusBoard.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -229,6 +248,7 @@
     <Content Include="Views\Git\Index.cshtml" />
     <Content Include="Views\Builds\Index.cshtml" />
     <Content Include="Views\RedAlert\Index.cshtml" />
+    <Content Include="Views\Deployments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

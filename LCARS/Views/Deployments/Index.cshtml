@@ -1,0 +1,42 @@
+﻿@model LCARS.ViewModels.Deployments.DeploymentStatus
+
+@section refresh
+{
+    @if (Model.IsRedAlertEnabled)
+    {
+        <meta http-equiv="refresh" content="0; /RedAlert">
+    }
+    else
+    {
+        <meta http-equiv="refresh" content="30" />
+    }
+}
+
+<div class="deployments">
+    <div class="row">
+        <div style="width: 150px; float: left;">&nbsp;</div>
+        @foreach (var environment in Model.Environments)
+        {
+            <div style="float: left; width: @(650/Model.Environments.Count)px" class="title">@environment.Name</div>
+        }
+    </div>
+    <div style="clear: both"></div>
+    @foreach (var project in Model.Projects.OrderByDescending(p => p.Group))
+    {
+        <div class="row project">
+            <div class="projectName" style="float: left; width: 150px">
+                @project.Name
+            </div>
+            @foreach(var environment in Model.Environments)
+            {
+                <div data-project-id="@project.Id" data-environment-id="@environment.Id" class="deployment loading" style="float: left; width: @(650 / Model.Environments.Count)px">Loading...</div>
+            }
+        </div>
+    }
+</div>
+
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/deployments.js"></script>
+    <script type="text/javascript">getDeployments()</script>
+}

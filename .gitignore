@@ -188,6 +188,5 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 
-AutoDeploy.xml
 Status.xml
-Creds.xml
+Settings.xml

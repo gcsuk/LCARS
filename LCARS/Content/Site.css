@@ -219,7 +219,7 @@ table.digits tr.white {
 	color: #cc6699
 }
 
-/* DESTRUCT */
+/* RED ALERT */
 
 .destruct {
 	width: 800px;
@@ -334,4 +334,51 @@ table.digits tr.white {
     font-size: 48pt;
     text-align: center;
     color: #ff0000
+}
+
+/* DEPLOYMENTS */
+
+.deployments {
+    margin-top: 10px;
+    color: #fff
+}
+
+.deployments .title {
+    text-transform: uppercase;
+    text-align: center;
+    margin: 5px;
+    font-size: 18px
+}
+
+.deployments .projectName {
+    padding-top: 6px;
+}
+
+.deployment {
+    color: #000;
+    margin: 5px;
+    padding: 2px 0;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 25px;
+}
+
+.deployment.loading {
+    background-color: #694669
+}
+
+.deployment.success {
+    background-color: #215321
+}
+
+.deployment.failed {
+    background-color: #CC6666
+}
+
+.deployment.executing {
+    background-color: #d7a024
+}
+
+.deployment.none {
+    background-color: #000
 }

@@ -23,7 +23,7 @@ function getTimeRemaining(isEnabled, targetTime) {
 	                window.location = "/" + returnUrl;
 	            }
 	        },
-	        error: function (xhr, thrownError) {
+	        error: function () {
 	            location.reload();
 	        }
 	    });
