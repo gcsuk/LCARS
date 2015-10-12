@@ -6,7 +6,7 @@ The project is designed primarily for a software development team, but could eas
 
 You need 3 XML files in App_Data in order to get the project running. If you implement different content screens, you will not need them for the template.
 
-Creds and Status aren't included on GitHub as they contain personal data, but they are required files
+Settings, Deployments and Status aren't included on GitHub as they contain personal data, but they are required files
 
 The structure is as follows:
 
@@ -30,18 +30,12 @@ Status.xml
   &lt;/Tenant&gt;
 &lt;/Tenants&gt;
 
+Settings.xml (for Team City and Octopus Deploy integration)
 
-RedAlert.xml
-
-&lt;RedAlert&gt;
-  &lt;IsEnabled&gt;0&lt;/IsEnabled&gt;
-  &lt;TargetDate&gt;June 1, 2050 00:00:00&lt;/TargetDate&gt;
-  &lt;AlertType&gt;Red&lt;/AlertType&gt;
-&lt;/RedAlert&gt;
-
-Creds.xml (for Team City integration)
-
-&lt;Credentials&gt;
-  &lt;Username&gt;Username&lt;/Username&gt;
-  &lt;Password&gt;Password&lt;/Password&gt;
-&lt;/Credentials&gt;
+&lt;Settings&gt;
+  &lt;BuildServerCredentials&gt;
+    &lt;Username&gt;Username&lt;/Username&gt;
+    &lt;Password&gt;Password&lt;/Password&gt;
+  &lt;/BuildServerCredentials&gt;
+  &lt;DeploymentServerPath&gt;http://od.ad.bedegaming.com/api/dashboard&lt;/DeploymentServerPath&gt;
+&lt;/Settings&gt;
