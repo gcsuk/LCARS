@@ -7,5 +7,7 @@
         public string BuildServerPassword { get; set; }
 
         public string DeploymentServerPath { get; set; }
+
+        public string DeploymentServerKey { get; set; }
     }
 }

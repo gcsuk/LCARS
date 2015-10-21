@@ -10,15 +10,17 @@ namespace LCARS.Repository
     public class Deployments : IDeployments
     {
         private readonly string _deploymentServer;
+        private readonly string _apiKey;
 
-        public Deployments(string deploymentServer)
+        public Deployments(string deploymentServer, string apiKey)
         {
             _deploymentServer = deploymentServer;
+            _apiKey = apiKey;
         }
 
         public Models.Deployments.Deployments Get()
         {
-            var jsonData = DownloadJson(_deploymentServer);
+            var jsonData = DownloadJson(_deploymentServer, _apiKey);
 
             return JsonConvert.DeserializeObject<Models.Deployments.Deployments>(jsonData);
         }
@@ -35,11 +37,11 @@ namespace LCARS.Repository
             }).ToList();
         }
 
-        private static string DownloadJson(string url)
+        private static string DownloadJson(string url, string apiKey)
         {
             using (WebClient webClient = new WebClient())
             {
-                webClient.Headers.Set("X-Octopus-ApiKey", "API-3KKXFTSGULC9UXF7UFVPOQPL0C");
+                webClient.Headers.Set("X-Octopus-ApiKey", apiKey);
 
                 return webClient.DownloadString(url);
             }

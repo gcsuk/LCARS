@@ -39,7 +39,8 @@ namespace LCARS
                 .WithParameter("password", settings.BuildServerPassword);
             builder.RegisterType<Repository.Deployments>()
                 .As<Repository.IDeployments>()
-                .WithParameter("deploymentServer", settings.DeploymentServerPath);
+                .WithParameter("deploymentServer", settings.DeploymentServerPath)
+                .WithParameter("apiKey", settings.DeploymentServerKey);
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
@@ -62,7 +63,8 @@ namespace LCARS
             {
                 BuildServerUsername = doc.Root.Element("BuildServerCredentials").Element("Username").Value,
                 BuildServerPassword = doc.Root.Element("BuildServerCredentials").Element("Password").Value,
-                DeploymentServerPath = doc.Root.Element("DeploymentServerPath").Value
+                DeploymentServerPath = doc.Root.Element("DeploymentServerPath").Value,
+                DeploymentServerKey = doc.Root.Element("DeploymentServerKey").Value
             };
         }
     }
