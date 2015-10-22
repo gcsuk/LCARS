@@ -122,12 +122,15 @@
     <Compile Include="Controllers\DeploymentsController.cs" />
     <Compile Include="Controllers\GitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IssuesController.cs" />
     <Compile Include="Controllers\RedAlertController.cs" />
     <Compile Include="Domain\Builds.cs" />
     <Compile Include="Domain\IDeployments.cs" />
     <Compile Include="Domain\Deployments.cs" />
     <Compile Include="Domain\Environments.cs" />
     <Compile Include="Domain\IBuilds.cs" />
+    <Compile Include="Domain\IIssues.cs" />
+    <Compile Include="Domain\Issues.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -138,12 +141,23 @@
     <Compile Include="Models\Deployments\Environment.cs" />
     <Compile Include="Models\Deployments\Project.cs" />
     <Compile Include="Models\Deployments\Deployment.cs" />
+    <Compile Include="Models\Issues\Parent.cs" />
+    <Compile Include="Models\Issues\Issue.cs" />
+    <Compile Include="Models\Issues\Status.cs" />
+    <Compile Include="Models\Issues\Priority.cs" />
+    <Compile Include="Models\Issues\Person.cs" />
+    <Compile Include="Models\Issues\Field.cs" />
     <Compile Include="Models\RedAlert.cs" />
     <Compile Include="Models\Boards.cs" />
     <Compile Include="Models\BuildSet.cs" />
     <Compile Include="Models\BuildStatus.cs" />
     <Compile Include="Models\Environment.cs" />
     <Compile Include="Models\Build.cs" />
+    <Compile Include="Repository\IIssues.cs" />
+    <Compile Include="Repository\Issues.cs" />
+    <Compile Include="ViewModels\Issues\Issue.cs" />
+    <Compile Include="ViewModels\Issues\Issues.cs" />
+    <Compile Include="ViewModels\RedAlert.cs" />
     <Compile Include="ViewModels\Settings.cs" />
     <Compile Include="Models\Tenant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -249,6 +263,7 @@
     <Content Include="Views\Builds\Index.cshtml" />
     <Content Include="Views\RedAlert\Index.cshtml" />
     <Content Include="Views\Deployments\Index.cshtml" />
+    <Content Include="Views\Issues\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

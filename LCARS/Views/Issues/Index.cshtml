@@ -1,0 +1,24 @@
+﻿@model LCARS.ViewModels.Issues.Blockers
+@{
+    ViewBag.Title = "LCARS | Issues";
+
+    if (Model.IsRedAlertEnabled)
+    {
+        <meta http-equiv="refresh" content="0; /RedAlert?returnUrl=Issues">
+    }
+    else
+    {
+        <meta http-equiv="refresh" content="30">
+    }
+}
+
+<table class="issues">
+    @foreach (var issue in Model.IssueList)
+    {
+        <tr>
+            <td class="priority"><img src="@issue.PriorityIcon" alt="@issue.Priority" /></td>
+            <td class="issueId">@issue.Id</td>
+            <td>@issue.Summary</td>
+        </tr>
+    }
+</table>

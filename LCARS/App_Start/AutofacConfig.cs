@@ -30,6 +30,7 @@ namespace LCARS
             builder.RegisterType<Domain.Environments>().As<Domain.IEnvironments>();
             builder.RegisterType<Domain.Builds>().As<Domain.IBuilds>();
             builder.RegisterType<Domain.Deployments>().As<Domain.IDeployments>();
+            builder.RegisterType<Domain.Issues>().As<Domain.IIssues>();
 
             builder.RegisterType<Repository.Environments>().As<Repository.IEnvironments>();
             builder.RegisterType<Repository.Common>().As<Repository.ICommon>();
@@ -41,6 +42,11 @@ namespace LCARS
                 .As<Repository.IDeployments>()
                 .WithParameter("deploymentServer", settings.DeploymentServerPath)
                 .WithParameter("apiKey", settings.DeploymentServerKey);
+            builder.RegisterType<Repository.Issues>()
+                .As<Repository.IIssues>()
+                .WithParameter("url", settings.IssuesUrl)
+                .WithParameter("username", settings.IssuesUsername)
+                .WithParameter("password", settings.IssuesPassword);
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
@@ -64,7 +70,10 @@ namespace LCARS
                 BuildServerUsername = doc.Root.Element("BuildServerCredentials").Element("Username").Value,
                 BuildServerPassword = doc.Root.Element("BuildServerCredentials").Element("Password").Value,
                 DeploymentServerPath = doc.Root.Element("DeploymentServerPath").Value,
-                DeploymentServerKey = doc.Root.Element("DeploymentServerKey").Value
+                DeploymentServerKey = doc.Root.Element("DeploymentServerKey").Value,
+                IssuesUrl = doc.Root.Element("IssuesUrl").Value,
+                IssuesUsername = doc.Root.Element("IssuesUsername").Value,
+                IssuesPassword = doc.Root.Element("IssuesPassword").Value
             };
         }
     }

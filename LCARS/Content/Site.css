@@ -296,7 +296,7 @@ table.digits tr.white {
     background-color: #fff;
     color: #000;
     padding-top: 4px;
-
+    border-radius: 25px;
 }
 
     .buildStatusProgress div {
@@ -306,11 +306,18 @@ table.digits tr.white {
     }
 
     .buildStatusProgress.unreachable {
+        color: #fff;
         background-color: #694669
     }
 
     .buildStatusProgress.success {
+        color: #fff;
         background-color: #215321
+    }
+
+    .buildStatusProgress.failure {
+        color: #fff;
+        background-color: #CC6699
     }
 
     .buildStatusProgress.buildingA {
@@ -319,14 +326,6 @@ table.digits tr.white {
 
     .buildStatusProgress.buildingB {
         background-color: #FF9900
-    }
-
-    .buildStatusProgress.success {
-        background-color: #9999FF
-    }
-
-    .buildStatusProgress.failure {
-        background-color: #CC6699
     }
 
 .git h1 {
@@ -389,4 +388,28 @@ table.digits tr.white {
 
 .deployment.none {
     background-color: #000
+}
+
+/* ISSUES */
+
+.issues {
+    margin-top: 10px;
+    color: #fff
+}
+
+.issues td {
+    vertical-align: top;
+    padding-bottom: 10px
+}
+
+.issues td.priority {
+    width: 25px
+}
+
+.issues td.priority img {
+    width: 20px
+}
+
+.issues td.issueId {
+    width: 125px
 }

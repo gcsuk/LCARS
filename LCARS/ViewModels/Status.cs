@@ -3,10 +3,8 @@ using LCARS.Models;
 
 namespace LCARS.ViewModels
 {
-    public class Status
+    public class Status : RedAlert
     {
         public IEnumerable<Tenant> Tenants { get; set; }
-
-        public bool IsRedAlertEnabled { get; set; }
     }
 }

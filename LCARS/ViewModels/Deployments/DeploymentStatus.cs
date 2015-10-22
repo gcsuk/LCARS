@@ -2,11 +2,9 @@
 
 namespace LCARS.ViewModels.Deployments
 {
-    public class DeploymentStatus
+    public class DeploymentStatus : RedAlert
     {
         public IEnumerable<Deployment> Deployments { get; set; }
-
-        public bool IsRedAlertEnabled { get; set; }
 
         public IList<Project> Projects { get; set; }
 

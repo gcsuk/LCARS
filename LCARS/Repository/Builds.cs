@@ -41,7 +41,13 @@ namespace LCARS.Repository
                 return builds;
             }
 
-            foreach (var build in doc.Root.Elements("build"))
+            foreach (
+                var build in
+                    doc.Root.Elements("build")
+                        .Where(
+                            build =>
+                                !builds.ContainsKey(
+                                    Convert.ToInt32(build.Attribute("buildTypeId").Value.Replace("bt", "")))))
             {
                 builds.Add(Convert.ToInt32(build.Attribute("buildTypeId").Value.Replace("bt", "")),
                     Convert.ToInt32(build.Attribute("id").Value));
