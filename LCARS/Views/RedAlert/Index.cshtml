@@ -26,4 +26,7 @@
 {
     <script type="text/javascript" src="~/Scripts/RedAlert.js"></script>
     <script type="text/javascript">getTimeRemaining(@Model.IsEnabled.ToString().ToLower(), new Date("@(Model.TargetDate)"));</script>
+    <script type="text/javascript">
+        $("#mainBody").removeClass("clearFont");
+    </script>
 }

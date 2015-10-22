@@ -4,8 +4,20 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	@RenderSection("refresh", false)
-	<title>System Status</title>
+    <title>
+        @{
+            if (ViewBag.Title == null)
+            {
+                <text>System Status</text>
+            }
+            else
+            {
+                @ViewBag.Title
+            }
+        }
+    </title>
 	@Styles.Render("~/Content/css")
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
 	@Scripts.Render("~/bundles/modernizr")
 	@RenderSection("header", false)
 </head>
@@ -99,7 +111,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-10">
+			<div id="mainBody" class="col-lg-10 clearFont">
 				@RenderBody()
 			</div>
 		</div>

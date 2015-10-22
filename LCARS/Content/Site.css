@@ -219,6 +219,11 @@ table.digits tr.white {
 	color: #cc6699
 }
 
+.clearFont {
+    font-family: "open sans";
+    font-size: 20px;
+}
+
 /* RED ALERT */
 
 .destruct {
@@ -276,7 +281,7 @@ table.digits tr.white {
 
 .buildStatusRow {
     margin: 30px 0 20px 0;
-    font-size: 20pt;
+    font-size: 14pt;
 }
 
 .buildStatusRow img {
@@ -289,7 +294,9 @@ table.digits tr.white {
     margin-bottom: 10px;
     text-align: center;
     background-color: #fff;
-    color: #000
+    color: #000;
+    padding-top: 4px;
+
 }
 
     .buildStatusProgress div {
@@ -368,6 +375,7 @@ table.digits tr.white {
 }
 
 .deployment.success {
+    color: #fff;
     background-color: #215321
 }
 
