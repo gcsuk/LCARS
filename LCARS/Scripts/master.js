@@ -10,3 +10,20 @@
 };
 
 setDigitColor();
+
+function gitStatus(data) {
+
+    if (data.status === "good") {
+        window.location = "/";
+    } else {
+        var $gitStatus = $("#gitStatus");
+
+        if ($gitStatus.length > 0) {
+            $("#gitStatus").html("GitHub Status: <span class=\"status\">" + data.status + "</span>");
+            $("#gitStatusMessage").text(data.body);
+            $("#gitStatusDate").text(moment(data.created_on).format("DD MMMM YYYY hh:mm"));
+        } else {
+            window.location = "/Git";
+        }
+    }
+}

@@ -123,6 +123,7 @@
 	@Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/moment")
     <script type="text/javascript" src="~/Scripts/master.js"></script>
+    <script src="https://status.github.com/api/last-message.json?callback=gitStatus"></script>
 	@RenderSection("scripts", false)
 </body>
 </html>

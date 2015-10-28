@@ -332,13 +332,17 @@ table.digits tr.white {
     padding-top: 10px;
     font-size: 72pt;
     text-align: center;
-    color: #ff0000
+    color: #fff
 }
 
 .git h2 {
     padding-top: 10px;
     font-size: 48pt;
     text-align: center;
+    color: #fff
+}
+
+.git h1 span.status {
     color: #ff0000
 }
 

@@ -226,7 +226,6 @@
     <Content Include="img\topRight.png" />
     <Content Include="img\yellowButton.png" />
     <Content Include="Scripts\buildProgress.js" />
-    <Content Include="Scripts\git.js" />
     <Content Include="Scripts\master.js" />
     <Content Include="Scripts\redAlert.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -245,7 +244,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\deployments.js" />
-    <Content Include="Scripts\statusBoard.js" />
+    <Content Include="Scripts\environments.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
