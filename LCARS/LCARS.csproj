@@ -121,6 +121,7 @@
     <Compile Include="Controllers\BuildsController.cs" />
     <Compile Include="Controllers\DeploymentsController.cs" />
     <Compile Include="Controllers\GitController.cs" />
+    <Compile Include="Controllers\EnvironmentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IssuesController.cs" />
     <Compile Include="Controllers\RedAlertController.cs" />
@@ -257,13 +258,13 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\RedAlert\Update.cshtml" />
     <Content Include="Views\Git\Index.cshtml" />
     <Content Include="Views\Builds\Index.cshtml" />
     <Content Include="Views\RedAlert\Index.cshtml" />
     <Content Include="Views\Deployments\Index.cshtml" />
     <Content Include="Views\Issues\Index.cshtml" />
+    <Content Include="Views\Environments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -4,7 +4,7 @@ namespace LCARS.Models
 {
     public enum Boards
     {
-        [Description("Home")] Environment = 1,
+        [Description("Environments")] Environment = 1,
         [Description("Builds")] Build = 2,
         Git = 3,
         Issues = 4,
