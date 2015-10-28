@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using LCARS.Domain;
+using LCARS.Models;
 using LCARS.ViewModels.Deployments;
+using Environment = LCARS.ViewModels.Deployments.Environment;
 
 namespace LCARS.Controllers
 {
@@ -9,16 +11,25 @@ namespace LCARS.Controllers
     {
         private readonly ICommon _commonDomain;
         private readonly IDeployments _deploymentsDomain;
+        private readonly Boards _thisBoard;
 
         public DeploymentsController(ICommon commonDomain, IDeployments deploymentsDomain)
         {
             _commonDomain = commonDomain;
             _deploymentsDomain = deploymentsDomain;
+            _thisBoard = Boards.Deployments;
         }
 
         // GET: Deployments
         public ActionResult Index()
         {
+            Boards randomBoard = _commonDomain.SelectBoard();
+
+            if (_thisBoard != randomBoard)
+            {
+                return RedirectToAction("Index", randomBoard.GetDescription());
+            }
+
             var deployments = _deploymentsDomain.Get().OrderBy(g => g.ProjectGroup).ThenBy(p => p.Project).ToList();
 
             var isRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.xml")).IsEnabled;

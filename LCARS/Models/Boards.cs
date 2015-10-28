@@ -7,6 +7,7 @@ namespace LCARS.Models
         [Description("Home")] Environment = 1,
         [Description("Builds")] Build = 2,
         Git = 3,
-        Issues = 4
+        Issues = 4,
+        Deployments = 5
     }
 }
