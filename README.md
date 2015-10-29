@@ -25,10 +25,11 @@ Environments.xml
   		<Tenant ID="1" Name="Tenant 1">
 			<Environments>
 				<Environment Name="Env 1" Status="OK" />
-				<Environment Name="Env 2" Status="OK" />
-				<Environment Name="Env 3" Status="v2" />
-				<Environment Name="Env 4" Status="v2" />
-				<Environment Name="Env 5" Status="v2" />
+				<Environment Name="Env 2" Status="DOWN" />
+				<Environment Name="Env 3" Status="OK" />
+				<Environment Name="Env 4" Status="OK" />
+				<Environment Name="Env 5" Status="ISSUES" />
+				...
 			</Environments>
 		</Tenant>
 		...
