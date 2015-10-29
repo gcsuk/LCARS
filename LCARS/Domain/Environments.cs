@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using LCARS.Models;
+using LCARS.ViewModels.Environments;
 
 namespace LCARS.Domain
 {
@@ -15,26 +15,27 @@ namespace LCARS.Domain
 
         public IEnumerable<Tenant> Get(string path)
         {
-            return _repository.Get(path).ToList();
+            return _repository.Get(path).Select(t => new Tenant
+            {
+                Id = t.Id,
+                Name = t.Name,
+                Environments = t.Environments.Select(e => new Environment
+                {
+                    Name = e.Name,
+                    Status = e.Status
+                })
+            });
         }
 
-        public void Update(string path, string tenant, string dependency, string environment, string currentStatus)
+        public void Update(string path, string tenant, string environment, string currentStatus)
         {
-            _repository.Update(path, tenant, dependency, environment, SetNewStatus(currentStatus));
+            _repository.Update(path, tenant, environment, SetNewStatus(currentStatus));
         }
 
         private static string SetNewStatus(string currentStatus)
         {
             switch (currentStatus)
             {
-                case "v1":
-                    return "v2";
-                case "v2":
-                    return "v3";
-                case "v3":
-                    return "v4";
-                case "v4":
-                    return "v1";
                 case "OK":
                     return "ISSUES";
                 case "ISSUES":

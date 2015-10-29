@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using LCARS.Models;
 
-namespace LCARS.ViewModels
+namespace LCARS.ViewModels.Environments
 {
-    public class Status : RedAlert
+    public class Environments : RedAlertStatus
     {
         public IEnumerable<Tenant> Tenants { get; set; }
     }

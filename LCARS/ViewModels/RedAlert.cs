@@ -1,7 +1,11 @@
 ﻿namespace LCARS.ViewModels
 {
-    public abstract class RedAlert
+    public class RedAlert
     {
-        public bool IsRedAlertEnabled { get; set; }
+        public bool IsEnabled { get; set; }
+
+        public string TargetDate { get; set; }
+
+        public string AlertType { get; set; }
     }
 }

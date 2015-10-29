@@ -192,6 +192,11 @@ table.digits tr.white {
 	height: 50px
 }
 
+.clearFont {
+    font-family: "open sans";
+    font-size: 20px;
+}
+
 .stats {
 	margin-top: 5px;
 	margin-left: 50px;
@@ -199,12 +204,29 @@ table.digits tr.white {
 	font-size: 20px
 }
 
-.tenant {
-	border-top: solid 1px #ffffff
+/* ENVIRONMENTS */
+
+.environments {
+	margin-top: 5px;
+	color: #ffffff;
+    font-size: 36px;
+    max-width: 850px
 }
 
-.status {
-	text-align: center
+.environment {
+    border-bottom: solid 1px #fff
+}
+
+.environment-name {
+    display: inline-block;
+    width: 250px;
+    text-align: left
+}
+
+.environment-status {
+    display: inline-block;
+    width: 140px;
+    text-align: center
 }
 
 .statusBlue {
@@ -217,11 +239,6 @@ table.digits tr.white {
 
 .statusRed {
 	color: #cc6699
-}
-
-.clearFont {
-    font-family: "open sans";
-    font-size: 20px;
 }
 
 /* RED ALERT */

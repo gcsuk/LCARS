@@ -1,5 +1,5 @@
 ﻿using System;
-using LCARS.Models;
+using LCARS.ViewModels;
 
 namespace LCARS.Domain
 {

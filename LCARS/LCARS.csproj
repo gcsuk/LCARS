@@ -148,19 +148,21 @@
     <Compile Include="Models\Issues\Priority.cs" />
     <Compile Include="Models\Issues\Person.cs" />
     <Compile Include="Models\Issues\Field.cs" />
-    <Compile Include="Models\RedAlert.cs" />
-    <Compile Include="Models\Boards.cs" />
+    <Compile Include="ViewModels\RedAlert.cs" />
+    <Compile Include="ViewModels\Boards.cs" />
     <Compile Include="Models\BuildSet.cs" />
     <Compile Include="Models\BuildStatus.cs" />
-    <Compile Include="Models\Environment.cs" />
+    <Compile Include="Models\Environments\Environment.cs" />
     <Compile Include="Models\Build.cs" />
     <Compile Include="Repository\IIssues.cs" />
     <Compile Include="Repository\Issues.cs" />
+    <Compile Include="ViewModels\Environments\Environment.cs" />
+    <Compile Include="ViewModels\Environments\Tenant.cs" />
     <Compile Include="ViewModels\Issues\Issue.cs" />
     <Compile Include="ViewModels\Issues\Issues.cs" />
-    <Compile Include="ViewModels\RedAlert.cs" />
+    <Compile Include="ViewModels\RedAlertStatus.cs" />
     <Compile Include="ViewModels\Settings.cs" />
-    <Compile Include="Models\Tenant.cs" />
+    <Compile Include="Models\Environments\Tenant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Common.cs" />
     <Compile Include="Domain\ICommon.cs" />
@@ -173,14 +175,13 @@
     <Compile Include="Repository\Environments.cs" />
     <Compile Include="Repository\Builds.cs" />
     <Compile Include="Repository\Common.cs" />
-    <Compile Include="Models\Dependency.cs" />
     <Compile Include="ViewModels\BuildStatus.cs" />
     <Compile Include="ViewModels\Deployments\DeploymentStatus.cs" />
     <Compile Include="ViewModels\Deployments\Environment.cs" />
     <Compile Include="ViewModels\Deployments\Project.cs" />
     <Compile Include="ViewModels\Deployments\Deployment.cs" />
     <Compile Include="ViewModels\Deployments\ProjectGroup.cs" />
-    <Compile Include="ViewModels\Status.cs" />
+    <Compile Include="ViewModels\Environments\Environments.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\BuildSets\PAM.xml" />
@@ -189,7 +190,7 @@
     <Content Include="App_Data\RedAlert.xml" />
     <Content Include="App_Data\BuildSets\Web.xml" />
     <Content Include="App_Data\BuildSets\CMS.xml" />
-    <Content Include="App_Data\Status.xml">
+    <Content Include="App_Data\Environments.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\bootstrap-theme.css" />

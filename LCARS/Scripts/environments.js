@@ -1,9 +1,9 @@
-﻿function updateStatus(tenant, dependency, environment, currentStatus) {
+﻿function updateStatus(tenant, environment, currentStatus) {
 	$.ajax({
 		type: "POST",
 		contentType: "application/json",
-		data: "{ 'tenant':'" + tenant + "','dependency':'" + dependency + "','environment':'" + environment + "','currentStatus':'" + currentStatus + "' }",
-		url: "/Home/UpdateStatus",
+		data: "{ 'tenant':'" + tenant + "','environment':'" + environment + "','currentStatus':'" + currentStatus + "' }",
+		url: "/Environments/UpdateStatus",
 		success: function () {
 			location.reload();
 		},

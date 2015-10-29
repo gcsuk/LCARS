@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using LCARS.Domain;
-using LCARS.Models;
 
 namespace LCARS.Controllers
 {
@@ -15,7 +14,7 @@ namespace LCARS.Controllers
 
         public ActionResult Index()
         {
-            Boards randomBoard = _commonDomain.SelectBoard();
+            var randomBoard = _commonDomain.SelectBoard();
 
             return RedirectToAction("Index", randomBoard.GetDescription());
         }

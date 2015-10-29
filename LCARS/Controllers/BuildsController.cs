@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using LCARS.Domain;
 using LCARS.Models;
@@ -10,13 +11,13 @@ namespace LCARS.Controllers
     {
         private readonly ICommon _commonDomain;
         private readonly IBuilds _buildsDomain;
-        private readonly Boards _thisBoard;
+        private readonly ViewModels.Boards _thisBoard;
 
         public BuildsController(ICommon commonDomain, IBuilds buildsDomain)
         {
             _commonDomain = commonDomain;
             _buildsDomain = buildsDomain;
-            _thisBoard = Boards.Build;
+            _thisBoard = ViewModels.Boards.Build;
         }
 
         // GET: Build
@@ -27,7 +28,7 @@ namespace LCARS.Controllers
             {
                 buildSet = (BuildSet)new Random(Guid.NewGuid().GetHashCode()).Next(1, Enum.GetNames(typeof(BuildSet)).Length);
 
-                Boards randomBoard = _commonDomain.SelectBoard();
+                var randomBoard = _commonDomain.SelectBoard();
 
                 if (_thisBoard != randomBoard)
                 {
@@ -60,12 +61,10 @@ namespace LCARS.Controllers
             }
             catch (System.Net.WebException)
             {
-                var builds = new List<Build>();
-
-                foreach (int buildTypeId in buildTypeIds)
+                var builds = buildTypeIds.Select(buildTypeId => new Build
                 {
-                    builds.Add(new Build { TypeId = buildTypeId });
-                }
+                    TypeId = buildTypeId
+                }).ToList();
 
                 return Json(builds, JsonRequestBehavior.AllowGet);
             }

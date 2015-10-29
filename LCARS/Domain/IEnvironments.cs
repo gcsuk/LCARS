@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using LCARS.Models;
+using LCARS.ViewModels.Environments;
 
 namespace LCARS.Domain
 {
@@ -7,6 +7,6 @@ namespace LCARS.Domain
     {
         IEnumerable<Tenant> Get(string path);
 
-        void Update(string path, string tenant, string dependency, string environment, string status);
+        void Update(string path, string tenant, string environment, string status);
     }
 }

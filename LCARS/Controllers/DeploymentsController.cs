@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using LCARS.Domain;
-using LCARS.Models;
 using LCARS.ViewModels.Deployments;
-using Environment = LCARS.ViewModels.Deployments.Environment;
 
 namespace LCARS.Controllers
 {
@@ -11,19 +9,19 @@ namespace LCARS.Controllers
     {
         private readonly ICommon _commonDomain;
         private readonly IDeployments _deploymentsDomain;
-        private readonly Boards _thisBoard;
+        private readonly ViewModels.Boards _thisBoard;
 
         public DeploymentsController(ICommon commonDomain, IDeployments deploymentsDomain)
         {
             _commonDomain = commonDomain;
             _deploymentsDomain = deploymentsDomain;
-            _thisBoard = Boards.Deployments;
+            _thisBoard = ViewModels.Boards.Deployments;
         }
 
         // GET: Deployments
         public ActionResult Index()
         {
-            Boards randomBoard = _commonDomain.SelectBoard();
+            var randomBoard = _commonDomain.SelectBoard();
 
             if (_thisBoard != randomBoard)
             {

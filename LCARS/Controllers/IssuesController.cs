@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using LCARS.Domain;
-using LCARS.Models;
 
 namespace LCARS.Controllers
 {
@@ -8,19 +7,19 @@ namespace LCARS.Controllers
     {
         private readonly IIssues _issuesDomain;
         private readonly ICommon _commonDomain;
-        private readonly Boards _thisBoard;
+        private readonly ViewModels.Boards _thisBoard;
 
         public IssuesController(IIssues issuesDomain, ICommon commonDomain)
         {
             _issuesDomain = issuesDomain;
             _commonDomain = commonDomain;
-            _thisBoard = Boards.Issues;
+            _thisBoard = ViewModels.Boards.Issues;
         }
 
         // GET: Issues
         public ActionResult Index()
         {
-            Boards randomBoard = _commonDomain.SelectBoard();
+            var randomBoard = _commonDomain.SelectBoard();
 
             if (_thisBoard != randomBoard)
             {

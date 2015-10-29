@@ -20,7 +20,7 @@ namespace LCARS.Controllers
 
         public ActionResult Update()
         {
-            Models.RedAlert vm = _domain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.xml"));
+            var vm = _domain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.xml"));
 
             return View(vm);
         }

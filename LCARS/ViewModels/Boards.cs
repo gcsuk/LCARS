@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace LCARS.Models
+namespace LCARS.ViewModels
 {
     public enum Boards
     {

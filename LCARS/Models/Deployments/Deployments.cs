@@ -5,6 +5,11 @@ namespace LCARS.Models.Deployments
 {
     public class Deployments
     {
+        public Deployments()
+        {
+            Deploys = new List<Deployment>();
+        }
+
         public List<ProjectGroup> ProjectGroups { get; set; }
 
         public List<Project> Projects { get; set; }

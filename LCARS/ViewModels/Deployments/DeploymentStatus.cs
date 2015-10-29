@@ -2,7 +2,7 @@
 
 namespace LCARS.ViewModels.Deployments
 {
-    public class DeploymentStatus : RedAlert
+    public class DeploymentStatus : RedAlertStatus
     {
         public IEnumerable<Deployment> Deployments { get; set; }
 

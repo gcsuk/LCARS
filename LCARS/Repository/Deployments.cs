@@ -2,8 +2,8 @@
 using System.Linq;
 using Newtonsoft.Json;
 using System.Net;
+using System.Net.Sockets;
 using System.Xml.Linq;
-using LCARS.Models.Deployments;
 
 namespace LCARS.Repository
 {
@@ -22,14 +22,16 @@ namespace LCARS.Repository
         {
             var jsonData = DownloadJson(_deploymentServer, _apiKey);
 
-            return JsonConvert.DeserializeObject<Models.Deployments.Deployments>(jsonData);
+            return !string.IsNullOrEmpty(jsonData)
+                ? JsonConvert.DeserializeObject<Models.Deployments.Deployments>(jsonData)
+                : new Models.Deployments.Deployments();
         }
 
-        public IEnumerable<Environment> GetEnvironmentPreferences(string fileName)
+        public IEnumerable<Models.Deployments.Environment> GetEnvironmentPreferences(string fileName)
         {
             var doc = XDocument.Load(fileName);
 
-            return doc.Root.Elements("Deployment").Select(env => new Environment
+            return doc.Root.Elements("Deployment").Select(env => new Models.Deployments.Environment
             {
                 Id = env.Attribute("Id").Value,
                 Name = env.Value,
@@ -39,11 +41,18 @@ namespace LCARS.Repository
 
         private static string DownloadJson(string url, string apiKey)
         {
-            using (WebClient webClient = new WebClient())
+            try
             {
-                webClient.Headers.Set("X-Octopus-ApiKey", apiKey);
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.Headers.Set("X-Octopus-ApiKey", apiKey);
 
-                return webClient.DownloadString(url);
+                    return webClient.DownloadString(url);
+                }
+            }
+            catch
+            {
+                return "";
             }
         }
     }

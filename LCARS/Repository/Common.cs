@@ -1,5 +1,5 @@
 ﻿using System.Xml.Linq;
-using LCARS.Models;
+using LCARS.ViewModels;
 
 namespace LCARS.Repository
 {
@@ -7,7 +7,7 @@ namespace LCARS.Repository
     {
         public RedAlert GetRedAlert(string fileName)
         {
-            XDocument doc = XDocument.Load(fileName);
+            var doc = XDocument.Load(fileName);
 
             if (doc.Root == null)
                 return null;
@@ -22,10 +22,12 @@ namespace LCARS.Repository
 
         public void UpdateRedAlert(string fileName, bool isEnabled, string targetDate, string alertType)
         {
-            XDocument doc = XDocument.Load(fileName);
+            var doc = XDocument.Load(fileName);
 
             if (doc.Root == null)
+            {
                 return;
+            }
 
             doc.Root.Element("IsEnabled").Value = (isEnabled ? "1" : "0");
             doc.Root.Element("TargetDate").Value = targetDate;

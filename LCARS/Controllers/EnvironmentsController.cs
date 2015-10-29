@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using LCARS.Domain;
-using LCARS.Models;
 using LCARS.ViewModels;
 
 namespace LCARS.Controllers
@@ -27,19 +26,19 @@ namespace LCARS.Controllers
                 return RedirectToAction("Index", randomBoard.GetDescription());
             }
 
-            Status vm = new Status
-		    {
+            var vm = new ViewModels.Environments.Environments
+            {
                 Tenants = _environmentsDomain.Get(Server.MapPath(@"~/App_Data/Environments.xml")),
-		        IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.xml")).IsEnabled
-		    };
+                IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.xml")).IsEnabled
+            };
 
-			return View(vm);
-		}
+            return View(vm);
+        }
 
         [HttpPost]
-        public void UpdateStatus(string tenant, string dependency, string environment, string currentStatus)
+        public void UpdateStatus(string tenant, string environment, string currentStatus)
         {
-            _environmentsDomain.Update(Server.MapPath(@"~/App_Data/Environments.xml"), tenant, dependency, environment, currentStatus);
+            _environmentsDomain.Update(Server.MapPath(@"~/App_Data/Environments.xml"), tenant, environment, currentStatus);
         }
 	}
 }

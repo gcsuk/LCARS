@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using LCARS.Models;
+using LCARS.Models.Environments;
 
 namespace LCARS.Repository
 {
@@ -7,6 +7,6 @@ namespace LCARS.Repository
 	{
 		IEnumerable<Tenant> Get(string fileName);
 
-		void Update(string fileName, string tenant, string dependency, string environment, string status);
+		void Update(string fileName, string tenant, string environment, string status);
 	}
 }
