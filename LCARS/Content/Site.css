@@ -101,7 +101,8 @@ a {
 
 .blueCornerTop {
 	background: url(../img/blueCornerTop.png) no-repeat;
-	height: 101px;
+    background-position-y: bottom;
+	height: 76px;
 	width: 152px
 }
 
@@ -127,13 +128,13 @@ a {
 
 .topRight {
 	/*background: url(../img/topRight.png) no-repeat right;*/
-	height: 200px;
+	height: 175px;
 	/*padding-top: 75px*/
 }
 
 .header {
 	color: #ff9900;
-	font-size: 65px;
+	font-size: 44pt;
 	font-family: lcarsslim;
 	text-align: right;
 	line-height: 1;
@@ -163,21 +164,24 @@ table.digits tr.white {
 }
 
 .topRightButton {
-	height: 54px;
+	height: 40px;
 	width: 156px;
 	margin: 5px
 }
 
 .topRightButton.blueButton {
-	background-image: url("/img/blueButton.png")
+    background-color: #9999FF;
+    border-radius: 25px
 }
 
 .topRightButton.yellowButton {
-	background-image: url("/img/yellowButton.png")
+    background-color: #FF9900;
+    border-radius: 25px
 }
 
 .topRightButton.redButton {
-	background-image: url("/img/redButton.png")
+    background-color: #CC6666;
+    border-radius: 25px
 }
 
 .heightTall {

@@ -1,5 +1,5 @@
 ﻿function setDigitColor() {
-    var rowOne = Math.floor(Math.random() * 6) + 1;
+    var rowOne = Math.floor(Math.random() * 5) + 1;
     var rowTwo = rowOne + 1;
 
     $(".digits tr").removeClass("white");
