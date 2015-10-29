@@ -6,28 +6,33 @@ The project is designed primarily for a software development team, but could eas
 
 You need 2 XML files in App_Data that aren't in the repo in order to get the project running. If you implement different content screens, you will not need them for the template.
 
-Settings and Status aren't included in the repo because they contain personal data, but they are required files for certain boards.
+Settings and Environments aren't included in the repo because they contain personal data, but they are required files for certain boards.
 
 The structure is as follows:
 
-Status.xml
+Environments.xml
+
+<Tenant ID="1" Name="Grosvenor">
+    <Environments>
+      <Environment Name="IN01" Status="ISSUES" />
+      <Environment Name="DEV01" Status="OK" />
+      <Environment Name="QA01" Status="OK" />
+      <Environment Name="QA02" Status="DOWN" />
+    </Environments>
+  </Tenant>
 
 	<Tenants>
   		<Tenant ID="1" Name="Tenant 1">
-    			<Dependencies>
-				<Dependency Name="Dependency 1">
-					<Environments>
-						<Environment Name="Env 1" Status="OK" />
-						<Environment Name="Env 2" Status="OK" />
-						<Environment Name="Env 3" Status="v2" />
-						<Environment Name="Env 4" Status="v2" />
-						<Environment Name="Env 5" Status="v2" />
-					</Environments>
+			<Environments>
+				<Environment Name="Env 1" Status="OK" />
+				<Environment Name="Env 2" Status="DOWN" />
+				<Environment Name="Env 3" Status="OK" />
+				<Environment Name="Env 4" Status="OK" />
+				<Environment Name="Env 5" Status="ISSUES" />
 				...
-				</Dependency>
-			...
-			</Dependencies>
+			</Environments>
 		</Tenant>
+		...
 	</Tenants>
 
 Settings.xml (for Jira, Team City and Octopus Deploy integration)
