@@ -21,18 +21,13 @@ namespace LCARS.Repository
 
         public Parent Get()
         {
-            var jsonData = DownloadJson(_url, GetEncodedCredentials(_username, _password));
-
-            return JsonConvert.DeserializeObject<Parent>(jsonData);
-        }
-
-        private static string DownloadJson(string url, string credentials)
-        {
             using (WebClient webClient = new WebClient())
             {
-                webClient.Headers.Set("Authorization", "Basic " + credentials);
+                webClient.Headers.Set("Authorization", "Basic " + GetEncodedCredentials(_username, _password));
 
-                return webClient.DownloadString(url);
+                var jsonData = webClient.DownloadString(_url);
+
+                return JsonConvert.DeserializeObject<Parent>(jsonData);
             }
         }
 

@@ -6,11 +6,11 @@ namespace LCARS.Controllers
 {
 	public class EnvironmentsController : Controller
 	{
-        private readonly ICommon _commonDomain;
+        private readonly IRedAlert _commonDomain;
 		private readonly IEnvironments _environmentsDomain;
         private readonly Boards _thisBoard;
 
-        public EnvironmentsController(ICommon commonDomain, IEnvironments environmentsDomain)
+        public EnvironmentsController(IRedAlert commonDomain, IEnvironments environmentsDomain)
         {
             _commonDomain = commonDomain;
             _environmentsDomain = environmentsDomain;
@@ -19,7 +19,7 @@ namespace LCARS.Controllers
 
 		public ActionResult Index()
 		{
-            Boards randomBoard = _commonDomain.SelectBoard();
+            var randomBoard = Domain.Settings.SelectBoard();
 
             if (_thisBoard != randomBoard)
             {

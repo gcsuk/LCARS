@@ -6,9 +6,9 @@ namespace LCARS.Controllers
 {
     public class RedAlertController : Controller
     {
-        private readonly ICommon _domain;
+        private readonly IRedAlert _domain;
 
-        public RedAlertController(ICommon domain)
+        public RedAlertController(IRedAlert domain)
         {
             _domain = domain;
         }
@@ -29,7 +29,7 @@ namespace LCARS.Controllers
         [HttpPost]
         public ActionResult Update(bool isEnabled, string targetDate, string alertType)
         {
-            var settings = new RedAlert
+            var settings = new ViewModels.RedAlert
             {
                 IsEnabled = isEnabled,
                 TargetDate = targetDate,

@@ -9,11 +9,11 @@ namespace LCARS.Controllers
 {
     public class BuildsController : Controller
     {
-        private readonly ICommon _commonDomain;
+        private readonly IRedAlert _commonDomain;
         private readonly IBuilds _buildsDomain;
         private readonly ViewModels.Boards _thisBoard;
 
-        public BuildsController(ICommon commonDomain, IBuilds buildsDomain)
+        public BuildsController(IRedAlert commonDomain, IBuilds buildsDomain)
         {
             _commonDomain = commonDomain;
             _buildsDomain = buildsDomain;
@@ -28,7 +28,7 @@ namespace LCARS.Controllers
             {
                 buildSet = (BuildSet)new Random(Guid.NewGuid().GetHashCode()).Next(1, Enum.GetNames(typeof(BuildSet)).Length);
 
-                var randomBoard = _commonDomain.SelectBoard();
+                var randomBoard = Domain.Settings.SelectBoard();
 
                 if (_thisBoard != randomBoard)
                 {

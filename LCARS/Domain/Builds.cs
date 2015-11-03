@@ -7,15 +7,17 @@ namespace LCARS.Domain
     public class Builds : IBuilds
     {
         private readonly Repository.IBuilds _repository;
+        private readonly Repository.IRepository<Build> _settingsRepository;
 
-        public Builds(Repository.IBuilds repository)
+        public Builds(Repository.IBuilds repository, Repository.IRepository<Build> settingsRepository)
         {
             _repository = repository;
+            _settingsRepository = settingsRepository;
         }
 
         public IEnumerable<Build> GetBuilds(string path)
         {
-            return _repository.GetBuilds(path);
+            return _settingsRepository.GetList(path);
         }
 
         public IEnumerable<Build> GetBuildStatus(IEnumerable<int> buildTypeIds)

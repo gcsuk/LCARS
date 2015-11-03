@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Net;
 
 namespace LCARS.Repository
@@ -18,38 +16,25 @@ namespace LCARS.Repository
 
         public Models.Deployments.Deployments Get()
         {
-            var jsonData = DownloadJson(_deploymentServer, _apiKey);
+            var jsonData = "";
 
-            return !string.IsNullOrEmpty(jsonData)
-                ? JsonConvert.DeserializeObject<Models.Deployments.Deployments>(jsonData)
-                : new Models.Deployments.Deployments();
-        }
-
-        public IEnumerable<Models.Deployments.Environment> GetEnvironmentPreferences(string filePath)
-        {
-            if (!File.Exists(filePath))
-            {
-                throw new IOException("RedAlert file does not exist. Refer to ReadMe file for setup instructions.");
-            }
-
-            return JsonConvert.DeserializeObject<IEnumerable<Models.Deployments.Environment>>(File.ReadAllText(filePath));
-        }
-
-        private static string DownloadJson(string url, string apiKey)
-        {
             try
             {
                 using (WebClient webClient = new WebClient())
                 {
-                    webClient.Headers.Set("X-Octopus-ApiKey", apiKey);
+                    webClient.Headers.Set("X-Octopus-ApiKey", _apiKey);
 
-                    return webClient.DownloadString(url);
+                    jsonData = webClient.DownloadString(_deploymentServer);
                 }
             }
             catch
             {
-                return "";
+                // jsonData will be empty
             }
+
+            return !string.IsNullOrEmpty(jsonData)
+                ? JsonConvert.DeserializeObject<Models.Deployments.Deployments>(jsonData)
+                : new Models.Deployments.Deployments();
         }
     }
 }

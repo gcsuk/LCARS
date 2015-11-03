@@ -4,25 +4,8 @@ using Newtonsoft.Json;
 
 namespace LCARS.Repository
 {
-    public class Common : ICommon
+    public class Common
     {
-        public RedAlert GetRedAlert(string filePath)
-        {
-            if (!File.Exists(filePath))
-            {
-                throw new IOException("RedAlert file does not exist. Refer to ReadMe file for setup instructions.");
-            }
-
-            return JsonConvert.DeserializeObject<RedAlert>(File.ReadAllText(filePath));
-        }
-
-        public void UpdateRedAlert(string filePath, RedAlert settings)
-        {
-            var json = JsonConvert.SerializeObject(settings, Formatting.Indented);
-
-            File.WriteAllText(filePath, json);
-        }
-
         public static Settings GetSettings(string filePath)
         {
             if (!File.Exists(filePath))

@@ -6,16 +6,16 @@ namespace LCARS.Domain
 {
     public class Environments : IEnvironments
     {
-        private readonly Repository.IEnvironments _repository;
+        private readonly Repository.IRepository<Models.Environments.Tenant> _repository;
 
-        public Environments(Repository.IEnvironments repository)
+        public Environments(Repository.IRepository<Models.Environments.Tenant> repository)
         {
             _repository = repository;
         }
 
         public IEnumerable<Tenant> Get(string path)
         {
-            return _repository.Get(path).Select(t => new Tenant
+            return _repository.GetList(path).Select(t => new Tenant
             {
                 Id = t.Id,
                 Name = t.Name,
@@ -29,22 +29,27 @@ namespace LCARS.Domain
 
         public void Update(string path, string tenant, string environment, string currentStatus)
         {
-            _repository.Update(path, tenant, environment, SetNewStatus(currentStatus));
-        }
+            var tenants = _repository.GetList(path).ToList();
 
-        private static string SetNewStatus(string currentStatus)
-        {
+            var thisEnvironment = tenants.Single(t => t.Name == tenant).Environments.Single(e => e.Name == environment);
+
             switch (currentStatus)
             {
                 case "OK":
-                    return "ISSUES";
+                    thisEnvironment.Status = "ISSUES";
+                    break;
                 case "ISSUES":
-                    return "DOWN";
+                    thisEnvironment.Status = "DOWN";
+                    break;
                 case "DOWN":
-                    return "OK";
+                    thisEnvironment.Status = "OK";
+                    break;
                 default:
-                    return "";
+                    thisEnvironment.Status = "";
+                    break;
             }
+
+            _repository.UpdateList(path, tenants);
         }
     }
 }

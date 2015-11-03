@@ -3,6 +3,8 @@ using Autofac.Integration.Mvc;
 using System;
 using System.Web;
 using System.Web.Mvc;
+using LCARS.Models;
+using LCARS.Models.Environments;
 
 namespace LCARS
 {
@@ -10,8 +12,10 @@ namespace LCARS
     {
         public static void RegisterDependencies()
         {
-            // Cant put credentials on GitHub so segreated them into excluded JSON file
-            var settings = Domain.Common.GetSettings(HttpContext.Current.Server.MapPath(@"~/App_Data/Settings.json"));
+            // Cant put credentials on GitHub so segregated them into excluded JSON file
+            var settings =
+                new Domain.Settings(new Repository.SettingsRepository<Settings>()).GetSettings(
+                    HttpContext.Current.Server.MapPath(@"~/App_Data/Settings.json"));
 
             if (string.IsNullOrEmpty(settings.BuildServerUsername))
             {
@@ -23,14 +27,16 @@ namespace LCARS
             // Register your MVC controllers.
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
-            builder.RegisterType<Domain.Common>().As<Domain.ICommon>();
+            builder.RegisterType<Domain.RedAlert>().As<Domain.IRedAlert>();
             builder.RegisterType<Domain.Environments>().As<Domain.IEnvironments>();
             builder.RegisterType<Domain.Builds>().As<Domain.IBuilds>();
             builder.RegisterType<Domain.Deployments>().As<Domain.IDeployments>();
             builder.RegisterType<Domain.Issues>().As<Domain.IIssues>();
 
-            builder.RegisterType<Repository.Environments>().As<Repository.IEnvironments>();
-            builder.RegisterType<Repository.Common>().As<Repository.ICommon>();
+            builder.RegisterType<Repository.SettingsRepository<RedAlert>>().As<Repository.IRepository<RedAlert>>();
+            builder.RegisterType<Repository.SettingsRepository<Tenant>>().As<Repository.IRepository<Tenant>>();
+            builder.RegisterType<Repository.SettingsRepository<Build>>().As<Repository.IRepository<Build>>();
+            builder.RegisterType<Repository.SettingsRepository<Models.Deployments.Environment>>().As<Repository.IRepository<Models.Deployments.Environment>>();
             builder.RegisterType<Repository.Builds>()
                 .As<Repository.IBuilds>()
                 .WithParameter("username", settings.BuildServerUsername)

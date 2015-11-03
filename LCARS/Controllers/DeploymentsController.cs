@@ -7,11 +7,11 @@ namespace LCARS.Controllers
 {
     public class DeploymentsController : Controller
     {
-        private readonly ICommon _commonDomain;
+        private readonly IRedAlert _commonDomain;
         private readonly IDeployments _deploymentsDomain;
         private readonly ViewModels.Boards _thisBoard;
 
-        public DeploymentsController(ICommon commonDomain, IDeployments deploymentsDomain)
+        public DeploymentsController(IRedAlert commonDomain, IDeployments deploymentsDomain)
         {
             _commonDomain = commonDomain;
             _deploymentsDomain = deploymentsDomain;
@@ -21,7 +21,7 @@ namespace LCARS.Controllers
         // GET: Deployments
         public ActionResult Index()
         {
-            var randomBoard = _commonDomain.SelectBoard();
+            var randomBoard = Settings.SelectBoard();
 
             if (_thisBoard != randomBoard)
             {

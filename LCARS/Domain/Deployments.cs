@@ -7,10 +7,12 @@ namespace LCARS.Domain
     public class Deployments : IDeployments
     {
         private readonly Repository.IDeployments _repository;
+        private readonly Repository.IRepository<Models.Deployments.Environment> _settingsRepository;
 
-        public Deployments(Repository.IDeployments repository)
+        public Deployments(Repository.IDeployments repository, Repository.IRepository<Models.Deployments.Environment> settingsRepository)
         {
             _repository = repository;
+            _settingsRepository = settingsRepository;
         }
 
         public IEnumerable<Deployment> Get()
@@ -41,7 +43,7 @@ namespace LCARS.Domain
 
         public IEnumerable<Environment> SetEnvironmentOrder(IEnumerable<Environment> environments, string preferencesFilePath)
         {
-            var preferences = _repository.GetEnvironmentPreferences(preferencesFilePath);
+            var preferences = _settingsRepository.GetList(preferencesFilePath);
 
             foreach (var environment in environments.ToList())
             {

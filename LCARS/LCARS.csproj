@@ -132,6 +132,7 @@
     <Compile Include="Domain\IBuilds.cs" />
     <Compile Include="Domain\IIssues.cs" />
     <Compile Include="Domain\Issues.cs" />
+    <Compile Include="Domain\Settings.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -150,6 +151,8 @@
     <Compile Include="Models\Issues\Field.cs" />
     <Compile Include="Models\RedAlert.cs" />
     <Compile Include="Models\Settings.cs" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\SettingsRepository.cs" />
     <Compile Include="ViewModels\RedAlert.cs" />
     <Compile Include="ViewModels\Boards.cs" />
     <Compile Include="Models\BuildSet.cs" />
@@ -166,15 +169,12 @@
     <Compile Include="ViewModels\Settings.cs" />
     <Compile Include="Models\Environments\Tenant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Domain\Common.cs" />
-    <Compile Include="Domain\ICommon.cs" />
+    <Compile Include="Domain\RedAlert.cs" />
+    <Compile Include="Domain\IRedAlert.cs" />
     <Compile Include="Domain\IEnvironments.cs" />
     <Compile Include="Repository\IDeployments.cs" />
     <Compile Include="Repository\Deployments.cs" />
-    <Compile Include="Repository\IEnvironments.cs" />
     <Compile Include="Repository\IBuilds.cs" />
-    <Compile Include="Repository\ICommon.cs" />
-    <Compile Include="Repository\Environments.cs" />
     <Compile Include="Repository\Builds.cs" />
     <Compile Include="Repository\Common.cs" />
     <Compile Include="ViewModels\BuildStatus.cs" />

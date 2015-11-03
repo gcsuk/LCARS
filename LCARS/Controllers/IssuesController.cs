@@ -6,10 +6,10 @@ namespace LCARS.Controllers
     public class IssuesController : Controller
     {
         private readonly IIssues _issuesDomain;
-        private readonly ICommon _commonDomain;
+        private readonly IRedAlert _commonDomain;
         private readonly ViewModels.Boards _thisBoard;
 
-        public IssuesController(IIssues issuesDomain, ICommon commonDomain)
+        public IssuesController(IIssues issuesDomain, IRedAlert commonDomain)
         {
             _issuesDomain = issuesDomain;
             _commonDomain = commonDomain;
@@ -19,7 +19,7 @@ namespace LCARS.Controllers
         // GET: Issues
         public ActionResult Index()
         {
-            var randomBoard = _commonDomain.SelectBoard();
+            var randomBoard = Settings.SelectBoard();
 
             if (_thisBoard != randomBoard)
             {
