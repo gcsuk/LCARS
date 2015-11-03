@@ -59,6 +59,19 @@ Build Set
     ...
 ]
 
+Issue Queries
+
+[
+    {
+        "Id": "1",
+        "Jql": ""
+    },
+    {
+        "Id": "2",
+        "Jql": ""
+    }
+]
+
 Settings.json (for Jira, Team City and Octopus Deploy integration)
 
 {

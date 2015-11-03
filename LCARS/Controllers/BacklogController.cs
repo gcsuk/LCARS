@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using LCARS.Domain;
 
@@ -32,16 +30,28 @@ namespace LCARS.Controllers
 
             var query =
                 _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/IssueQueries.json"))
-                    .Single(i => i.Id == ((int)ViewModels.Issues.IssueSet.Bugs))
+                    .Single(i => i.Id == ((int) ViewModels.Issues.IssueSet.Bugs))
                     .Jql;
 
             var vm = new ViewModels.Issues.Bugs
             {
                 BugList = _issuesDomain.Get(query),
+                Deadline = new DateTime(2015, 11, 17, 17, 30, 0), // TODO: Sort this temporary hack
                 IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled
             };
 
             return View(vm);
+        }
+
+        [HttpGet]
+        public JsonResult GetBacklog()
+        {
+            var query =
+                _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/IssueQueries.json"))
+                    .Single(i => i.Id == ((int) ViewModels.Issues.IssueSet.Bugs))
+                    .Jql;
+
+            return Json(_issuesDomain.Get(query), JsonRequestBehavior.AllowGet);
         }
     }
 }

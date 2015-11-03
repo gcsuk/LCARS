@@ -268,12 +268,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\RedAlert\Update.cshtml" />
     <Content Include="Views\Git\Index.cshtml" />
-    <Content Include="Views\Builds\Index.cshtml" />
+    <Content Include="Views\Builds\HighCount.cshtml" />
     <Content Include="Views\RedAlert\Index.cshtml" />
     <Content Include="Views\Deployments\Index.cshtml" />
     <Content Include="Views\Issues\Index.cshtml" />
     <Content Include="Views\Environments\Index.cshtml" />
     <Content Include="Views\Backlog\Index.cshtml" />
+    <Content Include="Views\Builds\LowCount.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

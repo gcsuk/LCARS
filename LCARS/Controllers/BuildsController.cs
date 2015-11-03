@@ -46,7 +46,7 @@ namespace LCARS.Controllers
                 IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled
             };
 
-            return View(vm);
+            return View(vm.Builds.Count() > 8 ? "HighCount" : "LowCount", vm);
         }
 
         // GET: Build

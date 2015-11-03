@@ -17,16 +17,19 @@
 
 <div class="issueCount">
     <div class="row">
-        <div class="col-lg-4">
-            <img src="~/img/softwareBug.jpg" alt="Bug" />
-        </div>
+        <img src="~/img/softwareBug.jpg" alt="Bug"/>
         <div class="col-lg-8">
-            CMS Bugs:
-            <br/>
-            <span>@Model.Count</span>
+            CMS Bugs: <span>@Model.Count</span>
+            <div id="timeRemaining" class="row">
+                <div>
+                    Days Left: <span>@Model.NumberOfWorkingDays</span>
+                </div>
+                <div class="hoursRemaining">
+                    (Working Hours: @Model.NumberOfWorkingHours)
+                </div>
+            </div>
         </div>
     </div>
-    
 </div>
 
 @*<table class="issues">
