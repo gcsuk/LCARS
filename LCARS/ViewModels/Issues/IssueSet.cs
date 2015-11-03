@@ -1,9 +1,12 @@
-﻿namespace LCARS.ViewModels.Issues
+﻿using System.ComponentModel;
+
+namespace LCARS.ViewModels.Issues
 {
     public enum IssueSet
     {
         Random = 0,
         Blockers = 1,
-        Bugs = 2
+        [Description("CMS")] CmsBugs = 2,
+        [Description("Web")] WebBugs = 3
     }
 }

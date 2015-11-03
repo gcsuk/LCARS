@@ -24,7 +24,7 @@ namespace LCARS.Controllers
 
             if (_thisBoard != randomBoard)
             {
-                return RedirectToAction("Index", randomBoard.GetDescription());
+               return RedirectToAction("Index", randomBoard.GetDescription());
             }
 
             var query =

@@ -469,7 +469,8 @@ table.digits tr.white {
 }
 
 .issueCount img {
-    float: left
+    float: left;
+    margin-top: 60px
 }
 
 .issueCount span {
