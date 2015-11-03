@@ -5,7 +5,7 @@ namespace LCARS.Repository
 {
     public interface IBuilds
     {
-        IEnumerable<Build> GetBuilds(string fileName);
+        IEnumerable<Build> GetBuilds(string filePath);
 
         Dictionary<int, int> GetBuildsRunning();
 

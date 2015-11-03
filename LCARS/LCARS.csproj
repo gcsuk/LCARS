@@ -148,6 +148,8 @@
     <Compile Include="Models\Issues\Priority.cs" />
     <Compile Include="Models\Issues\Person.cs" />
     <Compile Include="Models\Issues\Field.cs" />
+    <Compile Include="Models\RedAlert.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="ViewModels\RedAlert.cs" />
     <Compile Include="ViewModels\Boards.cs" />
     <Compile Include="Models\BuildSet.cs" />
@@ -184,15 +186,12 @@
     <Compile Include="ViewModels\Environments\Environments.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\BuildSets\PAM.xml" />
-    <Content Include="App_Data\Settings.xml" />
-    <Content Include="App_Data\Deployments.xml" />
-    <Content Include="App_Data\RedAlert.xml" />
-    <Content Include="App_Data\BuildSets\Web.xml" />
-    <Content Include="App_Data\BuildSets\CMS.xml" />
-    <Content Include="App_Data\Environments.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <None Include="App_Data\BuildSets\PAM.json" />
+    <None Include="App_Data\BuildSets\Web.json" />
+    <None Include="App_Data\BuildSets\CMS.json" />
+    <None Include="App_Data\Environments.json" />
+    <None Include="App_Data\RedAlert.json" />
+    <None Include="App_Data\Deployments.json" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -210,6 +209,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="App_Data\Settings.json" />
     <None Include="Properties\PublishProfiles\Standard.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="img\blueCornerBottomAlert.png" />

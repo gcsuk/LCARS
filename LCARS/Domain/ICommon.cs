@@ -6,8 +6,8 @@ namespace LCARS.Domain
     {
         Boards SelectBoard();
 
-        RedAlert GetRedAlert(string fileName);
+        RedAlert GetRedAlert(string filePath);
 
-        void UpdateRedAlert(string fileName, bool isEnabled, string targetDate, string alertType);
+        void UpdateRedAlert(string filePath, RedAlert settings);
     }
 }

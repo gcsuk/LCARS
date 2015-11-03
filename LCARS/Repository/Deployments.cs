@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using Newtonsoft.Json;
 using System.Net;
-using System.Net.Sockets;
-using System.Xml.Linq;
 
 namespace LCARS.Repository
 {
@@ -27,16 +25,14 @@ namespace LCARS.Repository
                 : new Models.Deployments.Deployments();
         }
 
-        public IEnumerable<Models.Deployments.Environment> GetEnvironmentPreferences(string fileName)
+        public IEnumerable<Models.Deployments.Environment> GetEnvironmentPreferences(string filePath)
         {
-            var doc = XDocument.Load(fileName);
-
-            return doc.Root.Elements("Deployment").Select(env => new Models.Deployments.Environment
+            if (!File.Exists(filePath))
             {
-                Id = env.Attribute("Id").Value,
-                Name = env.Value,
-                OrderId = System.Convert.ToInt32(env.Attribute("OrderId").Value)
-            }).ToList();
+                throw new IOException("RedAlert file does not exist. Refer to ReadMe file for setup instructions.");
+            }
+
+            return JsonConvert.DeserializeObject<IEnumerable<Models.Deployments.Environment>>(File.ReadAllText(filePath));
         }
 
         private static string DownloadJson(string url, string apiKey)

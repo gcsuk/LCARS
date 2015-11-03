@@ -28,8 +28,8 @@ namespace LCARS.Controllers
 
             var vm = new ViewModels.Environments.Environments
             {
-                Tenants = _environmentsDomain.Get(Server.MapPath(@"~/App_Data/Environments.xml")),
-                IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.xml")).IsEnabled
+                Tenants = _environmentsDomain.Get(Server.MapPath(@"~/App_Data/Environments.json")),
+                IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled
             };
 
             return View(vm);
@@ -38,7 +38,7 @@ namespace LCARS.Controllers
         [HttpPost]
         public void UpdateStatus(string tenant, string environment, string currentStatus)
         {
-            _environmentsDomain.Update(Server.MapPath(@"~/App_Data/Environments.xml"), tenant, environment, currentStatus);
+            _environmentsDomain.Update(Server.MapPath(@"~/App_Data/Environments.json"), tenant, environment, currentStatus);
         }
 	}
 }

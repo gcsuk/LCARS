@@ -29,7 +29,7 @@ namespace LCARS.Controllers
             var vm = new ViewModels.Issues.Blockers
             {
                 IssueList = _issuesDomain.Get(),
-                IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.xml")).IsEnabled
+                IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled
             };
 
             return View(vm);

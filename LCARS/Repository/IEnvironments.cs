@@ -5,8 +5,8 @@ namespace LCARS.Repository
 {
 	public interface IEnvironments
 	{
-		IEnumerable<Tenant> Get(string fileName);
+		IEnumerable<Tenant> Get(string filePath);
 
-		void Update(string fileName, string tenant, string environment, string status);
+		void Update(string filePath, string tenant, string environment, string status);
 	}
 }

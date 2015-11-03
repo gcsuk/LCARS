@@ -37,13 +37,13 @@ namespace LCARS.Controllers
             }
 
             var builds =
-                _buildsDomain.GetBuilds(Server.MapPath(string.Format(@"~/App_Data/BuildSets/{0}.xml", buildSet.GetDescription())));
+                _buildsDomain.GetBuilds(Server.MapPath(string.Format(@"~/App_Data/BuildSets/{0}.json", buildSet.GetDescription())));
 
             var vm = new ViewModels.BuildStatus
             {
                 BuildSet = buildSet,
                 Builds = builds,
-                IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.xml")).IsEnabled
+                IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled
             };
 
             return View(vm);

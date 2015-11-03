@@ -7,6 +7,6 @@ namespace LCARS.Repository
     {
         Models.Deployments.Deployments Get();
 
-        IEnumerable<Environment> GetEnvironmentPreferences(string fileName);
+        IEnumerable<Environment> GetEnvironmentPreferences(string filePath);
     }
 }

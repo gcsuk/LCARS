@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Xml.Linq;
 using LCARS.Models;
+using Newtonsoft.Json;
 
 namespace LCARS.Repository
 {
@@ -19,15 +20,14 @@ namespace LCARS.Repository
             _password = password;
         }
 
-        public IEnumerable<Build> GetBuilds(string fileName)
+        public IEnumerable<Build> GetBuilds(string filePath)
         {
-            var doc = XDocument.Load(fileName);
-
-            return doc.Root.Elements("Build").Select(build => new Build
+            if (!File.Exists(filePath))
             {
-                TypeId = Convert.ToInt32(build.Attribute("TypeId").Value),
-                Name = build.Attribute("Name").Value
-            }).ToList();
+                throw new IOException("BuildSet files does not exist. Refer to ReadMe file for setup instructions.");
+            }
+
+            return JsonConvert.DeserializeObject<IEnumerable<Build>>(File.ReadAllText(filePath));
         }
 
         public Dictionary<int, int> GetBuildsRunning()

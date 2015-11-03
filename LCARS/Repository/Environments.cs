@@ -1,62 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Xml.Linq;
 using LCARS.Models.Environments;
+using Newtonsoft.Json;
 
 namespace LCARS.Repository
 {
     public class Environments : IEnvironments
     {
-        public IEnumerable<Tenant> Get(string fileName)
+        public IEnumerable<Tenant> Get(string filePath)
         {
-            var doc = XDocument.Load(fileName);
-
-            if (doc.Root == null)
-                return null;
-
-            var tenants = new List<Tenant>();
-
-            foreach (var tenantData in doc.Root.Elements("Tenant"))
+            if (!File.Exists(filePath))
             {
-                var tenant = new Tenant
-                {
-                    Id = Convert.ToInt32(tenantData.Attribute("ID").Value),
-                    Name = tenantData.Attribute("Name").Value
-                };
-
-                foreach (var environmentData in tenantData.Element("Environments").Elements("Environment"))
-                {
-                    tenant.Environments.Add(new Models.Environments.Environment
-                    {
-                        Name = environmentData.Attribute("Name").Value,
-                        Status = environmentData.Attribute("Status").Value
-                    });
-                }
-
-                tenants.Add(tenant);
+                throw new IOException("Environments file does not exist. Refer to ReadMe file for setup instructions.");
             }
 
-            return tenants;
+            return JsonConvert.DeserializeObject<IEnumerable<Tenant>>(File.ReadAllText(filePath));
         }
 
-        public void Update(string fileName, string tenant, string environment, string status)
+        public void Update(string filePath, string tenant, string environment, string status)
         {
-            var doc = XDocument.Load(fileName);
+            var allEnvironments = JsonConvert.DeserializeObject<IEnumerable<Tenant>>(File.ReadAllText(filePath));
 
-            if (doc.Root == null)
-                return;
+            var thisEnvironment = allEnvironments.Single(t => t.Name == tenant).Environments.Single(e => e.Name == environment);
 
-            var tenantElement = doc.Root.Elements("Tenant").Single(t => t.Attribute("Name").Value == tenant);
+            thisEnvironment.Status = status;
 
-            var environmentElement =
-                tenantElement.Element("Environments")
-                    .Elements("Environment")
-                    .Single(e => e.Attribute("Name").Value == environment);
+            var json = JsonConvert.SerializeObject(allEnvironments, Formatting.Indented);
 
-            environmentElement.Attribute("Status").Value = status;
-
-            doc.Save(fileName);
+            File.WriteAllText(filePath, json);
         }
     }
 }

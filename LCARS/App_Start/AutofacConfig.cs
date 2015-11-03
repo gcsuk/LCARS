@@ -1,11 +1,8 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using System;
-using System.IO;
 using System.Web;
 using System.Web.Mvc;
-using System.Xml.Linq;
-using LCARS.ViewModels;
 
 namespace LCARS
 {
@@ -13,10 +10,10 @@ namespace LCARS
     {
         public static void RegisterDependencies()
         {
-            // Cant put credentials on GitHub so segreated them into excluded XML file
-            var settings = GetSettings();
+            // Cant put credentials on GitHub so segreated them into excluded JSON file
+            var settings = Domain.Common.GetSettings(HttpContext.Current.Server.MapPath(@"~/App_Data/Settings.json"));
 
-            if (string.IsNullOrWhiteSpace(settings.BuildServerUsername))
+            if (string.IsNullOrEmpty(settings.BuildServerUsername))
             {
                 throw new Exception("You must specify build server credentials. See repository Readme for details.");
             }
@@ -52,29 +49,6 @@ namespace LCARS
             var container = builder.Build();
 
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-        }
-
-        private static Settings GetSettings()
-        {
-            var filePath = HttpContext.Current.Server.MapPath(@"~/App_Data/Settings.xml");
-
-            if (!File.Exists(filePath))
-            {
-                throw new IOException("Settings file does not exist. Refer to ReadMe file for setup instructions.");
-            }
-
-            var doc = XDocument.Load(filePath);
-
-            return new Settings
-            {
-                BuildServerUsername = doc.Root.Element("BuildServerCredentials").Element("Username").Value,
-                BuildServerPassword = doc.Root.Element("BuildServerCredentials").Element("Password").Value,
-                DeploymentServerPath = doc.Root.Element("DeploymentServerPath").Value,
-                DeploymentServerKey = doc.Root.Element("DeploymentServerKey").Value,
-                IssuesUrl = doc.Root.Element("IssuesUrl").Value,
-                IssuesUsername = doc.Root.Element("IssuesUsername").Value,
-                IssuesPassword = doc.Root.Element("IssuesPassword").Value
-            };
         }
     }
 }

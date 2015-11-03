@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Builds>
-    <Build Name="Mercury" TypeId="76" />
-    <Build Name="Mercury IN01 Integration Tests" TypeId="1194" />
-    <Build Name="Mercury Deployment to Dev01" TypeId="281" />
-    <Build Name="Zeus" TypeId="81" />
-    <Build Name="Zeus Deployment to Dev01" TypeId="594" />
-</Builds>

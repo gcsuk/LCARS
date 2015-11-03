@@ -1,39 +1,36 @@
-﻿using System.Xml.Linq;
-using LCARS.ViewModels;
+﻿using System.IO;
+using LCARS.Models;
+using Newtonsoft.Json;
 
 namespace LCARS.Repository
 {
     public class Common : ICommon
     {
-        public RedAlert GetRedAlert(string fileName)
+        public RedAlert GetRedAlert(string filePath)
         {
-            var doc = XDocument.Load(fileName);
-
-            if (doc.Root == null)
-                return null;
-
-            return new RedAlert
+            if (!File.Exists(filePath))
             {
-                IsEnabled = doc.Root.Element("IsEnabled").Value == "1",
-                TargetDate = doc.Root.Element("TargetDate").Value,
-                AlertType = doc.Root.Element("AlertType").Value,
-            };
-        }
-
-        public void UpdateRedAlert(string fileName, bool isEnabled, string targetDate, string alertType)
-        {
-            var doc = XDocument.Load(fileName);
-
-            if (doc.Root == null)
-            {
-                return;
+                throw new IOException("RedAlert file does not exist. Refer to ReadMe file for setup instructions.");
             }
 
-            doc.Root.Element("IsEnabled").Value = (isEnabled ? "1" : "0");
-            doc.Root.Element("TargetDate").Value = targetDate;
-            doc.Root.Element("AlertType").Value = alertType;
+            return JsonConvert.DeserializeObject<RedAlert>(File.ReadAllText(filePath));
+        }
 
-            doc.Save(fileName);
+        public void UpdateRedAlert(string filePath, RedAlert settings)
+        {
+            var json = JsonConvert.SerializeObject(settings, Formatting.Indented);
+
+            File.WriteAllText(filePath, json);
+        }
+
+        public static Settings GetSettings(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                throw new IOException("Settings file does not exist. Refer to ReadMe file for setup instructions.");
+            }
+
+            return JsonConvert.DeserializeObject<Settings>(File.ReadAllText(filePath));
         }
     }
 }

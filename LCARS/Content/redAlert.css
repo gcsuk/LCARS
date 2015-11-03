@@ -57,15 +57,15 @@ table.digits tr.white {
 }
 
 .topRightButton.blueButton {
-	background-image: url("/img/redButtonAlert.png")
+	background-color: #940606
 }
 
 .topRightButton.yellowButton {
-	background-image: url("/img/redButtonAlert.png")
+	background-color: #940606
 }
 
 .topRightButton.redButton {
-	background-image: url("/img/redButtonAlert.png")
+	background-color: #940606
 }
 
 .stats {

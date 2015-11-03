@@ -30,7 +30,7 @@ namespace LCARS.Controllers
 
             var deployments = _deploymentsDomain.Get().OrderBy(g => g.ProjectGroup).ThenBy(p => p.Project).ToList();
 
-            var isRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.xml")).IsEnabled;
+            var isRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled;
 
             var projects =
                 deployments.GroupBy(p => p.ProjectId)
@@ -55,7 +55,7 @@ namespace LCARS.Controllers
                     .ToList();
 
             environments =
-                _deploymentsDomain.SetEnvironmentOrder(environments, Server.MapPath(@"~/App_Data/Deployments.xml"))
+                _deploymentsDomain.SetEnvironmentOrder(environments, Server.MapPath(@"~/App_Data/Deployments.json"))
                     .ToList();
 
             var vm = new DeploymentStatus
