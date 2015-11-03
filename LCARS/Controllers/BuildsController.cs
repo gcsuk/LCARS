@@ -26,14 +26,14 @@ namespace LCARS.Controllers
         {
             if (buildSet == BuildSet.Random)
             {
-                buildSet = (BuildSet)new Random(Guid.NewGuid().GetHashCode()).Next(1, Enum.GetNames(typeof(BuildSet)).Length);
-
                 var randomBoard = Domain.Settings.SelectBoard();
 
                 if (_thisBoard != randomBoard)
                 {
                     return RedirectToAction("Index", randomBoard.GetDescription());
                 }
+
+                buildSet = (BuildSet)new Random(Guid.NewGuid().GetHashCode()).Next(1, Enum.GetNames(typeof(BuildSet)).Length);
             }
 
             var builds =

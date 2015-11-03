@@ -1,0 +1,41 @@
+﻿@model LCARS.ViewModels.Issues.Bugs
+@{
+    ViewBag.Title = "LCARS | Bugs";
+
+    if (Model.IsRedAlertEnabled)
+    {
+        <meta http-equiv="refresh" content="0; /RedAlert?returnUrl=Issues">
+    }
+    else
+    {
+        <meta http-equiv="refresh" content="30">
+    }
+}
+@section header {
+    <link href="/Content/yellowAlert.css" rel="stylesheet" />
+}
+
+<div class="issueCount">
+    <div class="row">
+        <div class="col-lg-4">
+            <img src="~/img/softwareBug.jpg" alt="Bug" />
+        </div>
+        <div class="col-lg-8">
+            CMS Bugs:
+            <br/>
+            <span>@Model.Count</span>
+        </div>
+    </div>
+    
+</div>
+
+@*<table class="issues">
+    @foreach (var issue in Model.BugList)
+    {
+        <tr>
+            <td class="priority"><img src="@issue.PriorityIcon" alt="@issue.Priority" /></td>
+            <td class="issueId">@issue.Id</td>
+            <td>@issue.Summary</td>
+        </tr>
+    }
+</table>*@

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using LCARS.Models;
 using LCARS.Models.Environments;
+using LCARS.Models.Issues;
 
 namespace LCARS
 {
@@ -36,6 +37,7 @@ namespace LCARS
             builder.RegisterType<Repository.SettingsRepository<RedAlert>>().As<Repository.IRepository<RedAlert>>();
             builder.RegisterType<Repository.SettingsRepository<Tenant>>().As<Repository.IRepository<Tenant>>();
             builder.RegisterType<Repository.SettingsRepository<Build>>().As<Repository.IRepository<Build>>();
+            builder.RegisterType<Repository.SettingsRepository<Query>>().As<Repository.IRepository<Query>>();
             builder.RegisterType<Repository.SettingsRepository<Models.Deployments.Environment>>().As<Repository.IRepository<Models.Deployments.Environment>>();
             builder.RegisterType<Repository.Builds>()
                 .As<Repository.IBuilds>()

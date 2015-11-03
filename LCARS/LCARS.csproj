@@ -118,6 +118,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BacklogController.cs" />
     <Compile Include="Controllers\BuildsController.cs" />
     <Compile Include="Controllers\DeploymentsController.cs" />
     <Compile Include="Controllers\GitController.cs" />
@@ -143,6 +144,9 @@
     <Compile Include="Models\Deployments\Environment.cs" />
     <Compile Include="Models\Deployments\Project.cs" />
     <Compile Include="Models\Deployments\Deployment.cs" />
+    <Compile Include="Models\Issues\Query.cs" />
+    <Compile Include="ViewModels\Issues\Bugs.cs" />
+    <Compile Include="ViewModels\Issues\IssueSet.cs" />
     <Compile Include="Models\Issues\Parent.cs" />
     <Compile Include="Models\Issues\Issue.cs" />
     <Compile Include="Models\Issues\Status.cs" />
@@ -153,6 +157,7 @@
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\SettingsRepository.cs" />
+    <Compile Include="ViewModels\Issues\Query.cs" />
     <Compile Include="ViewModels\RedAlert.cs" />
     <Compile Include="ViewModels\Boards.cs" />
     <Compile Include="Models\BuildSet.cs" />
@@ -164,7 +169,7 @@
     <Compile Include="ViewModels\Environments\Environment.cs" />
     <Compile Include="ViewModels\Environments\Tenant.cs" />
     <Compile Include="ViewModels\Issues\Issue.cs" />
-    <Compile Include="ViewModels\Issues\Issues.cs" />
+    <Compile Include="ViewModels\Issues\Blockers.cs" />
     <Compile Include="ViewModels\RedAlertStatus.cs" />
     <Compile Include="ViewModels\Settings.cs" />
     <Compile Include="Models\Environments\Tenant.cs" />
@@ -192,10 +197,12 @@
     <None Include="App_Data\Environments.json" />
     <None Include="App_Data\RedAlert.json" />
     <None Include="App_Data\Deployments.json" />
+    <None Include="App_Data\IssueQueries.json" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\yellowAlert.css" />
     <Content Include="Content\redAlert.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -213,14 +220,19 @@
     <None Include="Properties\PublishProfiles\Standard.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="img\blueCornerBottomAlert.png" />
+    <Content Include="img\blueCornerBottomAlertYellow.png" />
     <Content Include="img\blueCornerTop.png" />
     <Content Include="img\blueCornerBottom.png" />
     <Content Include="img\blueCornerTopAlert.png" />
+    <Content Include="img\blueCornerTopAlertYellow.png" />
     <Content Include="img\redButtonAlert.png" />
     <Content Include="img\redCornerBottom.png" />
     <Content Include="img\redCornerBottomAlert.png" />
+    <Content Include="img\redCornerBottomAlertYellow.png" />
     <Content Include="img\redCornerTop.png" />
     <Content Include="img\redCornerTopAlert.png" />
+    <Content Include="img\redCornerTopAlertYellow.png" />
+    <Content Include="img\softwareBug.jpg" />
     <Content Include="img\topRight.png" />
     <Content Include="Scripts\buildProgress.js" />
     <Content Include="Scripts\master.js" />
@@ -261,6 +273,7 @@
     <Content Include="Views\Deployments\Index.cshtml" />
     <Content Include="Views\Issues\Index.cshtml" />
     <Content Include="Views\Environments\Index.cshtml" />
+    <Content Include="Views\Backlog\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

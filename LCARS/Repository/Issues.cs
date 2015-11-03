@@ -19,13 +19,13 @@ namespace LCARS.Repository
             _password = password;
         }
 
-        public Parent Get()
+        public Parent Get(string query)
         {
             using (WebClient webClient = new WebClient())
             {
                 webClient.Headers.Set("Authorization", "Basic " + GetEncodedCredentials(_username, _password));
 
-                var jsonData = webClient.DownloadString(_url);
+                var jsonData = webClient.DownloadString(_url + query);
 
                 return JsonConvert.DeserializeObject<Parent>(jsonData);
             }

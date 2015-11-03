@@ -4,6 +4,6 @@ namespace LCARS.Repository
 {
     public interface IIssues
     {
-        Parent Get();
+        Parent Get(string query);
     }
 }

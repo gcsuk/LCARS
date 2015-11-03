@@ -1,23 +1,26 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using LCARS.Domain;
 
 namespace LCARS.Controllers
 {
-    public class IssuesController : Controller
+    public class BacklogController : Controller
     {
         private readonly IIssues _issuesDomain;
         private readonly IRedAlert _commonDomain;
         private readonly ViewModels.Boards _thisBoard;
 
-        public IssuesController(IIssues issuesDomain, IRedAlert commonDomain)
+        public BacklogController(IIssues issuesDomain, IRedAlert commonDomain)
         {
             _issuesDomain = issuesDomain;
             _commonDomain = commonDomain;
             _thisBoard = ViewModels.Boards.Issues;
         }
 
-        // GET: Issues
+        // GET: Backlog
         public ActionResult Index()
         {
             var randomBoard = Settings.SelectBoard();
@@ -29,12 +32,12 @@ namespace LCARS.Controllers
 
             var query =
                 _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/IssueQueries.json"))
-                    .Single(i => i.Id == ((int) ViewModels.Issues.IssueSet.Blockers))
+                    .Single(i => i.Id == ((int)ViewModels.Issues.IssueSet.Bugs))
                     .Jql;
 
-            var vm = new ViewModels.Issues.Blockers
+            var vm = new ViewModels.Issues.Bugs
             {
-                IssueList = _issuesDomain.Get(query),
+                BugList = _issuesDomain.Get(query),
                 IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled
             };
 

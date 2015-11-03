@@ -7,6 +7,7 @@ namespace LCARS.ViewModels
         [Description("Environments")] Environment = 1,
         [Description("Builds")] Build = 2,
         Issues = 3,
-        Deployments = 4
+        Deployments = 4,
+        Backlog = 5
     }
 }

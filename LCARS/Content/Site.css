@@ -438,3 +438,15 @@ table.digits tr.white {
 .issues td.issueId {
     width: 125px
 }
+
+.issueCount {
+    margin-top: 30px;
+    font-size: 72pt;
+    text-align: center;
+    color: #d7a024
+}
+
+.issueCount span {
+    font-size: 96pt;
+    font-weight: bold
+}
