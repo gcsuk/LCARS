@@ -2,7 +2,7 @@
 
 @section refresh
 {
-    <meta http-equiv="refresh" content="10" />
+    <meta http-equiv="refresh" content="30" />
 }
 
 @section header {
@@ -25,7 +25,7 @@
 @section scripts
 {
     <script type="text/javascript" src="~/Scripts/RedAlert.js"></script>
-    <script type="text/javascript">getTimeRemaining(@Model.IsEnabled.ToString().ToLower(), new Date("@(Model.TargetDate)"));</script>
+    <script type="text/javascript">getTimeRemaining(@Model.IsEnabled.ToString().ToLower(), new Date('@(Model.TargetDate.Value.ToString("MMMM dd, yyyy HH:mm:ss"))'));</script>
     <script type="text/javascript">
         $("#mainBody").removeClass("clearFont");
     </script>

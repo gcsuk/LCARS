@@ -11,8 +11,8 @@ function getTimeRemaining(isEnabled, targetTime) {
 	    $.ajax({
 	        type: "POST",
 	        contentType: "application/json",
-	        data: "{ 'isEnabled':false,'targetDate':'June 1, 2050 00:00:00', 'alertType': 'Beer' }",
-	        url: "/RedAlert/Update",
+	        data: "{ 'isEnabled':false,'targetDate':'', 'alertType': 'Beer' }",
+	        url: "/Admin/UpdateRedAlert",
 	        success: function() {
 
 	            var returnUrl = getUrlVars()["returnUrl"];
@@ -78,7 +78,7 @@ function getTimeRemaining(isEnabled, targetTime) {
 	$("#secondsRemaining").html(seconds);
 	$("#millisecondsRemaining").html(milliseconds);
 
-	setTimeout("getTimeRemaining(true)", 25);
+	setTimeout("getTimeRemaining(true)", 90);
 }
 
 var highlightNumber = 1;

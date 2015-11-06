@@ -285,20 +285,6 @@ table.digits tr.white {
 	line-height: 1
 }
 
-.destruct-admin {
-	margin: 50px
-}
-
-.destruct-admin span {
-	display: inline-block;
-	width: 125px;
-	color: #ffffff
-}
-
-	.destruct-admin input[type=submit] {
-		margin-top: 20px
-	}
-
 /* BUILDS*/
 
 .buildStatusRow {

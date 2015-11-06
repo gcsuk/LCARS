@@ -1,0 +1,63 @@
+﻿@using System.Globalization
+@model LCARS.ViewModels.Admin.RedAlert
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    ViewBag.Title = "LCARS Admin | Red Alert";
+
+    <div class="admin-red-alert">
+        <div>
+            <span>Enabled</span> @Html.CheckBoxFor(r => r.IsEnabled, new {  id = "isEnabled"})
+        </div>
+        <div>
+            <span>Target Date</span>
+            <select id="targetDay">
+                @for (var i = 1; i <= 31; i++)
+                {
+                    <option value="@i" @(i == Model.TargetDay ? "selected" : "")>@i</option>
+                }
+            </select>
+            <select id="targetMonth">
+                @for (var i = 1; i <= 12; i++)
+                {
+                    <option value="@i" @(i == Model.TargetMonth ? "selected" : "")>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i)</option>
+                }
+            </select>
+            <select id="targetYear">
+                @for (var i = DateTime.Now.Year; i <= DateTime.Now.Year + 1; i++)
+                {
+                    <option value="@i" @(i == Model.TargetYear ? "selected" : "")>@i</option>
+                }
+            </select>
+        </div>
+        <div style="margin-top: 10px">
+            <span>Target Time</span>
+            <select id="targetHour">
+                @for (var i = 0; i <= 24; i++) 
+                {
+                    <option value="@i" @(i == Model.TargetHour ? "selected" : "")>@i</option>
+                }
+            </select>
+            <select id="targetMinute">
+                @for (var i = 0; i < 60; i++)
+                {
+                    <option value="@i" @(i == Model.TargetMinute ? "selected" : "")>@i</option>
+                }
+            </select>
+        </div>
+        <div style="margin-top: 10px">
+            <span>Alert Type</span> <input type="text" id="alertType" value="@Model.AlertType" />
+        </div>
+        <div>
+            <input id="updateRedAlert" type="button" value="Save" class="red" />
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    <script>
+        $(".template-menu-selected").removeClass().addClass("template-menu-selected");
+        $("#template-menu-@((int) TempData["menuId"])").addClass("@(TempData["menuColor"])");
+    </script>
+    <script type="text/javascript" src="~/Scripts/admin.js"></script>
+}

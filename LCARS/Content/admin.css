@@ -1,0 +1,125 @@
+﻿@font-face {
+    font-family: lcars;
+    src: url(../fonts/tt0105m_.ttf)
+}
+
+@font-face {
+    font-family: lcarsslim;
+    src: url(../fonts/tt0106m0.ttf)
+}
+
+body {
+    padding-top: 5px;
+    padding-bottom: 20px;
+	background: black;
+	font-family: lcars;
+	font-size: 18pt;
+	color: #000000
+}
+
+a {
+    text-decoration: none;
+    color: #000000
+}
+
+input[type=text], select {
+    color: #000000
+}
+
+.template-top-left {
+     border-top-left-radius: 25px
+}
+
+.template-top-right, .template-bottom-right {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    margin-left: 5px
+}
+
+.template-bottom-left {
+    border-bottom-left-radius: 25px
+}
+
+.template-text {
+    color: #ff9900;
+    text-align: center
+}
+
+.template-menu {
+    margin-bottom: 5px;
+    padding-top: 20px;
+    padding-right: 5px;
+    text-align: right;
+}
+
+.template-menu-selected {
+     width: 40%;
+     margin-bottom: 5px;
+     margin-left: 5px;
+     padding-top: 20px;
+     padding-right: 5px;
+     text-align: right;
+     border-top-right-radius: 25px;
+     border-bottom-right-radius: 25px
+}
+
+.template-menu-buffer-top {
+    margin-bottom: 5px;
+    height: 35px
+}
+
+.template-menu-buffer-bottom {
+    margin-top: 5px;
+    height: 35px
+}
+
+.white-text {
+    color: #ffffff
+}
+
+.black {
+    background-color: #000000
+}
+
+.yellow {
+    background-color: #d7a024
+}
+
+.purple {
+	background-color: #cc99cc
+}
+
+.blue {
+	background-color: #9999ff
+}
+
+.red {
+	background-color: #cc6666
+}
+
+.orange {
+	background-color: #ff9900
+}
+
+.apricot {
+	background-color: #ff9966
+}
+
+/* RED ALERT */
+
+.admin-red-alert {
+	margin: 50px
+}
+
+.admin-red-alert span {
+	display: inline-block;
+	width: 125px;
+	color: #ffffff
+}
+
+	.admin-red-alert input[type=button] {
+	    margin-top: 20px;
+	    border: none;
+	    min-width: 200px;
+        border-radius: 20px
+	}

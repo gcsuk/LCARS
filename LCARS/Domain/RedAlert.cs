@@ -1,7 +1,4 @@
-﻿using System;
-using LCARS.ViewModels;
-
-namespace LCARS.Domain
+﻿namespace LCARS.Domain
 {
     public class RedAlert : IRedAlert
     {

@@ -1,11 +1,11 @@
 ﻿[
     {
         "Id": "1",
-        "Jql": "(priority%20=%20Blocker%20OR%20issuetype%20=%20Incident)%20AND%20statuscategory%20!=%20done"
+        "Jql": "Project%3DCMS%20AND%20(priority%20=%20Blocker%20OR%20issuetype%20=%20Incident)%20AND%20statuscategory%20!=%20done"
     },
     {
         "Id": "2",
-        "Jql": "Project%3DCMS%20and%20issuetype%3D'CMS%20Bug'%20and%20priority%20IN%20(Major%2C%20Blocker)and%20statusCategory%20!%3D%20Done%20and%20status%20!%3D%20'ready%20for%20prod'"
+        "Jql": "'Epic Link'=CMS-2632"
     },
     {
         "Id": "3",

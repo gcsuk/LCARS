@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,13 +58,13 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -88,9 +89,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -112,12 +111,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BacklogController.cs" />
     <Compile Include="Controllers\BuildsController.cs" />
     <Compile Include="Controllers\DeploymentsController.cs" />
@@ -145,6 +146,8 @@
     <Compile Include="Models\Deployments\Project.cs" />
     <Compile Include="Models\Deployments\Deployment.cs" />
     <Compile Include="Models\Issues\Query.cs" />
+    <Compile Include="ViewModels\AdminMenu.cs" />
+    <Compile Include="ViewModels\Admin\RedAlert.cs" />
     <Compile Include="ViewModels\Issues\Bugs.cs" />
     <Compile Include="ViewModels\Issues\IssueSet.cs" />
     <Compile Include="Models\Issues\Parent.cs" />
@@ -202,6 +205,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\admin.css" />
     <Content Include="Content\yellowAlert.css" />
     <Content Include="Content\redAlert.css" />
     <Content Include="favicon.ico" />
@@ -234,6 +238,7 @@
     <Content Include="img\redCornerTopAlertYellow.png" />
     <Content Include="img\softwareBug.jpg" />
     <Content Include="img\topRight.png" />
+    <Content Include="Scripts\admin.js" />
     <Content Include="Scripts\buildProgress.js" />
     <Content Include="Scripts\master.js" />
     <Content Include="Scripts\redAlert.js" />
@@ -266,7 +271,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\RedAlert\Update.cshtml" />
     <Content Include="Views\Git\Index.cshtml" />
     <Content Include="Views\Builds\HighCount.cshtml" />
     <Content Include="Views\RedAlert\Index.cshtml" />
@@ -275,6 +279,9 @@
     <Content Include="Views\Environments\Index.cshtml" />
     <Content Include="Views\Backlog\Index.cshtml" />
     <Content Include="Views\Builds\LowCount.cshtml" />
+    <Content Include="Views\Shared\_Admin.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\RedAlert.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
