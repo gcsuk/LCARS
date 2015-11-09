@@ -26,6 +26,18 @@ input[type=text], select {
     color: #000000
 }
 
+input[type=button] {
+	margin-top: 20px;
+	border: none;
+	min-width: 200px;
+    border-radius: 20px
+}
+
+.admin-button {
+     text-align: right;
+     margin: 0 215px 20px 0
+}
+
 .template-top-left {
      border-top-left-radius: 25px
 }
@@ -117,9 +129,18 @@ input[type=text], select {
 	color: #ffffff
 }
 
-	.admin-red-alert input[type=button] {
-	    margin-top: 20px;
-	    border: none;
-	    min-width: 200px;
-        border-radius: 20px
-	}
+/* SETTINGS */
+
+.admin-settings div span {
+    margin: 10px 0
+}
+
+.admin-settings div span {
+    display: inline-block;
+    width: 125px
+}
+
+.admin-settings div input[type=text] {
+    display: inline-block;
+    width: 500px
+}

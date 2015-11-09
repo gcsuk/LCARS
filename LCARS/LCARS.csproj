@@ -133,6 +133,7 @@
     <Compile Include="Domain\Environments.cs" />
     <Compile Include="Domain\IBuilds.cs" />
     <Compile Include="Domain\IIssues.cs" />
+    <Compile Include="Domain\ISettings.cs" />
     <Compile Include="Domain\Issues.cs" />
     <Compile Include="Domain\Settings.cs" />
     <Compile Include="ExtensionMethods.cs" />
@@ -282,6 +283,7 @@
     <Content Include="Views\Shared\_Admin.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\RedAlert.cshtml" />
+    <Content Include="Views\Admin\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

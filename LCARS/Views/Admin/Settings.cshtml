@@ -1,0 +1,44 @@
+﻿@model LCARS.ViewModels.Settings
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    ViewBag.Title = "LCARS Admin | Settings";
+}
+
+<div class="admin-settings">
+    <h1>Build Server</h1>
+    <div>
+        <span>Username</span> @Html.TextBoxFor(r => r.BuildServerUsername, new { id = "buildServerUsername" })
+    </div>
+    <div>
+        <span>Password</span> @Html.TextBoxFor(r => r.BuildServerPassword, new { id = "buildServerPassword" })
+    </div>
+    <h1>Deployment Server</h1>
+    <div>
+        <span>Path</span> @Html.TextBoxFor(r => r.DeploymentServerPath, new { id = "deploymentServerPath" })
+    </div>
+    <div>
+        <span>Key</span> @Html.TextBoxFor(r => r.DeploymentServerKey, new { id = "deploymentServerKey" })
+    </div>
+    <h1>Issues</h1>
+    <div>
+        <span>URL</span> @Html.TextBoxFor(r => r.IssuesUrl, new { id = "issuesUrl" })
+    </div>
+    <div>
+        <span>Username</span> @Html.TextBoxFor(r => r.IssuesUsername, new { id = "issuesUsername" })
+    </div>
+    <div>
+        <span>Password</span> @Html.TextBoxFor(r => r.IssuesPassword, new {id = "issuesPassword"})
+    </div>
+    <div class="admin-button">
+        <input type="button" value="Save" class="blue" />
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(".template-menu-selected").removeClass().addClass("template-menu-selected");
+        $("#template-menu-@((int) TempData["menuId"])").addClass("@(TempData["menuColor"])");
+    </script>
+    <script type="text/javascript" src="~/Scripts/admin.js"></script>
+}

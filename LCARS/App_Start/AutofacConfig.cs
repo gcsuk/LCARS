@@ -33,12 +33,14 @@ namespace LCARS
             builder.RegisterType<Domain.Builds>().As<Domain.IBuilds>();
             builder.RegisterType<Domain.Deployments>().As<Domain.IDeployments>();
             builder.RegisterType<Domain.Issues>().As<Domain.IIssues>();
+            builder.RegisterType<Domain.Settings>().As<Domain.ISettings>();
 
             builder.RegisterType<Repository.SettingsRepository<RedAlert>>().As<Repository.IRepository<RedAlert>>();
             builder.RegisterType<Repository.SettingsRepository<Tenant>>().As<Repository.IRepository<Tenant>>();
             builder.RegisterType<Repository.SettingsRepository<Build>>().As<Repository.IRepository<Build>>();
             builder.RegisterType<Repository.SettingsRepository<Query>>().As<Repository.IRepository<Query>>();
             builder.RegisterType<Repository.SettingsRepository<Models.Deployments.Environment>>().As<Repository.IRepository<Models.Deployments.Environment>>();
+            builder.RegisterType<Repository.SettingsRepository<Settings>>().As<Repository.IRepository<Settings>>();
             builder.RegisterType<Repository.Builds>()
                 .As<Repository.IBuilds>()
                 .WithParameter("username", settings.BuildServerUsername)

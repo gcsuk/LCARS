@@ -8,10 +8,12 @@ namespace LCARS.Controllers
     public class AdminController : Controller
     {
         private readonly IRedAlert _redAlertDomain;
+        private readonly ISettings _settingsDomain;
 
-        public AdminController(IRedAlert redAlertDomain)
+        public AdminController(IRedAlert redAlertDomain, ISettings settingsDomain)
         {
             _redAlertDomain = redAlertDomain;
+            _settingsDomain = settingsDomain;
         }
 
         // GET: Admin
@@ -39,9 +41,10 @@ namespace LCARS.Controllers
                     return View();
                 case AdminMenu.RedAlert:
                     TempData["menuColor"] = "blue";
+
                     var redAlertDetails = _redAlertDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json"));
 
-                    var vm = new ViewModels.Admin.RedAlert
+                    var redAlertVm = new ViewModels.Admin.RedAlert
                     {
                         IsEnabled = redAlertDetails.IsEnabled,
                         AlertType = redAlertDetails.AlertType,
@@ -52,10 +55,13 @@ namespace LCARS.Controllers
                         TargetMinute = Convert.ToDateTime(redAlertDetails.TargetDate).Minute
                     };
 
-                    return View("RedAlert", vm);
+                    return View("RedAlert", redAlertVm);
                 case AdminMenu.Settings:
                     TempData["menuColor"] = "apricot";
-                    return View();
+
+                    var settingsVm = _settingsDomain.GetSettings(Server.MapPath(@"~/App_Data/Settings.json"));
+
+                    return View("Settings", settingsVm);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(selectedMenu), selectedMenu, null);
             }

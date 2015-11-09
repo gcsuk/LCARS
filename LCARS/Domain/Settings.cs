@@ -4,7 +4,7 @@ using LCARS.ViewModels;
 
 namespace LCARS.Domain
 {
-    public class Settings
+    public class Settings : ISettings
     {
         private readonly IRepository<Models.Settings> _repository;
 
@@ -27,6 +27,26 @@ namespace LCARS.Domain
                 IssuesUsername = settings.IssuesUsername,
                 IssuesPassword = settings.IssuesPassword
             };
+        }
+
+        public void UpdateSettings(string filePath, ViewModels.Settings settingsVm)
+        {
+            var settings = new Models.Settings
+            {
+                BuildServerCredentials =
+                    new Models.Credentials
+                    {
+                        Username = settingsVm.BuildServerUsername,
+                        Password = settingsVm.BuildServerPassword
+                    },
+                DeploymentServerPath = settingsVm.DeploymentServerPath,
+                DeploymentServerKey = settingsVm.DeploymentServerKey,
+                IssuesUrl = settingsVm.IssuesUrl,
+                IssuesUsername = settingsVm.IssuesUsername,
+                IssuesPassword = settingsVm.IssuesPassword
+            };
+
+            _repository.Update(filePath, settings);
         }
 
         public static Boards SelectBoard()
