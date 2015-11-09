@@ -68,7 +68,7 @@ namespace LCARS.Controllers
         }
 
         [HttpPost, Route("Admin/UpdateRedAlert")]
-        public bool UpdateRedAlert(bool isEnabled, string targetDate, string alertType)
+        public JsonResult UpdateRedAlert(bool isEnabled, string targetDate, string alertType)
         {
             try
             {
@@ -81,11 +81,11 @@ namespace LCARS.Controllers
 
                 _redAlertDomain.UpdateRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json"), settings);
 
-                return true;
+                return Json(true, JsonRequestBehavior.AllowGet);
             }
             catch
             {
-                return false;
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
             
         }
