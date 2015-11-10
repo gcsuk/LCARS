@@ -26,11 +26,33 @@ input[type=text], select {
     color: #000000
 }
 
-input[type=button] {
-	margin-top: 20px;
+input[type=button], input[type=submit] {
+	margin-top: 10px;
 	border: none;
 	min-width: 200px;
     border-radius: 20px
+}
+
+.confirmation {
+    display: none;
+    width: 600px;
+    text-align: center;
+    margin: 10px;
+    padding: 5px 0;
+    color: #ff9900;
+    border: solid 5px #ff9900;
+    border-radius: 25px
+}
+
+.error {
+    display: none;
+    width: 600px;
+    text-align: center;
+    margin: 10px;
+    padding: 5px 0;
+    color: #940606;
+    border: solid 5px #940606;
+    border-radius: 25px
 }
 
 .admin-button {
@@ -81,8 +103,9 @@ input[type=button] {
 }
 
 .template-menu-buffer-bottom {
-    margin-top: 5px;
-    height: 35px
+    display: inline-block;
+    height: 100%;
+    width: 100%
 }
 
 .white-text {
@@ -132,7 +155,7 @@ input[type=button] {
 /* SETTINGS */
 
 .admin-settings div span {
-    margin: 10px 0
+    margin: 2px 0
 }
 
 .admin-settings div span {
@@ -142,5 +165,6 @@ input[type=button] {
 
 .admin-settings div input[type=text] {
     display: inline-block;
-    width: 500px
+    width: 500px;
+    line-height: 1
 }

@@ -89,5 +89,22 @@ namespace LCARS.Controllers
             }
             
         }
+
+        [HttpPost, Route("Admin/Settings"), ValidateInput(false)]
+        public ActionResult Settings(ViewModels.Settings viewModel)
+        {
+            try
+            {
+                _settingsDomain.UpdateSettings(Server.MapPath(@"~/App_Data/Settings.json"), viewModel);
+
+                TempData["ShowConfirmation"] = "display: block";
+            }
+            catch
+            {
+                TempData["ShowError"] = "display: block";
+            }
+
+            return RedirectToAction("Settings");
+        }
     }
 }

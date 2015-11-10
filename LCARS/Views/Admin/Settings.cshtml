@@ -4,37 +4,37 @@
     ViewBag.Title = "LCARS Admin | Settings";
 }
 
-<div class="admin-settings">
-    <h1>Build Server</h1>
-    <div>
-        <span>Username</span> @Html.TextBoxFor(r => r.BuildServerUsername, new { id = "buildServerUsername" })
-    </div>
-    <div>
-        <span>Password</span> @Html.TextBoxFor(r => r.BuildServerPassword, new { id = "buildServerPassword" })
-    </div>
-    <h1>Deployment Server</h1>
-    <div>
-        <span>Path</span> @Html.TextBoxFor(r => r.DeploymentServerPath, new { id = "deploymentServerPath" })
-    </div>
-    <div>
-        <span>Key</span> @Html.TextBoxFor(r => r.DeploymentServerKey, new { id = "deploymentServerKey" })
-    </div>
-    <h1>Issues</h1>
-    <div>
-        <span>URL</span> @Html.TextBoxFor(r => r.IssuesUrl, new { id = "issuesUrl" })
-    </div>
-    <div>
-        <span>Username</span> @Html.TextBoxFor(r => r.IssuesUsername, new { id = "issuesUsername" })
-    </div>
-    <div>
-        <span>Password</span> @Html.TextBoxFor(r => r.IssuesPassword, new {id = "issuesPassword"})
-    </div>
-    <div class="admin-button">
-        <input type="button" value="Save" class="blue" />
-    </div>
-</div>
-
-@section scripts
+@using (Html.BeginForm("Settings", "Admin"))
 {
-    
+    <div class="admin-settings">
+        <h2>Build Server</h2>
+        <div>
+            <span>Username</span> @Html.TextBoxFor(r => r.BuildServerUsername, new {id = "buildServerUsername"})
+        </div>
+        <div>
+            <span>Password</span> @Html.TextBoxFor(r => r.BuildServerPassword, new {id = "buildServerPassword"})
+        </div>
+        <h2>Deployment Server</h2>
+        <div>
+            <span>Path</span> @Html.TextBoxFor(r => r.DeploymentServerPath, new {id = "deploymentServerPath"})
+        </div>
+        <div>
+            <span>Key</span> @Html.TextBoxFor(r => r.DeploymentServerKey, new {id = "deploymentServerKey"})
+        </div>
+        <h2>Issues</h2>
+        <div>
+            <span>URL</span> @Html.TextBoxFor(r => r.IssuesUrl, new {id = "issuesUrl"})
+        </div>
+        <div>
+            <span>Username</span> @Html.TextBoxFor(r => r.IssuesUsername, new {id = "issuesUsername"})
+        </div>
+        <div>
+            <span>Password</span> @Html.TextBoxFor(r => r.IssuesPassword, new {id = "issuesPassword"})
+        </div>
+        <div class="admin-button">
+            <input id="updateSettings" type="submit" value="Save" class="blue"/>
+        </div>
+        <div class="confirmation" style="@TempData["ShowConfirmation"]">Changes Saved Successfully</div>
+        <div class="error" style="@TempData["ShowError"]">There was an error saving the changes.</div>
+    </div>
 }
