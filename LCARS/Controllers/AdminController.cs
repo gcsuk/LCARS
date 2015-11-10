@@ -75,7 +75,7 @@ namespace LCARS.Controllers
                 var settings = new ViewModels.RedAlert
                 {
                     IsEnabled = isEnabled,
-                    TargetDate = targetDate == "" ? (DateTime?) null : Convert.ToDateTime(targetDate),
+                    TargetDate = isEnabled ? Convert.ToDateTime(targetDate) : (DateTime?) null,
                     AlertType = alertType
                 };
 
