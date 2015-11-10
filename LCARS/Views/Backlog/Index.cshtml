@@ -1,4 +1,4 @@
-﻿@model LCARS.ViewModels.Issues.Bugs
+﻿@model LCARS.ViewModels.Issues.Backlog
 @{
     ViewBag.Title = "LCARS | Bugs";
 
@@ -19,26 +19,18 @@
     <div class="row">
         <img src="~/img/softwareBug.jpg" alt="Bug" />
         <div class="col-lg-8">
-            @Model.IssueSet Bugs: <span>@Model.Count</span>
-            <div id="timeRemaining" class="row">
-                <div>
-                    Days Left: <span>@Model.NumberOfWorkingDays</span>
+            @Model.IssueSet: <span>@Model.Count</span>
+            @if (Model.Deadline.HasValue)
+            {
+                <div id="timeRemaining" class="row">
+                    <div>
+                        Days Left: <span>@Model.NumberOfWorkingDays</span>
+                    </div>
+                    <div class="hoursRemaining">
+                        (@Model.NumberOfWorkingHours hours, @Model.NumberOfWorkingMinutes minutes)
+                    </div>
                 </div>
-                <div class="hoursRemaining">
-                    (@Model.NumberOfWorkingHours hours, @Model.NumberOfWorkingMinutes minutes)
-                </div>
-            </div>
+            }
         </div>
     </div>
 </div>
-
-@*<table class="issues">
-    @foreach (var issue in Model.BugList)
-    {
-        <tr>
-            <td class="priority"><img src="@issue.PriorityIcon" alt="@issue.Priority" /></td>
-            <td class="issueId">@issue.Id</td>
-            <td>@issue.Summary</td>
-        </tr>
-    }
-</table>*@

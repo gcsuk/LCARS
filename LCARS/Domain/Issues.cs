@@ -15,13 +15,51 @@ namespace LCARS.Domain
             _settingsRepository = settingsRepository;
         }
 
-        public IEnumerable<Query> GetQueries(string path)
+        public IEnumerable<Query> GetQueries(string filePath)
         {
-            return _settingsRepository.GetList(path).Select(q => new Query
+            return _settingsRepository.GetList(filePath).Select(q => new Query
             {
                 Id = q.Id,
+                Name = q.Name,
+                Deadline = q.Deadline,
                 Jql = q.Jql
             });
+        }
+
+        public void UpdateQuery(string filePath, Query query)
+        {
+            var queries = _settingsRepository.GetList(filePath).ToList();
+
+            var selectedQuery = queries.SingleOrDefault(q => q.Id == query.Id);
+
+            if (selectedQuery == null) // New item
+            {
+                queries.Add(new Models.Issues.Query
+                {
+                    Id = query.Id,
+                    Name = query.Name,
+                    Deadline = query.Deadline,
+                    Jql = query.Jql
+                });
+            }
+            else // Updated item
+            {
+                selectedQuery.Id = query.Id;
+                selectedQuery.Name = query.Name;
+                selectedQuery.Deadline = query.Deadline;
+                selectedQuery.Jql = query.Jql;
+            }
+
+            _settingsRepository.UpdateList(filePath, queries);
+        }
+
+        public void DeleteQuery(string filePath, int id)
+        {
+            var queries = _settingsRepository.GetList(filePath).ToList();
+
+            queries.Remove(queries.SingleOrDefault(q => q.Id == id));
+
+            _settingsRepository.UpdateList(filePath, queries);
         }
 
         public IEnumerable<Issue> Get(string query)

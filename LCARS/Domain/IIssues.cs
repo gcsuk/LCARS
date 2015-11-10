@@ -6,6 +6,10 @@ namespace LCARS.Domain
     {
         IEnumerable<ViewModels.Issues.Query> GetQueries(string path);
 
+        void UpdateQuery(string filePath, ViewModels.Issues.Query query);
+
+        void DeleteQuery(string filePath, int id);
+
         IEnumerable<ViewModels.Issues.Issue> Get(string query);
     }
 }

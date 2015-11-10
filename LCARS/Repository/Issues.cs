@@ -25,7 +25,7 @@ namespace LCARS.Repository
             {
                 webClient.Headers.Set("Authorization", "Basic " + GetEncodedCredentials(_username, _password));
 
-                var jsonData = webClient.DownloadString(_url + query);
+                var jsonData = webClient.DownloadString(_url + query + "&maxResults=1000");
 
                 return JsonConvert.DeserializeObject<Parent>(jsonData);
             }

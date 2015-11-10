@@ -1,0 +1,78 @@
+﻿@using System.Globalization
+@model IEnumerable<LCARS.ViewModels.Issues.Query>
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    ViewBag.Title = "LCARS Admin | Issues";
+}
+
+<div class="admin-issues">
+    <div>
+        @foreach (var issue in Model)
+        {
+            <div class="issue-button apricot" data-button-id="@issue.Id">
+                @issue.Name
+            </div>
+        }
+        <div class="issue-button orange" data-button-id="-1">
+            New
+        </div>
+    </div>
+    <div class="details">
+        <div>
+            <span>ID</span><input id="id" type="text"/>
+        </div>
+        <div>
+            <span>Name</span><input id="name" type="text"/>
+        </div>
+        <div>
+            <span>Deadline</span>
+            <input id="hasDeadline" type="checkbox"/>
+            <select id="deadlineDay" disabled>
+                @for (var i = 1; i <= 31; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+            <select id="deadlineMonth" disabled>
+                @for (var i = 1; i <= 12; i++)
+                {
+                    <option value="@i">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i)</option>
+                }
+            </select>
+            <select id="deadlineYear" disabled>
+                @for (var i = DateTime.Now.Year; i <= DateTime.Now.Year + 1; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+            <select id="deadlineHour" disabled>
+                @for (var i = 0; i <= 23; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+            <select id="deadlineMinute" disabled>
+                @for (var i = 0; i <= 59; i += 15)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+        </div>
+        <div>
+            <span>JQL</span><textarea id="jql"></textarea>
+        </div>
+        <div>
+            <input id="updateIssueQuery" type="button" value="Save" class="blue"/>
+            <input id="deleteIssueQuery" type="button" value="Delete" class="red"/>
+        </div>
+    </div>
+    <div class="confirmation">Changes Saved Successfully</div>
+    <div class="error">There was an error saving the changes.</div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        getIssueQuery(0);
+    </script>
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1,
+    "Name": "Blockers",
+    "Deadline": null,
+    "Jql": "(Project=CMS OR Project=Prod OR Project=\"Rank Production\") AND (priority = Blocker OR issuetype = Incident) AND statuscategory != done"
+  },
+  {
+    "Id": 2,
+    "Name": "CMS Bugs",
+    "Deadline": "2015-11-17T17:30:00",
+    "Jql": "\"Epic Link\"=CMS-2632"
+  },
+  {
+    "Id": 3,
+    "Name": "Web Bugs",
+    "Deadline": "2015-11-17T17:30:00",
+    "Jql": "project = \"Rank Production\" AND type != Epic AND type != Sub-Task AND status in (\"To Do\", Started, \"In Progress\", \"Open Pull Request\", \"Merged into Develop\", Backlog) "
+  }
+]

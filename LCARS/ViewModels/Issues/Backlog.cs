@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LCARS.ViewModels.Issues
 {
-    public class Bugs : RedAlertStatus
+    public class Backlog : RedAlertStatus
     {
         public string IssueSet { get; set; }
 
@@ -12,23 +12,28 @@ namespace LCARS.ViewModels.Issues
 
         public int Count => BugList.Count();
 
-        public DateTime Deadline { get; set; }
+        public DateTime? Deadline { get; set; }
 
         public int NumberOfWorkingDays
         {
             get
             {
+                if (!Deadline.HasValue)
+                {
+                    return 0;
+                }
+
                 var dayCount = 0;
                 var date = Deadline;
 
                 while (date > DateTime.Now.Date)
                 {
-                    if (date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday)
+                    if (date.Value.DayOfWeek != DayOfWeek.Saturday && date.Value.DayOfWeek != DayOfWeek.Sunday)
                     {
                         dayCount++;
                     }
 
-                    date = date.AddDays(-1);
+                    date = date.Value.AddDays(-1);
                 }
 
                 return dayCount;
@@ -39,6 +44,11 @@ namespace LCARS.ViewModels.Issues
         {
             get
             {
+                if (!Deadline.HasValue)
+                {
+                    return 0;
+                }
+
                 var hourCount = NumberOfWorkingDays * 7.5M;
 
                 // If it is after 17:30, just return the full days remaining
@@ -55,6 +65,11 @@ namespace LCARS.ViewModels.Issues
         {
             get
             {
+                if (!Deadline.HasValue)
+                {
+                    return 0;
+                }
+
                 if (DateTime.Now.Hour >= 18 || (DateTime.Now.Hour == 17 && DateTime.Now.Minute >= 30))
                 {
                     return 30;

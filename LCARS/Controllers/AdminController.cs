@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using LCARS.ViewModels;
 using LCARS.Domain;
@@ -7,11 +8,13 @@ namespace LCARS.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly IIssues _issuesDomain;
         private readonly IRedAlert _redAlertDomain;
         private readonly ISettings _settingsDomain;
 
-        public AdminController(IRedAlert redAlertDomain, ISettings settingsDomain)
+        public AdminController(IIssues issuesDomain, IRedAlert redAlertDomain, ISettings settingsDomain)
         {
+            _issuesDomain = issuesDomain;
             _redAlertDomain = redAlertDomain;
             _settingsDomain = settingsDomain;
         }
@@ -38,7 +41,10 @@ namespace LCARS.Controllers
                     return View();
                 case AdminMenu.Issues:
                     TempData["menuColor"] = "red";
-                    return View();
+
+                    var issuesVm = _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"));
+
+                    return View("Issues", issuesVm);
                 case AdminMenu.RedAlert:
                     TempData["menuColor"] = "blue";
 
@@ -64,6 +70,62 @@ namespace LCARS.Controllers
                     return View("Settings", settingsVm);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(selectedMenu), selectedMenu, null);
+            }
+        }
+
+        [Route("Admin/GetIssueQuery/{id}")]
+        public JsonResult GetIssueQuery(int id = 0)
+        {
+            switch (id)
+            {
+                case -1:
+                    return Json(new ViewModels.Issues.Query(), JsonRequestBehavior.AllowGet);
+                case 0:
+                    return Json(_issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json")).First(),
+                        JsonRequestBehavior.AllowGet);
+                default:
+                    return Json(_issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json")).Single(i => i.Id == id),
+                        JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost, Route("Admin/UpdateIssueQuery")]
+        public ActionResult UpdateIssueQuery(ViewModels.Issues.Query query)
+        {
+            try
+            {
+                if (query.Id <= 0)
+                {
+                    throw new ArgumentException("Invalid ID. Try again.", "query");
+                }
+
+                _issuesDomain.UpdateQuery(Server.MapPath(@"~/App_Data/Issues.json"), query);
+
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost, Route("Admin/DeleteIssueQuery")]
+        public ActionResult DeleteIssueQuery(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                {
+                    throw new ArgumentException("Invalid ID. Try again.", "id");
+                }
+
+                _issuesDomain.DeleteQuery(Server.MapPath(@"~/App_Data/Issues.json"), id);
+
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
 

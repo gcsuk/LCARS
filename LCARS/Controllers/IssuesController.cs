@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using LCARS.Domain;
 
@@ -18,21 +19,31 @@ namespace LCARS.Controllers
         }
 
         // GET: Issues
-        public ActionResult Index()
+        [Route("Issues/{issueSet?}")]
+        public ActionResult Index(int issueSet = 0)
         {
-            var randomBoard = Settings.SelectBoard();
-
-            if (_thisBoard != randomBoard)
+            if (issueSet == 0)
             {
-               return RedirectToAction("Index", randomBoard.GetDescription());
+                var randomBoard = Settings.SelectBoard();
+
+                if (_thisBoard != randomBoard)
+                {
+                    return RedirectToAction("Index", randomBoard.GetDescription());
+                }
+
+                var issueSets = _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
+                    .Select(q => q.Id)
+                    .ToList();
+
+                issueSet = issueSets[new Random(Guid.NewGuid().GetHashCode()).Next(0, issueSets.Count)];
             }
 
             var query =
-                _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/IssueQueries.json"))
-                    .Single(i => i.Id == ((int) ViewModels.Issues.IssueSet.Blockers))
+                _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
+                    .Single(i => i.Id == issueSet)
                     .Jql;
 
-            var vm = new ViewModels.Issues.Blockers
+            var vm = new ViewModels.Issues.Issues
             {
                 IssueList = _issuesDomain.Get(query),
                 IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled

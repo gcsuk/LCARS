@@ -2,7 +2,7 @@
 
 namespace LCARS.ViewModels.Issues
 {
-    public class Blockers : RedAlertStatus
+    public class Issues : RedAlertStatus
     {
         public IEnumerable<Issue> IssueList { get; set; }
     }

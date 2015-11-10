@@ -21,9 +21,9 @@ namespace LCARS.Controllers
 
         // GET: Backlog
         [Route("Backlog/{issueSet?}")]
-        public ActionResult Index(IssueSet issueSet = IssueSet.Random)
+        public ActionResult Index(int issueSet = 0)
         {
-            if (issueSet == IssueSet.Random)
+            if (issueSet == 0)
             {
                 var randomBoard = Settings.SelectBoard();
 
@@ -32,19 +32,22 @@ namespace LCARS.Controllers
                     return RedirectToAction("Index", randomBoard.GetDescription());
                 }
 
-                issueSet = (IssueSet)new Random(Guid.NewGuid().GetHashCode()).Next(2, Enum.GetNames(typeof(IssueSet)).Length);
+                var issueSets = _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
+                    .Select(q => q.Id)
+                    .ToList();
+
+                issueSet = issueSets[new Random(Guid.NewGuid().GetHashCode()).Next(0, issueSets.Count)];
             }
 
             var query =
-                _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/IssueQueries.json"))
-                    .Single(i => i.Id == ((int)issueSet))
-                    .Jql;
+                _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
+                    .Single(i => i.Id == issueSet);
 
-            var vm = new Bugs
+            var vm = new Backlog
             {
-                IssueSet = issueSet.GetDescription(),
-                BugList = _issuesDomain.Get(query),
-                Deadline = new DateTime(2015, 11, 17, 17, 30, 0), // TODO: Sort this temporary hack
+                IssueSet = query.Name,
+                BugList = _issuesDomain.Get(query.Jql),
+                Deadline = query.Deadline,
                 IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled
             };
 
@@ -52,11 +55,11 @@ namespace LCARS.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetBacklog()
+        public JsonResult GetBacklog(int issueSet = 1)
         {
             var query =
-                _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/IssueQueries.json"))
-                    .Single(i => i.Id == ((int)IssueSet.CmsBugs))
+                _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
+                    .Single(i => i.Id == issueSet)
                     .Jql;
 
             return Json(_issuesDomain.Get(query), JsonRequestBehavior.AllowGet);

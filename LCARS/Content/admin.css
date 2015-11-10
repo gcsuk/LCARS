@@ -11,10 +11,10 @@
 body {
     padding-top: 5px;
     padding-bottom: 20px;
-	background: black;
-	font-family: lcars;
-	font-size: 18pt;
-	color: #000000
+    background: black;
+    font-family: lcars;
+    font-size: 18pt;
+    color: #000000
 }
 
 a {
@@ -22,15 +22,29 @@ a {
     color: #000000
 }
 
-input[type=text], select {
+span {
+    display: inline-block;
+    width: 125px;
+    color: #ffffff;
+    vertical-align: top
+}
+
+input[type=text], select, textarea {
     color: #000000
 }
 
+select:disabled {
+    background-color: #ccc;
+    color: #565555
+}
+
 input[type=button], input[type=submit] {
-	margin-top: 10px;
-	border: none;
-	min-width: 200px;
-    border-radius: 20px
+    margin-top: 10px;
+    border: none;
+    min-width: 200px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: #000000
 }
 
 .confirmation {
@@ -56,27 +70,27 @@ input[type=button], input[type=submit] {
 }
 
 .admin-button {
-     text-align: right;
-     margin: 0 215px 20px 0
+    text-align: right;
+    margin: 0 215px 20px 0;
 }
 
 .template-top-left {
-     border-top-left-radius: 25px
+    border-top-left-radius: 25px;
 }
 
 .template-top-right, .template-bottom-right {
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
-    margin-left: 5px
+    margin-left: 5px;
 }
 
 .template-bottom-left {
-    border-bottom-left-radius: 25px
+    border-bottom-left-radius: 25px;
 }
 
 .template-text {
     color: #ff9900;
-    text-align: center
+    text-align: center;
 }
 
 .template-menu {
@@ -87,29 +101,29 @@ input[type=button], input[type=submit] {
 }
 
 .template-menu-selected {
-     width: 40%;
-     margin-bottom: 5px;
-     margin-left: 5px;
-     padding-top: 20px;
-     padding-right: 5px;
-     text-align: right;
-     border-top-right-radius: 25px;
-     border-bottom-right-radius: 25px
+    width: 40%;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    padding-top: 20px;
+    padding-right: 5px;
+    text-align: right;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
 
 .template-menu-buffer-top {
     margin-bottom: 5px;
-    height: 35px
+    height: 35px;
 }
 
 .template-menu-buffer-bottom {
     display: inline-block;
     height: 100%;
-    width: 100%
+    width: 100%;
 }
 
 .white-text {
-    color: #ffffff
+    color: #ffffff;
 }
 
 .black {
@@ -121,50 +135,76 @@ input[type=button], input[type=submit] {
 }
 
 .purple {
-	background-color: #cc99cc
+    background-color: #cc99cc
 }
 
 .blue {
-	background-color: #9999ff
+    background-color: #9999ff
 }
 
 .red {
-	background-color: #cc6666
+    background-color: #cc6666
 }
 
 .orange {
-	background-color: #ff9900
+    background-color: #ff9900
 }
 
 .apricot {
-	background-color: #ff9966
+    background-color: #ff9966
 }
+
+/* ISSUES */
+
+.admin-issues {
+    margin-top: 20px;
+}
+
+    .admin-issues div {
+        margin: 5px 0;
+    }
+
+    .admin-issues div input[type=text] {
+        display: inline-block;
+        width: 200px;
+        line-height: 1
+    }
+
+    .admin-issues div textarea {
+        display: inline-block;
+        width: 500px;
+        height: 150px;
+        line-height: 1
+    }
+
+    .admin-issues div.issue-button {
+        display: inline-block;
+	    border: none;
+	    min-width: 100px;
+        border-radius: 20px;
+        text-align: center;
+        color: #000000;
+        cursor: pointer
+    }
+
+    .admin-issues div.details {
+        margin-top: 20px
+    }
 
 /* RED ALERT */
 
 .admin-red-alert {
-	margin: 50px
-}
-
-.admin-red-alert span {
-	display: inline-block;
-	width: 125px;
-	color: #ffffff
+    margin: 50px;
 }
 
 /* SETTINGS */
 
 .admin-settings div span {
-    margin: 2px 0
-}
-
-.admin-settings div span {
-    display: inline-block;
-    width: 125px
+    margin: 2px 0;
 }
 
 .admin-settings div input[type=text] {
     display: inline-block;
     width: 500px;
-    line-height: 1
+    line-height: 1;
 }
