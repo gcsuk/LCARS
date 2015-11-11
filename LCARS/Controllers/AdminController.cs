@@ -92,21 +92,12 @@ namespace LCARS.Controllers
         [HttpPost, Route("Admin/UpdateIssueQuery")]
         public ActionResult UpdateIssueQuery(ViewModels.Issues.Query query)
         {
-            try
+            if (query.Id <= 0)
             {
-                if (query.Id <= 0)
-                {
-                    throw new ArgumentException("Invalid ID. Try again.", "query");
-                }
-
-                _issuesDomain.UpdateQuery(Server.MapPath(@"~/App_Data/Issues.json"), query);
-
-                return Json(true, JsonRequestBehavior.AllowGet);
+                throw new ArgumentException("Invalid ID. Try again.", "query");
             }
-            catch
-            {
-                return Json(false, JsonRequestBehavior.AllowGet);
-            }
+
+            return Json(_issuesDomain.UpdateQuery(Server.MapPath(@"~/App_Data/Issues.json"), query), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost, Route("Admin/DeleteIssueQuery")]

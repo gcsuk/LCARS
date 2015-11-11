@@ -33,7 +33,7 @@ $("#hasDeadline").click(function () {
     }
 });
 
-$(".issue-button").click(function () {
+$("div").on("click", ".issue-button", function () {
     $(".confirmation").hide();
     $(".error").hide();
     getIssueQuery($(this).attr("data-button-id"));
@@ -78,10 +78,15 @@ $("#updateIssueQuery").click(function () {
         data: "{ 'id':" + $("#id").val() + ", 'name':'" + $("#name").val() + "', 'deadline': " + deadline + ", 'jql': '" + $("#jql").val().replace(/'/g, '"') + "' }",
         success: function (data) {
             if (data) {
-                $(".confirmation").show();
+                $("<div class=\"issue-button apricot\" data-button-id=\"" + $("#id").val() + "\">" + $("#name").val() + "</div>").insertBefore("#new");
             } else {
-                $(".error").show();
+                $("div[data-button-id='" + $("#id").val() + "'").html($("#name").val());
             }
+
+            $(".confirmation").show();
+        },
+        error: function () {
+            $(".error").show();
         }
     });
 });

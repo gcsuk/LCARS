@@ -26,7 +26,7 @@ namespace LCARS.Domain
             });
         }
 
-        public void UpdateQuery(string filePath, Query query)
+        public bool UpdateQuery(string filePath, Query query)
         {
             var queries = _settingsRepository.GetList(filePath).ToList();
 
@@ -51,6 +51,8 @@ namespace LCARS.Domain
             }
 
             _settingsRepository.UpdateList(filePath, queries);
+
+            return selectedQuery == null;
         }
 
         public void DeleteQuery(string filePath, int id)
