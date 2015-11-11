@@ -167,8 +167,8 @@
     <Compile Include="Models\BuildStatus.cs" />
     <Compile Include="Models\Environments\Environment.cs" />
     <Compile Include="Models\Build.cs" />
-    <Compile Include="Repository\IIssues.cs" />
-    <Compile Include="Repository\Issues.cs" />
+    <Compile Include="Services\IIssues.cs" />
+    <Compile Include="Services\Issues.cs" />
     <Compile Include="ViewModels\Environments\Environment.cs" />
     <Compile Include="ViewModels\Environments\Tenant.cs" />
     <Compile Include="ViewModels\Issues\Issue.cs" />
@@ -180,11 +180,10 @@
     <Compile Include="Domain\RedAlert.cs" />
     <Compile Include="Domain\IRedAlert.cs" />
     <Compile Include="Domain\IEnvironments.cs" />
-    <Compile Include="Repository\IDeployments.cs" />
-    <Compile Include="Repository\Deployments.cs" />
-    <Compile Include="Repository\IBuilds.cs" />
-    <Compile Include="Repository\Builds.cs" />
-    <Compile Include="Repository\Common.cs" />
+    <Compile Include="Services\IDeployments.cs" />
+    <Compile Include="Services\Deployments.cs" />
+    <Compile Include="Services\IBuilds.cs" />
+    <Compile Include="Services\Builds.cs" />
     <Compile Include="ViewModels\BuildStatus.cs" />
     <Compile Include="ViewModels\Deployments\DeploymentStatus.cs" />
     <Compile Include="ViewModels\Deployments\Environment.cs" />

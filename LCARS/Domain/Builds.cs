@@ -6,12 +6,12 @@ namespace LCARS.Domain
 {
     public class Builds : IBuilds
     {
-        private readonly Repository.IBuilds _repository;
+        private readonly Services.IBuilds _service;
         private readonly Repository.IRepository<Build> _settingsRepository;
 
-        public Builds(Repository.IBuilds repository, Repository.IRepository<Build> settingsRepository)
+        public Builds(Services.IBuilds service, Repository.IRepository<Build> settingsRepository)
         {
-            _repository = repository;
+            _service = service;
             _settingsRepository = settingsRepository;
         }
 
@@ -25,7 +25,7 @@ namespace LCARS.Domain
             var builds = new List<Build>();
 
             // Get all running builds
-            var buildsRunning = _repository.GetBuildsRunning();
+            var buildsRunning = _service.GetBuildsRunning();
 
             foreach (var buildTypeId in buildTypeIds)
             {
@@ -33,11 +33,11 @@ namespace LCARS.Domain
 
                 if (buildsRunning.ContainsKey(buildTypeId))
                 {
-                    build.Progress = _repository.GetBuildProgress(buildsRunning.Single(b => b.Key == buildTypeId).Value);
+                    build.Progress = _service.GetBuildProgress(buildsRunning.Single(b => b.Key == buildTypeId).Value);
                 }
                 else
                 {
-                    var lastBuildStatus = _repository.GetLastBuildStatus(buildTypeId);
+                    var lastBuildStatus = _service.GetLastBuildStatus(buildTypeId);
 
                     build.Status = lastBuildStatus.Key;
                     build.Number = lastBuildStatus.Value;

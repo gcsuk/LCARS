@@ -35,25 +35,26 @@ namespace LCARS
             builder.RegisterType<Domain.Issues>().As<Domain.IIssues>();
             builder.RegisterType<Domain.Settings>().As<Domain.ISettings>();
 
+            builder.RegisterType<Services.Builds>()
+                .As<Services.IBuilds>()
+                .WithParameter("username", settings.BuildServerUsername)
+                .WithParameter("password", settings.BuildServerPassword);
+            builder.RegisterType<Services.Deployments>()
+                .As<Services.IDeployments>()
+                .WithParameter("deploymentServer", settings.DeploymentServerPath)
+                .WithParameter("apiKey", settings.DeploymentServerKey);
+            builder.RegisterType<Services.Issues>()
+                .As<Services.IIssues>()
+                .WithParameter("url", settings.IssuesUrl)
+                .WithParameter("username", settings.IssuesUsername)
+                .WithParameter("password", settings.IssuesPassword);
+
             builder.RegisterType<Repository.SettingsRepository<RedAlert>>().As<Repository.IRepository<RedAlert>>();
             builder.RegisterType<Repository.SettingsRepository<Tenant>>().As<Repository.IRepository<Tenant>>();
             builder.RegisterType<Repository.SettingsRepository<Build>>().As<Repository.IRepository<Build>>();
             builder.RegisterType<Repository.SettingsRepository<Query>>().As<Repository.IRepository<Query>>();
             builder.RegisterType<Repository.SettingsRepository<Models.Deployments.Environment>>().As<Repository.IRepository<Models.Deployments.Environment>>();
             builder.RegisterType<Repository.SettingsRepository<Settings>>().As<Repository.IRepository<Settings>>();
-            builder.RegisterType<Repository.Builds>()
-                .As<Repository.IBuilds>()
-                .WithParameter("username", settings.BuildServerUsername)
-                .WithParameter("password", settings.BuildServerPassword);
-            builder.RegisterType<Repository.Deployments>()
-                .As<Repository.IDeployments>()
-                .WithParameter("deploymentServer", settings.DeploymentServerPath)
-                .WithParameter("apiKey", settings.DeploymentServerKey);
-            builder.RegisterType<Repository.Issues>()
-                .As<Repository.IIssues>()
-                .WithParameter("url", settings.IssuesUrl)
-                .WithParameter("username", settings.IssuesUsername)
-                .WithParameter("password", settings.IssuesPassword);
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();

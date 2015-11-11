@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Net;
 
-namespace LCARS.Repository
+namespace LCARS.Services
 {
     public class Deployments : IDeployments
     {

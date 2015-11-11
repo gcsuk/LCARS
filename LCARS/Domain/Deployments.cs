@@ -6,18 +6,18 @@ namespace LCARS.Domain
 {
     public class Deployments : IDeployments
     {
-        private readonly Repository.IDeployments _repository;
+        private readonly Services.IDeployments _service;
         private readonly Repository.IRepository<Models.Deployments.Environment> _settingsRepository;
 
-        public Deployments(Repository.IDeployments repository, Repository.IRepository<Models.Deployments.Environment> settingsRepository)
+        public Deployments(Services.IDeployments service, Repository.IRepository<Models.Deployments.Environment> settingsRepository)
         {
-            _repository = repository;
+            _service = service;
             _settingsRepository = settingsRepository;
         }
 
         public IEnumerable<Deployment> Get()
         {
-            var deployments = _repository.Get();
+            var deployments = _service.Get();
 
             deployments.Deploys.ForEach(d =>
             {

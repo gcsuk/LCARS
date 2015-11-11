@@ -4,7 +4,7 @@ using System.Text;
 using LCARS.Models.Issues;
 using Newtonsoft.Json;
 
-namespace LCARS.Repository
+namespace LCARS.Services
 {
     public class Issues : IIssues
     {

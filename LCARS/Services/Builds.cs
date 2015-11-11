@@ -6,7 +6,7 @@ using System.Net;
 using System.Xml.Linq;
 using LCARS.Models;
 
-namespace LCARS.Repository
+namespace LCARS.Services
 {
     public class Builds : IBuilds
     {

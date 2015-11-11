@@ -1,6 +1,6 @@
 using LCARS.Models.Issues;
 
-namespace LCARS.Repository
+namespace LCARS.Services
 {
     public interface IIssues
     {

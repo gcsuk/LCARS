@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using LCARS.Models;
 
-namespace LCARS.Repository
+namespace LCARS.Services
 {
     public interface IBuilds
     {

@@ -6,12 +6,12 @@ namespace LCARS.Domain
 {
     public class Issues : IIssues
     {
-        private readonly Repository.IIssues _repository;
+        private readonly Services.IIssues _service;
         private readonly Repository.IRepository<Models.Issues.Query> _settingsRepository;
 
-        public Issues(Repository.IIssues repository, Repository.IRepository<Models.Issues.Query> settingsRepository)
+        public Issues(Services.IIssues service, Repository.IRepository<Models.Issues.Query> settingsRepository)
         {
-            _repository = repository;
+            _service = service;
             _settingsRepository = settingsRepository;
         }
 
@@ -66,7 +66,7 @@ namespace LCARS.Domain
 
         public IEnumerable<Issue> Get(string query)
         {
-            return _repository.Get(query).Issues.OrderByDescending(i => i.Fields.Created).Select(i => new Issue
+            return _service.Get(query).Issues.OrderByDescending(i => i.Fields.Created).Select(i => new Issue
             {
                 Id = i.Key,
                 Summary = i.Fields.Summary,
