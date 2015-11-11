@@ -18,7 +18,7 @@ namespace LCARS.ViewModels.Issues
         {
             get
             {
-                if (!Deadline.HasValue)
+                if (!Deadline.HasValue || Deadline > DateTime.Now)
                 {
                     return 0;
                 }
@@ -44,7 +44,7 @@ namespace LCARS.ViewModels.Issues
         {
             get
             {
-                if (!Deadline.HasValue)
+                if (!Deadline.HasValue || Deadline > DateTime.Now)
                 {
                     return 0;
                 }
@@ -57,7 +57,7 @@ namespace LCARS.ViewModels.Issues
                     return (int)Math.Floor(hourCount);
                 }
 
-                return (int)Math.Floor(hourCount + (new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 17, 30, 0) - DateTime.Now).Hours);
+                return (int)Math.Floor(hourCount + (new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Deadline.Value.Hour, Deadline.Value.Minute, 0) - DateTime.Now).Hours);
             }
         }
 
@@ -65,22 +65,25 @@ namespace LCARS.ViewModels.Issues
         {
             get
             {
-                if (!Deadline.HasValue)
+                if (!Deadline.HasValue || Deadline > DateTime.Now)
                 {
                     return 0;
                 }
 
+                // If now is after hours, then return just the minutes of the deadline
                 if (DateTime.Now.Hour >= 18 || (DateTime.Now.Hour == 17 && DateTime.Now.Minute >= 30))
                 {
-                    return 30;
+                    return Deadline.Value.Minute;
                 }
 
-                if (DateTime.Now.Minute > 30)
+                // If the minutes past current hour is greater than the minutes of the deadline, return the remaining minutes this hour, plus the minutes of the deadline
+                if (DateTime.Now.Minute > Deadline.Value.Minute)
                 {
-                    return (60 - DateTime.Now.Minute) + 30;
+                    return (60 - DateTime.Now.Minute) + Deadline.Value.Minute;
                 }
 
-                return 30 - DateTime.Now.Minute;
+                // If the minutes past the current hour is lower than the minutes of the deadline, return the difference
+                return Deadline.Value.Minute - DateTime.Now.Minute;
             }
         }
     }
