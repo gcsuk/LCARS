@@ -18,7 +18,7 @@ namespace LCARS.ViewModels.Issues
         {
             get
             {
-                if (!Deadline.HasValue || Deadline > DateTime.Now)
+                if (!Deadline.HasValue || Deadline < DateTime.Now)
                 {
                     return 0;
                 }
@@ -44,7 +44,7 @@ namespace LCARS.ViewModels.Issues
         {
             get
             {
-                if (!Deadline.HasValue || Deadline > DateTime.Now)
+                if (!Deadline.HasValue || Deadline < DateTime.Now)
                 {
                     return 0;
                 }
@@ -65,7 +65,7 @@ namespace LCARS.ViewModels.Issues
         {
             get
             {
-                if (!Deadline.HasValue || Deadline > DateTime.Now)
+                if (!Deadline.HasValue || Deadline < DateTime.Now)
                 {
                     return 0;
                 }
