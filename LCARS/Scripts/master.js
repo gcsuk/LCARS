@@ -22,7 +22,7 @@ function gitStatus(data) {
         else {
             $("#gitStatus").html("GitHub Status: <span class=\"status\">" + data.status + "</span>");
             $("#gitStatusMessage").text(data.body);
-            $("#gitStatusDate").text(moment(data.created_on).format("DD MMMM YYYY hh:mm"));
+            $("#gitStatusDate").text(moment(data.created_on).format("DD MMMM YYYY HH:mm"));
         }
     }
     else {
