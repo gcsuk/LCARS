@@ -2,6 +2,8 @@
 {
     public class Settings
     {
+        public string BuildServerDomain { get; set; }
+
         public string BuildServerUsername { get; set; }
 
         public string BuildServerPassword { get; set; }

@@ -9,6 +9,9 @@
     <div class="admin-settings">
         <h2>Build Server</h2>
         <div>
+            <span>Domain</span> @Html.TextBoxFor(r => r.BuildServerDomain, new { id = "buildServerDomain" })
+        </div>
+        <div>
             <span>Username</span> @Html.TextBoxFor(r => r.BuildServerUsername, new {id = "buildServerUsername"})
         </div>
         <div>

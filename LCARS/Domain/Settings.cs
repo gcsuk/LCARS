@@ -19,6 +19,7 @@ namespace LCARS.Domain
 
             return new ViewModels.Settings
             {
+                BuildServerDomain = settings.BuildServerCredentials.Domain,
                 BuildServerUsername = settings.BuildServerCredentials.Username,
                 BuildServerPassword = settings.BuildServerCredentials.Password,
                 DeploymentServerPath = settings.DeploymentServerPath,
@@ -36,6 +37,7 @@ namespace LCARS.Domain
                 BuildServerCredentials =
                     new Models.Credentials
                     {
+                        Domain = settingsVm.BuildServerDomain,
                         Username = settingsVm.BuildServerUsername,
                         Password = settingsVm.BuildServerPassword
                     },

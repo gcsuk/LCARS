@@ -10,18 +10,20 @@ namespace LCARS.Services
 {
     public class Builds : IBuilds
     {
+        private readonly string _domain;
         private readonly string _username;
         private readonly string _password;
 
-        public Builds(string username, string password)
+        public Builds(string domain, string username, string password)
         {
+            _domain = domain;
             _username = username;
             _password = password;
         }
 
         public Dictionary<int, int> GetBuildsRunning()
         {
-            var doc = GetXml("http://teamcity.bedegaming.com/httpAuth/app/rest/builds?locator=running:true");
+            var doc = GetXml($"http://{_domain}/httpAuth/app/rest/builds?locator=running:true");
 
             var builds = new Dictionary<int, int>();
 
@@ -47,7 +49,7 @@ namespace LCARS.Services
 
         public BuildProgress GetBuildProgress(int buildId)
         {
-            var doc = GetXml("http://user:pwd@teamcity.bedegaming.com/httpAuth/app/rest/builds/id:" + buildId);
+            var doc = GetXml($"http://user:pwd@{_domain}/httpAuth/app/rest/builds/id:{buildId}");
 
             if (doc == null)
             {
@@ -78,7 +80,7 @@ namespace LCARS.Services
 
         public KeyValuePair<string, string> GetLastBuildStatus(int buildTypeId)
         {
-            var doc = GetXml(string.Format("http://teamcity.bedegaming.com/httpAuth/app/rest/builds?locator=buildType:(id:bt{0})", buildTypeId));
+            var doc = GetXml($"http://{_domain}/httpAuth/app/rest/builds?locator=buildType:(id:bt{buildTypeId})");
 
             if (doc == null)
             {
@@ -94,17 +96,17 @@ namespace LCARS.Services
             Uri requestUri;
             Uri.TryCreate(url, UriKind.Absolute, out requestUri);
 
-            NetworkCredential nc = new NetworkCredential(_username, _password);
-            CredentialCache cCache = new CredentialCache { { requestUri, "Basic", nc } };
+            var nc = new NetworkCredential(_username, _password);
+            var cCache = new CredentialCache { { requestUri, "Basic", nc } };
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUri);
+            var request = (HttpWebRequest)WebRequest.Create(requestUri);
 
             request.Credentials = cCache;
             request.PreAuthenticate = true;
             request.Method = WebRequestMethods.Http.Get;
             request.Timeout = 2000;
 
-            using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
+            using (var response = (HttpWebResponse) request.GetResponse())
             {
                 var doc = XDocument.Load(new StreamReader(response.GetResponseStream()));
 

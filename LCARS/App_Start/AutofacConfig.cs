@@ -37,6 +37,7 @@ namespace LCARS
 
             builder.RegisterType<Services.Builds>()
                 .As<Services.IBuilds>()
+                .WithParameter("domain", settings.BuildServerDomain)
                 .WithParameter("username", settings.BuildServerUsername)
                 .WithParameter("password", settings.BuildServerPassword);
             builder.RegisterType<Services.Deployments>()
