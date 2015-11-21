@@ -1,0 +1,12 @@
+[
+  {
+    "Id": 1,
+    "Name": "Demo",
+    "Boards": [
+      {
+        "CategoryId": 1,
+        "Argument": ""
+      }
+    ]
+  }
+]

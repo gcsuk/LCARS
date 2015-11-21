@@ -151,8 +151,81 @@ input[type=button], input[type=submit] {
 }
 
 .apricot {
-    background-color: #ff9966
+    background-color: #ff9966;
+    color: #000000
 }
+
+/* SCREENS */
+
+.admin-screens {
+    margin-top: 20px;
+}
+
+    .admin-screens div {
+        margin: 5px 0;
+    }
+
+    .admin-screens div input[type=text] {
+        display: inline-block;
+        width: 200px;
+        line-height: 1
+    }
+
+    .admin-screens div input[type=button] {
+        min-width: 100px;
+    }
+
+    .admin-screens div select {
+        display: inline-block;
+        width: 200px;
+    }
+
+    .admin-screens div textarea {
+        display: inline-block;
+        width: 500px;
+        height: 150px;
+        line-height: 1
+    }
+
+    .admin-screens div.screen-button {
+        display: inline-block;
+        border: none;
+        min-width: 100px;
+        border-radius: 20px;
+        text-align: center;
+        color: #000000;
+        cursor: pointer
+    }
+
+    .admin-screens div.details {
+        margin-top: 20px
+    }
+
+    .admin-screens table#boards {
+        margin-top: 20px
+    }
+
+    .admin-screens table#boards td.left {
+        width: 150px
+    }
+
+    .admin-screens table#boards td.left div {
+        border-radius: 20px 0 0 20px;
+        padding-left: 20px
+    }
+
+    .admin-screens table#boards td.middle {
+        min-width: 10px;
+        padding: 0 10px
+    }
+
+    .admin-screens table#boards td.right {
+        width: 20px
+    }
+
+    .admin-screens table#boards td.right div {
+        border-radius: 0 20px 20px 0
+    }
 
 /* ISSUES */
 
@@ -179,8 +252,8 @@ input[type=button], input[type=submit] {
 
     .admin-issues div.issue-button {
         display: inline-block;
-	    border: none;
-	    min-width: 100px;
+        border: none;
+        min-width: 100px;
         border-radius: 20px;
         text-align: center;
         color: #000000;

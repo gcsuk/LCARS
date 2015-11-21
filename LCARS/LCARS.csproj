@@ -133,20 +133,25 @@
     <Compile Include="Domain\Environments.cs" />
     <Compile Include="Domain\IBuilds.cs" />
     <Compile Include="Domain\IIssues.cs" />
+    <Compile Include="Domain\IScreens.cs" />
     <Compile Include="Domain\ISettings.cs" />
     <Compile Include="Domain\Issues.cs" />
+    <Compile Include="Domain\Screens.cs" />
     <Compile Include="Domain\Settings.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BuildProgress.cs" />
+    <Compile Include="Models\Builds\Build.cs" />
     <Compile Include="Models\Deployments\Deployments.cs" />
     <Compile Include="Models\Deployments\ProjectGroup.cs" />
     <Compile Include="Models\Deployments\Environment.cs" />
     <Compile Include="Models\Deployments\Project.cs" />
     <Compile Include="Models\Deployments\Deployment.cs" />
     <Compile Include="Models\Issues\Query.cs" />
+    <Compile Include="Models\Screens\Board.cs" />
+    <Compile Include="Models\Screens\Screen.cs" />
     <Compile Include="ViewModels\AdminMenu.cs" />
     <Compile Include="ViewModels\Admin\RedAlert.cs" />
     <Compile Include="ViewModels\Issues\Backlog.cs" />
@@ -174,6 +179,9 @@
     <Compile Include="ViewModels\Issues\Issue.cs" />
     <Compile Include="ViewModels\Issues\Issues.cs" />
     <Compile Include="ViewModels\RedAlertStatus.cs" />
+    <Compile Include="ViewModels\Screens\Board.cs" />
+    <Compile Include="ViewModels\Screens\Screens.cs" />
+    <Compile Include="ViewModels\Screens\Screen.cs" />
     <Compile Include="ViewModels\Settings.cs" />
     <Compile Include="Models\Environments\Tenant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -219,6 +227,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="App_Data\Screens.json" />
     <None Include="App_Data\Settings.json" />
     <None Include="Properties\PublishProfiles\Standard.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
@@ -283,6 +292,7 @@
     <Content Include="Views\Admin\RedAlert.cshtml" />
     <Content Include="Views\Admin\Settings.cshtml" />
     <Content Include="Views\Admin\Issues.cshtml" />
+    <Content Include="Views\Admin\Screens.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -33,6 +33,117 @@ $("#hasDeadline").click(function () {
     }
 });
 
+$("div").on("click", ".screen-button", function () {
+    $(".confirmation").hide();
+    $(".error").hide();
+    getScreen($(this).attr("data-button-id"));
+});
+
+function getScreen(id) {
+    $.get("/Admin/GetScreen/" + id, function (data) {
+        $("#id").val(data.Id);
+        $("#name").val(data.Name);
+
+        var boardRow = "";
+
+        $.each(data.Boards, function (key, board) {
+
+            boardRow += "<tr data-index=\"" + key + "\" class=\"board\">" +
+                        "<td class=\"left\"><div class=\"apricot\">" + board.Category + "</div></td>" +
+                        "<td class=\"middle\">" + board.Argument + "</td>" +
+                        "<td class=\"right\"><div class=\"apricot\">&nbsp;</div></td>" +
+                        "</tr>";
+
+            $("#boards").html(boardRow);
+        });
+    });
+};
+
+$("#updateScreen").click(function () {
+
+    $(".confirmation").hide();
+    $(".error").hide();
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/Admin/UpdateScreen",
+        dataType: "json",
+        data: "{ 'id':" + $("#id").val() + ", 'name':'" + $("#name").val() + "' }",
+        success: function (data) {
+
+            if (data) {
+                $("<div class=\"screen-button apricot\" data-button-id=\"" + $("#id").val() + "\">" + $("#id").val() + "</div>").insertBefore("#new");
+            } else {
+                $("div[data-button-id='" + $("#id").val() + "'").html($("#id").val());
+            }
+
+            $(".confirmation").show();
+        },
+        error: function () {
+            $(".error").show();
+        }
+    });
+});
+
+$("#deleteScreen").click(function () {
+    $(".error").hide();
+
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        contentType: "application/json",
+        url: "/Admin/DeleteScreen",
+        data: JSON.stringify({ id: $("#id").val() }),
+        success: function (data) {
+            if (data) {
+                window.location.reload();
+            } else {
+                $(".error").show();
+            }
+        }
+    });
+});
+
+$("#addBoard").click(function () {
+
+    $(".confirmation").hide();
+    $(".error").hide();
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/Admin/AddBoard",
+        dataType: "json",
+        data: "{ 'screenId':" + $("#id").val() + ", 'categoryId':" + $("#categories").val() + ", 'argument':'" + $("#argument").val() + "' }",
+        success: function (data) {
+            getScreen(data);
+        },
+        error: function () {
+            $(".error").show();
+        }
+    });
+});
+
+$("div").on("click", ".board", function () {
+    $(".confirmation").hide();
+    $(".error").hide();
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/Admin/DeleteBoard",
+        dataType: "json",
+        data: "{ 'screenId':" + $("#id").val() + ", 'boardIndex':" + $(this).attr("data-index") + "}",
+        success: function (data) {
+            getScreen(data);
+        },
+        error: function () {
+            $(".error").show();
+        }
+    });
+});
+
 $("div").on("click", ".issue-button", function () {
     $(".confirmation").hide();
     $(".error").hide();

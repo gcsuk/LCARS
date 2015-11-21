@@ -1,0 +1,52 @@
+﻿@model LCARS.ViewModels.Screens.Screens
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    ViewBag.Title = "LCARS Admin | Screens";
+}
+
+<div class="admin-screens">
+    <div>
+        @foreach (var screen in Model.ScreenList)
+        {
+            <div class="screen-button apricot" data-button-id="@screen.Id">
+                @screen.Id
+            </div>
+        }
+        <div id="new" class="screen-button orange" data-button-id="-1">
+            New
+        </div>
+    </div>
+    <div class="details">
+        <div>
+            <span>ID</span><input id="id" type="text" />
+        </div>
+        <div>
+            <span>Name</span><input id="name" type="text"/>
+            <input id="updateScreen" type="button" value="Save" class="blue"/>
+            <input id="deleteScreen" type="button" value="Delete" class="red" />
+        </div>
+        <hr/>
+        <div>
+            <span>Category</span><select id="categories">
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.Key">@category.Value</option>
+                }
+            </select>
+        </div>
+        <div>
+            <span>Argument</span><input type="text" id="argument"/> <input id="addBoard" type="button" value="Add" class="blue" />
+        </div>
+        
+        <table id="boards"></table>
+    </div>
+    <div class="confirmation">Changes Saved Successfully</div>
+    <div class="error">There was an error saving the changes.</div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        getScreen(0);
+    </script>
+}

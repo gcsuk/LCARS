@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using LCARS.ViewModels;
@@ -8,12 +9,14 @@ namespace LCARS.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly IScreens _screensDomain;
         private readonly IIssues _issuesDomain;
         private readonly IRedAlert _redAlertDomain;
         private readonly ISettings _settingsDomain;
 
-        public AdminController(IIssues issuesDomain, IRedAlert redAlertDomain, ISettings settingsDomain)
+        public AdminController(IScreens screensDomain, IIssues issuesDomain, IRedAlert redAlertDomain, ISettings settingsDomain)
         {
+            _screensDomain = screensDomain;
             _issuesDomain = issuesDomain;
             _redAlertDomain = redAlertDomain;
             _settingsDomain = settingsDomain;
@@ -29,7 +32,14 @@ namespace LCARS.Controllers
             {
                 case AdminMenu.Screens:
                     TempData["menuColor"] = "red";
-                    return View("Screens");
+
+                    var screensVm = new ViewModels.Screens.Screens
+                    {
+                        Categories = GetBoards(),
+                        ScreenList = _screensDomain.GetScreens(Server.MapPath(@"~/App_Data/Screens.json")).ToList()
+                    };
+
+                    return View("Screens", screensVm);
                 case AdminMenu.Environments:
                     TempData["menuColor"] = "red";
                     return View("Environments");
@@ -71,6 +81,69 @@ namespace LCARS.Controllers
                 default:
                     throw new ArgumentOutOfRangeException(nameof(selectedMenu), selectedMenu, null);
             }
+        }
+
+        [Route("Admin/GetScreen/{id}")]
+        public JsonResult GetScreen(int id = 0)
+        {
+            switch (id)
+            {
+                case -1:
+                    return Json(new ViewModels.Screens.Screen(), JsonRequestBehavior.AllowGet);
+                case 0:
+                    return Json(_screensDomain.GetScreens(Server.MapPath(@"~/App_Data/Screens.json")).First(),
+                        JsonRequestBehavior.AllowGet);
+                default:
+                    return Json(_screensDomain.GetScreens(Server.MapPath(@"~/App_Data/Screens.json")).Single(i => i.Id == id),
+                        JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost, Route("Admin/UpdateScreen")]
+        public ActionResult UpdateScreen(ViewModels.Screens.Screen screen)
+        {
+            if (screen.Id <= 0)
+            {
+                throw new ArgumentException("Invalid ID. Try again.", "screen");
+            }
+
+            return Json(_screensDomain.UpdateScreen(Server.MapPath(@"~/App_Data/Screens.json"), screen), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost, Route("Admin/DeleteScreen")]
+        public ActionResult DeleteScreen(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                {
+                    throw new ArgumentException("Invalid ID. Try again.", "id");
+                }
+
+                _screensDomain.DeleteScreen(Server.MapPath(@"~/App_Data/Screens.json"), id);
+
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost, Route("Admin/AddBoard")]
+        public ActionResult AddBoard(ViewModels.Screens.Board board)
+        {
+            _screensDomain.AddBoard(Server.MapPath(@"~/App_Data/Screens.json"), board);
+
+            return Json(board.ScreenId, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost, Route("Admin/DeleteBoard")]
+        public ActionResult DeleteBoard(int screenId, int boardIndex)
+        {
+            _screensDomain.DeleteBoard(Server.MapPath(@"~/App_Data/Screens.json"), screenId, boardIndex);
+
+            return Json(screenId, JsonRequestBehavior.AllowGet);
         }
 
         [Route("Admin/GetIssueQuery/{id}")]
@@ -158,6 +231,13 @@ namespace LCARS.Controllers
             }
 
             return RedirectToAction("Settings");
+        }
+
+        private Dictionary<int, string> GetBoards()
+        {
+            return Enum.GetValues(typeof(Boards))
+                .Cast<object>()
+                .ToDictionary(val => (int)val, val => Enum.GetName(typeof(Boards), val));
         }
     }
 }

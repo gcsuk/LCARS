@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using LCARS.Models;
 using LCARS.Models.Environments;
 using LCARS.Models.Issues;
+using LCARS.Models.Screens;
 
 namespace LCARS
 {
@@ -29,6 +30,7 @@ namespace LCARS
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
             builder.RegisterType<Domain.RedAlert>().As<Domain.IRedAlert>();
+            builder.RegisterType<Domain.Screens>().As<Domain.IScreens>();
             builder.RegisterType<Domain.Environments>().As<Domain.IEnvironments>();
             builder.RegisterType<Domain.Builds>().As<Domain.IBuilds>();
             builder.RegisterType<Domain.Deployments>().As<Domain.IDeployments>();
@@ -51,6 +53,7 @@ namespace LCARS
                 .WithParameter("password", settings.IssuesPassword);
 
             builder.RegisterType<Repository.SettingsRepository<RedAlert>>().As<Repository.IRepository<RedAlert>>();
+            builder.RegisterType<Repository.SettingsRepository<Screen>>().As<Repository.IRepository<Screen>>();
             builder.RegisterType<Repository.SettingsRepository<Tenant>>().As<Repository.IRepository<Tenant>>();
             builder.RegisterType<Repository.SettingsRepository<Build>>().As<Repository.IRepository<Build>>();
             builder.RegisterType<Repository.SettingsRepository<Query>>().As<Repository.IRepository<Query>>();
