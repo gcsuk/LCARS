@@ -30,12 +30,22 @@ namespace LCARS.Repository
         {
             var json = JsonConvert.SerializeObject(settings, Formatting.Indented);
 
+            if (!File.Exists(filePath))
+            {
+                File.Create(filePath);
+            }
+
             File.WriteAllText(filePath, json);
         }
 
         public void UpdateList(string filePath, IEnumerable<T> settings)
         {
             var json = JsonConvert.SerializeObject(settings, Formatting.Indented);
+
+            if (!File.Exists(filePath))
+            {
+                File.Create(filePath);
+            }
 
             File.WriteAllText(filePath, json);
         }
