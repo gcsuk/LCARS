@@ -33,10 +33,10 @@ $("#hasDeadline").click(function () {
     }
 });
 
-$("div").on("click", ".screen-button", function () {
+$("#screens").on("click", function (e) {
     $(".confirmation").hide();
     $(".error").hide();
-    getScreen($(this).attr("data-button-id"));
+    getScreen($(e.target).attr("data-button-id"));
 });
 
 function getScreen(id) {
@@ -46,16 +46,17 @@ function getScreen(id) {
 
         var boardRow = "";
 
-        $.each(data.Boards, function (key, board) {
+        if (data.Boards.length > 0) {
+            $.each(data.Boards, function(key, board) {
+                boardRow += "<tr data-index=\"" + key + "\" class=\"board\">" +
+                    "<td class=\"left\"><div class=\"apricot\">" + board.Category + "</div></td>" +
+                    "<td class=\"middle\">" + board.Argument + "</td>" +
+                    "<td class=\"right\"><div class=\"apricot\">&nbsp;</div></td>" +
+                    "</tr>";
+            });
+        }
 
-            boardRow += "<tr data-index=\"" + key + "\" class=\"board\">" +
-                        "<td class=\"left\"><div class=\"apricot\">" + board.Category + "</div></td>" +
-                        "<td class=\"middle\">" + board.Argument + "</td>" +
-                        "<td class=\"right\"><div class=\"apricot\">&nbsp;</div></td>" +
-                        "</tr>";
-
-            $("#boards").html(boardRow);
-        });
+        $("#boards").html(boardRow);
     });
 };
 
@@ -125,16 +126,19 @@ $("#addBoard").click(function () {
     });
 });
 
-$("div").on("click", ".board", function () {
+$("#boards").on("click", function (e) {
+
     $(".confirmation").hide();
     $(".error").hide();
+
+    var index = $(e.target).parent().parent().attr("data-index");
 
     $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "/Admin/DeleteBoard",
         dataType: "json",
-        data: "{ 'screenId':" + $("#id").val() + ", 'boardIndex':" + $(this).attr("data-index") + "}",
+        data: "{ 'screenId':" + $("#id").val() + ", 'boardIndex':" + index + "}",
         success: function (data) {
             getScreen(data);
         },
@@ -144,10 +148,10 @@ $("div").on("click", ".board", function () {
     });
 });
 
-$("div").on("click", ".issue-button", function () {
+$("#issues").on("click", function (e) {
     $(".confirmation").hide();
     $(".error").hide();
-    getIssueQuery($(this).attr("data-button-id"));
+    getIssueQuery($(e.target).attr("data-button-id"));
 });
 
 function getIssueQuery(id) {
