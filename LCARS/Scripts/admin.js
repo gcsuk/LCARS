@@ -44,19 +44,10 @@ function getScreen(id) {
         $("#id").val(data.Id);
         $("#name").val(data.Name);
 
-        var boardRow = "";
+        var source = $("#boardsTemplate").html();
+        var template = Handlebars.compile(source);
 
-        if (data.Boards.length > 0) {
-            $.each(data.Boards, function(key, board) {
-                boardRow += "<tr data-index=\"" + key + "\" class=\"board\">" +
-                    "<td class=\"left\"><div class=\"apricot\">" + board.Category + "</div></td>" +
-                    "<td class=\"middle\">" + board.Argument + "</td>" +
-                    "<td class=\"right\"><div class=\"apricot\">&nbsp;</div></td>" +
-                    "</tr>";
-            });
-        }
-
-        $("#boards").html(boardRow);
+        $("#boards").html(template(data));
     });
 };
 
