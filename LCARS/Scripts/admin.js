@@ -44,12 +44,18 @@ function getScreen(id) {
         $("#id").val(data.Id);
         $("#name").val(data.Name);
 
+        var boards;
+
         if (data.Boards.length) {
             var source = $("#boardsTemplate").html();
             var template = Handlebars.compile(source);
 
-            $("#boards").html(template(data));
+            boards = template(data);
+        } else {
+            boards = "Blank";
         }
+
+        $("#boards").html(borads);
     });
 };
 
