@@ -1,4 +1,29 @@
-﻿$("#updateRedAlert").click(function () {
+﻿function createBoardTemplate(board) {
+    var source = $("#boardTemplate").html();
+    var template = Handlebars.compile(source);
+
+    return template(board);
+}
+
+function getScreen(id) {
+    $.get("/Admin/GetScreen/" + id, function (data) {
+        $("#id").val(data.Id);
+        $("#name").val(data.Name);
+
+        if (data.Boards.length) {
+            var template = _.map(data.Boards, function (board) {
+
+                board.ScreenId = data.Id;
+
+                return createBoardTemplate(board);
+            });
+
+            $("#boards").html(template.join(''));
+        }
+    });
+};
+
+$("#updateRedAlert").click(function () {
     $(".confirmation").hide();
     $(".error").hide();
     $.ajax({
@@ -38,20 +63,6 @@ $("#screens").on("click", function (e) {
     $(".error").hide();
     getScreen($(e.target).attr("data-button-id"));
 });
-
-function getScreen(id) {
-    $.get("/Admin/GetScreen/" + id, function (data) {
-        $("#id").val(data.Id);
-        $("#name").val(data.Name);
-
-        if (data.Boards.length) {
-            var source = $("#boardsTemplate").html();
-            var template = Handlebars.compile(source);
-
-            $("#boards").html(template(data));
-        }
-    });
-};
 
 $("#updateScreen").click(function () {
 
@@ -103,15 +114,24 @@ $("#addBoard").click(function () {
 
     $(".confirmation").hide();
     $(".error").hide();
+    
+    var $details = $(".details");
+
+    var board = {
+        ScreenId: $details.find("#id").val(),
+        Category: $details.find("#categories").val(),
+        CategoryId: $details.find("#categories").attr('data-id'),
+        Argument: $details.find("#argument").val(),
+    };
 
     $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "/Admin/AddBoard",
         dataType: "json",
-        data: "{ 'screenId':" + $("#id").val() + ", 'categoryId':" + $("#categories").val() + ", 'argument':'" + $("#argument").val() + "' }",
+        data: JSON.stringify(board),
         success: function (data) {
-            getScreen(data);
+            $('#boards').append(createBoardTemplate(board));
         },
         error: function () {
             $(".error").show();
