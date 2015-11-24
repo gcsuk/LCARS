@@ -44,18 +44,12 @@ function getScreen(id) {
         $("#id").val(data.Id);
         $("#name").val(data.Name);
 
-        var boards;
-
         if (data.Boards.length) {
             var source = $("#boardsTemplate").html();
             var template = Handlebars.compile(source);
 
-            boards = template(data);
-        } else {
-            boards = "Blank";
+            $("#boards").html(template(data));
         }
-
-        $("#boards").html(borads);
     });
 };
 
@@ -130,7 +124,8 @@ $("#boards").on("click", function (e) {
     $(".confirmation").hide();
     $(".error").hide();
 
-    var index = $(e.target).parent().parent().attr("data-index");
+    var $element = $(e.target).parent().parent();
+    var index = $element.attr("data-index");
 
     $.ajax({
         type: "POST",
@@ -139,7 +134,7 @@ $("#boards").on("click", function (e) {
         dataType: "json",
         data: "{ 'screenId':" + $("#id").val() + ", 'boardIndex':" + index + "}",
         success: function (data) {
-            getScreen(data);
+            $element.remove();
         },
         error: function () {
             $(".error").show();
