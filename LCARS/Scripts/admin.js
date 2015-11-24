@@ -11,10 +11,8 @@ function getScreen(id) {
         $("#name").val(data.Name);
 
         if (data.Boards.length) {
-            var template = _.map(data.Boards, function (board) {
-
+            var template = _.map(data.Boards, function (board, key) {
                 board.ScreenId = data.Id;
-
                 return createBoardTemplate(board);
             });
 
@@ -118,7 +116,7 @@ $("#addBoard").click(function () {
     var $details = $(".details");
 
     var board = {
-        ScreenId: $details.find("#id").val(),
+        ScreenId: $("#id").val(),
         Category: $details.find("#categories").val(),
         CategoryId: $details.find("#categories").attr('data-id'),
         Argument: $details.find("#argument").val(),
@@ -145,14 +143,17 @@ $("#boards").on("click", function (e) {
     $(".error").hide();
 
     var $element = $(e.target).parent().parent();
-    var index = $element.attr("data-index");
+    var data = {
+        ScreenId: $element.attr("data-screens-id"),
+        boardId: $element.attr("data-id"),
+    }
 
     $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "/Admin/DeleteBoard",
         dataType: "json",
-        data: "{ 'screenId':" + $("#id").val() + ", 'boardIndex':" + index + "}",
+        data: JSON.stringify(data),
         success: function (data) {
             $element.remove();
         },
