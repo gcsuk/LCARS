@@ -30,7 +30,7 @@
             <span>Category</span><select id="categories">
                 @foreach (var category in Model.Categories)
                 {
-                    <option value="@category.Key">@category.Value</option>
+                    <option data-id="@category.Key" value="@category.Value">@category.Value</option>
                 }
             </select>
         </div>
@@ -38,7 +38,7 @@
             <span>Argument</span><input type="text" id="argument"/> <input id="addBoard" type="button" value="Add" class="blue" />
         </div>
         
-        <div id="boards"></div>
+        <table id="boards"></table>
     </div>
     <div class="confirmation">Changes Saved Successfully</div>
     <div class="error">There was an error saving the changes.</div>
@@ -46,20 +46,16 @@
 
 @section Scripts
 {
-    <script type="text/x-handlebars-template" id="boardsTemplate">
-        <table>
-            {{#each Boards}}
-                <tr data-index="{{@@index}}" class="board">
-                    <td class="left">
-                        <div class="apricot">{{this.Category}}</div>
-                    </td>
-                    <td class="middle">{{this.Argument}}</td>
-                    <td class="right">
-                        <div class="apricot">&nbsp;</div>
-                    </td>
-                </tr>
-            {{/each}}
-        </table>
+    <script type="text/x-handlebars-template" id="boardTemplate">
+        <tr data-index="{{ScreenId}}" data-id="{{CategoryId}}" class="board">
+            <td class="left">
+                <div class="apricot">{{Category}}</div>
+            </td>
+            <td class="middle">{{Argument}}</td>
+            <td class="right">
+                <div class="apricot">&nbsp;</div>
+            </td>
+        </tr>
     </script>
     <script type="text/javascript">
         getScreen(0);
