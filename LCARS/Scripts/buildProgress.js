@@ -37,7 +37,9 @@
             });
         });
 
-    setTimeout("getProgress()", 1000);
+    setTimeout("getProgress()", 3000);
 }
 
-getProgress();
+$(document).ready(function() {
+    getProgress();
+});

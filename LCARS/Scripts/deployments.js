@@ -27,7 +27,7 @@
             $("div.loading").removeClass("loading");
         },
         error: function () {
-            location.reload();
+
         }
     });
 }

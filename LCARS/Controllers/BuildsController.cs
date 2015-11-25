@@ -11,37 +11,28 @@ namespace LCARS.Controllers
     {
         private readonly IRedAlert _commonDomain;
         private readonly IBuilds _buildsDomain;
-        private readonly ViewModels.Boards _thisBoard;
 
         public BuildsController(IRedAlert commonDomain, IBuilds buildsDomain)
         {
             _commonDomain = commonDomain;
             _buildsDomain = buildsDomain;
-            _thisBoard = ViewModels.Boards.Build;
         }
 
         // GET: Build
         [Route("Builds/{buildSet?}")]
-        public ActionResult Index(BuildSet buildSet = BuildSet.Random)
+        public ActionResult Index(BuildSet typeId = BuildSet.Random)
         {
-            if (buildSet == BuildSet.Random)
+            if (typeId == BuildSet.Random)
             {
-                var randomBoard = Domain.Settings.SelectBoard();
-
-                if (_thisBoard != randomBoard)
-                {
-                    return RedirectToAction("Index", randomBoard.GetDescription());
-                }
-
-                buildSet = (BuildSet)new Random(Guid.NewGuid().GetHashCode()).Next(1, Enum.GetNames(typeof(BuildSet)).Length);
+                typeId = (BuildSet)new Random(Guid.NewGuid().GetHashCode()).Next(1, Enum.GetNames(typeof(BuildSet)).Length);
             }
 
             var builds =
-                _buildsDomain.GetBuilds(Server.MapPath(string.Format(@"~/App_Data/BuildSets/{0}.json", buildSet.GetDescription())));
+                _buildsDomain.GetBuilds(Server.MapPath(string.Format(@"~/App_Data/BuildSets/{0}.json", typeId.GetDescription())));
 
             var vm = new ViewModels.BuildStatus
             {
-                BuildSet = buildSet,
+                BuildSet = typeId,
                 Builds = builds,
                 IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled
             };

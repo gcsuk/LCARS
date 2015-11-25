@@ -294,7 +294,9 @@
     <Content Include="Views\Admin\Issues.cshtml" />
     <Content Include="Views\Admin\Screens.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Screens\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
