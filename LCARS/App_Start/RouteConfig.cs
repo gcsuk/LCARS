@@ -12,12 +12,6 @@ namespace LCARS
             routes.MapMvcAttributeRoutes();
 
             routes.MapRoute(
-                name: "Default",
-                url: "{screenId}",
-                defaults: new { controller = "Home", action = "Index", screenId = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
                 name: "DefaultWithAction",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
