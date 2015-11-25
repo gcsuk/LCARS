@@ -33,7 +33,7 @@ namespace LCARS.Controllers
                 _screensDomain.GetScreens(Server.MapPath(@"~/App_Data/Screens.json"))
                     .SingleOrDefault(s => screenId == s.Id);
 
-            if (screen == null || screen.Boards == null)
+            if (screen == null || screen.Boards == null || !screen.Boards.Any())
             {
                 var randomBoard = Settings.SelectBoard();
 
