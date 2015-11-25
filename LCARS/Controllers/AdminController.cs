@@ -31,7 +31,7 @@ namespace LCARS.Controllers
             switch (selectedMenu)
             {
                 case AdminMenu.Screens:
-                    TempData["menuColor"] = "red";
+                    TempData["menuColor"] = "blue";
 
                     var screensVm = new ViewModels.Screens.Screens
                     {

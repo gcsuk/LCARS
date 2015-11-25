@@ -4,8 +4,16 @@
     "Name": "Demo",
     "Boards": [
       {
-        "CategoryId": 1,
+        "CategoryId": 2,
+        "Argument": "CMS"
+      },
+      {
+        "CategoryId": 4,
         "Argument": ""
+      },
+      {
+        "CategoryId": 2,
+        "Argument": "WEB"
       }
     ]
   }

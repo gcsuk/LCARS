@@ -9,25 +9,16 @@ namespace LCARS.Controllers
     {
         private readonly IRedAlert _commonDomain;
         private readonly IDeployments _deploymentsDomain;
-        private readonly ViewModels.Boards _thisBoard;
 
         public DeploymentsController(IRedAlert commonDomain, IDeployments deploymentsDomain)
         {
             _commonDomain = commonDomain;
             _deploymentsDomain = deploymentsDomain;
-            _thisBoard = ViewModels.Boards.Deployments;
         }
 
         // GET: Deployments
         public ActionResult Index()
         {
-            var randomBoard = Settings.SelectBoard();
-
-            if (_thisBoard != randomBoard)
-            {
-                return RedirectToAction("Index", randomBoard.GetDescription());
-            }
-
             var deployments = _deploymentsDomain.Get().OrderBy(g => g.ProjectGroup).ThenBy(p => p.Project).ToList();
 
             var isRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled;

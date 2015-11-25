@@ -8,24 +8,15 @@ namespace LCARS.Controllers
 	{
         private readonly IRedAlert _commonDomain;
 		private readonly IEnvironments _environmentsDomain;
-        private readonly Boards _thisBoard;
 
         public EnvironmentsController(IRedAlert commonDomain, IEnvironments environmentsDomain)
         {
             _commonDomain = commonDomain;
             _environmentsDomain = environmentsDomain;
-            _thisBoard = Boards.Environment;
         }
 
 		public ActionResult Index()
 		{
-            var randomBoard = Domain.Settings.SelectBoard();
-
-            if (_thisBoard != randomBoard)
-            {
-                return RedirectToAction("Index", randomBoard.GetDescription());
-            }
-
             var vm = new ViewModels.Environments.Environments
             {
                 Tenants = _environmentsDomain.Get(Server.MapPath(@"~/App_Data/Environments.json")),
