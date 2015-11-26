@@ -303,7 +303,9 @@
     <Content Include="Views\Admin\Screens.cshtml" />
     <Content Include="Scripts\underscore.min.map" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Screens\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
