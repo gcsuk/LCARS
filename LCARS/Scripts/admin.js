@@ -11,12 +11,12 @@ function getScreen(id) {
         $("#name").val(data.Name);
 
         if (data.Boards.length) {
-            var template = _.map(data.Boards, function (board, key) {
+            var template = _.map(data.Boards, function(board) {
                 board.ScreenId = data.Id;
                 return createBoardTemplate(board);
             });
 
-            $("#boards").html(template.join(''));
+            $("#boards").html(template.join(""));
         }
     });
 };
@@ -118,8 +118,8 @@ $("#addBoard").click(function () {
     var board = {
         ScreenId: $("#id").val(),
         Category: $details.find("#categories").val(),
-        CategoryId: $details.find("#categories").attr('data-id'),
-        Argument: $details.find("#argument").val(),
+        CategoryId: $details.find("#categories").attr("data-id"),
+        Argument: $details.find("#argument").val()
     };
 
     $.ajax({
@@ -128,8 +128,8 @@ $("#addBoard").click(function () {
         url: "/Admin/AddBoard",
         dataType: "json",
         data: JSON.stringify(board),
-        success: function (data) {
-            $('#boards').append(createBoardTemplate(board));
+        success: function () {
+            $("#boards").append(createBoardTemplate(board));
         },
         error: function () {
             $(".error").show();
@@ -145,7 +145,7 @@ $("#boards").on("click", function (e) {
     var $element = $(e.target).parent().parent();
     var data = {
         ScreenId: $element.attr("data-screens-id"),
-        boardId: $element.attr("data-id"),
+        boardId: $element.attr("data-id")
     }
 
     $.ajax({
@@ -154,7 +154,7 @@ $("#boards").on("click", function (e) {
         url: "/Admin/DeleteBoard",
         dataType: "json",
         data: JSON.stringify(data),
-        success: function (data) {
+        success: function () {
             $element.remove();
         },
         error: function () {

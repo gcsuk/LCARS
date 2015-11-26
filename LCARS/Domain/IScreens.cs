@@ -13,6 +13,6 @@ namespace LCARS.Domain
 
         void AddBoard(string filePath, Board board);
 
-        void DeleteBoard(string filePath, int screenId, int index);
+        void DeleteBoard(string filePath, int screenId, string boardId);
     }
 }

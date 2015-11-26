@@ -139,9 +139,9 @@ namespace LCARS.Controllers
         }
 
         [HttpPost, Route("Admin/DeleteBoard")]
-        public ActionResult DeleteBoard(int screenId, int boardIndex)
+        public ActionResult DeleteBoard(int screenId, string boardId)
         {
-            _screensDomain.DeleteBoard(Server.MapPath(@"~/App_Data/Screens.json"), screenId, boardIndex);
+            _screensDomain.DeleteBoard(Server.MapPath(@"~/App_Data/Screens.json"), screenId, boardId);
 
             return Json(screenId, JsonRequestBehavior.AllowGet);
         }
