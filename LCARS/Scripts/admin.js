@@ -119,7 +119,8 @@ $("#addBoard").click(function () {
         ScreenId: $("#id").val(),
         Category: $details.find("#categories").val(),
         CategoryId: $details.find("#categories").attr("data-id"),
-        Argument: $details.find("#argument").val()
+        Argument: $details.find("#argument").val(),
+        Id: $("#boards tr").length + 1,
     };
 
     $.ajax({
@@ -145,7 +146,7 @@ $("#boards").on("click", function (e) {
     var $element = $(e.target).parent().parent();
     var data = {
         ScreenId: $element.attr("data-screens-id"),
-        boardId: $element.attr("data-id")
+        BoardId: $element.attr("data-id"),
     }
 
     $.ajax({
