@@ -84,15 +84,12 @@ namespace LCARS.Controllers
         }
 
         [Route("Admin/GetScreen/{id}")]
-        public JsonResult GetScreen(int id = 0)
+        public JsonResult GetScreen(int id)
         {
             switch (id)
             {
                 case -1:
                     return Json(new ViewModels.Screens.Screen(), JsonRequestBehavior.AllowGet);
-                case 0:
-                    return Json(_screensDomain.GetScreens(Server.MapPath(@"~/App_Data/Screens.json")).First(),
-                        JsonRequestBehavior.AllowGet);
                 default:
                     return Json(_screensDomain.GetScreens(Server.MapPath(@"~/App_Data/Screens.json")).Single(i => i.Id == id),
                         JsonRequestBehavior.AllowGet);
