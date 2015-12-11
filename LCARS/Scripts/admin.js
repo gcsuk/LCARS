@@ -118,7 +118,7 @@ $("#addBoard").click(function () {
     var board = {
         ScreenId: $("#id").val(),
         Category: $details.find("#categories").val(),
-        CategoryId: $details.find("#categories").attr("data-id"),
+        CategoryId: $details.find("#categories option:selected").attr("data-id"),
         Argument: $details.find("#argument").val(),
         Id: $("#boards tr").length + 1,
     };
