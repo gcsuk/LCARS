@@ -10,14 +10,13 @@ function getScreen(id) {
         $("#id").val(data.Id);
         $("#name").val(data.Name);
 
-        if (data.Boards.length) {
-            var template = _.map(data.Boards, function(board) {
-                board.ScreenId = data.Id;
-                return createBoardTemplate(board);
-            });
+        var template = _.map(data.Boards, function(board) {
+            board.ScreenId = data.Id;
 
-            $("#boards").html(template.join(""));
-        }
+            return createBoardTemplate(board);
+        });
+
+        $("#boards").html(template.join(""));
     });
 };
 
