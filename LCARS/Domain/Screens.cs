@@ -24,7 +24,8 @@ namespace LCARS.Domain
                 Name = screenItem.Name,
                 Boards =
                     screenItem.Boards.Select(
-                        s => new Board { CategoryId = (ViewModels.Boards)s.CategoryId, Argument = s.Argument }).ToList()
+                        s => new Board {Id = s.Id, CategoryId = (ViewModels.Boards) s.CategoryId, Argument = s.Argument})
+                        .ToList()
             }).OrderBy(s => s.Id).ToList();
         }
 
@@ -75,6 +76,7 @@ namespace LCARS.Domain
 
             selectedScreen.Boards.Add(new Models.Screens.Board
             {
+                Id =  board.Id,
                 CategoryId = (int) board.CategoryId,
                 Argument = board.Argument == null ? "" : board.Argument
             });
@@ -82,13 +84,13 @@ namespace LCARS.Domain
             _repository.UpdateList(filePath, screens);
         }
 
-        public void DeleteBoard(string filePath, int screenId, int index)
+        public void DeleteBoard(string filePath, int screenId, string boardId)
         {
             var screens = _repository.GetList(filePath).ToList();
 
-            var selectedScreen = screens.Single(q => q.Id == screenId);
+            var selectedScreen = screens.Single(s => s.Id == screenId);
 
-            selectedScreen.Boards.RemoveAt(index);
+            selectedScreen.Boards.Remove(selectedScreen.Boards.Single(b => b.Id == boardId));
 
             _repository.UpdateList(filePath, screens);
         }

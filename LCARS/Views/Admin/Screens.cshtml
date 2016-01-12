@@ -16,7 +16,7 @@
             New
         </div>
     </div>
-    <div>ID is used as the argument to indicate which board set to use.</div>
+    <div>ID is used in the URL to indicate which screen set to use. e.g. screenId=1</div>
     <div>Name is just for admin reference, it has no functional usage.</div>
     <div class="details">
         <div>
@@ -33,7 +33,7 @@
             <span>Category</span><select id="categories">
                 @foreach (var category in Model.Categories)
                 {
-                    <option value="@category.Key">@category.Value</option>
+                    <option data-id="@category.Key" value="@category.Value">@category.Value</option>
                 }
             </select>
         </div>
@@ -49,7 +49,18 @@
 
 @section Scripts
 {
+    <script type="text/x-handlebars-template" id="boardTemplate">
+        <tr data-screens-id="{{ScreenId}}" data-id="{{Id}}" class="board">
+            <td class="left">
+                <div class="apricot">{{Category}}</div>
+            </td>
+            <td class="middle">{{Argument}}</td>
+            <td class="right">
+                <div class="apricot">&nbsp;</div>
+            </td>
+        </tr>
+    </script>
     <script type="text/javascript">
-        getScreen(0);
+        getScreen($("#screens div:first-child").attr("data-button-id"));
     </script>
 }

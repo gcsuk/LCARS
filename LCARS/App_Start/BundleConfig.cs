@@ -17,6 +17,12 @@ namespace LCARS
             bundles.Add(new ScriptBundle("~/bundles/querystring").Include(
                 "~/Scripts/queryString.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/handlebars").Include(
+                "~/Scripts/handlebars.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/underscore").Include(
+                "~/Scripts/underscore.min.js"));
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -25,9 +31,6 @@ namespace LCARS
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/respond.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
-                "~/Scripts/knockout-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/moment").Include(
                 "~/Scripts/moment.min.js"));

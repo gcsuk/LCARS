@@ -1,4 +1,26 @@
-﻿$("#updateRedAlert").click(function () {
+﻿function createBoardTemplate(board) {
+    var source = $("#boardTemplate").html();
+    var template = Handlebars.compile(source);
+
+    return template(board);
+}
+
+function getScreen(id) {
+    $.get("/Admin/GetScreen/" + id, function (data) {
+        $("#id").val(data.Id);
+        $("#name").val(data.Name);
+
+        var template = _.map(data.Boards, function(board) {
+            board.ScreenId = data.Id;
+
+            return createBoardTemplate(board);
+        });
+
+        $("#boards").html(template.join(""));
+    });
+};
+
+$("#updateRedAlert").click(function () {
     $(".confirmation").hide();
     $(".error").hide();
     $.ajax({
@@ -38,27 +60,6 @@ $("#screens").on("click", function (e) {
     $(".error").hide();
     getScreen($(e.target).attr("data-button-id"));
 });
-
-function getScreen(id) {
-    $.get("/Admin/GetScreen/" + id, function (data) {
-        $("#id").val(data.Id);
-        $("#name").val(data.Name);
-
-        var boardRow = "";
-
-        if (data.Boards.length > 0) {
-            $.each(data.Boards, function(key, board) {
-                boardRow += "<tr data-index=\"" + key + "\" class=\"board\">" +
-                    "<td class=\"left\"><div class=\"apricot\">" + board.Category + "</div></td>" +
-                    "<td class=\"middle\">" + board.Argument + "</td>" +
-                    "<td class=\"right\"><div class=\"apricot\">&nbsp;</div></td>" +
-                    "</tr>";
-            });
-        }
-
-        $("#boards").html(boardRow);
-    });
-};
 
 $("#updateScreen").click(function () {
 
@@ -110,15 +111,25 @@ $("#addBoard").click(function () {
 
     $(".confirmation").hide();
     $(".error").hide();
+    
+    var $details = $(".details");
+
+    var board = {
+        ScreenId: $("#id").val(),
+        Category: $details.find("#categories").val(),
+        CategoryId: $details.find("#categories option:selected").attr("data-id"),
+        Argument: $details.find("#argument").val(),
+        Id: $("#boards tr").length + 1,
+    };
 
     $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "/Admin/AddBoard",
         dataType: "json",
-        data: "{ 'screenId':" + $("#id").val() + ", 'categoryId':" + $("#categories").val() + ", 'argument':'" + $("#argument").val() + "' }",
-        success: function (data) {
-            getScreen(data);
+        data: JSON.stringify(board),
+        success: function () {
+            $("#boards").append(createBoardTemplate(board));
         },
         error: function () {
             $(".error").show();
@@ -131,16 +142,20 @@ $("#boards").on("click", function (e) {
     $(".confirmation").hide();
     $(".error").hide();
 
-    var index = $(e.target).parent().parent().attr("data-index");
+    var $element = $(e.target).parent().parent();
+    var data = {
+        ScreenId: $element.attr("data-screens-id"),
+        BoardId: $element.attr("data-id"),
+    }
 
     $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "/Admin/DeleteBoard",
         dataType: "json",
-        data: "{ 'screenId':" + $("#id").val() + ", 'boardIndex':" + index + "}",
-        success: function (data) {
-            getScreen(data);
+        data: JSON.stringify(data),
+        success: function () {
+            $element.remove();
         },
         error: function () {
             $(".error").show();
