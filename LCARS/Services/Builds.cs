@@ -23,7 +23,7 @@ namespace LCARS.Services
 
         public Dictionary<int, int> GetBuildsRunning()
         {
-            var doc = GetXml($"http://{_domain}/httpAuth/app/rest/builds?locator=running:true");
+            var doc = GetXml($"http://{_domain}/guestAuth/app/rest/builds?locator=running:true");
 
             var builds = new Dictionary<int, int>();
 
@@ -49,7 +49,7 @@ namespace LCARS.Services
 
         public BuildProgress GetBuildProgress(int buildId)
         {
-            var doc = GetXml($"http://user:pwd@{_domain}/httpAuth/app/rest/builds/id:{buildId}");
+            var doc = GetXml($"http://user:pwd@{_domain}/guestAuth/app/rest/builds/id:{buildId}");
 
             if (doc == null)
             {
@@ -80,7 +80,7 @@ namespace LCARS.Services
 
         public KeyValuePair<string, string> GetLastBuildStatus(int buildTypeId)
         {
-            var doc = GetXml($"http://{_domain}/httpAuth/app/rest/builds?locator=buildType:(id:bt{buildTypeId})");
+            var doc = GetXml($"http://{_domain}/guestAuth/app/rest/builds?locator=buildType:(id:bt{buildTypeId})");
 
             if (doc == null)
             {
