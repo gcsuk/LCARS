@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 using LCARS.Domain;
-using LCARS.Models;
+using LCARS.Models.Builds;
 
 namespace LCARS.Controllers
 {
@@ -19,20 +20,21 @@ namespace LCARS.Controllers
         }
 
         // GET: Build
-        [Route("Builds/{buildSet?}")]
-        public ActionResult Index(BuildSet typeId = BuildSet.Random)
+        [Route("Builds/{typeId?}")]
+        public ActionResult Index(int typeId)
         {
-            if (typeId == BuildSet.Random)
+            var buildProjects = _buildsDomain.GetBuilds(Server.MapPath("~/App_Data/Builds.json")).ToList();
+
+            if (typeId == 0)
             {
-                typeId = (BuildSet)new Random(Guid.NewGuid().GetHashCode()).Next(1, Enum.GetNames(typeof(BuildSet)).Length);
+                typeId = new Random(Guid.NewGuid().GetHashCode()).Next(1, buildProjects.Count);
             }
 
-            var builds =
-                _buildsDomain.GetBuilds(Server.MapPath(string.Format(@"~/App_Data/BuildSets/{0}.json", typeId.GetDescription())));
+            var builds = buildProjects.Single(b => b.Id == typeId).Builds;
 
             var vm = new ViewModels.BuildStatus
             {
-                BuildSet = typeId,
+                ProjectId = typeId,
                 Builds = builds,
                 IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled
             };
@@ -50,8 +52,10 @@ namespace LCARS.Controllers
 
                 return Json(buildStatus, JsonRequestBehavior.AllowGet);
             }
-            catch (System.Net.WebException)
+            catch (System.Net.WebException ex)
             {
+                Debug.WriteLine(ex.Message);
+
                 var builds = buildTypeIds.Select(buildTypeId => new Build
                 {
                     TypeId = buildTypeId

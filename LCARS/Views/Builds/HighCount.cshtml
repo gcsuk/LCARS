@@ -4,7 +4,7 @@
 {
     @if (Model.IsRedAlertEnabled)
     {
-        <meta http-equiv="refresh" content="0; /RedAlert?returnUrl=Builds/@(Model.BuildSet.GetDescription())">
+        <meta http-equiv="refresh" content="0; /RedAlert?returnUrl=Builds/@(Model.ProjectId)">
     }
     else if (Model.AutoRefresh)
     {

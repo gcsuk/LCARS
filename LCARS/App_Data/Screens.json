@@ -4,6 +4,7 @@
     "Name": "Demo",
     "Boards": [
       {
+        "Id": "1",
         "CategoryId": 1,
         "Argument": ""
       }
