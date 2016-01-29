@@ -32,7 +32,7 @@ namespace LCARS.Repository
 
             if (!File.Exists(filePath))
             {
-                File.Create(filePath);
+                File.Create(filePath).Close();
             }
 
             File.WriteAllText(filePath, json);
@@ -44,7 +44,7 @@ namespace LCARS.Repository
 
             if (!File.Exists(filePath))
             {
-                File.Create(filePath);
+                File.Create(filePath).Close();
             }
 
             File.WriteAllText(filePath, json);
