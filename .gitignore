@@ -189,7 +189,9 @@ _Pvt_Extensions/
 ModelManifest.xml
 
 Builds.json
-Environments.json
-Settings.json
 Deployments.json
-IssueQueries.json
+Environments.json
+Issues.json
+RedAlert.json
+Screens.json
+Settings.json
