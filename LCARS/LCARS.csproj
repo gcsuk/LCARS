@@ -128,6 +128,7 @@
     <Compile Include="Controllers\IssuesController.cs" />
     <Compile Include="Controllers\RedAlertController.cs" />
     <Compile Include="Domain\Builds.cs" />
+    <Compile Include="Domain\ConfigInitialiser.cs" />
     <Compile Include="Domain\IDeployments.cs" />
     <Compile Include="Domain\Deployments.cs" />
     <Compile Include="Domain\Environments.cs" />
@@ -142,8 +143,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\BuildProgress.cs" />
-    <Compile Include="Models\Builds\Build.cs" />
+    <Compile Include="Models\Builds\BuildProgress.cs" />
+    <Compile Include="Models\Builds\BuildProject.cs" />
     <Compile Include="Models\Deployments\Deployments.cs" />
     <Compile Include="Models\Deployments\ProjectGroup.cs" />
     <Compile Include="Models\Deployments\Environment.cs" />
@@ -168,10 +169,8 @@
     <Compile Include="ViewModels\Issues\Query.cs" />
     <Compile Include="ViewModels\RedAlert.cs" />
     <Compile Include="ViewModels\Boards.cs" />
-    <Compile Include="Models\BuildSet.cs" />
-    <Compile Include="Models\BuildStatus.cs" />
     <Compile Include="Models\Environments\Environment.cs" />
-    <Compile Include="Models\Build.cs" />
+    <Compile Include="Models\Builds\Build.cs" />
     <Compile Include="Services\IIssues.cs" />
     <Compile Include="Services\Issues.cs" />
     <Compile Include="ViewModels\Environments\Environment.cs" />
@@ -202,9 +201,7 @@
     <Compile Include="ViewModels\Environments\Environments.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Data\BuildSets\PAM.json" />
-    <None Include="App_Data\BuildSets\Web.json" />
-    <None Include="App_Data\BuildSets\CMS.json" />
+    <Content Include="App_Data\Builds.json" />
     <None Include="App_Data\Environments.json" />
     <None Include="App_Data\RedAlert.json" />
     <None Include="App_Data\Deployments.json" />

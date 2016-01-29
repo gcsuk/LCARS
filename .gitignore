@@ -188,8 +188,10 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 
-BuildSets
-Environments.json
-Settings.json
+Builds.json
 Deployments.json
-IssueQueries.json
+Environments.json
+Issues.json
+RedAlert.json
+Screens.json
+Settings.json

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using LCARS.Models;
+using LCARS.Models.Builds;
 
 namespace LCARS.ViewModels
 {
     public class BuildStatus : RedAlertStatus
     {
-        public IEnumerable<Build> Builds { get; set; }
+        public int ProjectId { get; set; }
 
-        public BuildSet BuildSet { get; set; }
+        public IEnumerable<Build> Builds { get; set; }
     }
 }

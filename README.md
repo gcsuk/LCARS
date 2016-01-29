@@ -4,84 +4,8 @@ The LCARS project is a dashboard system for anyone who needs an interesting look
 
 The project is designed primarily for a software development team, but could easily be adapted for other purposes.
 
-You need a few JSON files in App_Data that aren't in the repo in order to get the project running. If you implement different content screens, you will not need them for the template.
+You need a few JSON files in App_Data that aren't in the repo in order to get the project running.
 
-Settings and Environments aren't included in the repo because they contain personal data, but they are required files for certain boards.
+The required files are generated the first time the solution runs (it checks for the existence of the core Settings.json file and will run if it isn't there).
 
-The structure is as follows:
-
-Environments.json
-
-[
-  {
-    "Id": 1,
-    "Name": "Web Site Name",
-    "Environments": [
-      {
-        "Name": "Env 01"
-        "Status": "ISSUES"
-      },
-      {
-        "Name": "Env 02",
-        "Status": "OK"
-      },
-      {
-        "Name": "Env 03",
-        "Status": "OK"
-      },
-      {
-        "Name": "Env 04",
-        "Status": "DOWN"
-      }
-    ]
-  },
-  ...
-]
-
-Deployments.json
-
-[
-    {
-        "Id": "Env-5",
-        "OrderId": "1",
-        "Name": "Env 01"
-    },
-    ...
-]
-
-Build Set
-
-[
-    {
-        "Name": "Build Name",
-        "TypeId": "Build Type ID"
-    },
-    ...
-]
-
-Issue Queries
-
-[
-    {
-        "Id": "1",
-        "Jql": ""
-    },
-    {
-        "Id": "2",
-        "Jql": ""
-    }
-]
-
-Settings.json (for Jira, Team City and Octopus Deploy integration)
-
-{
-    "BuildServerCredentials": {
-        "Username": "",
-        "Password": ""
-    },
-    "DeploymentServerKey": "",
-    "DeploymentServerPath": "",
-    "IssuesUrl": "",
-    "IssuesUsername": "",
-    "IssuesPassword": ""
-}
+You must edit these immediately to suit your environment. If you don't select a particular screen type in the Admin area, you can skip its config.
