@@ -188,7 +188,7 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 
-BuildSets
+Builds.json
 Environments.json
 Settings.json
 Deployments.json

@@ -1,21 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using LCARS.Models;
+using LCARS.Models.Builds;
 
 namespace LCARS.Domain
 {
     public class Builds : IBuilds
     {
         private readonly Services.IBuilds _service;
-        private readonly Repository.IRepository<Build> _settingsRepository;
+        private readonly Repository.IRepository<BuildProject> _settingsRepository;
 
-        public Builds(Services.IBuilds service, Repository.IRepository<Build> settingsRepository)
+        public Builds(Services.IBuilds service, Repository.IRepository<BuildProject> settingsRepository)
         {
             _service = service;
             _settingsRepository = settingsRepository;
         }
 
-        public IEnumerable<Build> GetBuilds(string path)
+        public IEnumerable<BuildProject> GetBuilds(string path)
         {
             return _settingsRepository.GetList(path);
         }
