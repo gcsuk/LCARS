@@ -20,11 +20,6 @@ namespace LCARS
                 new Domain.Settings(new Repository.SettingsRepository<Settings>()).GetSettings(
                     HttpContext.Current.Server.MapPath(@"~/App_Data/Settings.json"));
 
-            if (string.IsNullOrEmpty(settings.BuildServerUsername))
-            {
-                throw new Exception("You must specify build server credentials. See repository Readme for details.");
-            }
-
             var builder = new ContainerBuilder();
 
             // Register your MVC controllers.

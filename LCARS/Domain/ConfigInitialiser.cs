@@ -12,26 +12,35 @@ namespace LCARS.Domain
         private readonly IRepository<Models.Settings> _settingsRepository;
         private readonly IRepository<Models.Screens.Screen> _screenRepository;
         private readonly IRepository<Models.RedAlert> _redAlertRepository;
+        private readonly IRepository<Models.Builds.BuildProject> _buildsRepository;
         private readonly IRepository<Models.Deployments.Environment> _deploymentsRepository;
         private readonly IRepository<Models.Environments.Tenant> _environmentsRepository;
+        private readonly IRepository<Models.Issues.Query> _issuesRepository;
         private readonly string _settingsFilePath;
         private readonly string _screenFilePath;
         private readonly string _redAlertFilePath;
+        private readonly string _buildsFilePath;
         private readonly string _deploymentsFilePath;
         private readonly string _environmentsFilePath;
+        private readonly string _issuesFilePath;
 
         public ConfigInitialiser()
         {
             _settingsRepository = new SettingsRepository<Models.Settings>();
             _screenRepository = new SettingsRepository<Models.Screens.Screen>();
             _redAlertRepository = new SettingsRepository<Models.RedAlert>();
+            _buildsRepository = new SettingsRepository<Models.Builds.BuildProject>();
             _deploymentsRepository = new SettingsRepository<Models.Deployments.Environment>();
             _environmentsRepository = new SettingsRepository<Models.Environments.Tenant>();
+            _issuesRepository = new SettingsRepository<Models.Issues.Query>();
+
             _settingsFilePath = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["GlobalSettingsPath"]);
             _screenFilePath = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ScreenSettingsPath"]);
             _redAlertFilePath = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["RedAlertSettingsPath"]);
+            _buildsFilePath = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["BuildsSettingsPath"]);
             _deploymentsFilePath = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["DeploymentsSettingsPath"]);
             _environmentsFilePath = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["EnvironmentsSettingsPath"]);
+            _issuesFilePath = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["IssuesSettingsPath"]);
         }
 
         public void Generate()
@@ -85,6 +94,25 @@ namespace LCARS.Domain
             };
 
             _redAlertRepository.Update(_redAlertFilePath, redAlert);
+
+            var builds = new List<Models.Builds.BuildProject>
+            {
+                new Models.Builds.BuildProject
+                {
+                    Id = 1,
+                    Name = "Example Team",
+                    Builds = new List<Models.Builds.Build>
+                    {
+                        new Models.Builds.Build
+                        {
+                            Name = "Build 1",
+                            TypeId = 1
+                        }
+                    }
+                }
+            };
+
+            _buildsRepository.UpdateList(_buildsFilePath, builds);
 
             var deployments = new List<Models.Deployments.Environment>
             {
@@ -149,6 +177,18 @@ namespace LCARS.Domain
             };
 
             _environmentsRepository.UpdateList(_environmentsFilePath, environments);
+
+            var issues = new List<Models.Issues.Query>
+            {
+                new Models.Issues.Query
+                {
+                    Id = 1,
+                    Name = "Example",
+                    Jql = ""
+                }
+            };
+
+            _issuesRepository.UpdateList(_issuesFilePath, issues);
         }
     }
 }
