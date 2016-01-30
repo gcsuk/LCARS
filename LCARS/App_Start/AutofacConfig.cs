@@ -1,8 +1,10 @@
-﻿using Autofac;
+﻿using System.Reflection;
+using Autofac;
 using Autofac.Integration.Mvc;
-using System;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
+using Autofac.Integration.WebApi;
 using LCARS.Models;
 using LCARS.Models.Builds;
 using LCARS.Models.Environments;
@@ -22,7 +24,10 @@ namespace LCARS
 
             var builder = new ContainerBuilder();
 
-            // Register your MVC controllers.
+            // Register API controllers.
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+
+            // Register MVC controllers.
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
             builder.RegisterType<Domain.RedAlert>().As<Domain.IRedAlert>();
@@ -59,6 +64,13 @@ namespace LCARS
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
 
+            // Get HttpConfiguration.
+            var config = GlobalConfiguration.Configuration;
+
+            // Web API dependency resolver
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
+            // MVC dependency resolver
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
     }
