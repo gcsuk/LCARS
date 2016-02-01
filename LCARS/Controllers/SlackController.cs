@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Configuration;
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using Newtonsoft.Json;
 
 namespace LCARS.Controllers
 {
@@ -15,39 +18,58 @@ namespace LCARS.Controllers
             _domain = domain;
         }
 
-        public string Post([FromBody]ViewModels.Slack.SlackData data)
+        public HttpResponseMessage Post([FromBody]ViewModels.Slack.SlackData data)
         {
             if (data == null || string.IsNullOrEmpty(data.Text))
             {
-                return "You need to set the Red Alert properly! Use \"RedAlert alert-type end-date\" (in the format dd/mm/yyyy hh:mm). Leave date blank for next Friday at 16:30.";
+                return Request.CreateResponse(HttpStatusCode.OK,
+                    new
+                    {
+                        text =
+                            "You need to set the Red Alert properly! Use \"RedAlert alert-type end-date\" (in the format dd/mm/yyyy hh:mm). Leave date blank for next Friday at 16:30."
+                    });
             }
 
-            string[] parameters = data.Text.Split(',');
+            // Remove the trigger word, otherwise it will be part of the response and trigger an infinite alert loop
+            data.Text = data.Text.Replace(data.Trigger_Word, "").Trim();
 
-            if (parameters.Length == 0)
+            var parameters = data.Text.Split(new [] { "," }, StringSplitOptions.RemoveEmptyEntries);
+
+            var settings = new ViewModels.RedAlert
             {
-                return "You need to set the Red Alert properly! Use \"RedAlert alert-type end-date\" (in the format dd/mm/yyyy hh:mm). Leave date blank for next Friday at 16:30.";
-            }
+                IsEnabled = true,
+                AlertType = parameters.Length == 0 ? "Beer" : parameters[0].Trim()
+            };
 
-            var settings = new ViewModels.RedAlert { IsEnabled = true };
+            var targetDate = new DateTime();
 
-            if (parameters.Length >= 1)
+            var defaultDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 16, 30, 0);
+
+            if (parameters.Length < 2)
             {
-                settings.AlertType = parameters[0].Trim();
+                targetDate = defaultDate;
             }
-
-            if (parameters.Length >= 2)
+            else if (!DateTime.TryParse(parameters[1], out targetDate)) // If this succeeds, target date will be set by the TryParse
             {
-                DateTime targetDate;
-
-                settings.TargetDate = DateTime.TryParse(parameters[1], out targetDate) ? targetDate : new DateTime?();
+                targetDate = defaultDate;
             }
 
-            File.WriteAllText(HttpContext.Current.Server.MapPath("temp.json"), settings.ToString());
+            settings.TargetDate = targetDate;
 
-            _domain.UpdateRedAlert(HttpContext.Current.Server.MapPath("../" + ConfigurationManager.AppSettings["RedAlertSettingsPath"]), settings);
+            try
+            {
+                _domain.UpdateRedAlert(HttpContext.Current.Server.MapPath("../" + ConfigurationManager.AppSettings["RedAlertSettingsPath"]), settings);
 
-            return settings.AlertType + " Alert Activated";
+#if DEBUG
+                File.WriteAllText(HttpContext.Current.Server.MapPath("temp.json"), JsonConvert.SerializeObject(data));
+#endif
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.OK, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, new { text = settings.AlertType + " Alert Activated"});
         }
     }
 }
