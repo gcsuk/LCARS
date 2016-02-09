@@ -5,10 +5,10 @@ namespace LCARS.Services
 {
     public interface IBuilds
     {
-        Dictionary<int, int> GetBuildsRunning();
+        Dictionary<string, int> GetBuildsRunning();
 
         BuildProgress GetBuildProgress(int buildId);
 
-        KeyValuePair<string, string> GetLastBuildStatus(int buildTypeId);
+        KeyValuePair<string, string> GetLastBuildStatus(string buildTypeId);
     }
 }

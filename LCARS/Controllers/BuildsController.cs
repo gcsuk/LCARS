@@ -44,7 +44,7 @@ namespace LCARS.Controllers
 
         // GET: Build
         [Route("Builds/Status/{buildId?}")]
-        public JsonResult GetStatus(IEnumerable<int> buildTypeIds)
+        public JsonResult GetStatus(IEnumerable<string> buildTypeIds)
         {
             try
             {

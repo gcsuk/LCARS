@@ -106,7 +106,7 @@ namespace LCARS.Domain
                         new Models.Builds.Build
                         {
                             Name = "Build 1",
-                            TypeId = 1
+                            TypeId = "bt1"
                         }
                     }
                 }

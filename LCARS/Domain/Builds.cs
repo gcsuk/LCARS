@@ -20,7 +20,7 @@ namespace LCARS.Domain
             return _settingsRepository.GetList(path);
         }
 
-        public IEnumerable<Build> GetBuildStatus(IEnumerable<int> buildTypeIds)
+        public IEnumerable<Build> GetBuildStatus(IEnumerable<string> buildTypeIds)
         {
             var builds = new List<Build>();
 

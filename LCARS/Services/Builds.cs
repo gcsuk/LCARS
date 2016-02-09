@@ -21,11 +21,11 @@ namespace LCARS.Services
             _password = password;
         }
 
-        public Dictionary<int, int> GetBuildsRunning()
+        public Dictionary<string, int> GetBuildsRunning()
         {
             var doc = GetXml($"http://{_domain}/guestAuth/app/rest/builds?locator=running:true");
 
-            var builds = new Dictionary<int, int>();
+            var builds = new Dictionary<string, int>();
 
             if (doc == null)
             {
@@ -34,14 +34,10 @@ namespace LCARS.Services
 
             foreach (
                 var build in
-                    doc.Root.Elements("build")
-                        .Where(
-                            build =>
-                                !builds.ContainsKey(
-                                    Convert.ToInt32(build.Attribute("buildTypeId").Value.Replace("bt", "")))))
+                    doc.Root.Elements("build").Where(build => !builds.ContainsKey(build.Attribute("buildTypeId").Value))
+                )
             {
-                builds.Add(Convert.ToInt32(build.Attribute("buildTypeId").Value.Replace("bt", "")),
-                    Convert.ToInt32(build.Attribute("id").Value));
+                builds.Add(build.Attribute("buildTypeId").Value, Convert.ToInt32(build.Attribute("id").Value));
             }
 
             return builds;
@@ -78,9 +74,9 @@ namespace LCARS.Services
             };
         }
 
-        public KeyValuePair<string, string> GetLastBuildStatus(int buildTypeId)
+        public KeyValuePair<string, string> GetLastBuildStatus(string buildTypeId)
         {
-            var doc = GetXml($"http://{_domain}/guestAuth/app/rest/builds?locator=buildType:(id:bt{buildTypeId})");
+            var doc = GetXml($"http://{_domain}/guestAuth/app/rest/builds?locator=buildType:(id:{buildTypeId})");
 
             if (doc == null)
             {

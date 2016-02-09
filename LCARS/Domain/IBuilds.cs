@@ -7,6 +7,6 @@ namespace LCARS.Domain
     {
         IEnumerable<BuildProject> GetBuilds(string path);
 
-        IEnumerable<Build> GetBuildStatus(IEnumerable<int> buildTypeIds);
+        IEnumerable<Build> GetBuildStatus(IEnumerable<string> buildTypeIds);
     }
 }

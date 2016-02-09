@@ -2,7 +2,7 @@
 {
     public class Build
     {
-        public int TypeId { get; set; }
+        public string TypeId { get; set; }
 
         public string Number { get; set; }
 
