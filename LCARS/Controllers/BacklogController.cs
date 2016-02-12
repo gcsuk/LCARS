@@ -8,13 +8,11 @@ namespace LCARS.Controllers
 {
     public class BacklogController : Controller
     {
-        private readonly IIssues _issuesDomain;
-        private readonly IRedAlert _commonDomain;
+        private readonly IIssues _domain;
 
-        public BacklogController(IIssues issuesDomain, IRedAlert commonDomain)
+        public BacklogController(IIssues domain)
         {
-            _issuesDomain = issuesDomain;
-            _commonDomain = commonDomain;
+            _domain = domain;
         }
 
         // GET: Backlog
@@ -23,7 +21,7 @@ namespace LCARS.Controllers
         {
             if (typeId == 0)
             {
-                var issueSets = _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
+                var issueSets = _domain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
                     .Select(q => q.Id)
                     .ToList();
 
@@ -31,15 +29,14 @@ namespace LCARS.Controllers
             }
 
             var query =
-                _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
+                _domain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
                     .Single(i => i.Id == typeId);
 
             var vm = new Backlog
             {
                 IssueSet = query.Name,
-                BugList = _issuesDomain.Get(query.Jql),
-                Deadline = query.Deadline,
-                IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled
+                BugList = _domain.Get(query.Jql),
+                Deadline = query.Deadline
             };
 
             return View(vm);
@@ -49,11 +46,11 @@ namespace LCARS.Controllers
         public JsonResult GetBacklog(int issueSet = 1)
         {
             var query =
-                _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
+                _domain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
                     .Single(i => i.Id == issueSet)
                     .Jql;
 
-            return Json(_issuesDomain.Get(query), JsonRequestBehavior.AllowGet);
+            return Json(_domain.Get(query), JsonRequestBehavior.AllowGet);
         }
     }
 }

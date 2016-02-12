@@ -7,13 +7,11 @@ namespace LCARS.Controllers
 {
     public class IssuesController : Controller
     {
-        private readonly IIssues _issuesDomain;
-        private readonly IRedAlert _commonDomain;
+        private readonly IIssues _domain;
 
-        public IssuesController(IIssues issuesDomain, IRedAlert commonDomain)
+        public IssuesController(IIssues domain)
         {
-            _issuesDomain = issuesDomain;
-            _commonDomain = commonDomain;
+            _domain = domain;
         }
 
         // GET: Issues
@@ -22,7 +20,7 @@ namespace LCARS.Controllers
         {
             if (typeId == 0)
             {
-                var issueSets = _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
+                var issueSets = _domain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
                     .Select(q => q.Id)
                     .ToList();
 
@@ -30,14 +28,13 @@ namespace LCARS.Controllers
             }
 
             var query =
-                _issuesDomain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
+                _domain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
                     .Single(i => i.Id == typeId)
                     .Jql;
 
             var vm = new ViewModels.Issues.Issues
             {
-                IssueList = _issuesDomain.Get(query),
-                IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled
+                IssueList = _domain.Get(query)
             };
 
             return View(vm);

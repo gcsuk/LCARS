@@ -196,7 +196,6 @@
     <Compile Include="ViewModels\Issues\Issue.cs" />
     <Compile Include="ViewModels\Issues\Issues.cs" />
     <Compile Include="ViewModels\BaseSettings.cs" />
-    <Compile Include="ViewModels\RedAlertStatus.cs" />
     <Compile Include="ViewModels\Screens\Board.cs" />
     <Compile Include="ViewModels\Screens\Screens.cs" />
     <Compile Include="ViewModels\Screens\Screen.cs" />

@@ -7,21 +7,17 @@ namespace LCARS.Controllers
 {
     public class DeploymentsController : Controller
     {
-        private readonly IRedAlert _commonDomain;
-        private readonly IDeployments _deploymentsDomain;
+        private readonly IDeployments _domain;
 
-        public DeploymentsController(IRedAlert commonDomain, IDeployments deploymentsDomain)
+        public DeploymentsController(IDeployments domain)
         {
-            _commonDomain = commonDomain;
-            _deploymentsDomain = deploymentsDomain;
+            _domain = domain;
         }
 
         // GET: Deployments
         public ActionResult Index()
         {
-            var deployments = _deploymentsDomain.Get().OrderBy(g => g.ProjectGroup).ThenBy(p => p.Project).ToList();
-
-            var isRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled;
+            var deployments = _domain.Get().OrderBy(g => g.ProjectGroup).ThenBy(p => p.Project).ToList();
 
             var projects =
                 deployments.GroupBy(p => p.ProjectId)
@@ -46,15 +42,14 @@ namespace LCARS.Controllers
                     .ToList();
 
             environments =
-                _deploymentsDomain.SetEnvironmentOrder(environments, Server.MapPath(@"~/App_Data/Deployments.json"))
+                _domain.SetEnvironmentOrder(environments, Server.MapPath(@"~/App_Data/Deployments.json"))
                     .ToList();
 
             var vm = new DeploymentStatus
             {
                 Projects = projects,
                 Environments = environments,
-                Deployments = deployments,
-                IsRedAlertEnabled = isRedAlertEnabled
+                Deployments = deployments
             };
 
             return View(vm);
@@ -63,7 +58,7 @@ namespace LCARS.Controllers
         [HttpGet]
         public JsonResult GetStatus()
         {
-            return Json(_deploymentsDomain.Get().ToList(), JsonRequestBehavior.AllowGet);
+            return Json(_domain.Get().ToList(), JsonRequestBehavior.AllowGet);
         }
     }
 }

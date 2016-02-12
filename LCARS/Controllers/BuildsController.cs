@@ -10,20 +10,18 @@ namespace LCARS.Controllers
 {
     public class BuildsController : Controller
     {
-        private readonly IRedAlert _commonDomain;
-        private readonly IBuilds _buildsDomain;
+        private readonly IBuilds _domain;
 
-        public BuildsController(IRedAlert commonDomain, IBuilds buildsDomain)
+        public BuildsController(IBuilds domain)
         {
-            _commonDomain = commonDomain;
-            _buildsDomain = buildsDomain;
+            _domain = domain;
         }
 
         // GET: Build
         [Route("Builds/{typeId?}")]
         public ActionResult Index(int typeId)
         {
-            var buildProjects = _buildsDomain.GetBuilds(Server.MapPath("~/App_Data/Builds.json")).ToList();
+            var buildProjects = _domain.GetBuilds(Server.MapPath("~/App_Data/Builds.json")).ToList();
 
             if (typeId == 0)
             {
@@ -35,8 +33,7 @@ namespace LCARS.Controllers
             var vm = new ViewModels.BuildStatus
             {
                 ProjectId = typeId,
-                Builds = builds,
-                IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled
+                Builds = builds
             };
 
             return View(vm.Builds.Count() > 8 ? "HighCount" : "LowCount", vm);
@@ -48,7 +45,7 @@ namespace LCARS.Controllers
         {
             try
             {
-                var buildStatus = _buildsDomain.GetBuildStatus(buildTypeIds);
+                var buildStatus = _domain.GetBuildStatus(buildTypeIds);
 
                 return Json(buildStatus, JsonRequestBehavior.AllowGet);
             }
