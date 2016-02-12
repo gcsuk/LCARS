@@ -1,26 +1,22 @@
 ﻿using System.Web.Mvc;
 using LCARS.Domain;
-using LCARS.ViewModels;
 
 namespace LCARS.Controllers
 {
 	public class EnvironmentsController : Controller
 	{
-        private readonly IRedAlert _commonDomain;
-		private readonly IEnvironments _environmentsDomain;
+		private readonly IEnvironments _domain;
 
-        public EnvironmentsController(IRedAlert commonDomain, IEnvironments environmentsDomain)
+        public EnvironmentsController(IEnvironments domain)
         {
-            _commonDomain = commonDomain;
-            _environmentsDomain = environmentsDomain;
+            _domain = domain;
         }
 
 		public ActionResult Index()
 		{
             var vm = new ViewModels.Environments.Environments
             {
-                Tenants = _environmentsDomain.Get(Server.MapPath(@"~/App_Data/Environments.json")),
-                IsRedAlertEnabled = _commonDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled
+                Tenants = _domain.Get(Server.MapPath(@"~/App_Data/Environments.json"))
             };
 
             return View(vm);
@@ -29,7 +25,7 @@ namespace LCARS.Controllers
         [HttpPost]
         public void UpdateStatus(string tenant, string environment, string currentStatus)
         {
-            _environmentsDomain.Update(Server.MapPath(@"~/App_Data/Environments.json"), tenant, environment, currentStatus);
+            _domain.Update(Server.MapPath(@"~/App_Data/Environments.json"), tenant, environment, currentStatus);
         }
 	}
 }

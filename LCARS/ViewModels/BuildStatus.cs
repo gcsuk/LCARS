@@ -3,7 +3,7 @@ using LCARS.Models.Builds;
 
 namespace LCARS.ViewModels
 {
-    public class BuildStatus : RedAlertStatus
+    public class BuildStatus : BaseSettings
     {
         public int ProjectId { get; set; }
 

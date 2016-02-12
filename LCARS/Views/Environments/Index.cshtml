@@ -2,11 +2,7 @@
 
 @section refresh
 {
-    @if (Model.IsRedAlertEnabled)
-    {
-        <meta http-equiv="refresh" content="0; /RedAlert">
-    }
-    else if (Model.AutoRefresh)
+    @if (Model.AutoRefresh)
     {
         <meta http-equiv="refresh" content="30; URL=/">
     }

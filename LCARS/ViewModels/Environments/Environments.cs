@@ -2,7 +2,7 @@
 
 namespace LCARS.ViewModels.Environments
 {
-    public class Environments : RedAlertStatus
+    public class Environments : BaseSettings
     {
         public IEnumerable<Tenant> Tenants { get; set; }
     }

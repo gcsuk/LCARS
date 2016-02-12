@@ -2,11 +2,7 @@
 @{
     ViewBag.Title = "LCARS | Issues";
 
-    if (Model.IsRedAlertEnabled)
-    {
-        <meta http-equiv="refresh" content="0; /RedAlert?returnUrl=Issues">
-    }
-    else if (Model.AutoRefresh)
+    if (Model.AutoRefresh)
     {
         <meta http-equiv="refresh" content="30; URL=/">
     }

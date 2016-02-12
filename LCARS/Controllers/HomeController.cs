@@ -8,15 +8,22 @@ namespace LCARS.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IRedAlert _redAlertDomain;
         private readonly IScreens _screensDomain;
 
-        public HomeController(IScreens screensDomain)
+        public HomeController(IRedAlert redAlertDomain, IScreens screensDomain)
         {
+            _redAlertDomain = redAlertDomain;
             _screensDomain = screensDomain;
         }
 
         public ActionResult Index(int screenId = 0)
         {
+            if (_redAlertDomain.GetRedAlert(Server.MapPath(@"~/App_Data/RedAlert.json")).IsEnabled)
+            {
+                return RedirectToAction("Index", "RedAlert");
+            }
+
             if (screenId == 0 && Session["ScreenId"] != null)
             {
                 screenId = (int)Session["ScreenId"];
