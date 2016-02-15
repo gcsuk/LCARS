@@ -1,10 +1,23 @@
-﻿@section refresh
-{
-    <meta http-equiv="refresh" content="10" />
-}
+﻿@model IEnumerable<LCARS.ViewModels.GitHub.Repository>
 
-<div class="git">
-    <h1 id="gitStatus"></h1>
-    <h2 id="gitStatusMessage"></h2>
-    <h2 id="gitStatusDate"></h2>
+<div class="github">
+    <div class="row">
+        <table>
+            <tr>
+                <th></th>
+                <th class="category">Pending PRs</th>
+                <th class="category">Shipped PRs</th>
+                <th class="category">Branches</th>
+            </tr>
+            @foreach (var repository in Model)
+            {
+                <tr>
+                    <td class="repository">@repository.Name</td>
+                    <td class="category @(repository.PullRequestUnshippedCountWarning ? "red" : "")">@repository.PullRequests.Count(pr => !pr.IsShipped)</td>
+                    <td class="category @(repository.PullRequestShippedCountWarning ? "red" : "")">@repository.PullRequests.Count(pr => pr.IsShipped)</td>
+                    <td class="category @(repository.BranchCountWarning ? "red" : "")">@repository.Branches.Count()</td>
+                </tr>
+            }
+        </table>
+    </div>
 </div>

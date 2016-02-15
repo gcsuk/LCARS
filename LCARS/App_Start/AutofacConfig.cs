@@ -36,6 +36,7 @@ namespace LCARS
             builder.RegisterType<Domain.Builds>().As<Domain.IBuilds>();
             builder.RegisterType<Domain.Deployments>().As<Domain.IDeployments>();
             builder.RegisterType<Domain.Issues>().As<Domain.IIssues>();
+            builder.RegisterType<Domain.GitHub>().As<Domain.IGitHub>();
             builder.RegisterType<Domain.Settings>().As<Domain.ISettings>();
 
             builder.RegisterType<Services.Builds>()
@@ -53,12 +54,28 @@ namespace LCARS
                 .WithParameter("username", settings.IssuesUsername)
                 .WithParameter("password", settings.IssuesPassword);
 
+            builder.RegisterType<Services.GitHub<Models.GitHub.Branch>>()
+               .As<Services.IGitHub<Models.GitHub.Branch>>()
+               .WithParameter("username", settings.GitHubUsername)
+               .WithParameter("password", settings.GitHubPassword);
+
+            builder.RegisterType<Services.GitHub<Models.GitHub.PullRequest>>()
+               .As<Services.IGitHub<Models.GitHub.PullRequest>>()
+               .WithParameter("username", settings.GitHubUsername)
+               .WithParameter("password", settings.GitHubPassword);
+
+            builder.RegisterType<Services.GitHub<Models.GitHub.Comment>>()
+               .As<Services.IGitHub<Models.GitHub.Comment>>()
+               .WithParameter("username", settings.GitHubUsername)
+               .WithParameter("password", settings.GitHubPassword);
+
             builder.RegisterType<Repository.SettingsRepository<RedAlert>>().As<Repository.IRepository<RedAlert>>();
             builder.RegisterType<Repository.SettingsRepository<Screen>>().As<Repository.IRepository<Screen>>();
             builder.RegisterType<Repository.SettingsRepository<Tenant>>().As<Repository.IRepository<Tenant>>();
             builder.RegisterType<Repository.SettingsRepository<BuildProject>>().As<Repository.IRepository<BuildProject>>();
             builder.RegisterType<Repository.SettingsRepository<Query>>().As<Repository.IRepository<Query>>();
             builder.RegisterType<Repository.SettingsRepository<Models.Deployments.Environment>>().As<Repository.IRepository<Models.Deployments.Environment>>();
+            builder.RegisterType<Repository.SettingsRepository<Models.GitHub.Settings>>().As<Repository.IRepository<Models.GitHub.Settings>>();
             builder.RegisterType<Repository.SettingsRepository<Settings>>().As<Repository.IRepository<Settings>>();
 
             // Set the dependency resolver to be Autofac.

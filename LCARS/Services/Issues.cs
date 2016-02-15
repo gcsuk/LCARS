@@ -23,19 +23,12 @@ namespace LCARS.Services
         {
             using (WebClient webClient = new WebClient())
             {
-                webClient.Headers.Set("Authorization", "Basic " + GetEncodedCredentials(_username, _password));
+                webClient.Headers.Set("Authorization", "Basic " + Common.GetEncodedCredentials(_username, _password));
 
                 var jsonData = webClient.DownloadString(_url + query + "&maxResults=1000");
 
                 return JsonConvert.DeserializeObject<Parent>(jsonData);
             }
-        }
-
-        private static string GetEncodedCredentials(string username, string password)
-        {
-            var mergedCredentials = string.Format("{0}:{1}", username, password);
-            var byteCredentials = Encoding.UTF8.GetBytes(mergedCredentials);
-            return Convert.ToBase64String(byteCredentials);
         }
     }
 }

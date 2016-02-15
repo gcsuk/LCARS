@@ -13,6 +13,10 @@
         public string IssuesUsername { get; set; }
 
         public string IssuesPassword { get; set; }
+
+        public string GitHubUsername { get; set; }
+
+        public string GitHubPassword { get; set; }
     }
 
     public class Credentials
