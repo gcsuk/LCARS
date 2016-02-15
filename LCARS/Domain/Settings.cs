@@ -26,7 +26,9 @@ namespace LCARS.Domain
                 DeploymentServerKey = settings.DeploymentServerKey,
                 IssuesUrl = settings.IssuesUrl,
                 IssuesUsername = settings.IssuesUsername,
-                IssuesPassword = settings.IssuesPassword
+                IssuesPassword = settings.IssuesPassword,
+                GitHubUsername = settings.GitHubUsername,
+                GitHubPassword = settings.GitHubPassword
             };
         }
 

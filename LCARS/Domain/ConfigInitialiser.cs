@@ -16,6 +16,7 @@ namespace LCARS.Domain
         private readonly IRepository<Models.Deployments.Environment> _deploymentsRepository;
         private readonly IRepository<Models.Environments.Tenant> _environmentsRepository;
         private readonly IRepository<Models.Issues.Query> _issuesRepository;
+        private readonly IRepository<Models.GitHub.Settings> _gitHubRepository;
         private readonly string _settingsFilePath;
         private readonly string _screenFilePath;
         private readonly string _redAlertFilePath;
@@ -23,6 +24,7 @@ namespace LCARS.Domain
         private readonly string _deploymentsFilePath;
         private readonly string _environmentsFilePath;
         private readonly string _issuesFilePath;
+        private readonly string _gitHubFilePath;
 
         public ConfigInitialiser()
         {
@@ -33,6 +35,7 @@ namespace LCARS.Domain
             _deploymentsRepository = new SettingsRepository<Models.Deployments.Environment>();
             _environmentsRepository = new SettingsRepository<Models.Environments.Tenant>();
             _issuesRepository = new SettingsRepository<Models.Issues.Query>();
+            _gitHubRepository = new SettingsRepository<Models.GitHub.Settings>();
 
             _settingsFilePath = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["GlobalSettingsPath"]);
             _screenFilePath = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["ScreenSettingsPath"]);
@@ -41,6 +44,7 @@ namespace LCARS.Domain
             _deploymentsFilePath = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["DeploymentsSettingsPath"]);
             _environmentsFilePath = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["EnvironmentsSettingsPath"]);
             _issuesFilePath = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["IssuesSettingsPath"]);
+            _gitHubFilePath = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["GitHubSettingsPath"]);
         }
 
         public void Generate()
@@ -189,6 +193,15 @@ namespace LCARS.Domain
             };
 
             _issuesRepository.UpdateList(_issuesFilePath, issues);
+
+            var gitHub = new Models.GitHub.Settings
+            {
+                Owner = "Owner",
+                BaseUrl = "https://api.github.com/repos/OWNER/REPOSITORY",
+                Repositories = new List<string> { "Repo1", "Repo2", "Repo3" }
+            };
+
+            _gitHubRepository.Update(_gitHubFilePath, gitHub);
         }
     }
 }

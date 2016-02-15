@@ -8,6 +8,7 @@ namespace LCARS.ViewModels
         [Description("Builds")] Build = 2,
         Issues = 3,
         Deployments = 4,
-        Backlog = 5
+        Backlog = 5,
+        GitHub = 6
     }
 }

@@ -151,9 +151,11 @@
     <Compile Include="Domain\Deployments.cs" />
     <Compile Include="Domain\Environments.cs" />
     <Compile Include="Domain\IBuilds.cs" />
+    <Compile Include="Domain\IGitHub.cs" />
     <Compile Include="Domain\IIssues.cs" />
     <Compile Include="Domain\IScreens.cs" />
     <Compile Include="Domain\ISettings.cs" />
+    <Compile Include="Domain\GitHub.cs" />
     <Compile Include="Domain\Issues.cs" />
     <Compile Include="Domain\Screens.cs" />
     <Compile Include="Domain\Settings.cs" />
@@ -168,11 +170,24 @@
     <Compile Include="Models\Deployments\Environment.cs" />
     <Compile Include="Models\Deployments\Project.cs" />
     <Compile Include="Models\Deployments\Deployment.cs" />
+    <Compile Include="Models\GitHub\Comment.cs" />
+    <Compile Include="Models\GitHub\Settings.cs" />
+    <Compile Include="Models\GitHub\PullRequest.cs" />
+    <Compile Include="Models\GitHub\Branch.cs" />
+    <Compile Include="Models\GitHub\User.cs" />
     <Compile Include="Models\Issues\Query.cs" />
     <Compile Include="Models\Screens\Board.cs" />
     <Compile Include="Models\Screens\Screen.cs" />
+    <Compile Include="Services\Common.cs" />
+    <Compile Include="Services\GitHub.cs" />
+    <Compile Include="Services\IGitHub.cs" />
     <Compile Include="ViewModels\AdminMenu.cs" />
     <Compile Include="ViewModels\Admin\RedAlert.cs" />
+    <Compile Include="ViewModels\GitHub\Repository.cs" />
+    <Compile Include="ViewModels\GitHub\Settings.cs" />
+    <Compile Include="ViewModels\GitHub\Summary.cs" />
+    <Compile Include="ViewModels\GitHub\Branch.cs" />
+    <Compile Include="ViewModels\GitHub\PullRequest.cs" />
     <Compile Include="ViewModels\Issues\Backlog.cs" />
     <Compile Include="Models\Issues\Parent.cs" />
     <Compile Include="Models\Issues\Issue.cs" />
@@ -221,6 +236,7 @@
   <ItemGroup>
     <Content Include="App_Data\Builds.json" />
     <None Include="App_Data\Environments.json" />
+    <Content Include="App_Data\GitHub.json" />
     <None Include="App_Data\RedAlert.json" />
     <None Include="App_Data\Deployments.json" />
     <None Include="App_Data\Issues.json" />
@@ -303,7 +319,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Git\Index.cshtml" />
+    <Content Include="Views\Git\Alert.cshtml" />
     <Content Include="Views\Builds\HighCount.cshtml" />
     <Content Include="Views\RedAlert\Index.cshtml" />
     <Content Include="Views\Deployments\Index.cshtml" />
@@ -318,6 +334,7 @@
     <Content Include="Views\Admin\Issues.cshtml" />
     <Content Include="Views\Admin\Screens.cshtml" />
     <Content Include="Scripts\underscore.min.map" />
+    <Content Include="Views\Git\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Screens\" />

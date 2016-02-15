@@ -355,7 +355,7 @@ table.digits tr.white {
         background-color: #FF9900
     }
 
-/* GIT */
+/* GIT HUB */
 
 .git h1 {
     padding-top: 10px;
@@ -372,6 +372,36 @@ table.digits tr.white {
 }
 
 .git h1 span.status {
+    color: #ff0000
+}
+
+.github {
+    color: #ffffff;
+    font-size: 24pt;
+}
+
+.github table {
+    margin-top: 20px
+}
+
+.github table tr th, .github table tr td {
+    padding: 5px 20px
+}
+
+.github .repository {
+    width: 350px
+}
+
+.github .category {
+    width: 125px;
+    text-align: center
+}
+
+.github td.category {
+    font-size: 48pt
+}
+
+.github td.red {
     color: #ff0000
 }
 

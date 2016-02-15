@@ -27,7 +27,7 @@ function gitStatus(data) {
     }
     else {
         if (data.status !== "good") {
-            window.location = "/Git";
+            window.location = "/Git/Alert";
         }
     }
 }
