@@ -9,6 +9,6 @@ namespace LCARS.ViewModels
         Issues = 3,
         Deployments = 4,
         Backlog = 5,
-        GitHub = 6
+        Git = 6
     }
 }
