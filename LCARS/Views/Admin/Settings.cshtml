@@ -34,6 +34,13 @@
         <div>
             <span>Password</span> @Html.TextBoxFor(r => r.IssuesPassword, new {id = "issuesPassword"})
         </div>
+        <h2>GitHub</h2>
+        <div>
+            <span>Username</span> @Html.TextBoxFor(r => r.GitHubUsername, new { id = "gitHubUsername" })
+        </div>
+        <div>
+            <span>Password</span> @Html.TextBoxFor(r => r.GitHubPassword, new { id = "gitHubPassword" })
+        </div>
         <div class="admin-button">
             <input id="updateSettings" type="submit" value="Save" class="blue"/>
         </div>

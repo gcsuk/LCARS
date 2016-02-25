@@ -47,7 +47,9 @@ namespace LCARS.Domain
                 DeploymentServerKey = settingsVm.DeploymentServerKey,
                 IssuesUrl = settingsVm.IssuesUrl,
                 IssuesUsername = settingsVm.IssuesUsername,
-                IssuesPassword = settingsVm.IssuesPassword
+                IssuesPassword = settingsVm.IssuesPassword,
+                GitHubUsername = settingsVm.GitHubUsername,
+                GitHubPassword = settingsVm.GitHubPassword
             };
 
             _repository.Update(filePath, settings);
