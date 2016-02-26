@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using LCARS.Models.Builds;
 
-namespace LCARS.ViewModels
+namespace LCARS.ViewModels.Builds
 {
     public class BuildStatus : BaseSettings
     {

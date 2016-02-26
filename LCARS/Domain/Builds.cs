@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using LCARS.Models.Builds;
+using LCARS.ViewModels.Builds;
 
 namespace LCARS.Domain
 {
     public class Builds : IBuilds
     {
         private readonly Services.IBuilds _service;
-        private readonly Repository.IRepository<BuildProject> _settingsRepository;
+        private readonly Repository.IRepository<Models.Builds.BuildProject> _settingsRepository;
 
-        public Builds(Services.IBuilds service, Repository.IRepository<BuildProject> settingsRepository)
+        public Builds(Services.IBuilds service, Repository.IRepository<Models.Builds.BuildProject> settingsRepository)
         {
             _service = service;
             _settingsRepository = settingsRepository;
@@ -17,7 +17,16 @@ namespace LCARS.Domain
 
         public IEnumerable<BuildProject> GetBuilds(string path)
         {
-            return _settingsRepository.GetList(path);
+            return _settingsRepository.GetList(path).Select(bp => new BuildProject
+            {
+                Id = bp.Id,
+                Name = bp.Name,
+                Builds = bp.Builds.Select(b => new Build
+                {
+                    Name = b.Name,
+                    TypeId = b.TypeId
+                })
+            });
         }
 
         public IEnumerable<Build> GetBuildStatus(IEnumerable<string> buildTypeIds)
@@ -33,7 +42,13 @@ namespace LCARS.Domain
 
                 if (buildsRunning.ContainsKey(buildTypeId))
                 {
-                    build.Progress = _service.GetBuildProgress(buildsRunning.Single(b => b.Key == buildTypeId).Value);
+                    var progress = _service.GetBuildProgress(buildsRunning.Single(b => b.Key == buildTypeId).Value);
+
+                    build.Progress = new BuildProgress
+                    {
+                        Status = progress.Status,
+                        Percentage = progress.Percentage
+                    };
                 }
                 else
                 {

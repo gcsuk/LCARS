@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using LCARS.Models.Builds;
+using LCARS.ViewModels.Builds;
 
 namespace LCARS.Domain
 {

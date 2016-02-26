@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Text;
+﻿using System.Net;
 using LCARS.Models.Issues;
 using Newtonsoft.Json;
 

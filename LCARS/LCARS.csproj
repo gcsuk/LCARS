@@ -183,6 +183,9 @@
     <Compile Include="Services\IGitHub.cs" />
     <Compile Include="ViewModels\AdminMenu.cs" />
     <Compile Include="ViewModels\Admin\RedAlert.cs" />
+    <Compile Include="ViewModels\Builds\Build.cs" />
+    <Compile Include="ViewModels\Builds\BuildProgress.cs" />
+    <Compile Include="ViewModels\Builds\BuildProject.cs" />
     <Compile Include="ViewModels\GitHub\Repository.cs" />
     <Compile Include="ViewModels\GitHub\Settings.cs" />
     <Compile Include="ViewModels\GitHub\Summary.cs" />
@@ -224,7 +227,7 @@
     <Compile Include="Services\Deployments.cs" />
     <Compile Include="Services\IBuilds.cs" />
     <Compile Include="Services\Builds.cs" />
-    <Compile Include="ViewModels\BuildStatus.cs" />
+    <Compile Include="ViewModels\Builds\BuildStatus.cs" />
     <Compile Include="ViewModels\Deployments\DeploymentStatus.cs" />
     <Compile Include="ViewModels\Deployments\Environment.cs" />
     <Compile Include="ViewModels\Deployments\Project.cs" />

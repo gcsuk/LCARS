@@ -30,7 +30,7 @@ namespace LCARS.Controllers
 
             var builds = buildProjects.Single(b => b.Id == typeId).Builds;
 
-            var vm = new ViewModels.BuildStatus
+            var vm = new ViewModels.Builds.BuildStatus
             {
                 ProjectId = typeId,
                 Builds = builds
