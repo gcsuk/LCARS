@@ -63,5 +63,31 @@ namespace LCARS.Domain
 
             return builds;
         }
+
+        public bool UpdateBuild(string filePath, Models.Builds.BuildProject build)
+        {
+            var builds = _settingsRepository.GetList(filePath).ToList();
+
+            var selectedBuild = builds.SingleOrDefault(b => b.Id == build.Id);
+
+            if (selectedBuild == null) // New item
+            {
+                builds.Add(new Models.Builds.BuildProject
+                {
+                    Id = selectedBuild.Id,
+                    Name = selectedBuild.Name,
+                    Builds = selectedBuild.Builds
+                });
+            }
+            else // Updated item
+            {
+                selectedBuild.Name = build.Name;
+                selectedBuild.Builds = build.Builds;
+            }
+
+            _settingsRepository.UpdateList(filePath, builds);
+
+            return selectedBuild == null;
+        }
     }
 }
