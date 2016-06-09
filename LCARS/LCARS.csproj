@@ -283,7 +283,6 @@
     <Content Include="img\redCornerTop.png" />
     <Content Include="img\redCornerTopAlert.png" />
     <Content Include="img\redCornerTopAlertYellow.png" />
-    <Content Include="img\ship.jpg" />
     <Content Include="img\softwareBug.jpg" />
     <Content Include="img\topRight.png" />
     <Content Include="Scripts\admin.js" />

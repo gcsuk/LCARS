@@ -4,7 +4,7 @@
     <link href="/Content/yellowAlert.css" rel="stylesheet" />
 }
 
-<img class="git-shipped" src="~/img/ship.jpg" alt="Ship" />
+<img id="gitShippedBoat" alt="Ship" />
 
 <div id="gitShipped">
     <h1>PR SHIPPED!</h1>
@@ -19,3 +19,36 @@
         <h2>@Model.AuthorName PLEASE MERGE!!</h2>
     </div>
 </div>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        function imageSelector() {
+            var images = [
+                "http://www.funnyalltime.com/wp-content/uploads/2012/10/I-GOT-YOU-A-SHIP-SHIPPING-A-SHIP.jpg",
+                "http://i.dailymail.co.uk/i/pix/2014/03/06/article-2575169-1C17266100000578-86_964x617.jpg",
+                "https://qph.is.quoracdn.net/main-qimg-c987e575dca535436a6b811c189e7294?convert_to_webp=true",
+                "https://i.ytimg.com/vi/u-401CS5N1E/hqdefault.jpg"
+            ];
+
+            var randomNumber = Math.floor(Math.random() * images.length - 1);
+
+            $("#gitShippedBoat").attr("src", images[randomNumber]);
+        }
+
+        function ship() {
+            if ($("#gitShipped").hasClass("hide")) {
+                $("#gitShipped").removeClass("hide");
+                $("#gitShippedBoat").addClass("hide");
+            } else {
+                $("#gitShipped").addClass("hide");
+                $("#gitShippedBoat").removeClass("hide");
+            }
+            setTimeout(ship, 4000);
+        }
+
+        imageSelector();
+        ship(10);
+    </script>
+}

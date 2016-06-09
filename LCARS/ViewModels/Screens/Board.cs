@@ -8,7 +8,7 @@
 
         public Boards CategoryId { get; set; }
 
-        public string Category { get { return CategoryId.GetDescription(); } }
+        public string Category => CategoryId.GetDescription();
 
         public string Argument { get; set; }
     }

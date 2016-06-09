@@ -78,7 +78,7 @@ namespace LCARS.Controllers
                         {
                             AuthorName = pr.AuthorName,
                             Number = pr.Number,
-                            Title = pr.Title,
+                            Title = pr.Title.Replace("â€¦", "..."),
                             ShippedBy = shipComment.User.Name,
                             ShippedOn = shipComment.DateCreated
                         });

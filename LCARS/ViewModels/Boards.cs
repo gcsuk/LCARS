@@ -10,6 +10,7 @@ namespace LCARS.ViewModels
         Deployments = 4,
         Backlog = 5,
         Git = 6,
-        External = 7
+        External = 7,
+        [Description("Git/Shipped")] GitShipped = 8
     }
 }
