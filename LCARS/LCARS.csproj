@@ -56,8 +56,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -243,11 +243,11 @@
     <None Include="App_Data\RedAlert.json" />
     <None Include="App_Data\Deployments.json" />
     <None Include="App_Data\Issues.json" />
+    <Content Include="Content\admin.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\admin.css" />
     <Content Include="Content\yellowAlert.css" />
     <Content Include="Content\redAlert.css" />
     <Content Include="favicon.ico" />
@@ -256,16 +256,17 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\tt0105m_.TTF" />
     <Content Include="fonts\tt0106m0.TTF" />
+    <Content Include="App_Data\Screens.json" />
+    <None Include="App_Data\Settings.json" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="App_Data\Screens.json" />
-    <None Include="App_Data\Settings.json" />
     <None Include="Properties\PublishProfiles\Standard.pubxml" />
-    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="img\blueCornerBottomAlert.png" />
     <Content Include="img\blueCornerBottomAlertYellow.png" />
     <Content Include="img\blueCornerTop.png" />
@@ -282,6 +283,8 @@
     <Content Include="img\softwareBug.jpg" />
     <Content Include="img\topRight.png" />
     <Content Include="Scripts\admin.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\buildProgress.js" />
     <Content Include="Scripts\handlebars.amd.js" />
     <Content Include="Scripts\handlebars.amd.min.js" />
@@ -290,18 +293,16 @@
     <Content Include="Scripts\handlebars.runtime.amd.min.js" />
     <Content Include="Scripts\handlebars.runtime.js" />
     <Content Include="Scripts\handlebars.runtime.min.js" />
+    <None Include="Scripts\jquery-2.2.3.intellisense.js" />
+    <Content Include="Scripts\jquery-2.2.3.js" />
+    <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\master.js" />
-    <Content Include="Scripts\redAlert.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-2.1.4.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.map" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\redAlert.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\queryString.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -336,8 +337,9 @@
     <Content Include="Views\Admin\Settings.cshtml" />
     <Content Include="Views\Admin\Issues.cshtml" />
     <Content Include="Views\Admin\Screens.cshtml" />
-    <Content Include="Scripts\underscore.min.map" />
     <Content Include="Views\Git\Index.cshtml" />
+    <Content Include="Scripts\jquery-2.2.3.min.map" />
+    <Content Include="Scripts\underscore.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Screens\" />
