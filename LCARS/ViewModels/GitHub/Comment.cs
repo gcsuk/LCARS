@@ -1,11 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 
-namespace LCARS.Models.GitHub
+namespace LCARS.ViewModels.GitHub
 {
     public class Comment
     {
-        [JsonProperty("created_at")]
         public DateTime DateCreated { get; set; }
 
         public User User { get; set; }

@@ -16,7 +16,5 @@ namespace LCARS.Models.GitHub
         public DateTime UpdatedOn { get; set; }
 
         public User User { get; set; }
-
-        //public int CommentCount { get; set; }
     }
 }

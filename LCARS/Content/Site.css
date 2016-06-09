@@ -503,3 +503,27 @@ table.digits tr.white {
 .issueCount .hoursRemaining span {
     font-size: 30pt!important
 }
+
+/* GIT */
+
+img.git-shipped {
+    margin: 50px;
+    width: 600px; display: none
+}
+
+#gitShipped {
+    text-align: center;
+    font-size: 24pt
+}
+
+#gitShipped h1 {
+    font-size: 48pt
+}
+
+#gitShipped h2 {
+    font-size: 36pt
+}
+
+#gitShipped div {
+    margin: 40px 0
+}

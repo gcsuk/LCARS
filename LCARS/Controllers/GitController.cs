@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
+using System;
 
 namespace LCARS.Controllers
 {
@@ -30,7 +31,7 @@ namespace LCARS.Controllers
                         _domain.GetBranches(
                             settings.BaseUrl.Replace("OWNER", settings.Owner).Replace("REPOSITORY", repository) + "/branches",
                             repository).ToList(),
-                    PullRequests = 
+                    PullRequests =
                         _domain.GetPullRequests(
                             settings.BaseUrl.Replace("OWNER", settings.Owner).Replace("REPOSITORY", repository) + "/pulls",
                             repository).ToList()
@@ -38,24 +39,63 @@ namespace LCARS.Controllers
 
                 repo.PullRequests.ForEach(pr =>
                 {
-                    pr.Comments = _domain.GetComments(
+                    var lineComments = _domain.GetComments(
                         settings.BaseUrl.Replace("OWNER", settings.Owner).Replace("REPOSITORY", repository) +
-                        "/pulls/" + pr.Number + "/comments",
-                        repository).ToList();
+                        "/pulls", repository, pr.Number).ToList();
 
-                    if (pr.Comments == null || !pr.Comments.Any())
-                    {
-                        pr.Comments = _domain.GetComments(
+                    var mainComments = _domain.GetComments(
                             settings.BaseUrl.Replace("OWNER", settings.Owner).Replace("REPOSITORY", repository) +
-                            "/issues/" + pr.Number + "/comments",
-                            repository).ToList();
-                    }
+                            "/issues", repository, pr.Number).ToList();
+
+                    lineComments.AddRange(mainComments);
+
+                    pr.Comments = lineComments;
                 });
 
                 vm.Add(repo);
             }
 
             return View(vm);
+        }
+
+        public ActionResult Shipped()
+        {
+            var vm = new List<ViewModels.GitHub.ShippedPullRequest>();
+
+            var settings = _domain.GetSettings(Server.MapPath(@"~/App_Data/GitHub.json"));
+
+            foreach (var repository in settings.Repositories)
+            {
+                var pullRequests = _domain.GetPullRequests(settings.BaseUrl.Replace("OWNER", settings.Owner) + "/issues", repository).ToList();
+
+                pullRequests.ForEach(pr =>
+                {
+                    var shipComment = pr.Comments.FirstOrDefault(c => c.Body.Contains(":ship") || c.Body.Contains(":sheep"));
+
+                    if (shipComment != null)
+                    {
+                        vm.Add(new ViewModels.GitHub.ShippedPullRequest
+                        {
+                            AuthorName = pr.AuthorName,
+                            Number = pr.Number,
+                            Title = pr.Title,
+                            ShippedBy = shipComment.User.Name,
+                            ShippedOn = shipComment.DateCreated
+                        });
+                    }
+                });
+            }
+
+            if (vm.Any())
+            {
+                var randomSelectionIndex = new Random().Next(vm.Count);
+
+                return View(vm[randomSelectionIndex]);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         public ActionResult Alert()

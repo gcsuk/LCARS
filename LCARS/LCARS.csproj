@@ -186,11 +186,14 @@
     <Compile Include="ViewModels\Builds\Build.cs" />
     <Compile Include="ViewModels\Builds\BuildProgress.cs" />
     <Compile Include="ViewModels\Builds\BuildProject.cs" />
+    <Compile Include="ViewModels\GitHub\Comment.cs" />
     <Compile Include="ViewModels\GitHub\Repository.cs" />
     <Compile Include="ViewModels\GitHub\Settings.cs" />
+    <Compile Include="ViewModels\GitHub\ShippedPullRequest.cs" />
     <Compile Include="ViewModels\GitHub\Summary.cs" />
     <Compile Include="ViewModels\GitHub\Branch.cs" />
     <Compile Include="ViewModels\GitHub\PullRequest.cs" />
+    <Compile Include="ViewModels\GitHub\User.cs" />
     <Compile Include="ViewModels\Issues\Backlog.cs" />
     <Compile Include="Models\Issues\Parent.cs" />
     <Compile Include="Models\Issues\Issue.cs" />
@@ -280,6 +283,7 @@
     <Content Include="img\redCornerTop.png" />
     <Content Include="img\redCornerTopAlert.png" />
     <Content Include="img\redCornerTopAlertYellow.png" />
+    <Content Include="img\ship.jpg" />
     <Content Include="img\softwareBug.jpg" />
     <Content Include="img\topRight.png" />
     <Content Include="Scripts\admin.js" />
@@ -340,6 +344,7 @@
     <Content Include="Views\Git\Index.cshtml" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
     <Content Include="Scripts\underscore.min.map" />
+    <Content Include="Views\Git\Shipped.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Screens\" />

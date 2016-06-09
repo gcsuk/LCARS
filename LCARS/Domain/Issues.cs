@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using LCARS.ViewModels.Issues;
+using System;
+using System.Net;
 
 namespace LCARS.Domain
 {
@@ -66,16 +68,23 @@ namespace LCARS.Domain
 
         public IEnumerable<Issue> Get(string query)
         {
-            return _service.Get(query).Issues.OrderByDescending(i => i.Fields.Created).Select(i => new Issue
+            try
             {
-                Id = i.Key,
-                Summary = i.Fields.Summary,
-                Status = i.Fields.Status == null ? "N/A" : i.Fields.Status.Name,
-                Reporter = i.Fields.Reporter == null ? "N/A" : i.Fields.Reporter.DisplayName,
-                Priority = i.Fields.Priority == null ? "N/A" : i.Fields.Priority.Name,
-                PriorityIcon = i.Fields.Priority == null ? "N/At" : i.Fields.Priority.IconUrl,
-                Assignee = i.Fields.Assignee == null ? "N/A" : i.Fields.Assignee.DisplayName
-            });
+                return _service.Get(query).Issues.OrderByDescending(i => i.Fields.Created).Select(i => new Issue
+                {
+                    Id = i.Key,
+                    Summary = i.Fields.Summary,
+                    Status = i.Fields.Status == null ? "N/A" : i.Fields.Status.Name,
+                    Reporter = i.Fields.Reporter == null ? "N/A" : i.Fields.Reporter.DisplayName,
+                    Priority = i.Fields.Priority == null ? "N/A" : i.Fields.Priority.Name,
+                    PriorityIcon = i.Fields.Priority == null ? "N/At" : i.Fields.Priority.IconUrl,
+                    Assignee = i.Fields.Assignee == null ? "N/A" : i.Fields.Assignee.DisplayName
+                });
+            }
+            catch (WebException)
+            {
+                return new List<Issue>();
+            }
         }
     }
 }

@@ -20,11 +20,11 @@ namespace LCARS.ViewModels.GitHub
 
         public string AuthorAvatar { get; set; }
 
-        public IEnumerable<string> Comments { get; set; }
+        public IEnumerable<Comment> Comments { get; set; }
 
         public bool IsShipped
         {
-            get { return Comments != null && Comments.Any(c => c.Contains(":ship")); }
+            get { return Comments != null && Comments.Any(c => c.Body.Contains(":ship")); }
         }
     }
 }

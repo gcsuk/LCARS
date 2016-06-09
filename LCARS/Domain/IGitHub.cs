@@ -9,6 +9,6 @@ namespace LCARS.Domain
         IEnumerable<Branch> GetBranches(string url, string repository);
         IEnumerable<PullRequest> GetPullRequests(string url, string repository);
 
-        IEnumerable<string> GetComments(string url, string repository);
+        IEnumerable<Comment> GetComments(string url, string repository, int pullRequestNumber);
     }
 }

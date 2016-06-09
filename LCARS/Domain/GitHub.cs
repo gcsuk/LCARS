@@ -49,17 +49,26 @@ namespace LCARS.Domain
                     Repository = repository,
                     Number = p.Number,
                     Title = p.Title,
-                    CreatedOn = p.CreatedOn,
+                    CreatedOn = p.CreatedOn, 
                     UpdatedOn = p.UpdatedOn,
                     AuthorName = p.User.Name,
-                    AuthorAvatar = p.User.Avatar /*,
-                    CommentCount = _pullRequestService.GetCount(url.Replace("REPOSITORY", repository) + "/" + p.Number + "/comments", repository)*/
+                    AuthorAvatar = p.User.Avatar,
+                    Comments = GetComments(url, repository, p.Number)
                 });
         }
 
-        public IEnumerable<string> GetComments(string url, string repository)
+        public IEnumerable<Comment> GetComments(string url, string repository, int pullRequestNumber)
         {
-            return _commentService.Get(url.Replace("REPOSITORY", repository), repository).Select(p => p.Body);
+            return _commentService.Get(url.Replace("REPOSITORY", repository) + "/" + pullRequestNumber + "/comments", repository).Select(p => new Comment
+            {
+                DateCreated = p.DateCreated,
+                User = new User
+                {
+                    Name = p.User.Name,
+                    Avatar = p.User.Avatar
+                },
+                Body = p.Body
+            });
         }
     }
 }
