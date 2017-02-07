@@ -1,9 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCARS", "LCARS\LCARS.csproj", "{074A6450-54EA-4268-A57A-15434F781156}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C4B21490-2EA8-43FA-9B37-73C07055ACD2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{17BAECE9-1140-44D5-96C4-284B3BD2BCA4}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "LCARS", "src\LCARS\LCARS.xproj", "{451E6D3D-1D3E-442A-8832-FDCF53DCE563}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +18,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{074A6450-54EA-4268-A57A-15434F781156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{074A6450-54EA-4268-A57A-15434F781156}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{074A6450-54EA-4268-A57A-15434F781156}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{074A6450-54EA-4268-A57A-15434F781156}.Release|Any CPU.Build.0 = Release|Any CPU
+		{451E6D3D-1D3E-442A-8832-FDCF53DCE563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{451E6D3D-1D3E-442A-8832-FDCF53DCE563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{451E6D3D-1D3E-442A-8832-FDCF53DCE563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{451E6D3D-1D3E-442A-8832-FDCF53DCE563}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{451E6D3D-1D3E-442A-8832-FDCF53DCE563} = {C4B21490-2EA8-43FA-9B37-73C07055ACD2}
 	EndGlobalSection
 EndGlobal
