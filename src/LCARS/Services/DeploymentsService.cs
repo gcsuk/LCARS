@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -19,25 +20,27 @@ namespace LCARS.Services
 
         public async Task<IEnumerable<ViewModels.Deployments.Deployment>> Get()
         {
-            var jsonData = "";
+            string jsonData;
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("X-Octopus-ApiKey", _settings.DeploymentsServerKey);
+
+                jsonData = await client.GetStringAsync(_settings.DeploymentsServerUrl);
+            }
+
+            Deployments deployments;
 
             try
             {
-                using (var client = new HttpClient())
-                {
-                    client.DefaultRequestHeaders.Add("X-Octopus-ApiKey", _settings.DeploymentsServerKey);
-
-                    jsonData = await client.GetStringAsync(_settings.DeploymentsServerUrl);
-                }
+                deployments = !string.IsNullOrEmpty(jsonData)
+                    ? JsonConvert.DeserializeObject<Deployments>(jsonData)
+                    : new Deployments();
             }
-            catch
+            catch (Exception ex)
             {
-                // jsonData will be empty
+                throw new HttpRequestException("Invalid response from deployment server.", ex);
             }
-
-            var deployments = !string.IsNullOrEmpty(jsonData)
-                ? JsonConvert.DeserializeObject<Deployments>(jsonData)
-                : new Deployments();
 
             deployments.Deploys.ForEach(d =>
             {

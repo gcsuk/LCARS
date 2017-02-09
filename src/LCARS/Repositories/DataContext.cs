@@ -1,16 +1,19 @@
 using LCARS.Models;
 using LCARS.Models.Environments;
+using LCARS.Models.Issues;
 using Microsoft.EntityFrameworkCore;
 
 namespace LCARS.Repositories
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options) :base(options) { }
+        public DataContext(DbContextOptions options) :base(options) { }
 
         public virtual DbSet<Settings> Settings { get; set; }
 
         public virtual DbSet<Environment> Environments { get; set; }
+
+        public virtual DbSet<Query> IssueQueries { get; set; }
 
         public virtual DbSet<Site> Sites { get; set; }
 
@@ -22,10 +25,12 @@ namespace LCARS.Repositories
 
             CreateGitHubSettingsEntity(modelBuilder);
 
+            CreateIssuesSettingsEntity(modelBuilder);
+
             base.OnModelCreating(modelBuilder);
         }
 
-        private void CreateBuildsEntity(ModelBuilder modelBuilder)
+        private static void CreateBuildsEntity(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Settings>()
                 .Property(t => t.Id)
@@ -54,7 +59,7 @@ namespace LCARS.Repositories
                .HasForeignKey(d => d.SiteId);
         }
 
-        private void CreateGitHubSettingsEntity(ModelBuilder modelBuilder)
+        private static void CreateGitHubSettingsEntity(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Models.GitHub.Settings>()
                 .Property(t => t.Id)
@@ -63,6 +68,14 @@ namespace LCARS.Repositories
 
             modelBuilder.Entity<Models.GitHub.Settings>()
                 .Ignore(t => t.Repositories);
+        }
+
+        private static void CreateIssuesSettingsEntity(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Models.Issues.Query>()
+                .Property(t => t.Id)
+                .IsRequired()
+                .ValueGeneratedOnAdd();
         }
     }
 }

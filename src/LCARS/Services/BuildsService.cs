@@ -33,8 +33,8 @@ namespace LCARS.Services
 
             foreach (
                 var build in
-                    doc.Root.Elements("build").Where(build => !builds.ContainsKey(build.Attribute("buildTypeId").Value))
-                )
+                doc.Root.Elements("build").Where(build => !builds.ContainsKey(build.Attribute("buildTypeId").Value))
+            )
             {
                 builds.Add(build.Attribute("buildTypeId").Value, Convert.ToInt32(build.Attribute("id").Value));
             }
@@ -44,7 +44,8 @@ namespace LCARS.Services
 
         public async Task<BuildProgress> GetBuildProgress(int buildId)
         {
-            var doc = await GetData($"http://user:pwd@{_settings.BuildServerUrl}/guestAuth/app/rest/builds/id:{buildId}");
+            var doc =
+                await GetData($"http://user:pwd@{_settings.BuildServerUrl}/guestAuth/app/rest/builds/id:{buildId}");
 
             if (doc == null)
             {
@@ -75,7 +76,10 @@ namespace LCARS.Services
 
         public async Task<KeyValuePair<string, string>> GetLastBuildStatus(string buildTypeId)
         {
-            var doc = await GetData($"http://{_settings.BuildServerUrl}/guestAuth/app/rest/builds?locator=buildType:(id:{buildTypeId})");
+            var doc =
+                await
+                    GetData(
+                        $"http://{_settings.BuildServerUrl}/guestAuth/app/rest/builds?locator=buildType:(id:{buildTypeId})");
 
             if (doc == null)
             {
@@ -91,7 +95,8 @@ namespace LCARS.Services
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-                    Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_settings.BuildServerUsername}:{_settings.BuildServerPassword}")));
+                    Convert.ToBase64String(
+                        Encoding.ASCII.GetBytes($"{_settings.BuildServerUsername}:{_settings.BuildServerPassword}")));
 
                 var xml = await client.GetStreamAsync(url);
 

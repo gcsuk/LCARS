@@ -27,7 +27,7 @@ namespace LCARS.Services
         {
             var settings = GetSettings();
 
-            var branches = await GetData<Models.GitHub.Branch>(settings.BaseUrl, repository);
+            var branches = await GetData<Models.GitHub.Branch>(settings.BaseUrl.Replace("REPOSITORY", repository).Replace("OWNER", settings.Owner) + "/branches", repository);
             
             return branches.Select(b => new Branch
             {

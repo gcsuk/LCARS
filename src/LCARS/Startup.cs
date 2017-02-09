@@ -1,4 +1,6 @@
-﻿using LCARS.Repositories;
+﻿using System.IO;
+using LCARS.Filters;
+using LCARS.Repositories;
 using LCARS.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,13 +8,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.Swagger.Model;
 
 namespace LCARS
 {
     public class Startup
     {
+        private readonly IHostingEnvironment _env;
+
         public Startup(IHostingEnvironment env)
         {
+            _env = env;
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -33,9 +39,31 @@ namespace LCARS
             services.AddTransient<IBuildsService, BuildsService>();
             services.AddTransient<IDeploymentsService, DeploymentsService>();
             services.AddTransient<IGitHubService, GitHubService>();
+            services.AddTransient<IIssuesService, IssuesService>();
 
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new ApiExceptionFilter());
+            });
+
+            var pathToDoc = _env.IsDevelopment()
+                ? Path.Combine(_env.ContentRootPath, @"bin\Debug\netcoreapp1.1\", Configuration["Swagger:Path"])
+                : Path.Combine(_env.ContentRootPath, Configuration["Swagger:Path"]);
+
+            services.AddSwaggerGen();
+            services.ConfigureSwaggerGen(options =>
+            {
+                options.SingleApiVersion(new Info
+                {
+                    Version = "v1",
+                    Title = "LCARS API",
+                    Description = "An API to manage all aspects of LCARS",
+                    TermsOfService = "None"
+                });
+                options.IncludeXmlComments(pathToDoc);
+                options.DescribeAllEnumsAsStrings();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +90,9 @@ namespace LCARS
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseSwagger();
+            app.UseSwaggerUi();
         }
     }
 }
