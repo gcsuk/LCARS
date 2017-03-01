@@ -1,0 +1,31 @@
+{
+  "name": "lcars",
+  "version": "1.0.0",
+  "description": "The LCARS project is a dashboard system for anyone who needs an interesting looking interface for their metrics.",
+  "main": "index.js",
+  "scripts": {
+    "build": "watchify wwwroot/js/main.js -o wwwroot/js/bundle.js -t [ babelify --presets [ es2015 ] --plugins [ add-module-exports transform-object-rest-spread ] ] -dv",
+    "start": "npm run build & dotnet run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gcsuk/lcars.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gcsuk/lcars/issues"
+  },
+  "homepage": "https://github.com/gcsuk/lcars#readme",
+  "dependencies": {
+    "hyperapp": "^0.6.0",
+    "hyperx": "^2.0.5"
+  },
+  "devDependencies": {
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babelify": "^7.3.0",
+    "browserify": "^14.1.0"
+  }
+}
