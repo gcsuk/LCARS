@@ -98,11 +98,20 @@ namespace LCARS.Services
                     Convert.ToBase64String(
                         Encoding.ASCII.GetBytes($"{_settings.BuildServerUsername}:{_settings.BuildServerPassword}")));
 
-                var xml = await client.GetStreamAsync(url);
+                client.Timeout = new TimeSpan(0, 0, 0, 3);
 
-                var doc = XDocument.Load(xml);
+                try
+                {
+                    var xml = await client.GetStreamAsync(url);
 
-                return doc.Root == null ? null : doc;
+                    var doc = XDocument.Load(xml);
+
+                    return doc.Root == null ? null : doc;
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("There was an error contacting the build server", ex);
+                }
             }
         }
     }
