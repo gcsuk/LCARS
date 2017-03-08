@@ -14,7 +14,7 @@ namespace LCARS.Services
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Site> Get()
+        public IEnumerable<Site> GetStatus()
         {
             return _dbContext.Sites.Select(t => new Site
             {

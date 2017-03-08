@@ -7,12 +7,10 @@
         public DiagnosticsItem LastBuildStatus { get; set; }
 
         public DiagnosticsItem Deployments { get; set; }
-        public DiagnosticsItem Environments { get; set; }
         public DiagnosticsItem Issues { get; set; }
 
         public DiagnosticsItem GitHubPullRequests { get; set; }
         public DiagnosticsItem GitHubBranches { get; set; }
-        public DiagnosticsItem GitHubComments { get; set; }
 
         public class DiagnosticsItem
         {

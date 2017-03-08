@@ -5,6 +5,6 @@ namespace LCARS.Services
 {
     public interface IEnvironmentsService
     {
-        IEnumerable<Site> Get();
+        IEnumerable<Site> GetStatus();
     }
 }

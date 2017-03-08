@@ -96,9 +96,7 @@ namespace LCARS.Services
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
                     Convert.ToBase64String(
-                        Encoding.ASCII.GetBytes($"{_settings.BuildServerUsername}:{_settings.BuildServerPassword}")));
-
-                client.Timeout = new TimeSpan(0, 0, 0, 3);
+                        Encoding.ASCII.GetBytes($"{_settings.BuildServerUsername}j:{_settings.BuildServerPassword}")));
 
                 try
                 {
@@ -108,7 +106,7 @@ namespace LCARS.Services
 
                     return doc.Root == null ? null : doc;
                 }
-                catch (Exception ex)
+                catch (TaskCanceledException ex)
                 {
                     throw new Exception("There was an error contacting the build server", ex);
                 }

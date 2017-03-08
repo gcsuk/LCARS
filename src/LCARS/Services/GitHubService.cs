@@ -8,14 +8,13 @@ using System.Threading.Tasks;
 using LCARS.Repositories;
 using LCARS.ViewModels.GitHub;
 using Newtonsoft.Json;
-using Settings = LCARS.Models.Settings;
 
 namespace LCARS.Services
 {
     public class GitHubService : IGitHubService
     {
         private readonly DataContext _dbContext;
-        private readonly Settings _settings;
+        private readonly Models.Settings _settings;
 
         public GitHubService(ISettingsService settingsService, DataContext dbContext)
         {
@@ -23,9 +22,11 @@ namespace LCARS.Services
             _settings = settingsService.GetSettings();
         }
 
-        public async Task<IEnumerable<Branch>> GetBranches(string repository)
+        public async Task<IEnumerable<Branch>> GetBranches(string repository = null)
         {
             var settings = GetSettings();
+
+            repository = ParseRepository(repository, settings);
 
             var branches = await GetData<Models.GitHub.Branch>(settings.BaseUrl.Replace("REPOSITORY", repository).Replace("OWNER", settings.Owner) + "/branches", repository);
             
@@ -35,9 +36,11 @@ namespace LCARS.Services
             });
         }
 
-        public async Task<IEnumerable<PullRequest>> GetPullRequests(string repository)
+        public async Task<IEnumerable<PullRequest>> GetPullRequests(string repository = null)
         {
             var settings = GetSettings();
+
+            repository = ParseRepository(repository, settings);
 
             var pullRequests = await GetData<Models.GitHub.PullRequest>(settings.BaseUrl.Replace("REPOSITORY", repository).Replace("OWNER", settings.Owner) + "/pulls", repository);
 
@@ -60,9 +63,16 @@ namespace LCARS.Services
             return result;
         }
 
-        public async Task<IEnumerable<Comment>> GetComments(string repository, int pullRequestNumber)
+        public async Task<IEnumerable<Comment>> GetComments(string repository = null, int pullRequestNumber = 0)
         {
+            if (pullRequestNumber <= 0)
+            {
+                throw new ArgumentException("Invalid pull request number");
+            }
+
             var settings = GetSettings();
+
+            repository = ParseRepository(repository, settings);
 
             var comments =
                 await
@@ -82,7 +92,7 @@ namespace LCARS.Services
             });
         }
 
-        public ViewModels.GitHub.Settings GetSettings()
+        public Settings GetSettings()
         {
             var settings = _dbContext.GitHubSettings.Select(t => new ViewModels.GitHub.Settings
             {
@@ -114,29 +124,51 @@ namespace LCARS.Services
                 var pageNumber = 1;
                 var pagedUrl = url + "?per_page=100&page=1";
 
-                while (hasRecords)
+                try
                 {
-                    client.DefaultRequestHeaders.Add("User-Agent", repository);
-
-                    var jsonData = await client.GetStringAsync(pagedUrl);
-
-                    var newItems = JsonConvert.DeserializeObject<List<T>>(jsonData);
-
-                    if (newItems.Any())
+                    while (hasRecords)
                     {
-                        items.AddRange(newItems);
+                        client.DefaultRequestHeaders.Add("User-Agent", repository);
 
-                        pageNumber++;
-                        pagedUrl = url + "?per_page=100&page=" + pageNumber;
+                        var jsonData = await client.GetStringAsync(pagedUrl);
+
+                        var newItems = JsonConvert.DeserializeObject<List<T>>(jsonData);
+
+                        if (newItems.Any())
+                        {
+                            items.AddRange(newItems);
+
+                            pageNumber++;
+                            pagedUrl = url + "?per_page=100&page=" + pageNumber;
+                        }
+                        else
+                        {
+                            hasRecords = false;
+                        }
                     }
-                    else
-                    {
-                        hasRecords = false;
-                    }
+                }
+                catch (TaskCanceledException ex)
+                {
+                    throw new Exception("There was an error contacting GitHub", ex);
                 }
 
                 return items;
             }
+        }
+
+        private static string ParseRepository(string repository, ViewModels.GitHub.Settings settings)
+        {
+            if (!string.IsNullOrWhiteSpace(repository))
+            {
+                return repository;
+            }
+
+            if (!settings.Repositories.Any())
+            {
+                throw new InvalidOperationException("No repositories are configured in the settings database, and no repository was supplied as argument.");
+            }
+
+            return settings.Repositories.First().Replace("\"", "");
         }
     }
 }
