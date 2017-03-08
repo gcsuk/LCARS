@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LCARS</name>
+    </assembly>
+    <members>
+        <member name="M:LCARS.Controllers.BuildsController.GetRunning">
+            <remarks>Returns all running builds</remarks>
+            <response code="200">Returns running builds</response>
+            <returns>A dictionary containing all running builds type ids and ids</returns>
+        </member>
+        <member name="M:LCARS.Controllers.BuildsController.GetProgress(System.Int32)">
+            <remarks>Returns the progress of a running build</remarks>
+            <response code="200">Returns the progress of a running build</response>
+            <returns>An object containing the current progress of the specified build</returns>
+        </member>
+        <member name="M:LCARS.Controllers.BuildsController.GetLastRunStatus(System.String)">
+            <remarks>Returns the last build status of a specified type</remarks>
+            <response code="200">Returns the last build status of a specified type</response>
+            <returns>a key-value pair containing the percentage and the text status of the last build</returns>
+        </member>
+        <member name="M:LCARS.Controllers.DeploymentsController.Get">
+            <remarks>Returns a the status of each configured deployment project and environment</remarks>
+            <response code="200">Returns a the status of each configured deployment project and environment</response>
+            <returns>Returns a the status of each configured deployment project and environment</returns>
+        </member>
+        <member name="M:LCARS.Controllers.EnvironmentsController.Get">
+            <remarks>Returns a the status of each configured environment</remarks>
+            <response code="200">Returns a the status of each configured environment</response>
+            <returns>Returns a the status of each configured environment</returns>
+        </member>
+        <member name="M:LCARS.Controllers.GitHubController.GetBranches(System.String)">
+            <remarks>Returns a list of all branches for the configured repository</remarks>
+            <response code="200">Returns a list of all branches for the configured repository</response>
+            <returns>A list of all branches for the configured repository</returns>
+        </member>
+        <member name="M:LCARS.Controllers.GitHubController.GetPullRequests(System.String)">
+            <remarks>Returns a list of all open pull requests for the configured repository</remarks>
+            <response code="200">Returns a list of all open pull requests for the configured repository</response>
+            <returns>A list of all open pull requests for the configured repository</returns>
+        </member>
+        <member name="M:LCARS.Controllers.GitHubController.GetComments(System.String,System.Int32)">
+            <remarks>Returns a list of all PR comments for the configured repository</remarks>
+            <response code="200">Returns a list of all PR comments for the configured repositor</response>
+            <returns>A list of all PR comments for the configured repositor</returns>
+        </member>
+        <member name="M:LCARS.Controllers.IssuesController.Get(System.Nullable{System.Int32})">
+            <remarks>Returns a list of all issues for a stored query</remarks>
+            <response code="200">Returns a list of issues resulting from the stored query</response>
+            <returns>A list of issues resulting from the stored query</returns>
+        </member>
+    </members>
+</doc>
