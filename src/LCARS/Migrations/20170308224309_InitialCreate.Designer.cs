@@ -8,13 +8,13 @@ using LCARS.Repositories;
 namespace LCARS.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20170208214511_AddedIssues")]
-    partial class AddedIssues
+    [Migration("20170308224309_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
+                .HasAnnotation("ProductVersion", "1.1.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("LCARS.Models.Environments.Environment", b =>

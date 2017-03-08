@@ -44,6 +44,7 @@ namespace LCARS.Services
 
                 using (var client = new HttpClient())
                 {
+                    client.Timeout = TimeSpan.FromMilliseconds(1000);
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
                         Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_settings.IssuesUsername}:{_settings.IssuesPassword}")));
 

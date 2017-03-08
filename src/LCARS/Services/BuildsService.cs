@@ -96,13 +96,20 @@ namespace LCARS.Services
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
                     Convert.ToBase64String(
-                        Encoding.ASCII.GetBytes($"{_settings.BuildServerUsername}:{_settings.BuildServerPassword}")));
+                        Encoding.ASCII.GetBytes($"{_settings.BuildServerUsername}j:{_settings.BuildServerPassword}")));
 
-                var xml = await client.GetStreamAsync(url);
+                try
+                {
+                    var xml = await client.GetStreamAsync(url);
 
-                var doc = XDocument.Load(xml);
+                    var doc = XDocument.Load(xml);
 
-                return doc.Root == null ? null : doc;
+                    return doc.Root == null ? null : doc;
+                }
+                catch (TaskCanceledException ex)
+                {
+                    throw new Exception("There was an error contacting the build server", ex);
+                }
             }
         }
     }

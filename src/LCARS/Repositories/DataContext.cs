@@ -72,7 +72,7 @@ namespace LCARS.Repositories
 
         private static void CreateIssuesSettingsEntity(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Models.Issues.Query>()
+            modelBuilder.Entity<Query>()
                 .Property(t => t.Id)
                 .IsRequired()
                 .ValueGeneratedOnAdd();
