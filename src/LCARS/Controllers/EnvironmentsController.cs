@@ -20,7 +20,7 @@ namespace LCARS.Controllers
         [HttpGet("/api/environments")]
         public IActionResult Get()
         {
-            var vm = _environmentsService.Get();
+            var vm = _environmentsService.GetStatus();
 
             return Ok(vm);
         }

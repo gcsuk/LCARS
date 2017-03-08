@@ -24,6 +24,7 @@ namespace LCARS.Services
 
             using (var client = new HttpClient())
             {
+                client.Timeout = TimeSpan.FromMilliseconds(1000);
                 client.DefaultRequestHeaders.Add("X-Octopus-ApiKey", _settings.DeploymentsServerKey);
 
                 jsonData = await client.GetStringAsync(_settings.DeploymentsServerUrl);
