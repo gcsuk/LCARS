@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace LCARS.Models.Issues
+﻿namespace LCARS.Models.Issues
 {
     public class Issue
     {

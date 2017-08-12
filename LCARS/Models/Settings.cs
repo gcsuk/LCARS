@@ -2,29 +2,20 @@
 {
     public class Settings
     {
-        public Credentials BuildServerCredentials { get; set; }
+        public int Id { get; set; }
 
-        public string DeploymentServerPath { get; set; }
+        public string BuildServerUrl { get; set; }
+        public string BuildServerUsername { get; set; }
+        public string BuildServerPassword { get; set; }
 
-        public string DeploymentServerKey { get; set; }
+        public string DeploymentsServerUrl { get; set; }
+        public string DeploymentsServerKey { get; set; }
 
         public string IssuesUrl { get; set; }
-
         public string IssuesUsername { get; set; }
-
         public string IssuesPassword { get; set; }
 
         public string GitHubUsername { get; set; }
-
         public string GitHubPassword { get; set; }
-    }
-
-    public class Credentials
-    {
-        public string Domain { get; set; }
-
-        public string Username { get; set; }
-
-        public string Password { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace LCARS.ViewModels.Deployments
 {
-    public class DeploymentStatus : BaseSettings
+    public class DeploymentStatus
     {
         public IEnumerable<Deployment> Deployments { get; set; }
 

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LCARS.ViewModels.Issues
 {
-    public class Backlog : BaseSettings
+    public class Backlog
     {
         public string IssueSet { get; set; }
 

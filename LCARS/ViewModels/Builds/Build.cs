@@ -12,8 +12,8 @@
 
         public string Status
         {
-            get { return Progress == null ? _status : $"{Progress.Percentage}% - {Progress.Status}"; }
-            set { _status = value; }
+            get => Progress == null ? _status : $"{Progress.Percentage}% - {Progress.Status}";
+            set => _status = value;
         }
 
         public BuildProgress Progress { get; set; }

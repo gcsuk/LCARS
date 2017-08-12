@@ -1,68 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Web.Mvc;
-using LCARS.Domain;
-using LCARS.Models.Builds;
+using System.Threading.Tasks;
+using LCARS.Services;
+using LCARS.ViewModels.Builds;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LCARS.Controllers
 {
+
     public class BuildsController : Controller
     {
-        private readonly IBuilds _domain;
+        private readonly IBuildsService _buildsService;
 
-        public BuildsController(IBuilds domain)
+        public BuildsController(IBuildsService buildsService)
         {
-            _domain = domain;
+            _buildsService = buildsService;
         }
 
-        // GET: Build
-        [Route("Builds/{typeId?}")]
-        public ActionResult Index(int typeId)
+        /// <remarks>Returns all running builds</remarks>
+        /// <response code="200">Returns running builds</response>
+        /// <returns>A dictionary containing all running builds type ids and ids</returns>
+        [ProducesResponseType(typeof(Dictionary<string, int>), 200)]
+        [HttpGet("/api/builds/running")]
+        public async Task<IActionResult> GetRunning()
         {
-            var buildProjects = _domain.GetBuilds(Server.MapPath("~/App_Data/Builds.json")).ToList();
+            var response = await _buildsService.GetBuildsRunning();
 
-            if (typeId == 0)
-            {
-                typeId = new Random(Guid.NewGuid().GetHashCode()).Next(1, buildProjects.Count);
-            }
-
-            var builds = buildProjects.Single(b => b.Id == typeId).Builds;
-
-            var vm = new ViewModels.Builds.BuildStatus
-            {
-                ProjectId = typeId,
-                Builds = builds
-            };
-
-            return View(vm.Builds.Count() > 8 ? "HighCount" : "LowCount", vm);
+            return Ok(response);
         }
 
-        // GET: Build
-        [Route("Builds/Status/{buildId?}")]
-        public JsonResult GetStatus(IEnumerable<string> buildTypeIds)
+        /// <remarks>Returns the progress of a running build</remarks>
+        /// <response code="200">Returns the progress of a running build</response>
+        /// <returns>An object containing the current progress of the specified build</returns>
+        [ProducesResponseType(typeof(BuildProgress), 200)]
+        [HttpGet("/api/builds/progress/{buildId}")]
+        public async Task<IActionResult> GetProgress(int buildId)
         {
             try
             {
-                var buildStatus = _domain.GetBuildStatus(buildTypeIds);
+                var response = await _buildsService.GetBuildProgress(buildId);
 
-                return Json(buildStatus, JsonRequestBehavior.AllowGet);
+                return Ok(response);
             }
-            catch (System.Net.WebException ex)
+            catch (InvalidOperationException ex)
             {
-                Debug.WriteLine(ex.Message);
-
-                var builds = buildTypeIds.Select(buildTypeId => new Build
-                {
-                    TypeId = buildTypeId
-                }).ToList();
-
-                return Json(builds, JsonRequestBehavior.AllowGet);
+                return StatusCode(412, ex);
             }
-            catch (Exception ex)
+        }
+
+        /// <remarks>Returns the last build status of a specified type</remarks>
+        /// <response code="200">Returns the last build status of a specified type</response>
+        /// <returns>a key-value pair containing the percentage and the text status of the last build</returns>
+        [ProducesResponseType(typeof(KeyValuePair<string, string>), 200)]
+        [HttpGet("/api/builds/laststatus/{buildTypeId}")]
+        public async Task<IActionResult> GetLastRunStatus(string buildTypeId)
+        {
+            try
             {
-                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+                var response = await _buildsService.GetLastBuildStatus(buildTypeId);
+
+                return Ok(response);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return StatusCode(412, ex);
             }
         }
     }

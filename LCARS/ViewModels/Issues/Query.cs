@@ -10,30 +10,15 @@ namespace LCARS.ViewModels.Issues
 
         public DateTime? Deadline { get; set; }
 
-        public int DeadlineYear
-        {
-            get { return Deadline.HasValue ? Deadline.Value.Year : 0; }
-        }
+        public int DeadlineYear => Deadline?.Year ?? 0;
 
-        public int DeadlineMonth
-        {
-            get { return Deadline.HasValue ? Deadline.Value.Month : 1; }
-        }
+        public int DeadlineMonth => Deadline?.Month ?? 1;
 
-        public int DeadlineDay
-        {
-            get { return Deadline.HasValue ? Deadline.Value.Day : 1; }
-        }
+        public int DeadlineDay => Deadline?.Day ?? 1;
 
-        public int DeadlineHour
-        {
-            get { return Deadline.HasValue ? Deadline.Value.Hour : 0; }
-        }
+        public int DeadlineHour => Deadline?.Hour ?? 0;
 
-        public int DeadlineMinute
-        {
-            get { return Deadline.HasValue ? Deadline.Value.Minute : 0; }
-        }
+        public int DeadlineMinute => Deadline?.Minute ?? 0;
 
         public string Jql { get; set; }
     }

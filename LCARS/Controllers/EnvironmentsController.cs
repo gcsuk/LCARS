@@ -1,31 +1,28 @@
-﻿using System.Web.Mvc;
-using LCARS.Domain;
+﻿using System.Collections.Generic;
+using LCARS.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LCARS.Controllers
 {
-	public class EnvironmentsController : Controller
-	{
-		private readonly IEnvironments _domain;
+    public class EnvironmentsController : Controller
+    {
+        private readonly IEnvironmentsService _environmentsService;
 
-        public EnvironmentsController(IEnvironments domain)
+        public EnvironmentsController(IEnvironmentsService environmentsService)
         {
-            _domain = domain;
+            _environmentsService = environmentsService;
         }
 
-		public ActionResult Index()
-		{
-            var vm = new ViewModels.Environments.Environments
-            {
-                Tenants = _domain.Get(Server.MapPath(@"~/App_Data/Environments.json"))
-            };
-
-            return View(vm);
-        }
-
-        [HttpPost]
-        public void UpdateStatus(string tenant, string environment, string currentStatus)
+        /// <remarks>Returns a the status of each configured environment</remarks>
+        /// <response code="200">Returns a the status of each configured environment</response>
+        /// <returns>Returns a the status of each configured environment</returns>
+        [ProducesResponseType(typeof(IEnumerable<ViewModels.Environments.Environment>), 200)]
+        [HttpGet("/api/environments")]
+        public IActionResult Get()
         {
-            _domain.Update(Server.MapPath(@"~/App_Data/Environments.json"), tenant, environment, currentStatus);
+            var vm = _environmentsService.GetStatus();
+
+            return Ok(vm);
         }
-	}
+    }
 }

@@ -1,64 +1,29 @@
-﻿using System.Linq;
-using System.Web.Mvc;
-using LCARS.Domain;
-using LCARS.ViewModels.Deployments;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using LCARS.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LCARS.Controllers
 {
     public class DeploymentsController : Controller
     {
-        private readonly IDeployments _domain;
+        private readonly IDeploymentsService _deploymentsService;
 
-        public DeploymentsController(IDeployments domain)
+        public DeploymentsController(IDeploymentsService deploymentsService)
         {
-            _domain = domain;
+            _deploymentsService = deploymentsService;
         }
 
-        // GET: Deployments
-        public ActionResult Index()
+        /// <remarks>Returns a the status of each configured deployment project and environment</remarks>
+        /// <response code="200">Returns a the status of each configured deployment project and environment</response>
+        /// <returns>Returns a the status of each configured deployment project and environment</returns>
+        [ProducesResponseType(typeof(IEnumerable<ViewModels.Deployments.Deployment>), 200)]
+        [HttpGet("/api/deployments")]
+        public async Task<IActionResult> Get()
         {
-            var deployments = _domain.Get().OrderBy(g => g.ProjectGroup).ThenBy(p => p.Project).ToList();
+            var vm = await _deploymentsService.Get();
 
-            var projects =
-                deployments.GroupBy(p => p.ProjectId)
-                    .Select(
-                        g =>
-                            new Project
-                            {
-                                Id = g.First().ProjectId,
-                                Name = g.First().Project.Replace("CasinoToolkit_", "")
-                            })
-                    .ToList();
-
-            var environments =
-                deployments.GroupBy(p => p.EnvironmentId)
-                    .Select(
-                        g =>
-                            new Environment
-                            {
-                                Id = g.First().EnvironmentId,
-                                Name = g.First().Environment
-                            })
-                    .ToList();
-
-            environments =
-                _domain.SetEnvironmentOrder(environments, Server.MapPath(@"~/App_Data/Deployments.json"))
-                    .ToList();
-
-            var vm = new DeploymentStatus
-            {
-                Projects = projects,
-                Environments = environments,
-                Deployments = deployments
-            };
-
-            return View(vm);
-        }
-
-        [HttpGet]
-        public JsonResult GetStatus()
-        {
-            return Json(_domain.Get().ToList(), JsonRequestBehavior.AllowGet);
+            return Ok(vm);
         }
     }
 }

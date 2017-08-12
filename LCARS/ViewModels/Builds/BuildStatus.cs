@@ -2,7 +2,7 @@
 
 namespace LCARS.ViewModels.Builds
 {
-    public class BuildStatus : BaseSettings
+    public class BuildStatus
     {
         public int ProjectId { get; set; }
 

@@ -1,43 +1,39 @@
-﻿using System;
-using System.Linq;
-using System.Web.Mvc;
-using LCARS.Domain;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using LCARS.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LCARS.Controllers
 {
     public class IssuesController : Controller
     {
-        private readonly IIssues _domain;
+        private readonly IIssuesService _issuesService;
 
-        public IssuesController(IIssues domain)
+        public IssuesController(IIssuesService issuesService)
         {
-            _domain = domain;
+            _issuesService = issuesService;
         }
 
-        // GET: Issues
-        [Route("Issues/{issueSet?}")]
-        public ActionResult Index(int typeId = 0)
+        /// <remarks>Returns a list of all issues for a stored query</remarks>
+        /// <response code="200">Returns a list of issues resulting from the stored query</response>
+        /// <returns>A list of issues resulting from the stored query</returns>
+        [ProducesResponseType(typeof(ViewModels.Issues.Issues), 200)]
+        [HttpGet("/api/issues/{typeId?}")]
+        public async Task<IActionResult> Get(int? typeId = null)
         {
-            if (typeId == 0)
+            var query = _issuesService.GetQueries(typeId).FirstOrDefault();
+
+            if (query == null)
             {
-                var issueSets = _domain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
-                    .Select(q => q.Id)
-                    .ToList();
-
-                typeId = issueSets[new Random(Guid.NewGuid().GetHashCode()).Next(0, issueSets.Count)];
+                return StatusCode(412, "No matching queries!");
             }
-
-            var query =
-                _domain.GetQueries(Server.MapPath(@"~/App_Data/Issues.json"))
-                    .Single(i => i.Id == typeId)
-                    .Jql;
 
             var vm = new ViewModels.Issues.Issues
             {
-                IssueList = _domain.Get(query)
+                IssueList = await _issuesService.GetIssues(query.Jql)
             };
 
-            return View(vm);
+            return Ok(vm);
         }
     }
 }
