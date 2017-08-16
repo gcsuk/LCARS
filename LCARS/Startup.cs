@@ -49,7 +49,7 @@ namespace LCARS
             });
 
             var pathToDoc = _env.IsDevelopment()
-                ? Path.Combine(_env.ContentRootPath, @"bin\Debug\netcoreapp1.1\", Configuration["Swagger:Path"])
+                ? Path.Combine(_env.ContentRootPath, @"bin\Debug\netcoreapp2.0\", Configuration["Swagger:Path"])
                 : Path.Combine(_env.ContentRootPath, Configuration["Swagger:Path"]);
 
             services.AddSwaggerGen();
