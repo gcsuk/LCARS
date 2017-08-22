@@ -7,7 +7,7 @@ const buildPath = path.resolve(__dirname, '../wwwroot');
 
 module.exports = {
      entry: [
-       path.join(sourcePath, 'app.js')
+       path.join(sourcePath, 'index.js')
      ],
      output: {
          path: buildPath,
@@ -15,14 +15,27 @@ module.exports = {
          publicPath: "/"
      },
      module: {
-       loaders: [
-           {test: /\.js$/, loader: 'babel-loader', query: { presets: ['es2015'] }},
-           {test: /(\.css)$/, loaders: ['style', 'css']},
-           {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},
-           {test: /\.(woff|woff2)$/, loader: 'url?prefix=font/&limit=5000'},
-           {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},
-           {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'}
-       ]
+       rules: [
+        {
+            test: /\.css$/,
+            use: [ 'style-loader', 'css-loader' ]
+        },
+        {
+            test: /\.png$/,
+            use: [ 'file-loader' ]
+        },
+        {
+            test: /\.(js|jsx)$/,
+            exclude: /node_modules/,
+            use: {
+                loader: 'babel-loader'
+            }
+        },
+        {
+            test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+            use: ['file-loader?name=fonts/[name].[ext]' ]
+        }
+      ]
      },
      stats: {
          colors: true

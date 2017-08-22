@@ -1,0 +1,276 @@
+@font-face {
+  font-family: lcars;
+  src: url(../fonts/tt0105m_.ttf)
+}
+
+@font-face {
+  font-family: lcarsslim;
+  src: url(../fonts/tt0106m0.ttf)
+}
+
+body {
+  background-color: #000!important
+}
+
+.purple {
+	background-color: #cc99cc
+}
+
+.blue {
+	background-color: #9999ff
+}
+
+.red {
+	background-color: #cc6666
+}
+
+.orange {
+	background-color: #ff9900
+}
+
+.apricot {
+	background-color: #ff9966
+}
+
+.container {
+  background-color: #000
+}
+
+.header {
+  height: 200px;
+  border-radius: 0 0 0 100px;
+  background-color: #99f;
+  display: grid;
+  grid-template-columns: 125px auto 450px;
+  grid-template-rows: 180px 20px;
+  align-content: stretch
+}
+
+  .header .left {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    height: 100px;
+    background-color: #c9c;
+    border-bottom: solid 5px #000;
+    align-self: start;
+    font-family: lcars;
+    font-size: 24px;
+    color: #000;
+    vertical-align: bottom;
+    text-align: right;
+    padding: 60px 5px 0 0
+  }
+
+  .header .middle {
+    grid-column: 2;
+    grid-row: 1;
+    border-radius: 0 0 0 25px;
+    padding: 70px 0 0 30px;
+    background-color: #000
+  }
+
+    .header .middle table {
+      color: #f90;
+      font-size: 12px;
+      font-family: arial black;
+      text-align: right
+    }
+
+    .header .middle table .white {
+      color: #fff
+    }
+
+    .header .middle table td {
+      padding-left: 10px
+    }
+
+  .header .right {
+    grid-column: 3;
+    grid-row: 1;
+    height: 180px;
+    align-self: stretch;
+    background-color: #000
+  }
+
+    .header .right .title {
+      color: #f90;
+      width: 100%;
+      font-size: 44pt;
+      font-family: lcarsslim;
+      text-align: right;
+      line-height: 1;
+      margin-right: 50px;
+    }
+
+      .header .right .title span  {
+        color: #fff
+      }
+
+      .header .right .buttons {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr
+      }
+
+        .header .right .buttons div {
+          width: 70px;
+          background-color: #f90;
+          border-radius: 25px;
+          height: 40px;
+          width: 156px;
+          margin: 5px;
+          padding: 10px 10px 0 0;
+          text-align: right;
+          font-family: lcars;
+          font-size: 24px;
+          color: #000;
+          justify-self: end
+        }
+
+        .header .right .buttons div:nth-child(1) {
+          grid-column: 2 / 2;
+          background-color: #9999ff
+        }
+
+        .header .right .buttons div:nth-child(2) {
+          grid-column: 3 / 3;
+          background-color: #ff9900;
+        }
+
+        .header .right .buttons div:nth-child(3) {
+          grid-row: 2 / 2;
+          grid-column: 2 / 2;
+          background-color: #ff9900
+        }
+
+        .header .right .buttons div:nth-child(4) {
+          grid-row: 2 / 2;
+          grid-column: 3 / 3;
+          background-color: #cc6666;
+        }
+
+  .header .box-pattern {
+    grid-column: 2 / 4;
+    grid-row: 2 / 2;
+    align-self: stretch;
+    justify-self: end;
+    background-color: #000
+  }
+
+    .header .box-pattern span {
+      display: inline-block;
+      height: 20px;
+      border-left: solid 4px #000
+    }
+
+    .header .box-pattern span:nth-child(1) {
+      width: 82px;
+      background-color: #ff9900
+    }
+
+    .header .box-pattern span:nth-child(2) {
+      width: 162px;
+      background-color: #cc99cc
+    }
+
+    .header .box-pattern span:nth-child(3) {
+      width: 244px;
+      background-color: #cc99cc
+    }
+
+    .header .box-pattern span:nth-child(4) {
+      width: 82px;
+      background-color: #cc6666
+    }
+
+.body  {
+  border-radius: 100px 0 0 0;
+  margin-top: 10px;
+  background-color: #cc6666;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.sidebar div {
+  position: relative;
+  border-top: solid 5px #000;
+  text-align: right;
+  font-family: lcars;
+  font-size: 24px;
+  color: #000;
+  padding-right: 5px;
+}
+
+.sidebar div:nth-child(1) {
+  height: 150px;
+  margin-top: 100px;
+  background-color: #cc6666
+}
+
+.sidebar div:nth-child(2) {
+  height: 50px;
+  background-color: #ff9900
+}
+
+.sidebar div:nth-child(3) {
+  height: 150px;
+  background-color: #ff9966
+}
+
+.sidebar div:nth-child(4) {
+  height: 150px;
+  background-color: #cc99cc
+}
+
+.sidebar div span {
+  position: absolute;
+  bottom: 0;
+  right: 5px;
+}
+
+.main {
+  background-color: #cc6666;
+  height: 100%;
+  border-radius: 25px 0 0 0;
+  grid-column: 2 / 2;
+  display: grid;
+  grid-template-rows: 20px auto
+}
+
+.main .box-pattern {
+  align-self: stretch;
+  justify-self: end;
+  background-color: #000
+}
+
+  .main .box-pattern span {
+    display: inline-block;
+    height: 20px;
+    border-left: solid 4px #000
+  }
+
+  .main .box-pattern span:nth-child(1) {
+    width: 82px;
+    background-color: #ff9900
+  }
+
+  .main .box-pattern span:nth-child(2) {
+    width: 162px;
+    background-color: #ff9966
+  }
+
+  .main .box-pattern span:nth-child(3) {
+    width: 244px;
+    background-color: #cc99cc
+  }
+
+  .main .box-pattern span:nth-child(4) {
+    width: 82px;
+    background-color: #ff9900
+  }
+
+.content {
+  background-color: #000;
+  border-radius: 25px 0 0 0;
+  padding: 0  0 0 15px
+}
