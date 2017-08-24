@@ -11,7 +11,7 @@ class  Layout extends React.Component {
                     21-08-2017
                 </div>
                 <div className="middle">
-                    <Digits rowCount={6} />
+                    <Digits rowCount={6} colCount={13} />
                 </div>
                 <div className="right">
                     <div className="title">
