@@ -5,7 +5,7 @@ import Digits from './Digits';
 class  Layout extends React.Component {
   render() {
     return (
-        <div className="container">
+        <div>
             <div className="header">
                 <div className="left">
                     21-08-2017

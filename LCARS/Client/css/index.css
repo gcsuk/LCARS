@@ -9,7 +9,10 @@
 }
 
 body {
-  background-color: #000!important
+  background-color: #000;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #fff
 }
 
 .purple {
@@ -32,24 +35,19 @@ body {
 	background-color: #ff9966
 }
 
-.container {
-  background-color: #000
-}
-
 .header {
-  height: 200px;
+  height: 180px;
   border-radius: 0 0 0 100px;
   background-color: #99f;
   display: grid;
   grid-template-columns: 125px auto 450px;
-  grid-template-rows: 180px 20px;
+  grid-template-rows: 160px 20px;
   align-content: stretch
 }
 
   .header .left {
     grid-column: 1;
     grid-row: 1 / span 2;
-    height: 100px;
     background-color: #c9c;
     border-bottom: solid 5px #000;
     align-self: start;
@@ -65,7 +63,7 @@ body {
     grid-column: 2;
     grid-row: 1;
     border-radius: 0 0 0 25px;
-    padding: 70px 0 0 30px;
+    padding: 40px 0 0 30px;
     background-color: #000
   }
 
@@ -73,7 +71,8 @@ body {
       color: #f90;
       font-size: 12px;
       font-family: arial black;
-      text-align: right
+      text-align: right;
+      border-collapse: collapse
     }
 
     .header .middle table .white {
@@ -87,7 +86,6 @@ body {
   .header .right {
     grid-column: 3;
     grid-row: 1;
-    height: 180px;
     align-self: stretch;
     background-color: #000
   }
@@ -116,7 +114,7 @@ body {
           width: 70px;
           background-color: #f90;
           border-radius: 25px;
-          height: 40px;
+          height: 30px;
           width: 156px;
           margin: 5px;
           padding: 10px 10px 0 0;
@@ -184,8 +182,11 @@ body {
     }
 
 .body  {
+  width: 100%;
   border-radius: 100px 0 0 0;
   margin-top: 10px;
+  align-self: stretch;
+  justify-self: stretch;
   background-color: #cc6666;
   display: grid;
   grid-template-columns: 125px auto;
@@ -270,6 +271,7 @@ body {
   }
 
 .content {
+  grid-row: 2 / 2;
   background-color: #000;
   border-radius: 25px 0 0 0;
   padding: 0  0 0 15px

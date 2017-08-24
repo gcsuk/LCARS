@@ -8,9 +8,7 @@ import BuildsPage from './components/BuildsPage';
 class App extends React.Component {
   render() {
     return (
-      <div>
-        <Layout children={this.props.children} />
-      </div>
+      <Layout children={this.props.children} />
     );
   }
 }
