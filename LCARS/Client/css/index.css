@@ -11,8 +11,14 @@
 body {
   background-color: #000;
   font-size: 14px;
+  font-family: lcars;
   line-height: 1.42857143;
   color: #fff
+}
+
+a {
+  text-decoration: none;
+  color: #000
 }
 
 .purple {
@@ -274,5 +280,5 @@ body {
   grid-row: 2 / 2;
   background-color: #000;
   border-radius: 25px 0 0 0;
-  padding: 0  0 0 15px
+  padding: 15px 0 0 15px
 }
