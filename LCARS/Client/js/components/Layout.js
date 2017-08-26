@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Link} from 'react-router';
 import Digits from './Digits';
 
-class  Layout extends React.Component {
+class  Layout extends Component {
   render() {
     return (
         <div>
@@ -34,7 +34,7 @@ class  Layout extends React.Component {
             <div className="body">
                 <div className="sidebar">
                     <div>
-                        <span>CONFIG</span>
+                        <span><Link to="/builds">CONFIG</Link></span>
                     </div>
                     <div>
                         <span>STATUS</span>
