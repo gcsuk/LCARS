@@ -10,7 +10,7 @@ import IssuesPage from './components/IssuesPage';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={DeploymentsPage} />
+    <IndexRoute component={EnvironmentsPage} />
     <Route path="builds" component={BuildsPage} />
     <Route path="deployments" component={DeploymentsPage} />
     <Route path="git" component={GitPage} />
