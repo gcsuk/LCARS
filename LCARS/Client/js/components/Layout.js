@@ -34,7 +34,7 @@ class  Layout extends Component {
             <div className="body">
                 <div className="sidebar">
                     <div>
-                        <span><Link to="/builds">CONFIG</Link></span>
+                        <span><Link to="/admin">CONFIG</Link></span>
                     </div>
                     <div>
                         <span>STATUS</span>
