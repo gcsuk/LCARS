@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import styled from 'styled-components';
+import buildData from '../../data/builds'
 
 const Builds = styled.div`
   text-align: center;
@@ -27,17 +28,8 @@ const BuildStatus = styled.span`
 class BuildsPage extends Component { 
   constructor(props) {
     super(props);
-    
-    const builds = new Array(5);
 
-    for (var row = 0; row < 5; row++){
-        builds[row] = {};
-        builds[row].name = "Project " + row;
-        builds[row].status = "SUCCESS";
-        builds[row].version = row + ".0.0.0";
-    }
-
-    this.state = {builds: builds};
+    this.state = {builds: buildData};
   }
 
   render() {
