@@ -34,12 +34,14 @@ class DeploymentsPage extends Component {
     return (
       <Deployments>
         <thead>
-          <th></th>
-          { this.state.deployments[0].deploys.map((item, colIndex) => (
-            <th key={colIndex}>
-              {item.env}
-            </th>
-          ))}
+          <tr>
+            <th></th>
+            { this.state.deployments[0].deploys.map((item, colIndex) => (
+              <th key={colIndex}>
+                {item.env}
+              </th>
+            ))}
+          </tr>
         </thead>
         <tbody>
           { this.state.deployments.map((project, rowIndex) => (
