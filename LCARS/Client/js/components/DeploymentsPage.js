@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import styled from 'styled-components';
+import deploymentData from '../../data/deployments'
 
 const Deployments = styled.table`
   width: 100%;
@@ -25,22 +26,8 @@ const ProjectDeploy = styled.div`
 class DeploymentsPage extends Component { 
   constructor(props) {
     super(props);
-    
-    const deployments = new Array(5);
 
-    for (var row = 0; row < 5; row++){
-        deployments[row] = {};
-        deployments[row].name = "Project " + row;
-        deployments[row].deploys = new Array(5);
-        for(var col = 0; col < 5; col++){ 
-            deployments[row].deploys[col] = {};
-            deployments[row].deploys[col].env = "ENV 01";
-            deployments[row].deploys[col].status = "OK";
-            deployments[row].deploys[col].version = "1.0.1.2"
-        }
-    }
-
-    this.state = {deployments: deployments};
+    this.state = {deployments: deploymentData};
   }
 
   render() {

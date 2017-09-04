@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import styled from 'styled-components';
+import environmentData from '../../data/environments'
 
 const Environments = styled.table`
   width: 100%;
@@ -21,21 +22,8 @@ const SiteName = styled.td`
 class EnvironmentsPage extends Component { 
   constructor(props) {
     super(props);
-    
-    const environments = new Array(5);
 
-    for (var row = 0; row < 5; row++){
-        environments[row] = {};
-        environments[row].name = "Site " + row;
-        environments[row].envs = new Array(5);
-        for(var col = 0; col < 5; col++){ 
-          environments[row].envs[col] = {};
-          environments[row].envs[col].name = "ENV 01";
-          environments[row].envs[col].status = "OK";
-        }
-    }
-
-    this.state = {environments: environments};
+    this.state = {environments: environmentData};
   }
 
   render() {
