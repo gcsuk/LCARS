@@ -8,27 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.Swagger.Model;
 
 namespace LCARS
 {
     public class Startup
     {
-        private readonly IHostingEnvironment _env;
+        public IConfiguration Configuration { get; }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
-
-            _env = env;
+            Configuration = configuration;
         }
-
-        public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -48,21 +40,18 @@ namespace LCARS
                 options.Filters.Add(new ApiExceptionFilter());
             });
 
-            var pathToDoc = _env.IsDevelopment()
-                ? Path.Combine(_env.ContentRootPath, @"bin\Debug\netcoreapp2.0\", Configuration["Swagger:Path"])
-                : Path.Combine(_env.ContentRootPath, Configuration["Swagger:Path"]);
-
+            var xmlPath = GetXmlCommentsPath();
             services.AddSwaggerGen();
             services.ConfigureSwaggerGen(options =>
             {
                 options.SingleApiVersion(new Info
                 {
                     Version = "v1",
-                    Title = "LCARS API",
-                    Description = "An API to manage all aspects of LCARS",
-                    TermsOfService = "None"
+                    Title = "LCARS",
+                    TermsOfService = "None",
+                    Contact = new Contact { Name = "Rob King", Email = "rob@gcsuk.co.uk", Url = "www.gcsuk.co.uk" }
                 });
-                options.IncludeXmlComments(pathToDoc);
+                options.IncludeXmlComments(xmlPath);
                 options.DescribeAllEnumsAsStrings();
             });
         }
@@ -76,24 +65,17 @@ namespace LCARS
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseBrowserLink();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
-
+            app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUi();
+        }
+
+        private string GetXmlCommentsPath()
+        {
+            var app = PlatformServices.Default.Application;
+            return Path.Combine(app.ApplicationBasePath, "LCARS.xml");
         }
     }
 }

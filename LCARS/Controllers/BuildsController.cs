@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LCARS.Controllers
 {
-
+    [Route("api/[controller]")]
     public class BuildsController : Controller
     {
         private readonly IBuildsService _buildsService;
@@ -21,7 +21,7 @@ namespace LCARS.Controllers
         /// <response code="200">Returns running builds</response>
         /// <returns>A dictionary containing all running builds type ids and ids</returns>
         [ProducesResponseType(typeof(Dictionary<string, int>), 200)]
-        [HttpGet("/api/builds/running")]
+        [HttpGet("running")]
         public async Task<IActionResult> GetRunning()
         {
             var response = await _buildsService.GetBuildsRunning();
@@ -33,7 +33,7 @@ namespace LCARS.Controllers
         /// <response code="200">Returns the progress of a running build</response>
         /// <returns>An object containing the current progress of the specified build</returns>
         [ProducesResponseType(typeof(BuildProgress), 200)]
-        [HttpGet("/api/builds/progress/{buildId}")]
+        [HttpGet("progress/{buildId}")]
         public async Task<IActionResult> GetProgress(int buildId)
         {
             try
@@ -52,7 +52,7 @@ namespace LCARS.Controllers
         /// <response code="200">Returns the last build status of a specified type</response>
         /// <returns>a key-value pair containing the percentage and the text status of the last build</returns>
         [ProducesResponseType(typeof(KeyValuePair<string, string>), 200)]
-        [HttpGet("/api/builds/laststatus/{buildTypeId}")]
+        [HttpGet("laststatus/{buildTypeId}")]
         public async Task<IActionResult> GetLastRunStatus(string buildTypeId)
         {
             try
