@@ -4,7 +4,6 @@ using LCARS.Repositories;
 using LCARS.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -25,8 +24,10 @@ namespace LCARS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-
+            services.AddTransient<ISettingsRepository, SettingsRepository>();
+            services.AddTransient<IGitHubRepository, GitHubRepository>();
+            services.AddTransient<IEnvironmentsRepository, EnvironmentsRepository>();
+            services.AddTransient<IIssuesRepository, IssuesRepository>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IEnvironmentsService, EnvironmentsService>();
             services.AddTransient<IBuildsService, BuildsService>();

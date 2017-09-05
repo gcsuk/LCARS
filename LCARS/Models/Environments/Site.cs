@@ -13,6 +13,6 @@ namespace LCARS.Models.Environments
 
 		public string Name { get; set; }
 
-		public List<Environment> Environments { get; set; }
+		public IEnumerable<Environment> Environments { get; set; }
 	}
 }

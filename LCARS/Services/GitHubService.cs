@@ -13,12 +13,12 @@ namespace LCARS.Services
 {
     public class GitHubService : IGitHubService
     {
-        private readonly DataContext _dbContext;
+        private readonly IGitHubRepository _gitHubRepository;
         private readonly Models.Settings _settings;
 
-        public GitHubService(ISettingsService settingsService, DataContext dbContext)
+        public GitHubService(IGitHubRepository gitHubRepository, ISettingsService settingsService)
         {
-            _dbContext = dbContext;
+            _gitHubRepository = gitHubRepository;
             _settings = settingsService.GetSettings();
         }
 
@@ -94,7 +94,7 @@ namespace LCARS.Services
 
         public Settings GetSettings()
         {
-            var settings = _dbContext.GitHubSettings.Select(t => new ViewModels.GitHub.Settings
+            var settings = _gitHubRepository.GetAll().Select(t => new Settings
             {
                 BaseUrl = t.BaseUrl,
                 Owner = t.Owner,

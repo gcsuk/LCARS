@@ -14,18 +14,18 @@ namespace LCARS.Services
 {
     public class IssuesService : IIssuesService
     {
-        private readonly DataContext _dbContext;
+        private readonly IIssuesRepository _issuesRepository;
         private readonly Settings _settings;
 
-        public IssuesService(DataContext dbContext, ISettingsService settingsService)
+        public IssuesService(IIssuesRepository issuesRepository, ISettingsService settingsService)
         {
-            _dbContext = dbContext;
+            _issuesRepository = issuesRepository;
             _settings = settingsService.GetSettings();
         }
 
         public IEnumerable<Query> GetQueries(int? typeId = null)
         {
-            var queries = _dbContext.IssueQueries.Where(i => i.Id == (typeId ?? i.Id));
+            var queries = _issuesRepository.GetAll().Where(i => i.Id == (typeId ?? i.Id));
 
             return queries.Select(q => new Query
             {
