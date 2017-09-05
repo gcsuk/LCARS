@@ -10,8 +10,8 @@ namespace LCARS.Models.GitHub
         public ICollection<string> Repositories { get; set; }
         public string RepositoriesString
         {
-            get { return string.Join(",", Repositories); }
-            set { Repositories = value.Split(','); }
+            get => string.Join(",", Repositories);
+            set => Repositories = value.Split(',');
         }
         public int BranchThreshold { get; set; }
         public int PullRequestThreshold { get; set; }
