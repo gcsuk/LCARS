@@ -23,9 +23,9 @@ namespace LCARS.Repositories
         {
             using (var dbConnection = Connection)
             {
-                const string query = "INSERT INTO GitHubSettings" +
+                const string query = "INSERT INTO GitHubSettings " +
                                      "(Id, BaseUrl, BranchThreshold, Owner, PullRequestThreshold, RepositoriesString) " +
-                                     "VALUES" +
+                                     "VALUES " +
                                      "(@Id, @BaseUrl, @BranchThreshold, @Owner, @PullRequestThreshold, @RepositoriesString)";
                 dbConnection.Open();
                 return dbConnection.Execute(query, settings);
@@ -55,7 +55,7 @@ namespace LCARS.Repositories
         {
             using (var dbConnection = Connection)
             {
-                const string sql = "UPDATE GitHubSettings" +
+                const string sql = "UPDATE GitHubSettings " +
                                    "SET BaseUrl = @BaseUrl," +
                                    "    BranchThreshold = @BranchThreshold," +
                                    "    Owner = @Owner," +
@@ -63,7 +63,7 @@ namespace LCARS.Repositories
                                    "    RepositoriesString = @RepositoriesString " +
                                    "WHERE ID = @Id";
                 dbConnection.Open();
-                dbConnection.Query(sql, settings);
+                dbConnection.Execute(sql, settings);
             }
         }
 
