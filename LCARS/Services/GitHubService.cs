@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LCARS.Repositories;
 using LCARS.ViewModels.GitHub;
+using SettingsModel = LCARS.Models.GitHub.Settings;
 using Newtonsoft.Json;
 
 namespace LCARS.Services
@@ -96,6 +97,7 @@ namespace LCARS.Services
         {
             var settings = _gitHubRepository.GetAll().Select(t => new Settings
             {
+                Id = t.Id,
                 BaseUrl = t.BaseUrl,
                 Owner = t.Owner,
                 Repositories = t.Repositories.ToList(),
@@ -109,6 +111,19 @@ namespace LCARS.Services
             }
 
             return settings;
+        }
+
+        public void UpdateSettings(Settings settings)
+        {
+            _gitHubRepository.Update(new SettingsModel
+            {
+                Id = settings.Id,
+                BaseUrl = settings.BaseUrl,
+                BranchThreshold = settings.BranchThreshold,
+                Owner = settings.Owner,
+                PullRequestThreshold = settings.PullRequestThreshold,
+                Repositories = settings.Repositories
+            });
         }
 
         private async Task<IEnumerable<T>> GetData<T>(string url, string repository) where T : class
