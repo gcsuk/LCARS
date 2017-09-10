@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LCARS.ViewModels.GitHub;
+using LCARS.Models.GitHub;
 
 namespace LCARS.Services
 {
@@ -9,7 +9,7 @@ namespace LCARS.Services
         Task<IEnumerable<Branch>> GetBranches(string repository = null);
         Task<IEnumerable<PullRequest>> GetPullRequests(string repository = null);
         Task<IEnumerable<Comment>> GetComments(string repository = null, int pullRequestNumber = 0);
-        Settings GetSettings();
-        void UpdateSettings(Settings settings);
+        Task<Settings> GetSettings();
+        Task UpdateSettings(Settings settings);
     }
 }

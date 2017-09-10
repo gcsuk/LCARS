@@ -1,79 +1,79 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
 using LCARS.Models.GitHub;
-using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 
 namespace LCARS.Repositories
 {
     public class GitHubRepository : IGitHubRepository
     {
-        private readonly string _connectionString;
+        private readonly IDbConnection _dbConnection;
 
-        public GitHubRepository(IConfiguration configuration)
+        public GitHubRepository(IDbConnection dbConnection)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _dbConnection = dbConnection;
         }
 
-        public IDbConnection Connection => new SqlConnection(_connectionString);
-
-        public int Add(Settings settings)
+        public async Task<int> Add(Settings settings)
         {
-            using (var dbConnection = Connection)
+            using (var dbConnection = _dbConnection)
             {
                 const string query = "INSERT INTO GitHubSettings " +
-                                     "(Id, BaseUrl, BranchThreshold, Owner, PullRequestThreshold, RepositoriesString) " +
+                                     "(Id, Username, Password, BaseUrl, BranchThreshold, Owner, PullRequestThreshold, RepositoriesString) " +
                                      "VALUES " +
-                                     "(@Id, @BaseUrl, @BranchThreshold, @Owner, @PullRequestThreshold, @RepositoriesString)";
+                                     "(@Id, @Username, @Password, @BaseUrl, @BranchThreshold, @Owner, @PullRequestThreshold, @RepositoriesString)";
                 dbConnection.Open();
-                return dbConnection.Execute(query, settings);
+                return await dbConnection.ExecuteAsync(query, settings);
             }
         }
 
-        public IEnumerable<Settings> GetAll()
+        public async Task<IEnumerable<Settings>> GetAll()
         {
-            using (var dbConnection = Connection)
+            using (var dbConnection = _dbConnection)
             {
                 dbConnection.Open();
-                return dbConnection.Query<Settings>("SELECT * FROM GitHubSettings");
+                return await dbConnection.QueryAsync<Settings>("SELECT * FROM GitHubSettings");
             }
         }
 
-        public Settings GetByID(int id)
+        public async Task<Settings> GetByID(int id)
         {
-            using (var dbConnection = Connection)
+            using (var dbConnection = _dbConnection)
             {
                 const string query = "SELECT * FROM GitHubSettings WHERE ID = @Id";
                 dbConnection.Open();
-                return dbConnection.Query<Settings>(query, new { Id = id }).FirstOrDefault();
+                var settings = await dbConnection.QueryAsync<Settings>(query, new { Id = id });
+                return settings.FirstOrDefault();
             }
         }
 
-        public void Update(Settings settings)
+        public async Task Update(Settings settings)
         {
-            using (var dbConnection = Connection)
+            using (var dbConnection = _dbConnection)
             {
                 const string sql = "UPDATE GitHubSettings " +
-                                   "SET BaseUrl = @BaseUrl," +
+                                   "SET Username = @Username," +
+                                   "    Password = @Password," +
+                                   "    BaseUrl = @BaseUrl," +
                                    "    BranchThreshold = @BranchThreshold," +
                                    "    Owner = @Owner," +
                                    "    PullRequestThreshold = @PullRequestThreshold," +
                                    "    RepositoriesString = @RepositoriesString " +
                                    "WHERE ID = @Id";
                 dbConnection.Open();
-                dbConnection.Execute(sql, settings);
+                await dbConnection.ExecuteAsync(sql, settings);
             }
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            using (var dbConnection = Connection)
+            using (var dbConnection = _dbConnection)
             {
                 const string query = "DELETE FROM GitHubSettings WHERE ID = @Id";
                 dbConnection.Open();
-                dbConnection.Execute(query, new { Id = id });
+                await dbConnection.ExecuteAsync(query, new { Id = id });
             }
         }
     }

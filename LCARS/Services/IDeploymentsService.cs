@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using LCARS.ViewModels.Deployments;
+﻿using System.Threading.Tasks;
+using LCARS.Models.Deployments;
 
 namespace LCARS.Services
 {
     public interface IDeploymentsService
     {
-        Task<IEnumerable<Deployment>> Get();
+        Task<Deployments> Get();
+        Task<Settings> GetSettings();
+        Task UpdateSettings(Settings settings);
     }
 }

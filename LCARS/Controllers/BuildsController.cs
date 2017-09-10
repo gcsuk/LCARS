@@ -40,6 +40,12 @@ namespace LCARS.Controllers
             {
                 var response = await _buildsService.GetBuildProgress(buildId);
 
+                var vm = new BuildProgress
+                {
+                    Percentage = response.Percentage,
+                    Status = response.Status
+                };
+
                 return Ok(response);
             }
             catch (InvalidOperationException ex)
@@ -65,6 +71,44 @@ namespace LCARS.Controllers
             {
                 return StatusCode(412, ex);
             }
+        }
+
+        /// <remarks>Gets the configuration settings for builds</remarks>
+        /// <response code="200">Settings returned successfully</response>
+        [ProducesResponseType(200)]
+        [HttpGet("settings")]
+        public async Task<IActionResult> GetSettings()
+        {
+            var settings = await _buildsService.GetSettings();
+
+            var vm = new Settings
+            {
+                Id = settings.Id,
+                ServerUrl = settings.ServerUrl,
+                ServerUsername = settings.ServerUsername,
+                ServerPassword = settings.ServerPassword
+            };
+
+            return Ok(vm);
+        }
+
+        /// <remarks>Updates the configuration settings for builds</remarks>
+        /// <response code="204">Settings successfully updated</response>
+        [ProducesResponseType(204)]
+        [HttpPut("settings")]
+        public async Task<IActionResult> UpdateSettings([FromBody] Settings settings)
+        {
+            var model = new Models.Builds.Settings
+            {
+                Id = settings.Id,
+                ServerUrl = settings.ServerUrl,
+                ServerUsername = settings.ServerUsername,
+                ServerPassword = settings.ServerPassword
+            };
+
+            await _buildsService.UpdateSettings(model);
+
+            return NoContent();
         }
     }
 }

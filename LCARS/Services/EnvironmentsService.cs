@@ -4,6 +4,7 @@ using System.Linq;
 using LCARS.ViewModels.Environments;
 using SiteModel = LCARS.Models.Environments.Site;
 using EnvironmentModel = LCARS.Models.Environments.Environment;
+using System.Threading.Tasks;
 
 namespace LCARS.Services
 {
@@ -16,9 +17,9 @@ namespace LCARS.Services
             _repository = repository;
         }
 
-        public IEnumerable<Site> GetSites()
+        public async Task<IEnumerable<Site>> GetSites()
         {
-            return _repository.GetAll().Select(t => new Site
+            return (await _repository.GetAll()).Select(t => new Site
             {
                 Id = t.Id,
                 Name = t.Name,
@@ -31,21 +32,21 @@ namespace LCARS.Services
             });
         }
 
-        public Site AddSite(Site site)
+        public async Task<Site> AddSite(Site site)
         {
-            site.Id = _repository.Add(ConvertToModel(site));
+            site.Id = await _repository.Add(ConvertToModel(site));
 
             return site;
         }
 
-        public void UpdateSite(Site site)
+        public async Task UpdateSite(Site site)
         {
-            _repository.Update(ConvertToModel(site));
+            await _repository.Update(ConvertToModel(site));
         }
 
-        public void DeleteSite(int id)
+        public async Task DeleteSite(int id)
         {
-            _repository.Delete(id);
+            await _repository.Delete(id);
         }
 
         private static SiteModel ConvertToModel(Site vm)

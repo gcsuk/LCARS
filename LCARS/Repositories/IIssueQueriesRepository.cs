@@ -2,7 +2,7 @@
 
 namespace LCARS.Repositories
 {
-    public interface IIssuesRepository : IRepository<Query>
+    public interface IIssueQueriesRepository : IRepository<Query>
     {
     }
 }
