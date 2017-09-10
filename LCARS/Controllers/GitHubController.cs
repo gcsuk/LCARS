@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LCARS.Services;
 using LCARS.ViewModels.GitHub;
@@ -25,7 +26,12 @@ namespace LCARS.Controllers
         {
             var branches = await _gitHubService.GetBranches(repository);
 
-            return Ok(branches);
+            var vm = branches.Select(b => new Branch
+            {
+                Name = b.Name
+            });
+
+            return Ok(vm);
         }
 
         /// <remarks>Returns a list of all open pull requests for the configured repository</remarks>
@@ -37,7 +43,34 @@ namespace LCARS.Controllers
         {
             var pullRequests = await _gitHubService.GetPullRequests(repository);
 
-            return Ok(pullRequests);
+            var vm = pullRequests.Select(p => new PullRequest
+            {
+                Repository = repository,
+                Number = p.Number,
+                Title = p.Title,
+                CreatedOn = p.CreatedOn,
+                UpdatedOn = p.UpdatedOn,
+                AuthorName = p.User.Name,
+                AuthorAvatar = p.User.Avatar
+            }).ToList();
+
+            foreach (var pullRequest in vm)
+            {
+                var comments = await _gitHubService.GetComments(repository, pullRequest.Number);
+
+                pullRequest.Comments = comments.Select(p => new Comment
+                {
+                    DateCreated = p.DateCreated,
+                    User = new User
+                    {
+                        Name = p.User.Name,
+                        Avatar = p.User.Avatar
+                    },
+                    Body = p.Body
+                });
+            }
+
+            return Ok(vm);
         }
 
         /// <remarks>Returns a list of all PR comments for the configured repository</remarks>
@@ -49,7 +82,18 @@ namespace LCARS.Controllers
         {
             var comments = await _gitHubService.GetComments(repository, pullRequestNumber);
 
-            return Ok(comments);
+            var vm = comments.Select(p => new Comment
+            {
+                DateCreated = p.DateCreated,
+                User = new User
+                {
+                    Name = p.User.Name,
+                    Avatar = p.User.Avatar
+                },
+                Body = p.Body
+            });
+
+            return Ok(vm);
         }
 
         /// <remarks>Gets the configuration settings for GitHub</remarks>
@@ -58,7 +102,19 @@ namespace LCARS.Controllers
         [HttpGet("settings")]
         public async Task<IActionResult> GetSettings()
         {
-            var vm = _gitHubService.GetSettings();
+            var settings = await _gitHubService.GetSettings();
+
+            var vm = new Settings
+            {
+                Id = settings.Id,
+                Username = settings.Username,
+                Password = settings.Password,
+                BaseUrl = settings.BaseUrl,
+                Owner = settings.Owner,
+                Repositories = settings.Repositories.ToList(),
+                BranchThreshold = settings.BranchThreshold,
+                PullRequestThreshold = settings.PullRequestThreshold
+            };
 
             return Ok(vm);
         }
@@ -69,7 +125,19 @@ namespace LCARS.Controllers
         [HttpPut("settings")]
         public async Task<IActionResult> UpdateSettings([FromBody] Settings settings)
         {
-            _gitHubService.UpdateSettings(settings);
+            var model = new Models.GitHub.Settings
+            {
+                Id = settings.Id,
+                Username = settings.Username,
+                Password = settings.Password,
+                BaseUrl = settings.BaseUrl,
+                BranchThreshold = settings.BranchThreshold,
+                Owner = settings.Owner,
+                PullRequestThreshold = settings.PullRequestThreshold,
+                Repositories = settings.Repositories
+            };
+
+            await _gitHubService.UpdateSettings(model);
 
             return NoContent();
         }

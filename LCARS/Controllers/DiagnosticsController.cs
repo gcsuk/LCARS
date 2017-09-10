@@ -57,7 +57,7 @@ namespace LCARS.Controllers
                 taskList.Add(nameof(status.GitHubPullRequests), _gitHubService.GetPullRequests());
                 taskList.Add(nameof(status.GitHubBranches), _gitHubService.GetBranches());
 
-                var queries = _issuesService.GetQueries();
+                var queries = await _issuesService.GetQueries();
 
                 taskList.Add(nameof(status.Issues), _issuesService.GetIssues(queries.First().Jql));
 

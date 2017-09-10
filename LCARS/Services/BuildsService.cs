@@ -6,23 +6,26 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using LCARS.Models;
-using LCARS.ViewModels.Builds;
+using LCARS.Models.Builds;
+using LCARS.Repositories;
 
 namespace LCARS.Services
 {
     public class BuildsService : IBuildsService
     {
-        private readonly Settings _settings;
+        private Settings _settings;
+        private readonly IBuildsRepository _repository;
 
-        public BuildsService(ISettingsService settingsService)
+        public BuildsService(IBuildsRepository repository)
         {
-            _settings = settingsService.GetSettings();
+            _repository = repository;
         }
 
         public async Task<Dictionary<string, int>> GetBuildsRunning()
         {
-            var doc = await GetData($"http://{_settings.BuildServerUrl}/guestAuth/app/rest/builds?locator=running:true");
+            await GetSettings();
+
+            var doc = await GetData($"http://{_settings.ServerUrl}/guestAuth/app/rest/builds?locator=running:true");
 
             var builds = new Dictionary<string, int>();
 
@@ -44,8 +47,10 @@ namespace LCARS.Services
 
         public async Task<BuildProgress> GetBuildProgress(int buildId)
         {
+            await GetSettings();
+
             var doc =
-                await GetData($"http://user:pwd@{_settings.BuildServerUrl}/guestAuth/app/rest/builds/id:{buildId}");
+                await GetData($"http://user:pwd@{_settings.ServerUrl}/guestAuth/app/rest/builds/id:{buildId}");
 
             if (doc == null)
             {
@@ -76,10 +81,12 @@ namespace LCARS.Services
 
         public async Task<KeyValuePair<string, string>> GetLastBuildStatus(string buildTypeId)
         {
+            await GetSettings();
+
             var doc =
                 await
                     GetData(
-                        $"http://{_settings.BuildServerUrl}/guestAuth/app/rest/builds?locator=buildType:(id:{buildTypeId})");
+                        $"http://{_settings.ServerUrl}/guestAuth/app/rest/builds?locator=buildType:(id:{buildTypeId})");
 
             if (doc == null)
             {
@@ -96,7 +103,7 @@ namespace LCARS.Services
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
                     Convert.ToBase64String(
-                        Encoding.ASCII.GetBytes($"{_settings.BuildServerUsername}j:{_settings.BuildServerPassword}")));
+                        Encoding.ASCII.GetBytes($"{_settings.ServerUsername}j:{_settings.ServerPassword}")));
 
                 try
                 {
@@ -111,6 +118,26 @@ namespace LCARS.Services
                     throw new Exception("There was an error contacting the build server", ex);
                 }
             }
+        }
+
+        public async Task<Settings> GetSettings()
+        {
+            if (_settings != null)
+                return _settings;
+
+            var buildsSettings = (await _repository.GetAll()).SingleOrDefault();
+
+            _settings = buildsSettings ?? throw new InvalidOperationException("Invalid Builds settings");
+
+            return buildsSettings;
+        }
+
+        public async Task UpdateSettings(Settings settings)
+        {
+            await _repository.Update(settings);
+
+            // Force refresh of settings data on next API call
+            _settings = null;
         }
     }
 }

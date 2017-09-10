@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using LCARS.ViewModels.Environments;
+using System.Threading.Tasks;
 
 namespace LCARS.Services
 {
     public interface IEnvironmentsService
     {
-        IEnumerable<Site> GetSites();
-        Site AddSite(Site site);
-        void UpdateSite(Site site);
-        void DeleteSite(int id);
+        Task<IEnumerable<Site>> GetSites();
+        Task<Site> AddSite(Site site);
+        Task UpdateSite(Site site);
+        Task DeleteSite(int id);
     }
 }

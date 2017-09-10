@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Data.SqlClient;
+using System.IO;
 using LCARS.Filters;
 using LCARS.Repositories;
 using LCARS.Services;
@@ -24,11 +25,21 @@ namespace LCARS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ISettingsRepository, SettingsRepository>();
-            services.AddTransient<IGitHubRepository, GitHubRepository>();
-            services.AddTransient<IEnvironmentsRepository, EnvironmentsRepository>();
-            services.AddTransient<IIssuesRepository, IssuesRepository>();
-            services.AddTransient<ISettingsService, SettingsService>();
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            services.AddTransient<IGitHubRepository, GitHubRepository>(
+                serviceProvider => new GitHubRepository(new SqlConnection(connectionString)));
+            services.AddTransient<IEnvironmentsRepository, EnvironmentsRepository>(
+                serviceProvider => new EnvironmentsRepository(new SqlConnection(connectionString)));
+            services.AddTransient<IIssueSettingsRepository, IssueSettingsRepository>(
+                serviceProvider => new IssueSettingsRepository(new SqlConnection(connectionString)));
+            services.AddTransient<IIssueQueriesRepository, IssueQueriesRepository>(
+                serviceProvider => new IssueQueriesRepository(new SqlConnection(connectionString)));
+            services.AddTransient<IDeploymentsRepository, DeploymentsRepository>(
+                serviceProvider => new DeploymentsRepository(new SqlConnection(connectionString)));
+            services.AddTransient<IBuildsRepository, BuildsRepository>(
+                serviceProvider => new BuildsRepository(new SqlConnection(connectionString)));
+
             services.AddTransient<IEnvironmentsService, EnvironmentsService>();
             services.AddTransient<IBuildsService, BuildsService>();
             services.AddTransient<IDeploymentsService, DeploymentsService>();
@@ -54,6 +65,7 @@ namespace LCARS
                 });
                 options.IncludeXmlComments(xmlPath);
                 options.DescribeAllEnumsAsStrings();
+                options.CustomSchemaIds(x => x.FullName);
             });
         }
 

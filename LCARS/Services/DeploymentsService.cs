@@ -1,32 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
-using LCARS.Models;
 using LCARS.Models.Deployments;
 using System.Linq;
+using LCARS.Repositories;
 
 namespace LCARS.Services
 {
     public class DeploymentsService : IDeploymentsService
     {
-        private readonly Settings _settings;
+        private Settings _settings;
+        private readonly IDeploymentsRepository _repository;
 
-        public DeploymentsService(ISettingsService settingsService)
+        public DeploymentsService(IDeploymentsRepository repository)
         {
-            _settings = settingsService.GetSettings();
+            _repository = repository;
         }
 
-        public async Task<IEnumerable<ViewModels.Deployments.Deployment>> Get()
+        public async Task<Deployments> Get()
         {
+            await GetSettings();
+
             string jsonData;
 
             using (var client = new HttpClient())
             {
-                client.DefaultRequestHeaders.Add("X-Octopus-ApiKey", _settings.DeploymentsServerKey);
+                client.DefaultRequestHeaders.Add("X-Octopus-ApiKey", _settings.ServerKey);
 
-                jsonData = await client.GetStringAsync(_settings.DeploymentsServerUrl);
+                jsonData = await client.GetStringAsync(_settings.ServerUrl);
             }
 
             Deployments deployments;
@@ -48,20 +50,27 @@ namespace LCARS.Services
                 d.Environment = deployments.Environments.Single(e => e.Id == d.EnvironmentId).Name;
             });
 
-            return deployments.Deploys.Select(deployment => new ViewModels.Deployments.Deployment
-            {
-                ProjectGroupId = deployments.Projects.Single(g => g.Id == deployment.ProjectId).ProjectGroupId,
-                ProjectGroup = deployments.ProjectGroups.Single(pg => pg.Id == deployments.Projects.Single(g => g.Id == deployment.ProjectId).ProjectGroupId).Name,
-                ProjectId = deployment.ProjectId,
-                Project = deployment.Project,
-                EnvironmentId = deployment.EnvironmentId,
-                Environment = deployment.Environment,
-                CompletedTime = deployment.CompletedTime,
-                Duration = deployment.Duration,
-                State = deployment.State,
-                HasWarningsOrErrors = deployment.HasWarningsOrErrors,
-                ReleaseVersion = deployment.ReleaseVersion
-            }).ToList();
+            return deployments;
+        }
+
+        public async Task<Settings> GetSettings()
+        {
+            if (_settings != null)
+                return _settings;
+
+            var deploymentsSettings = (await _repository.GetAll()).SingleOrDefault();
+
+            _settings = deploymentsSettings ?? throw new InvalidOperationException("Invalid Deployments settings");
+
+            return deploymentsSettings;
+        }
+
+        public async Task UpdateSettings(Settings settings)
+        {
+            await _repository.Update(settings);
+
+            // Force refresh of settings data on next API call
+            _settings = null;
         }
     }
 }

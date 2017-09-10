@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Data;
+using System.Threading.Tasks;
 
 namespace LCARS.Repositories
 {
     public interface IRepository<T> where T : class
     {
-        IDbConnection Connection { get; }
-        int Add(T item);
-        IEnumerable<T> GetAll();
-        T GetByID(int id);
-        void Update(T item);
-        void Delete(int id);
+        Task<int> Add(T item);
+        Task<IEnumerable<T>> GetAll();
+        Task<T> GetByID(int id);
+        Task Update(T item);
+        Task Delete(int id);
     }
 }

@@ -6,8 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using LCARS.Repositories;
-using LCARS.ViewModels.GitHub;
-using SettingsModel = LCARS.Models.GitHub.Settings;
+using LCARS.Models.GitHub;
 using Newtonsoft.Json;
 
 namespace LCARS.Services
@@ -15,115 +14,73 @@ namespace LCARS.Services
     public class GitHubService : IGitHubService
     {
         private readonly IGitHubRepository _gitHubRepository;
-        private readonly Models.Settings _settings;
+        private Settings _settings;
 
-        public GitHubService(IGitHubRepository gitHubRepository, ISettingsService settingsService)
+        public GitHubService(IGitHubRepository gitHubRepository)
         {
             _gitHubRepository = gitHubRepository;
-            _settings = settingsService.GetSettings();
         }
 
         public async Task<IEnumerable<Branch>> GetBranches(string repository = null)
         {
-            var settings = GetSettings();
+            await GetSettings();
 
-            repository = ParseRepository(repository, settings);
+            repository = ParseRepository(repository, _settings);
 
-            var branches = await GetData<Models.GitHub.Branch>(settings.BaseUrl.Replace("REPOSITORY", repository).Replace("OWNER", settings.Owner) + "/branches", repository);
+            var branches = await GetData<Branch>(_settings.BaseUrl.Replace("REPOSITORY", repository).Replace("OWNER", _settings.Owner) + "/branches", repository);
             
-            return branches.Select(b => new Branch
-            {
-                Name = b.Name
-            });
+            return branches;
         }
 
         public async Task<IEnumerable<PullRequest>> GetPullRequests(string repository = null)
         {
-            var settings = GetSettings();
+            await GetSettings();
 
-            repository = ParseRepository(repository, settings);
+            repository = ParseRepository(repository, _settings);
 
-            var pullRequests = await GetData<Models.GitHub.PullRequest>(settings.BaseUrl.Replace("REPOSITORY", repository).Replace("OWNER", settings.Owner) + "/pulls", repository);
+            var pullRequests = await GetData<PullRequest>(_settings.BaseUrl.Replace("REPOSITORY", repository).Replace("OWNER", _settings.Owner) + "/pulls", repository);
 
-            var result = pullRequests.Select(p => new PullRequest
-            {
-                Repository = repository,
-                Number = p.Number,
-                Title = p.Title,
-                CreatedOn = p.CreatedOn,
-                UpdatedOn = p.UpdatedOn,
-                AuthorName = p.User.Name,
-                AuthorAvatar = p.User.Avatar
-            }).ToList();
-
-            foreach (var pullRequest in result)
-            {
-                pullRequest.Comments = await GetComments(repository, pullRequest.Number);
-            }
-
-            return result;
+            return pullRequests;
         }
 
         public async Task<IEnumerable<Comment>> GetComments(string repository = null, int pullRequestNumber = 0)
         {
+            await GetSettings();
+
             if (pullRequestNumber <= 0)
             {
                 throw new ArgumentException("Invalid pull request number");
             }
 
-            var settings = GetSettings();
-
-            repository = ParseRepository(repository, settings);
+            repository = ParseRepository(repository, _settings);
 
             var comments =
                 await
-                    GetData<Models.GitHub.Comment>(
-                        settings.BaseUrl.Replace("REPOSITORY", repository).Replace("OWNER", settings.Owner) + "/pulls/" +
+                    GetData<Comment>(
+                        _settings.BaseUrl.Replace("REPOSITORY", repository).Replace("OWNER", _settings.Owner) + "/pulls/" +
                         pullRequestNumber + "/comments", repository);
             
-            return comments.Select(p => new Comment
-            {
-                DateCreated = p.DateCreated,
-                User = new User
-                {
-                    Name = p.User.Name,
-                    Avatar = p.User.Avatar
-                },
-                Body = p.Body
-            });
+            return comments;
         }
 
-        public Settings GetSettings()
+        public async Task<Settings> GetSettings()
         {
-            var settings = _gitHubRepository.GetAll().Select(t => new Settings
-            {
-                Id = t.Id,
-                BaseUrl = t.BaseUrl,
-                Owner = t.Owner,
-                Repositories = t.Repositories.ToList(),
-                BranchThreshold = t.BranchThreshold,
-                PullRequestThreshold = t.PullRequestThreshold
-            }).SingleOrDefault();
+            if (_settings != null)
+                return _settings;
 
-            if (settings == null)
-            {
-                throw new InvalidOperationException("Invalid GitHub settings");
-            }
+            var gitHubSettings = (await _gitHubRepository.GetAll()).SingleOrDefault();
 
-            return settings;
+            _settings = gitHubSettings ?? throw new InvalidOperationException("Invalid GitHub settings");
+
+            return gitHubSettings;
         }
 
-        public void UpdateSettings(Settings settings)
+        public async Task UpdateSettings(Settings settings)
         {
-            _gitHubRepository.Update(new SettingsModel
-            {
-                Id = settings.Id,
-                BaseUrl = settings.BaseUrl,
-                BranchThreshold = settings.BranchThreshold,
-                Owner = settings.Owner,
-                PullRequestThreshold = settings.PullRequestThreshold,
-                Repositories = settings.Repositories
-            });
+            await _gitHubRepository.Update(settings);
+
+            // Force refresh of settings data on next API call
+            _settings = null;
         }
 
         private async Task<IEnumerable<T>> GetData<T>(string url, string repository) where T : class
@@ -131,7 +88,7 @@ namespace LCARS.Services
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-                    Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_settings.GitHubUsername}:{_settings.GitHubPassword}")));
+                    Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_settings.Username}:{_settings.Password}")));
 
                 var items = new List<T>();
                 var hasRecords = true;
@@ -170,7 +127,7 @@ namespace LCARS.Services
             }
         }
 
-        private static string ParseRepository(string repository, ViewModels.GitHub.Settings settings)
+        private static string ParseRepository(string repository, Settings settings)
         {
             if (!string.IsNullOrWhiteSpace(repository))
             {
