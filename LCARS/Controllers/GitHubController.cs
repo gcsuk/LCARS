@@ -38,10 +38,10 @@ namespace LCARS.Controllers
         /// <response code="200">Returns a list of all open pull requests for the configured repository</response>
         /// <returns>A list of all open pull requests for the configured repository</returns>
         [ProducesResponseType(typeof(IEnumerable<PullRequest>), 200)]
-        [HttpGet("pullrequests/{repository}")]
-        public async Task<IActionResult> GetPullRequests(string repository)
+        [HttpGet("pullrequests/{repository}/{includeComments}")]
+        public async Task<IActionResult> GetPullRequests(string repository, bool includeComments = false)
         {
-            var pullRequests = await _gitHubService.GetPullRequests(repository);
+            var pullRequests = await _gitHubService.GetPullRequests(repository, includeComments);
 
             var vm = pullRequests.Select(p => new PullRequest
             {
@@ -51,24 +51,18 @@ namespace LCARS.Controllers
                 CreatedOn = p.CreatedOn,
                 UpdatedOn = p.UpdatedOn,
                 AuthorName = p.User.Name,
-                AuthorAvatar = p.User.Avatar
-            }).ToList();
-
-            foreach (var pullRequest in vm)
-            {
-                var comments = await _gitHubService.GetComments(repository, pullRequest.Number);
-
-                pullRequest.Comments = comments.Select(p => new Comment
+                AuthorAvatar = p.User.Avatar,
+                Comments = p.Comments?.Select(c => new Comment
                 {
-                    DateCreated = p.DateCreated,
+                    DateCreated = c.DateCreated,
                     User = new User
                     {
-                        Name = p.User.Name,
-                        Avatar = p.User.Avatar
+                        Name = c.User.Name,
+                        Avatar = c.User.Avatar
                     },
-                    Body = p.Body
-                });
-            }
+                    Body = c.Body
+                })
+            }).ToList();
 
             return Ok(vm);
         }
@@ -94,6 +88,55 @@ namespace LCARS.Controllers
             });
 
             return Ok(vm);
+        }
+
+        /// <remarks>Returns a list of all branches for the configured repository</remarks>
+        /// <response code="200">Returns a list of all branches for the configured repository</response>
+        /// <returns>A list of all branches for the configured repository</returns>
+        [ProducesResponseType(typeof(IEnumerable<Summary>), 200)]
+        [HttpGet("summary")]
+        public async Task<IActionResult> GetSummary()
+        {
+            var summary = new List<Summary>();
+
+            var repositories = (await _gitHubService.GetSettings()).Repositories;
+
+            foreach (var repo in repositories)
+            {
+                var branches = await _gitHubService.GetBranches(repo);
+                var pullRequests = await _gitHubService.GetPullRequests(repo, true);
+
+                summary.Add(new Summary
+                {
+                    Repository = repo,
+                    Branches = branches.Select(b => new Branch
+                    {
+                        Name = b.Name
+                    }),
+                    PullRequests = pullRequests.Select(pr => new PullRequest
+                    {
+                        Repository = repo,
+                        Number = pr.Number,
+                        AuthorAvatar = pr.User.Avatar,
+                        CreatedOn = pr.CreatedOn,
+                        Title = pr.Title,
+                        UpdatedOn = pr.UpdatedOn,
+                        AuthorName = pr.User.Name,
+                        Comments = pr.Comments.Select(c => new Comment
+                        {
+                            Body = c.Body,
+                            DateCreated = c.DateCreated,
+                            User = new User
+                            {
+                                Name = c.User.Name,
+                                Avatar = c.User.Avatar
+                            }
+                        })
+                    })
+                });
+            }
+
+            return Ok(summary);
         }
 
         /// <remarks>Gets the configuration settings for GitHub</remarks>
