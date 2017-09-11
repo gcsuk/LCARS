@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import styled from 'styled-components';
-import deploymentData from '../../data/deployments'
+import deploymentData from '../../data/deployments';
 
 const Deployments = styled.table`
   width: 100%;
