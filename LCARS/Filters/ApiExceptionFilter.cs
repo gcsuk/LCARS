@@ -21,6 +21,10 @@ namespace LCARS.Filters
             {
                 CreateResponse(context, HttpStatusCode.BadRequest);
             }
+            else if (context.Exception is InvalidOperationException)
+            {
+                CreateResponse(context, (HttpStatusCode)412);
+            }
             else if (context.Exception is HttpRequestException)
             {
                 CreateResponse(context, HttpStatusCode.BadGateway);

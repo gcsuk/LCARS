@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using LCARS.Services;
 using Microsoft.AspNetCore.Mvc;
 using LCARS.ViewModels.Issues;
+using System;
 
 namespace LCARS.Controllers
 {
@@ -20,15 +21,16 @@ namespace LCARS.Controllers
         /// <response code="200">Returns a list of issues resulting from the stored query</response>
         /// <returns>A list of issues resulting from the stored query</returns>
         [ProducesResponseType(typeof(Issues), 200)]
-        [HttpGet("{typeId?}")]
-        public async Task<IActionResult> GetIssues(int? typeId = null)
+        [HttpGet("{queryId}")]
+        public async Task<IActionResult> GetIssues(int queryId)
         {
-            var query = (await _issuesService.GetQueries(typeId)).FirstOrDefault();
+            if (queryId <= 0)
+                throw new ArgumentException("Invalid query ID", nameof(queryId));
+
+            var query = (await _issuesService.GetQueries(queryId)).SingleOrDefault();
 
             if (query == null)
-            {
-                return StatusCode(412, "No matching queries!");
-            }
+                return NotFound();
 
             var issues = await _issuesService.GetIssues(query.Jql);
 
@@ -59,9 +61,7 @@ namespace LCARS.Controllers
             var queries = await _issuesService.GetQueries();
 
             if (queries == null || !queries.Any())
-            {
-                return StatusCode(412, "No matching queries!");
-            }
+                return NotFound();
 
             var vm = queries.Select(q => new Query
             {
@@ -88,7 +88,7 @@ namespace LCARS.Controllers
                 Jql = query.Jql
             };
 
-            _issuesService.UpdateQuery(model);
+            await _issuesService.UpdateQuery(model);
 
             return NoContent();
         }
@@ -116,7 +116,7 @@ namespace LCARS.Controllers
         /// <response code="204">Settings successfully updated</response>
         [ProducesResponseType(204)]
         [HttpPut("settings")]
-        public IActionResult UpdateSettings([FromBody] Settings settings)
+        public async Task<IActionResult> UpdateSettings([FromBody] Settings settings)
         {
             var model = new Models.Issues.Settings
             {
@@ -126,7 +126,7 @@ namespace LCARS.Controllers
                 Url = settings.Url
             };
 
-            _issuesService.UpdateSettings(model);
+            await _issuesService.UpdateSettings(model);
 
             return NoContent();
         }
