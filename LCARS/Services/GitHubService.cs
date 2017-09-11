@@ -32,13 +32,20 @@ namespace LCARS.Services
             return branches;
         }
 
-        public async Task<IEnumerable<PullRequest>> GetPullRequests(string repository = null)
+        public async Task<IEnumerable<PullRequest>> GetPullRequests(string repository = null, bool includeComments = false)
         {
             await GetSettings();
 
             repository = ParseRepository(repository, _settings);
 
             var pullRequests = await GetData<PullRequest>(_settings.BaseUrl.Replace("REPOSITORY", repository).Replace("OWNER", _settings.Owner) + "/pulls", repository);
+
+            if (includeComments)
+                foreach (var pr in pullRequests)
+                {
+                    pr.Comments = await GetComments(repository, pr.Number);
+                }
+                
 
             return pullRequests;
         }
