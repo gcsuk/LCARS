@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using LCARS.Services;
 using LCARS.ViewModels.Builds;
@@ -36,22 +35,15 @@ namespace LCARS.Controllers
         [HttpGet("progress/{buildId}")]
         public async Task<IActionResult> GetProgress(int buildId)
         {
-            try
-            {
-                var response = await _buildsService.GetBuildProgress(buildId);
+            var response = await _buildsService.GetBuildProgress(buildId);
 
-                var vm = new BuildProgress
-                {
-                    Percentage = response.Percentage,
-                    Status = response.Status
-                };
-
-                return Ok(response);
-            }
-            catch (InvalidOperationException ex)
+            var vm = new BuildProgress
             {
-                return StatusCode(412, ex);
-            }
+                Percentage = response.Percentage,
+                Status = response.Status
+            };
+
+            return Ok(response);
         }
 
         /// <remarks>Returns the last build status of a specified type</remarks>
@@ -61,16 +53,9 @@ namespace LCARS.Controllers
         [HttpGet("laststatus/{buildTypeId}")]
         public async Task<IActionResult> GetLastRunStatus(string buildTypeId)
         {
-            try
-            {
-                var response = await _buildsService.GetLastBuildStatus(buildTypeId);
+            var response = await _buildsService.GetLastBuildStatus(buildTypeId);
 
-                return Ok(response);
-            }
-            catch (InvalidOperationException ex)
-            {
-                return StatusCode(412, ex);
-            }
+            return Ok(response);
         }
 
         /// <remarks>Gets the configuration settings for builds</remarks>
