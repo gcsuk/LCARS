@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace LCARS.ViewModels.Issues
 {
-    public class Backlog
+    public class Summary
     {
         public string IssueSet { get; set; }
 
-        public IEnumerable<Issue> BugList { get; set; }
-
-        public int Count => BugList.Count();
+        public int IssueCount { get; set; }
 
         public DateTime? Deadline { get; set; }
 
