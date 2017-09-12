@@ -51,6 +51,31 @@ namespace LCARS.Controllers
             return Ok(vm);
         }
 
+        /// <response code="200">Returns a summary of backlog for a specified query</response>
+        [ProducesResponseType(typeof(Summary), 200)]
+        [HttpGet("summary/{queryId}")]
+        public async Task<IActionResult> GetSummary(int queryId)
+        {
+            if (queryId <= 0)
+                throw new ArgumentException("Invalid query ID", nameof(queryId));
+
+            var query = (await _issuesService.GetQueries(queryId)).SingleOrDefault();
+
+            if (query == null)
+                return NotFound();
+
+            var issues = await _issuesService.GetIssues(query.Jql);
+
+            var vm = new Summary
+            {
+                IssueSet = query.Name,
+                Deadline = query.Deadline,
+                IssueCount = issues.Count()
+            };
+
+            return Ok(vm);
+        }
+
         /// <remarks>Returns a list of all issues for a stored query</remarks>
         /// <response code="200">Returns a list of issues resulting from the stored query</response>
         /// <returns>A list of issues resulting from the stored query</returns>
