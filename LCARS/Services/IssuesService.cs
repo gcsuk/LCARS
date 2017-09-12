@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using LCARS.Models.Issues;
-using Newtonsoft.Json;
 using System.Linq;
 using LCARS.Repositories;
+using Refit;
 
 namespace LCARS.Services
 {
@@ -43,27 +41,13 @@ namespace LCARS.Services
         {
             await GetSettings();
 
-            try
-            {
-                Parent data;
+            var token = "Basic " + Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_settings.Username}:{_settings.Password}"));
 
-                using (var client = new HttpClient())
-                {
-                    client.Timeout = TimeSpan.FromMilliseconds(1000);
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-                        Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_settings.Username}:{_settings.Password}")));
+            var issuesClient = RestService.For<IIssuesClient>(_settings.Url);
 
-                    var jsonData = await client.GetStringAsync(_settings.Url + query + "&maxResults=1000");
+            var data = await issuesClient.GetIssues(token, query);
 
-                    data = JsonConvert.DeserializeObject<Parent>(jsonData);
-                }
-
-                return data.Issues;
-            }
-            catch
-            {
-                return new List<Issue>();
-            }
+            return data.Issues;
         }
 
         public async Task<Settings> GetSettings()

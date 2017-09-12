@@ -9,6 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.2" />
+    <PackageReference Include="Refit" Version="4.0.1" />
     <PackageReference Include="Swashbuckle" Version="6.0.0-beta901" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
   </ItemGroup>
