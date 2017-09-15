@@ -86,7 +86,7 @@ a {
 	background-color: #ff9966
 }
 
-.header {
+header {
   height: 180px;
   border-radius: 0 0 0 100px;
   background-color: #99f;
@@ -96,7 +96,7 @@ a {
   align-content: stretch
 }
 
-  .header .left {
+  header .left {
     grid-column: 1;
     grid-row: 1 / span 2;
     background-color: #c9c;
@@ -110,7 +110,7 @@ a {
     padding: 60px 5px 0 0
   }
 
-  .header .middle {
+  header .middle {
     grid-column: 2;
     grid-row: 1;
     border-radius: 0 0 0 25px;
@@ -118,7 +118,7 @@ a {
     background-color: #000
   }
 
-    .header .middle table {
+    header .middle table {
       color: #f90;
       font-size: 12px;
       font-family: arial black;
@@ -126,22 +126,22 @@ a {
       border-collapse: collapse
     }
 
-    .header .middle table .white {
+    header .middle table .white {
       color: #fff
     }
 
-    .header .middle table td {
+    header .middle table td {
       padding-left: 10px
     }
 
-  .header .right {
+  header .right {
     grid-column: 3;
     grid-row: 1;
     align-self: stretch;
     background-color: #000
   }
 
-    .header .right .title {
+    header .right .title {
       color: #f90;
       width: 100%;
       font-size: 44pt;
@@ -151,17 +151,17 @@ a {
       margin-right: 50px;
     }
 
-      .header .right .title span  {
+      header .right .title span  {
         color: #fff
       }
 
-      .header .right .buttons {
+      header .right .buttons {
         display: grid;
         grid-template-rows: 1fr 1fr;
         grid-template-columns: 1fr 1fr 1fr
       }
 
-        .header .right .buttons div {
+        header .right .buttons div {
           width: 70px;
           background-color: #f90;
           border-radius: 25px;
@@ -176,29 +176,29 @@ a {
           justify-self: end
         }
 
-        .header .right .buttons div:nth-child(1) {
+        header .right .buttons div:nth-child(1) {
           grid-column: 2 / 2;
           background-color: #9999ff
         }
 
-        .header .right .buttons div:nth-child(2) {
+        header .right .buttons div:nth-child(2) {
           grid-column: 3 / 3;
           background-color: #ff9900;
         }
 
-        .header .right .buttons div:nth-child(3) {
+        header .right .buttons div:nth-child(3) {
           grid-row: 2 / 2;
           grid-column: 2 / 2;
           background-color: #ff9900
         }
 
-        .header .right .buttons div:nth-child(4) {
+        header .right .buttons div:nth-child(4) {
           grid-row: 2 / 2;
           grid-column: 3 / 3;
           background-color: #cc6666;
         }
 
-  .header .box-pattern {
+  header .box-pattern {
     grid-column: 2 / 4;
     grid-row: 2 / 2;
     align-self: stretch;
@@ -206,28 +206,28 @@ a {
     background-color: #000
   }
 
-    .header .box-pattern span {
+    header .box-pattern span {
       display: inline-block;
       height: 20px;
       border-left: solid 4px #000
     }
 
-    .header .box-pattern span:nth-child(1) {
+    header .box-pattern span:nth-child(1) {
       width: 82px;
       background-color: #ff9900
     }
 
-    .header .box-pattern span:nth-child(2) {
+    header .box-pattern span:nth-child(2) {
       width: 162px;
       background-color: #cc99cc
     }
 
-    .header .box-pattern span:nth-child(3) {
+    header .box-pattern span:nth-child(3) {
       width: 244px;
       background-color: #cc99cc
     }
 
-    .header .box-pattern span:nth-child(4) {
+    header .box-pattern span:nth-child(4) {
       width: 82px;
       background-color: #cc6666
     }
@@ -243,7 +243,7 @@ a {
   grid-template-columns: 125px auto;
 }
 
-.sidebar div {
+aside div {
   position: relative;
   border-top: solid 5px #000;
   text-align: right;
@@ -253,34 +253,34 @@ a {
   padding-right: 5px;
 }
 
-.sidebar div:nth-child(1) {
+aside div:nth-child(1) {
   height: 150px;
   margin-top: 100px;
   background-color: #cc6666
 }
 
-.sidebar div:nth-child(2) {
+aside div:nth-child(2) {
   height: 50px;
   background-color: #ff9900
 }
 
-.sidebar div:nth-child(3) {
+aside div:nth-child(3) {
   height: 150px;
   background-color: #ff9966
 }
 
-.sidebar div:nth-child(4) {
+aside div:nth-child(4) {
   height: 150px;
   background-color: #cc99cc
 }
 
-.sidebar div span {
+aside div span {
   position: absolute;
   bottom: 0;
   right: 5px;
 }
 
-.main {
+main {
   background-color: #cc6666;
   height: 100%;
   border-radius: 25px 0 0 0;
@@ -289,34 +289,34 @@ a {
   grid-template-rows: 20px auto
 }
 
-.main .box-pattern {
+main .box-pattern {
   align-self: stretch;
   justify-self: end;
   background-color: #000
 }
 
-  .main .box-pattern span {
+  main .box-pattern span {
     display: inline-block;
     height: 20px;
     border-left: solid 4px #000
   }
 
-  .main .box-pattern span:nth-child(1) {
+  main .box-pattern span:nth-child(1) {
     width: 82px;
     background-color: #ff9900
   }
 
-  .main .box-pattern span:nth-child(2) {
+  main .box-pattern span:nth-child(2) {
     width: 162px;
     background-color: #ff9966
   }
 
-  .main .box-pattern span:nth-child(3) {
+  main .box-pattern span:nth-child(3) {
     width: 244px;
     background-color: #cc99cc
   }
 
-  .main .box-pattern span:nth-child(4) {
+  main .box-pattern span:nth-child(4) {
     width: 82px;
     background-color: #ff9900
   }

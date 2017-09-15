@@ -4,9 +4,9 @@ import * as actionCreators from '../../actions';
 
 export function mapStateToProps(state: Object) {
   return {
-    isConnected: state.builds,
-    isComplete: state.deployments,
-    chatName: state.environments
+    builds: state.builds,
+    deployments: state.deployments,
+    environments: state.environments
   };
 }
 

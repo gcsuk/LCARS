@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router';
 import styled from 'styled-components';
 import {issueSummary}  from '../../data/issues';
+import yellowAlertStyles from '../../css/alertYellow.css'
 
 const IssueSummaryContainer = styled.div`
   display: grid;

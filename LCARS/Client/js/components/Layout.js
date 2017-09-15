@@ -5,9 +5,9 @@ import Digits from './Digits';
 class  Layout extends Component {
   render() {
     return (
-        <div>
-            <div className="header">
-                <div className="left">
+        <div className={this.props.alertCondition}>
+            <header>
+                <div id="header-left" className="left">
                     21-08-2017
                 </div>
                 <div className="middle">
@@ -30,9 +30,9 @@ class  Layout extends Component {
                     <span></span>
                     <span></span>
                 </div>
-            </div>
+            </header>
             <div className="body">
-                <div className="sidebar">
+                <aside>
                     <div>
                         <span><Link to="/admin">CONFIG</Link></span>
                     </div>
@@ -45,8 +45,8 @@ class  Layout extends Component {
                     <div>
                         <span>06-15868</span>
                     </div>
-                </div>
-                <div className="main">
+                </aside>
+                <main>
                     <div className="box-pattern">
                         <span></span>
                         <span></span>
@@ -56,7 +56,7 @@ class  Layout extends Component {
                     <div className="content">
                         {this.props.children}
                     </div>
-                </div>
+                </main>
             </div>
         </div>
     );
