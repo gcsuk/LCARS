@@ -1,10 +1,9 @@
 ﻿using System;
-using Newtonsoft.Json;
-using System.Net.Http;
 using System.Threading.Tasks;
 using LCARS.Models.Deployments;
 using System.Linq;
 using LCARS.Repositories;
+using Refit;
 
 namespace LCARS.Services
 {
@@ -22,27 +21,9 @@ namespace LCARS.Services
         {
             await GetSettings();
 
-            string jsonData;
+            var deploymentsClient = RestService.For<IDeploymentsClient>(_settings.ServerUrl);
 
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Add("X-Octopus-ApiKey", _settings.ServerKey);
-
-                jsonData = await client.GetStringAsync(_settings.ServerUrl);
-            }
-
-            Deployments deployments;
-
-            try
-            {
-                deployments = !string.IsNullOrEmpty(jsonData)
-                    ? JsonConvert.DeserializeObject<Deployments>(jsonData)
-                    : new Deployments();
-            }
-            catch (Exception ex)
-            {
-                throw new HttpRequestException("Invalid response from deployment server.", ex);
-            }
+            var deployments = await deploymentsClient.GetDeployments(_settings.ServerKey);
 
             deployments.Deploys.ForEach(d =>
             {

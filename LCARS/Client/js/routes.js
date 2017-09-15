@@ -7,6 +7,8 @@ import DeploymentsPage from './components/DeploymentsPage';
 import GitPage from './components/GitPage';
 import EnvironmentsPage from './components/EnvironmentsPage';
 import IssuesPage from './components/IssuesPage';
+import IssueSummaryPage from './components/IssueSummaryPage';
+import RedAlertPage from './components/RedAlertPage';
 
 export default (
   <Route path="/" component={App}>
@@ -17,5 +19,6 @@ export default (
     <Route path="builds" component={BuildsPage} />
     <Route path="environments" component={EnvironmentsPage} />
     <Route path="issues" component={IssuesPage} />
+    <Route path="alert" component={RedAlertPage} />
   </Route>
 );
