@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from './state';
 import '../../../css/index.css';
-import Layout from '../../components/Layout';
-import HomePage from '../../components/HomePage';
-import BuildsPage from '../../components/BuildsPage';
+import Layout from '../../containers/Layout';
 
 class App extends Component {
   render() {

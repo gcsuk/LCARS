@@ -1,10 +1,7 @@
 const alertCondition = {
-    "condition": "green",
+    "condition": "red",
     "type": "Beer",
-    "hoursRemaining": "10",
-    "minutesRemaining": "47",
-    "secondsRemaining": "05",
-    "millisecondsRemaining": "10"
+    "endDate": "2017-09-17Z17:30:00"
   }
 
 export default alertCondition;

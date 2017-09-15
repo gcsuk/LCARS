@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import Digits from './Digits';
+import Digits from '../../components/Digits';
+import {connect} from 'react-redux';
+import { mapStateToProps, mapDispatchToProps } from './state';
 
 class  Layout extends Component {
   render() {
     return (
-        <div className={this.props.alertCondition}>
+        <div className={`condition-${this.props.alertCondition.condition}`}>
             <header>
                 <div id="header-left" className="left">
                     21-08-2017
@@ -63,4 +65,7 @@ class  Layout extends Component {
   }
 }
 
-export default Layout;
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Layout);

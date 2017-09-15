@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
+import {connect} from 'react-redux';
 import styled from 'styled-components';
-import buildData from '../../data/builds'
+import { mapStateToProps, mapDispatchToProps } from './state';
 
 const Builds = styled.div`
   text-align: center;
@@ -26,17 +27,11 @@ const BuildStatus = styled.span`
 `;
 
 class BuildsPage extends Component { 
-  constructor(props) {
-    super(props);
-
-    this.state = {builds: buildData};
-  }
-
   render() {
     return (
       <Builds>
-        { this.state.builds.map((project, rowIndex) => (
-          <Build>
+        { this.props.builds.map((project, rowIndex) => (
+          <Build key={rowIndex}>
             <ProjectName row={rowIndex}>
               {project.name}
             </ProjectName>
@@ -50,4 +45,7 @@ class BuildsPage extends Component {
   }
 }
 
-export default BuildsPage;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BuildsPage);
