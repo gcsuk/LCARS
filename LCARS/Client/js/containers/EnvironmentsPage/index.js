@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import styled from 'styled-components';
-import environmentData from '../../data/environments'
+import {connect} from 'react-redux';
+import { mapStateToProps, mapDispatchToProps } from './state';
 
 const Environments = styled.table`
   width: 100%;
@@ -20,25 +21,21 @@ const SiteName = styled.td`
 `;
 
 class EnvironmentsPage extends Component { 
-  constructor(props) {
-    super(props);
-
-    this.state = {environments: environmentData};
-  }
-
   render() {
     return (
       <Environments>
         <thead>
-          <th></th>
-          { this.state.environments[0].envs.map((item, colIndex) => (
-            <th key={colIndex}>
-              {item.name}
-            </th>
-          ))}
+          <tr>
+            <th></th>
+            { this.props.environments[0].envs.map((item, colIndex) => (
+              <th key={colIndex}>
+                {item.name}
+              </th>
+            ))}
+          </tr>
         </thead>
         <tbody>
-          { this.state.environments.map((site, rowIndex) => (
+          { this.props.environments.map((site, rowIndex) => (
             <Environment key={rowIndex}>
               <SiteName>
                 {site.name}
@@ -56,4 +53,7 @@ class EnvironmentsPage extends Component {
   }
 }
 
-export default EnvironmentsPage;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EnvironmentsPage);

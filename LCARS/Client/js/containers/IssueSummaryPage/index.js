@@ -1,8 +1,11 @@
+//@flow
+
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import styled from 'styled-components';
-import {issueSummary}  from '../../data/issues';
-import yellowAlertStyles from '../../css/alertYellow.css'
+import {connect} from 'react-redux';
+import { mapStateToProps, mapDispatchToProps } from './state';
+import yellowAlertStyles from '../../../css/alertYellow.css'
 
 const IssueSummaryContainer = styled.div`
   display: grid;
@@ -29,11 +32,6 @@ const IssueSummaryRight = styled.div`
 `;
 
 class IssueSummaryPage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {issueSummary};
-  }
   render() {
     return (
       <IssueSummaryContainer>
@@ -43,13 +41,13 @@ class IssueSummaryPage extends Component {
           </IssueSummaryIcon>
           <IssueSummary>
               <div>
-                {issueSummary.issueSet}: <span>{issueSummary.issueCount}</span>
+                {this.props.issueSummary.issueSet}: <span>{this.props.issueSummary.issueCount}</span>
               </div>
               <div>
-                  Days Left: <span>{issueSummary.numberOfWorkingDays}</span>
+                  Days Left: <span>{this.props.issueSummary.numberOfWorkingDays}</span>
               </div>
               <div>
-                  ({issueSummary.numberOfWorkingHours} hours, {issueSummary.numberOfWorkingMinutes} minutes)
+                  ({this.props.issueSummary.numberOfWorkingHours} hours, {this.props.issueSummary.numberOfWorkingMinutes} minutes)
               </div>
           </IssueSummary>
           <IssueSummaryRight>
@@ -59,4 +57,7 @@ class IssueSummaryPage extends Component {
   }
 }
 
-export default IssueSummaryPage;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IssueSummaryPage);

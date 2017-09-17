@@ -9,6 +9,7 @@ import builds from '../data/builds';
 import environments from '../data/environments';
 import git from '../data/git';
 import issues from '../data/issues';
+import {issueSummary} from '../data/issues';
 import alertCondition from '../data/alertCondition';
 
 const defaultState = {
@@ -17,6 +18,7 @@ const defaultState = {
     environments,
     git,
     issues,
+    issueSummary,
     alertCondition
 };
 

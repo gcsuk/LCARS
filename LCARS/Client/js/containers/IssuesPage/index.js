@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Link} from 'react-router';
 import styled from 'styled-components';
-import issueData from '../../data/issues';
+import {connect} from 'react-redux';
+import { mapStateToProps, mapDispatchToProps } from './state';
 
 const Issues = styled.table`
   width: 100%;
@@ -30,12 +31,7 @@ const PriorityIcon = styled.img`
   border-radius: 5px;
 `;
 
-class IssuesPage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {issues: issueData};
-  }
+class IssuesPage extends Component {
   render() {
     return (
       <Issues>
@@ -47,7 +43,7 @@ class IssuesPage extends React.Component {
           </tr>
         </thead>
         <tbody>
-          { this.state.issues.map((issue, rowIndex) => (
+          { this.props.issues.map((issue, rowIndex) => (
             <tr key={rowIndex}>
               <IssuePriority><PriorityIcon src={issue.priorityIcon} alt={issue.priority} /></IssuePriority>
               <IssueNumber>{issue.id}</IssueNumber>
@@ -60,4 +56,7 @@ class IssuesPage extends React.Component {
   }
 }
 
-export default IssuesPage;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IssuesPage);

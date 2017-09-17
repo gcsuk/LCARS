@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import styled from 'styled-components';
-import gitData from '../../data/git';
+import {connect} from 'react-redux';
+import { mapStateToProps, mapDispatchToProps } from './state';
 
 function isShipped(element) {
   
@@ -15,12 +16,6 @@ const Git = styled.table`
 `;
 
 class GitPage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {git: gitData};
-  }
-
   render() {
     return (
       <Git>
@@ -33,7 +28,7 @@ class GitPage extends Component {
           </tr>
         </thead>
         <tbody>
-          { this.state.git.map((repo, rowIndex) => (
+          { this.props.git.map((repo, rowIndex) => (
             <tr key={rowIndex}>
               <td>
                 {repo.repository}
@@ -55,4 +50,7 @@ class GitPage extends Component {
   }
 }
 
-export default GitPage;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GitPage);

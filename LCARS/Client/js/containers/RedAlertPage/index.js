@@ -78,7 +78,7 @@ class RedAlertPage extends Component {
         }
     }
     componentWillMount() {
-        this.intervalID = setInterval(() => this.tick(), 27);
+        this.intervalID = setInterval(() => this.tick(), 47);
     }
     componentWillUnmount() {
         clearInterval(this.intervalID);

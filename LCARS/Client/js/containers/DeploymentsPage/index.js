@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import styled from 'styled-components';
-import deploymentData from '../../data/deployments';
+import {connect} from 'react-redux';
+import { mapStateToProps, mapDispatchToProps } from './state';
 
 const Deployments = styled.table`
   width: 100%;
@@ -24,19 +25,13 @@ const ProjectDeploy = styled.div`
 `;
 
 class DeploymentsPage extends Component { 
-  constructor(props) {
-    super(props);
-
-    this.state = {deployments: deploymentData};
-  }
-
   render() {
     return (
       <Deployments>
         <thead>
           <tr>
             <th></th>
-            { this.state.deployments[0].deploys.map((item, colIndex) => (
+            { this.props.deployments[0].deploys.map((item, colIndex) => (
               <th key={colIndex}>
                 {item.env}
               </th>
@@ -44,7 +39,7 @@ class DeploymentsPage extends Component {
           </tr>
         </thead>
         <tbody>
-          { this.state.deployments.map((project, rowIndex) => (
+          { this.props.deployments.map((project, rowIndex) => (
             <tr key={rowIndex}>
               <ProjectName>
                 {project.name}
@@ -62,4 +57,7 @@ class DeploymentsPage extends Component {
   }
 }
 
-export default DeploymentsPage;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DeploymentsPage);

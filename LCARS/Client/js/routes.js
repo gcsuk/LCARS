@@ -1,13 +1,12 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './containers/App';
-import HomePage from './components/HomePage';
 import BuildsPage from './containers/BuildsPage';
-import DeploymentsPage from './components/DeploymentsPage';
-import GitPage from './components/GitPage';
-import EnvironmentsPage from './components/EnvironmentsPage';
-import IssuesPage from './components/IssuesPage';
-import IssueSummaryPage from './components/IssueSummaryPage';
+import DeploymentsPage from './containers/DeploymentsPage';
+import GitPage from './containers/GitPage';
+import EnvironmentsPage from './containers/EnvironmentsPage';
+import IssuesPage from './containers/IssuesPage';
+import IssueSummaryPage from './containers/IssueSummaryPage';
 import RedAlertPage from './containers/RedAlertPage';
 
 export default (
@@ -19,6 +18,7 @@ export default (
     <Route path="builds" component={BuildsPage} />
     <Route path="environments" component={EnvironmentsPage} />
     <Route path="issues" component={IssuesPage} />
+    <Route path="issuesummary" component={IssueSummaryPage} />
     <Route path="alert" component={RedAlertPage} />
   </Route>
 );
