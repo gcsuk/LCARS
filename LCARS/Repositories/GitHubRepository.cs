@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LCARS.Repositories
 {
-    public class GitHubRepository : IGitHubRepository
+    public class GitHubRepository : IRepository<Settings>
     {
         private readonly IDbConnection _dbConnection;
 

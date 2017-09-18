@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LCARS.Repositories
 {
-    public class BuildsRepository : IBuildsRepository
+    public class BuildsRepository : IRepository<Settings>
     {
         private readonly IDbConnection _dbConnection;
 

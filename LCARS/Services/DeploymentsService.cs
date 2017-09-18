@@ -10,9 +10,9 @@ namespace LCARS.Services
     public class DeploymentsService : IDeploymentsService
     {
         private Settings _settings;
-        private readonly IDeploymentsRepository _repository;
+        private readonly IRepository<Settings> _repository;
 
-        public DeploymentsService(IDeploymentsRepository repository)
+        public DeploymentsService(IRepository<Settings> repository)
         {
             _repository = repository;
         }

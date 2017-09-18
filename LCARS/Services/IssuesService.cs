@@ -11,11 +11,11 @@ namespace LCARS.Services
 {
     public class IssuesService : IIssuesService
     {
-        private readonly IIssueQueriesRepository _queryRepository;
-        private readonly IIssueSettingsRepository _settingsRepository;
+        private readonly IRepository<Query> _queryRepository;
+        private readonly IRepository<Settings> _settingsRepository;
         private Settings _settings;
 
-        public IssuesService(IIssueQueriesRepository queryRepository, IIssueSettingsRepository settingsRepository)
+        public IssuesService(IRepository<Query> queryRepository, IRepository<Settings> settingsRepository)
         {
             _queryRepository = queryRepository;
             _settingsRepository = settingsRepository;

@@ -14,9 +14,9 @@ namespace LCARS.Services
     public class BuildsService : IBuildsService
     {
         private Settings _settings;
-        private readonly IBuildsRepository _repository;
+        private readonly IRepository<Settings> _repository;
 
-        public BuildsService(IBuildsRepository repository)
+        public BuildsService(IRepository<Settings> repository)
         {
             _repository = repository;
         }

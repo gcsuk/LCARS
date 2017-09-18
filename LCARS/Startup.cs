@@ -27,17 +27,17 @@ namespace LCARS
         {
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-            services.AddTransient<IGitHubRepository, GitHubRepository>(
+            services.AddTransient<IRepository<Models.GitHub.Settings>, GitHubRepository>(
                 serviceProvider => new GitHubRepository(new SqlConnection(connectionString)));
-            services.AddTransient<IEnvironmentsRepository, EnvironmentsRepository>(
+            services.AddTransient<IRepository<Models.Environments.Site>, EnvironmentsRepository>(
                 serviceProvider => new EnvironmentsRepository(new SqlConnection(connectionString)));
-            services.AddTransient<IIssueSettingsRepository, IssueSettingsRepository>(
+            services.AddTransient<IRepository<Models.Issues.Settings>, IssueSettingsRepository>(
                 serviceProvider => new IssueSettingsRepository(new SqlConnection(connectionString)));
-            services.AddTransient<IIssueQueriesRepository, IssueQueriesRepository>(
+            services.AddTransient<IRepository<Models.Issues.Query>, IssueQueriesRepository>(
                 serviceProvider => new IssueQueriesRepository(new SqlConnection(connectionString)));
-            services.AddTransient<IDeploymentsRepository, DeploymentsRepository>(
+            services.AddTransient<IRepository<Models.Deployments.Settings>, DeploymentsRepository>(
                 serviceProvider => new DeploymentsRepository(new SqlConnection(connectionString)));
-            services.AddTransient<IBuildsRepository, BuildsRepository>(
+            services.AddTransient<IRepository<Models.Builds.Settings>, BuildsRepository>(
                 serviceProvider => new BuildsRepository(new SqlConnection(connectionString)));
 
             services.AddTransient<IEnvironmentsService, EnvironmentsService>();

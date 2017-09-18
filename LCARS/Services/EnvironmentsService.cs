@@ -10,9 +10,9 @@ namespace LCARS.Services
 {
     public class EnvironmentsService : IEnvironmentsService
     {
-        private readonly IEnvironmentsRepository _repository;
+        private readonly IRepository<SiteModel> _repository;
 
-        public EnvironmentsService(IEnvironmentsRepository repository)
+        public EnvironmentsService(IRepository<SiteModel> repository)
         {
             _repository = repository;
         }

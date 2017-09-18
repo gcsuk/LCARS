@@ -13,10 +13,10 @@ namespace LCARS.Services
 {
     public class GitHubService : IGitHubService
     {
-        private readonly IGitHubRepository _gitHubRepository;
+        private readonly IRepository<Settings> _gitHubRepository;
         private Settings _settings;
 
-        public GitHubService(IGitHubRepository gitHubRepository)
+        public GitHubService(IRepository<Settings> gitHubRepository)
         {
             _gitHubRepository = gitHubRepository;
         }
