@@ -11,7 +11,7 @@ import RedAlertPage from './containers/RedAlertPage';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={RedAlertPage} />
+    <IndexRoute component={DeploymentsPage} />
     <Route path="builds" component={BuildsPage} />
     <Route path="deployments" component={DeploymentsPage} />
     <Route path="git" component={GitPage} />
