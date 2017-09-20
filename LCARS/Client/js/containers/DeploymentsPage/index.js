@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import styled from 'styled-components';
 import {connect} from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from './state';
+import fetch from 'unfetch';
 
 const Deployments = styled.table`
   width: 100%;

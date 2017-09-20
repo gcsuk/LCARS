@@ -43,6 +43,7 @@
     "react-router-redux": "4.0.4",
     "redux": "3.5.2",
     "redux-saga": "^0.15.6",
-    "styled-components": "^2.1.2"
+    "styled-components": "^2.1.2",
+    "unfetch": "^3.0.0"
   }
 }
