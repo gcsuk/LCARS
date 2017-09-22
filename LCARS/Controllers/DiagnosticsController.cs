@@ -40,16 +40,10 @@ namespace LCARS.Controllers
 
             try
             {
-                taskList.Add(nameof(status.BuildsRunning), _buildsService.GetBuildsRunning());
-                taskList.Add(nameof(status.BuildProgress), _buildsService.GetBuildsRunning().ContinueWith(prevTask =>
+                taskList.Add(nameof(status.BuildProgress), _buildsService.GetBuilds().ContinueWith(prevTask =>
                 {
                     prevTask.Wait();
-                    _buildsService.GetBuildProgress(prevTask.Result.First().Value);
-                }));
-                taskList.Add(nameof(status.LastBuildStatus), _buildsService.GetBuildsRunning().ContinueWith(prevTask =>
-                {
-                    prevTask.Wait();
-                    _buildsService.GetLastBuildStatus(prevTask.Result.First().Key);
+                    _buildsService.GetBuild(prevTask.Result.First().Id);
                 }));
 
                 taskList.Add(nameof(status.Deployments), _deploymentsService.Get());

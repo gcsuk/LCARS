@@ -1,9 +1,11 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 using System.IO;
 using LCARS.Filters;
 using LCARS.Repositories;
 using LCARS.Services;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,6 +53,9 @@ namespace LCARS
             {
                 options.Filters.Add(new ApiExceptionFilter());
             });
+
+            services.AddCors(options => options.AddPolicy("AllowAll",
+                p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
             var xmlPath = GetXmlCommentsPath();
             services.AddSwaggerGen();

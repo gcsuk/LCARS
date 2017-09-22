@@ -3,7 +3,6 @@ import {Link} from 'react-router';
 import styled from 'styled-components';
 import {connect} from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from './state';
-import fetch from 'unfetch';
 
 const Deployments = styled.table`
   width: 100%;
@@ -20,7 +19,7 @@ const ProjectDeploy = styled.div`
   display: block;
   height: 40px;
   margin: 5px;
-  font-size: 30px;
+  font-size: 1.8rem;
   border-radius: 20px;
   background-color: #015001
 `;

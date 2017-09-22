@@ -6,9 +6,8 @@ namespace LCARS.Services
 {
     public interface IBuildsService
     {
-        Task<Dictionary<string, int>> GetBuildsRunning();
-        Task<BuildProgress> GetBuildProgress(int buildId);
-        Task<KeyValuePair<string, string>> GetLastBuildStatus(string buildTypeId);
+        Task<IEnumerable<Build>> GetBuilds(string buildTypeId = "");
+        Task<Build> GetBuild(int buildId);
         Task<Settings> GetSettings();
         Task UpdateSettings(Settings settings);
     }

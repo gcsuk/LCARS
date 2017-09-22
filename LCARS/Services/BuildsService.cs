@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using LCARS.Models.Builds;
 using LCARS.Repositories;
+using Refit;
 
 namespace LCARS.Services
 {
@@ -21,103 +18,74 @@ namespace LCARS.Services
             _repository = repository;
         }
 
-        public async Task<Dictionary<string, int>> GetBuildsRunning()
+        public async Task<IEnumerable<Build>> GetBuilds(string buildTypeId = "")
         {
             await GetSettings();
 
-            var doc = await GetData($"http://{_settings.ServerUrl}/guestAuth/app/rest/builds?locator=running:true");
+            var buildsClient = RestService.For<IBuildsClient>(_settings.ServerUrl);
 
-            var builds = new Dictionary<string, int>();
+            var buildTypeIds = new List<string>();
 
-            if (doc == null)
+            if (string.IsNullOrEmpty(buildTypeId))
+                buildTypeIds.AddRange(_settings.ProjectIds.Split(","));
+            else
+                buildTypeIds.Add(buildTypeId);
+
+            var builds = new List<Build>();
+
+            foreach (var projectId in buildTypeIds)
             {
-                return builds;
-            }
+                var project = await buildsClient.GetBuildsByType(projectId, 1);
 
-            foreach (
-                var build in
-                doc.Root.Elements("build").Where(build => !builds.ContainsKey(build.Attribute("buildTypeId").Value))
-            )
-            {
-                builds.Add(build.Attribute("buildTypeId").Value, Convert.ToInt32(build.Attribute("id").Value));
+                if (project.Build == null || !project.Build.Any())
+                    continue;
+
+                var build = project.Build.First();
+
+                var buildType = await buildsClient.GetBuildTypes(build.BuildTypeId);
+
+                if (buildType != null)
+                    build.BuildTypeName = buildType.Name;
+
+                var buildsRunning = await buildsClient.GetBuildsRunning(build.BuildTypeId);
+
+                if (buildsRunning.Build != null && buildsRunning.Build.Any())
+                {
+                    var status = buildsRunning.Build.First();
+
+                    build.Status = status.Status;
+                    build.State = status.State;
+                    build.StatusText = status.StatusText;
+                    build.PercentageComplete = status.PercentageComplete;
+                }
+
+                builds.Add(build);
             }
 
             return builds;
         }
 
-        public async Task<BuildProgress> GetBuildProgress(int buildId)
+        public async Task<Build> GetBuild(int id)
         {
             await GetSettings();
 
-            var doc =
-                await GetData($"http://user:pwd@{_settings.ServerUrl}/guestAuth/app/rest/builds/id:{buildId}");
+            var buildsClient = RestService.For<IBuildsClient>(_settings.ServerUrl);
 
-            if (doc == null)
+            var build = await buildsClient.GetBuildDetails(id);
+
+            var buildsRunning = await buildsClient.GetBuildsRunning(build.BuildTypeId);
+
+            if (buildsRunning.Build != null && buildsRunning.Build.Any())
             {
-                return new BuildProgress
-                {
-                    Percentage = 0,
-                    Status = ""
-                };
+                var status = buildsRunning.Build.First();
+
+                build.Status = status.Status;
+                build.State = status.State;
+                build.StatusText = status.StatusText;
+                build.PercentageComplete = status.PercentageComplete;
             }
 
-            var runningInfo = doc.Root.Element("running-info");
-
-            if (runningInfo == null)
-            {
-                return new BuildProgress
-                {
-                    Status = doc.Root.Element("statusText").Value,
-                    Percentage = 100
-                };
-            }
-
-            return new BuildProgress
-            {
-                Status = runningInfo.Attribute("currentStageText").Value,
-                Percentage = Convert.ToInt32(runningInfo.Attribute("percentageComplete").Value)
-            };
-        }
-
-        public async Task<KeyValuePair<string, string>> GetLastBuildStatus(string buildTypeId)
-        {
-            await GetSettings();
-
-            var doc =
-                await
-                    GetData(
-                        $"http://{_settings.ServerUrl}/guestAuth/app/rest/builds?locator=buildType:(id:{buildTypeId})");
-
-            if (doc == null)
-            {
-                return new KeyValuePair<string, string>("Unknown", "Unknown");
-            }
-
-            return new KeyValuePair<string, string>(doc.Root.Element("build").Attribute("status").Value,
-                doc.Root.Element("build").Attribute("number").Value);
-        }
-
-        private async Task<XDocument> GetData(string url)
-        {
-            using (var client = new HttpClient())
-            {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-                    Convert.ToBase64String(
-                        Encoding.ASCII.GetBytes($"{_settings.ServerUsername}j:{_settings.ServerPassword}")));
-
-                try
-                {
-                    var xml = await client.GetStreamAsync(url);
-
-                    var doc = XDocument.Load(xml);
-
-                    return doc.Root == null ? null : doc;
-                }
-                catch (TaskCanceledException ex)
-                {
-                    throw new Exception("There was an error contacting the build server", ex);
-                }
-            }
+            return build;
         }
 
         public async Task<Settings> GetSettings()

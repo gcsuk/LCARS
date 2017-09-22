@@ -14,7 +14,7 @@ const Build = styled.div`
 
 const ProjectName = styled.span`
   display: inline-block;
-  width: 200px;
+  width: 300px;
   text-align: left
 `;
 

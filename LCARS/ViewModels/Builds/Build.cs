@@ -2,20 +2,11 @@
 {
     public class Build
     {
-        public string TypeId { get; set; }
-
-        public string Number { get; set; }
-
+        public int Id { get; set; }
         public string Name { get; set; }
-
-        private string _status;
-
-        public string Status
-        {
-            get => Progress == null ? _status : $"{Progress.Percentage}% - {Progress.Status}";
-            set => _status = value;
-        }
-
-        public BuildProgress Progress { get; set; }
+        public string Version { get; set; }
+        public string State { get; set; }
+        public string Status { get; set; }
+        public string PercentageComplete { get; set; }
     }
 }
