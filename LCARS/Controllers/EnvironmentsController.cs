@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using LCARS.Services;
 using LCARS.ViewModels.Environments;
 using Microsoft.AspNetCore.Mvc;
-using Environment = LCARS.ViewModels.Environments.Environment;
+using Microsoft.AspNetCore.Cors;
+using System.Threading.Tasks;
 
 namespace LCARS.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowAll")]
     public class EnvironmentsController : Controller
     {
         private readonly IEnvironmentsService _environmentsService;
@@ -20,11 +22,11 @@ namespace LCARS.Controllers
         /// <remarks>Returns a the status of each configured environment</remarks>
         /// <response code="200">Returns a the status of each configured environment</response>
         /// <returns>Returns a the status of each configured environment</returns>
-        [ProducesResponseType(typeof(IEnumerable<Environment>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<Models.Environments.Environment>), 200)]
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var vm = _environmentsService.GetSites();
+            var vm = await _environmentsService.GetSites();
 
             return Ok(vm);
         }
@@ -34,12 +36,12 @@ namespace LCARS.Controllers
         /// <returns>New site object, with ID populated</returns>
         [ProducesResponseType(typeof(Site), 200)]
         [HttpPost]
-        public IActionResult Post([FromBody] Site site)
+        public async Task<IActionResult> Post([FromBody] Site site)
         {
             if (site == null)
                 throw new ArgumentNullException(nameof(site), "site is null");
 
-            var vm = _environmentsService.AddSite(site);
+            var vm = await _environmentsService.AddSite(site);
 
             return Ok(vm);
         }
@@ -48,12 +50,12 @@ namespace LCARS.Controllers
         /// <response code="200">Site updated successfully</response>
         [ProducesResponseType(204)]
         [HttpPut]
-        public IActionResult Put([FromBody] Site site)
+        public async Task<IActionResult> Put([FromBody] Site site)
         {
             if (site == null)
                 throw new ArgumentNullException(nameof(site), "site is null");
 
-            _environmentsService.UpdateSite(site);
+            await _environmentsService.UpdateSite(site);
 
             return NoContent();
         }
@@ -62,12 +64,12 @@ namespace LCARS.Controllers
         /// <response code="204">Site deleted successfully</response>
         [ProducesResponseType(204)]
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0)
                 throw new ArgumentException(nameof(id), "ID must be non-negative");
 
-            _environmentsService.DeleteSite(id);
+            await _environmentsService.DeleteSite(id);
 
             return NoContent();
         }

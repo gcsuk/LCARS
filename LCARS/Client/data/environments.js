@@ -1,7 +1,7 @@
 const environments = [
     {
         "name" : "Project 1",
-        "envs" : [
+        "environments" : [
             {
                 "name" : "ENV01",
                 "status" :  "OK"
@@ -25,7 +25,7 @@ const environments = [
     },
     {
         "name" : "Project 2",
-        "envs" : [
+        "environments" : [
             {
                 "name" : "ENV01",
                 "status" :  "OK"
@@ -49,7 +49,7 @@ const environments = [
     },
     {
         "name" : "Project 3",
-        "envs" : [
+        "environments" : [
             {
                 "name" : "ENV01",
                 "status" :  "OK"

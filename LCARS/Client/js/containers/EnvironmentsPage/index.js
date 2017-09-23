@@ -27,7 +27,7 @@ class EnvironmentsPage extends Component {
         <thead>
           <tr>
             <th></th>
-            { this.props.environments[0].envs.map((item, colIndex) => (
+            { this.props.environments[0].environments.map((item, colIndex) => (
               <th key={colIndex}>
                 {item.name}
               </th>
@@ -40,7 +40,7 @@ class EnvironmentsPage extends Component {
               <SiteName>
                 {site.name}
               </SiteName>
-              { site.envs.map((item, colIndex) => (
+              { site.environments.map((item, colIndex) => (
                 <td key={colIndex}>
                   {item.status}
                 </td>

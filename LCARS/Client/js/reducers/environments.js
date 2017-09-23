@@ -1,5 +1,11 @@
 function environments(state = [], action) {
-    return state;
+    switch (action.type)
+    {
+        case 'REFRESH_ENVIRONMENTS':
+            return action.environments;
+        default:
+            return state;
+    }
 }
 
 export default environments;
