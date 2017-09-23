@@ -1,5 +1,11 @@
 function deployments(state = [], action) {
-    return state;
+    switch (action.type)
+    {
+        case 'REFRESH_DEPLOYMENTS':
+            return action.deployments;
+        default:
+            return state;
+    }
 }
 
 export default deployments;

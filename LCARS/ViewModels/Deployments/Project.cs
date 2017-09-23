@@ -15,6 +15,6 @@ namespace LCARS.ViewModels.Deployments
 
         public int Group { get; set; }
 
-        public List<Deployment> Deployments { get; set; }
+        public IEnumerable<Deployment> Deployments { get; set; }
     }
 }

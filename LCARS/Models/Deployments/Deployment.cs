@@ -2,6 +2,10 @@
 {
     public class Deployment
     {
+        public string ProjectGroupId { get; set; }
+
+        public string ProjectGroup { get; set; }
+
         public string ProjectId { get; set; }
 
         public string Project { get; set; }

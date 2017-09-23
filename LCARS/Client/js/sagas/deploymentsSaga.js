@@ -1,18 +1,18 @@
 import { delay } from 'redux-saga';
 import fetch from 'unfetch';
 import { put } from 'redux-saga/effects';
-import { refreshBuilds, REFRESH_BUILDS } from '../actions';
+import { refreshDeployments, REFRESH_DEPLOYMENTS } from '../actions';
 
-export function* buildsSaga () {
+export function* deploymentsSaga () {
     while (true) {
-        const response = yield getBuildData();
-        yield put(refreshBuilds(response));
+        const response = yield getDeploymentsData();
+        yield put(refreshDeployments(response));
         yield delay(5000);
     }
 }
 
-export function* watchGetBuilds() {
-    yield takeLatest(REFRESH_BUILDS, buildsSaga);
+export function* watchGetDeployments() {
+    yield takeLatest(REFRESH_DEPLOYMENTS, deploymentsSaga);
 }
 
 function checkStatus(response) {
@@ -25,7 +25,7 @@ function checkStatus(response) {
     }
 }
 
-function getBuildData() {
-    return fetch('http://localhost:54359/api/builds/')
+function getDeploymentsData() {
+    return fetch('http://localhost:54359/api/deployments/')
             .then(res => res.json());
 }

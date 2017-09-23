@@ -4,6 +4,7 @@ using LCARS.Models.Deployments;
 using System.Linq;
 using LCARS.Repositories;
 using Refit;
+using System.Collections.Generic;
 
 namespace LCARS.Services
 {
@@ -17,7 +18,7 @@ namespace LCARS.Services
             _repository = repository;
         }
 
-        public async Task<Deployments> Get()
+        public async Task<IEnumerable<Deployment>> Get()
         {
             await GetSettings();
 
@@ -25,13 +26,15 @@ namespace LCARS.Services
 
             var deployments = await deploymentsClient.GetDeployments(_settings.ServerKey);
 
-            deployments.Deploys.ForEach(d =>
+            deployments.Deploys.ToList().ForEach(d =>
             {
                 d.Project = deployments.Projects.Single(e => e.Id == d.ProjectId).Name;
                 d.Environment = deployments.Environments.Single(e => e.Id == d.EnvironmentId).Name;
+                d.ProjectGroupId = deployments.Projects.Single(g => g.Id == d.ProjectId).ProjectGroupId;
+                d.ProjectGroup = deployments.ProjectGroups.Single(pg => pg.Id == deployments.Projects.Single(g => g.Id == d.ProjectId).ProjectGroupId).Name;
             });
 
-            return deployments;
+            return deployments.Deploys;
         }
 
         public async Task<Settings> GetSettings()

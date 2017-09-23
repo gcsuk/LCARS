@@ -21,9 +21,9 @@ namespace LCARS.Repositories
             using (var dbConnection = _dbConnection)
             {
                 const string query = "INSERT INTO Builds" +
-                                     "(Id, ServerPassword, ServerUrl, ServerUsername) " +
+                                     "(Id, ServerPassword, ServerUrl, ServerUsername, ProjectIds) " +
                                      "VALUES" +
-                                     "(@Id, @ServerPassword, @ServerUrl, @ServerUsername)";
+                                     "(@Id, @ServerPassword, @ServerUrl, @ServerUsername, @ProjectIds)";
                 dbConnection.Open();
                 return await dbConnection.ExecuteAsync(query, settings);
             }
@@ -65,7 +65,8 @@ namespace LCARS.Repositories
                 const string sql = "UPDATE Builds " +
                                    "SET ServerPassword = @ServerPassword," +
                                    "    ServerUrl = @ServerUrl," +
-                                   "    ServerUsername = @ServerUsername " +
+                                   "    ServerUsername = @ServerUsername," +
+                                   "    ProjectIds = @ProjectIds " +
                                    "WHERE Id = @Id";
                 dbConnection.Open();
                 await dbConnection.ExecuteAsync(sql, settings);

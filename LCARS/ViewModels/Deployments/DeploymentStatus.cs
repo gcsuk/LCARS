@@ -4,10 +4,8 @@ namespace LCARS.ViewModels.Deployments
 {
     public class DeploymentStatus
     {
-        public IEnumerable<Deployment> Deployments { get; set; }
-
-        public IList<Project> Projects { get; set; }
-
-        public IList<Environment> Environments { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public IList<Deployment> Deploys { get; set; }
     }
 }

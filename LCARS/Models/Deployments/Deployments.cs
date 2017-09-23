@@ -10,13 +10,13 @@ namespace LCARS.Models.Deployments
             Deploys = new List<Deployment>();
         }
 
-        public List<ProjectGroup> ProjectGroups { get; set; }
+        public IEnumerable<ProjectGroup> ProjectGroups { get; set; }
 
-        public List<Project> Projects { get; set; }
+        public IEnumerable<Project> Projects { get; set; }
 
-        public List<Environment> Environments { get; set; }
+        public IEnumerable<Environment> Environments { get; set; }
 
         [JsonProperty(PropertyName = "Items")]
-        public List<Deployment> Deploys { get; set; }
+        public IEnumerable<Deployment> Deploys { get; set; }
     }
 }

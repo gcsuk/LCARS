@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using LCARS.Services;
 using LCARS.ViewModels.Builds;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LCARS.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowAll")]
     public class BuildsController : Controller
     {
         private readonly IBuildsService _buildsService;
@@ -16,46 +19,52 @@ namespace LCARS.Controllers
             _buildsService = buildsService;
         }
 
-        /// <remarks>Returns all running builds</remarks>
-        /// <response code="200">Returns running builds</response>
-        /// <returns>A dictionary containing all running builds type ids and ids</returns>
-        [ProducesResponseType(typeof(Dictionary<string, int>), 200)]
-        [HttpGet("running")]
-        public async Task<IActionResult> GetRunning()
+        /// <remarks>Returns all builds</remarks>
+        /// <response code="200">Returns all builds</response>
+        /// <returns>A dictionary containing all builds</returns>
+        [ProducesResponseType(typeof(IEnumerable<Build>), 200)]
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
-            var response = await _buildsService.GetBuildsRunning();
+            var response = await _buildsService.GetBuilds();
 
-            return Ok(response);
+            var vm = new List<Build>();
+
+            response.ToList().ForEach(x =>
+            {
+                vm.Add(new Build
+                {
+                    Id = x.Id,
+                    Name = x.BuildTypeName,
+                    Version = x.Number,
+                    Status = x.Status,
+                    State = x.State,
+                    PercentageComplete = x.PercentageComplete
+                });
+            });
+
+            return Ok(vm);
         }
 
-        /// <remarks>Returns the progress of a running build</remarks>
-        /// <response code="200">Returns the progress of a running build</response>
-        /// <returns>An object containing the current progress of the specified build</returns>
-        [ProducesResponseType(typeof(BuildProgress), 200)]
-        [HttpGet("progress/{buildId}")]
-        public async Task<IActionResult> GetProgress(int buildId)
+        /// <remarks>Returns specified build details</remarks>
+        /// <response code="200">Returns specified build</response>
+        /// <returns>A dictionary containing specified build id</returns>
+        [ProducesResponseType(typeof(Build), 200)]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
         {
-            var response = await _buildsService.GetBuildProgress(buildId);
+            var response = await _buildsService.GetBuild(id);
 
             var vm = new BuildProgress
             {
-                Percentage = response.Percentage,
-                Status = response.Status
+                Id = response.Id,
+                Version = response.Number,
+                Status = response.Status,
+                State = response.State,
+                PercentageComplete = response.PercentageComplete
             };
 
-            return Ok(response);
-        }
-
-        /// <remarks>Returns the last build status of a specified type</remarks>
-        /// <response code="200">Returns the last build status of a specified type</response>
-        /// <returns>a key-value pair containing the percentage and the text status of the last build</returns>
-        [ProducesResponseType(typeof(KeyValuePair<string, string>), 200)]
-        [HttpGet("laststatus/{buildTypeId}")]
-        public async Task<IActionResult> GetLastRunStatus(string buildTypeId)
-        {
-            var response = await _buildsService.GetLastBuildStatus(buildTypeId);
-
-            return Ok(response);
+            return Ok(vm);
         }
 
         /// <remarks>Gets the configuration settings for builds</remarks>
@@ -71,7 +80,8 @@ namespace LCARS.Controllers
                 Id = settings.Id,
                 ServerUrl = settings.ServerUrl,
                 ServerUsername = settings.ServerUsername,
-                ServerPassword = settings.ServerPassword
+                ServerPassword = settings.ServerPassword,
+                ProjectIds = settings.ProjectIds.Split(",")
             };
 
             return Ok(vm);
@@ -88,7 +98,8 @@ namespace LCARS.Controllers
                 Id = settings.Id,
                 ServerUrl = settings.ServerUrl,
                 ServerUsername = settings.ServerUsername,
-                ServerPassword = settings.ServerPassword
+                ServerPassword = settings.ServerPassword,
+                ProjectIds = string.Join(",", settings.ProjectIds.ToArray())
             };
 
             await _buildsService.UpdateSettings(model);

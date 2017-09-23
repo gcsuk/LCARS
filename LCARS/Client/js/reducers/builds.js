@@ -1,5 +1,11 @@
 function builds(state = [], action) {
-    return state;
+    switch (action.type)
+    {
+        case 'REFRESH_BUILDS':
+            return action.builds;
+        default:
+            return state;
+    }
 }
 
 export default builds;

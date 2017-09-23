@@ -19,7 +19,7 @@ const ProjectDeploy = styled.div`
   display: block;
   height: 40px;
   margin: 5px;
-  font-size: 30px;
+  font-size: 1.8rem;
   border-radius: 20px;
   background-color: #015001
 `;

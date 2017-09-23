@@ -4,10 +4,12 @@ using LCARS.Services;
 using Microsoft.AspNetCore.Mvc;
 using LCARS.ViewModels.Deployments;
 using System.Linq;
+using Microsoft.AspNetCore.Cors;
 
 namespace LCARS.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowAll")]
     public class DeploymentsController : Controller
     {
         private readonly IDeploymentsService _deploymentsService;
@@ -24,22 +26,45 @@ namespace LCARS.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var deployments = await _deploymentsService.Get();
+            var deploymentData = await _deploymentsService.Get();
 
-            var vm = deployments.Deploys.Select(deployment => new Deployment
+            var vm = new List<DeploymentStatus>();
+
+            deploymentData.ToList().ForEach(dd =>
             {
-                ProjectGroupId = deployments.Projects.Single(g => g.Id == deployment.ProjectId).ProjectGroupId,
-                ProjectGroup = deployments.ProjectGroups.Single(pg => pg.Id == deployments.Projects.Single(g => g.Id == deployment.ProjectId).ProjectGroupId).Name,
-                ProjectId = deployment.ProjectId,
-                Project = deployment.Project,
-                EnvironmentId = deployment.EnvironmentId,
-                Environment = deployment.Environment,
-                CompletedTime = deployment.CompletedTime,
-                Duration = deployment.Duration,
-                State = deployment.State,
-                HasWarningsOrErrors = deployment.HasWarningsOrErrors,
-                ReleaseVersion = deployment.ReleaseVersion
-            }).ToList();
+                var existingDeploy = vm.FirstOrDefault(ed => dd.ProjectId == ed.Id);
+
+                // If this project is not already in the list, add it
+                if (existingDeploy == null)
+                {
+                    vm.Add(new DeploymentStatus
+                    {
+                        Id = dd.ProjectId,
+                        Name = dd.Project,
+                        Deploys = new List<Deployment>
+                        {
+                            new Deployment
+                            {
+                                Environment = dd.Environment,
+                                Status = dd.State,
+                                Version = dd.ReleaseVersion
+                            }
+                        }
+                    });
+                }
+                else
+                {
+                    existingDeploy.Deploys.Add
+                    (
+                        new Deployment
+                        {
+                            Environment = dd.Environment,
+                            Status = dd.State,
+                            Version = dd.ReleaseVersion
+                        }
+                    );
+                }
+            });
 
             return Ok(vm);
         }
