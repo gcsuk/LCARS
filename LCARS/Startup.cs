@@ -48,6 +48,8 @@ namespace LCARS
             services.AddTransient<IGitHubService, GitHubService>();
             services.AddTransient<IIssuesService, IssuesService>();
 
+            services.AddRouting(options => options.LowercaseUrls = true);
+
             // Add framework services.
             services.AddMvc(options =>
             {
