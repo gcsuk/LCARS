@@ -1,6 +1,7 @@
 export const REFRESH_BUILDS = 'REFRESH_BUILDS';
 export const REFRESH_DEPLOYMENTS = 'REFRESH_DEPLOYMENTS';
 export const REFRESH_ENVIRONMENTS = 'REFRESH_ENVIRONMENTS';
+export const REFRESH_GIT = 'REFRESH_GIT';
 
 export const refreshBuilds = builds => {
   return {
@@ -20,5 +21,12 @@ export const refreshEnvironments = environments => {
   return {
     type: REFRESH_ENVIRONMENTS,
     environments
+  }
+}
+
+export const refreshGit = git => {
+  return {
+    type: REFRESH_GIT,
+    git
   }
 }

@@ -1,5 +1,11 @@
 function git(state = [], action) {
-    return state;
+    switch (action.type)
+    {
+        case 'REFRESH_GIT':
+            return action.git;
+        default:
+            return state;
+    }
 }
 
 export default git;
