@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using LCARS.Repositories;
 using LCARS.Models.GitHub;
-using Newtonsoft.Json;
+using Refit;
 
 namespace LCARS.Services
 {
@@ -23,51 +21,36 @@ namespace LCARS.Services
 
         public async Task<IEnumerable<Branch>> GetBranches(string repository = null)
         {
-            await GetSettings();
+            var client = await GetClient<Branch>(repository);
 
-            repository = ParseRepository(repository, _settings);
-
-            var branches = await GetData<Branch>(_settings.BaseUrl.Replace("REPOSITORY", repository).Replace("OWNER", _settings.Owner) + "/branches", repository);
-            
-            return branches;
+            return await GetData(repository, "branches", client.GetBranches);
         }
 
         public async Task<IEnumerable<PullRequest>> GetPullRequests(string repository = null, bool includeComments = false)
         {
-            await GetSettings();
+            var client = await GetClient<PullRequest>(repository);
 
-            repository = ParseRepository(repository, _settings);
-
-            var pullRequests = await GetData<PullRequest>(_settings.BaseUrl.Replace("REPOSITORY", repository).Replace("OWNER", _settings.Owner) + "/pulls", repository);
+            var pullRequests = await GetData(repository, "pulls", client.GetPullRequests);
 
             if (includeComments)
                 foreach (var pr in pullRequests)
                 {
                     pr.Comments = await GetComments(repository, pr.Number);
                 }
-                
 
             return pullRequests;
         }
 
         public async Task<IEnumerable<Comment>> GetComments(string repository = null, int pullRequestNumber = 0)
         {
-            await GetSettings();
-
             if (pullRequestNumber <= 0)
             {
                 throw new ArgumentException("Invalid pull request number");
             }
 
-            repository = ParseRepository(repository, _settings);
+            var client = await GetClient<Comment>(repository);
 
-            var comments =
-                await
-                    GetData<Comment>(
-                        _settings.BaseUrl.Replace("REPOSITORY", repository).Replace("OWNER", _settings.Owner) + "/pulls/" +
-                        pullRequestNumber + "/comments", repository);
-            
-            return comments;
+            return await GetData(repository, pullRequestNumber.ToString(), client.GetComments);
         }
 
         public async Task<Settings> GetSettings()
@@ -90,48 +73,35 @@ namespace LCARS.Services
             _settings = null;
         }
 
-        private async Task<IEnumerable<T>> GetData<T>(string url, string repository) where T : class
+        private async Task<IEnumerable<T>> GetData<T>(string repository, string type, Func<string, string, string, int, Task<IEnumerable<T>>> api) where T : class
         {
-            using (var client = new HttpClient())
+            await GetSettings();
+
+            repository = ParseRepository(repository, _settings);
+
+            var token = "Basic " + Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_settings.Username}:{_settings.Password}"));
+
+            var items = new List<T>();
+            var hasRecords = true;
+            var pageNumber = 1;
+
+            while (hasRecords)
             {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-                    Convert.ToBase64String(Encoding.ASCII.GetBytes($"{_settings.Username}:{_settings.Password}")));
+                var newItems = await api(repository, token, type, pageNumber);
 
-                var items = new List<T>();
-                var hasRecords = true;
-                var pageNumber = 1;
-                var pagedUrl = url + "?per_page=100&page=1";
-
-                try
+                if (newItems.Any())
                 {
-                    while (hasRecords)
-                    {
-                        client.DefaultRequestHeaders.Add("User-Agent", repository);
+                    items.AddRange(newItems);
 
-                        var jsonData = await client.GetStringAsync(pagedUrl);
-
-                        var newItems = JsonConvert.DeserializeObject<List<T>>(jsonData);
-
-                        if (newItems.Any())
-                        {
-                            items.AddRange(newItems);
-
-                            pageNumber++;
-                            pagedUrl = url + "?per_page=100&page=" + pageNumber;
-                        }
-                        else
-                        {
-                            hasRecords = false;
-                        }
-                    }
+                    pageNumber++;
                 }
-                catch (TaskCanceledException ex)
+                else
                 {
-                    throw new Exception("There was an error contacting GitHub", ex);
+                    hasRecords = false;
                 }
-
-                return items;
             }
+
+            return items;
         }
 
         private static string ParseRepository(string repository, Settings settings)
@@ -147,6 +117,13 @@ namespace LCARS.Services
             }
 
             return settings.Repositories.First().Replace("\"", "");
+        }
+
+        private async Task<IGitHubClient<T>> GetClient<T>(string repository)
+        {
+            await GetSettings();
+
+            return RestService.For<IGitHubClient<T>>(_settings.BaseUrl.Replace("REPOSITORY", repository).Replace("OWNER", _settings.Owner));
         }
     }
 }
