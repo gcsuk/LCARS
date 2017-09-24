@@ -1,204 +1,204 @@
 const deployments = [
     {
-        "name" : "Project 1",
+        "name" : "Loading...",
         "deploys" : [
             {
                 "env" : "ENV01",
-                "version":  "11.23.8",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV02",
-                "version":  "11.23.8",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV03",
-                "version":  "11.23.5",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV04",
-                "version":  "11.23.1",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV05",
-                "version":  "11.22.0",
+                "version":  "---",
                 "status" :  "OK"
             }]
     },
     {
-        "name" : "Project 2",
+        "name" : "Loading...",
         "deploys" : [
             {
                 "env" : "ENV01",
-                "version":  "11.23.8",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV02",
-                "version":  "11.23.8",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV03",
-                "version":  "11.23.5",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV04",
-                "version":  "11.23.1",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV05",
-                "version":  "11.22.0",
+                "version":  "---",
                 "status" :  "OK"
             }]
     },
     {
-        "name" : "Project 3",
+        "name" : "Loading...",
         "deploys" : [
             {
                 "env" : "ENV01",
-                "version":  "11.23.8",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV02",
-                "version":  "11.23.8",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV03",
-                "version":  "11.23.5",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV04",
-                "version":  "11.23.1",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV05",
-                "version":  "11.22.0",
+                "version":  "---",
                 "status" :  "OK"
             }]
     },
     {
-        "name" : "Project 4",
+        "name" : "Loading...",
         "deploys" : [
             {
                 "env" : "ENV01",
-                "version":  "11.23.8",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV02",
-                "version":  "11.23.8",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV03",
-                "version":  "11.23.5",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV04",
-                "version":  "11.23.1",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV05",
-                "version":  "11.22.0",
+                "version":  "---",
                 "status" :  "OK"
             }]
     },
     {
-        "name" : "Project 5",
+        "name" : "Loading...",
         "deploys" : [
             {
                 "env" : "ENV01",
-                "version":  "11.23.8",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV02",
-                "version":  "11.23.8",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV03",
-                "version":  "11.23.5",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV04",
-                "version":  "11.23.1",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV05",
-                "version":  "11.22.0",
+                "version":  "---",
                 "status" :  "OK"
             }]
     },
     {
-        "name" : "Project 6",
+        "name" : "Loading...",
         "deploys" : [
             {
                 "env" : "ENV01",
-                "version":  "11.23.8",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV02",
-                "version":  "11.23.8",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV03",
-                "version":  "11.23.5",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV04",
-                "version":  "11.23.1",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV05",
-                "version":  "11.22.0",
+                "version":  "---",
                 "status" :  "OK"
             }]
     },
     {
-        "name" : "Project 7",
+        "name" : "Loading...",
         "deploys" : [
             {
                 "env" : "ENV01",
-                "version":  "11.23.8",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV02",
-                "version":  "11.23.8",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV03",
-                "version":  "11.23.5",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV04",
-                "version":  "11.23.1",
+                "version":  "---",
                 "status" :  "OK"
             },
             {
                 "env" : "ENV05",
-                "version":  "11.22.0",
+                "version":  "---",
                 "status" :  "OK"
             }]
     }

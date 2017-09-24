@@ -1,7 +1,7 @@
 const issues = [
       {
-        "id": "ABC-123",
-        "summary": "Some issue",
+        "id": "----",
+        "summary": "Loading...",
         "priority": "Unprioritised",
         "priorityIcon": "http://www.iconarchive.com/download/i27101/ph03nyx/super-mario/Retro-Block-Question.ico",
         "reporter": "gcsuk",
@@ -9,17 +9,35 @@ const issues = [
         "status": "In Progress"
       },
       {
-        "id": "ABC-456",
-        "summary": "Another issue",
+        "id": "----",
+        "summary": "Loading...",
         "priority": "P2",
-        "priorityIcon": "http://www.iconarchive.com/download/i91427/icons8/windows-8/Numbers-2-Black.ico",
+        "priorityIcon": "http://www.iconarchive.com/download/i27101/ph03nyx/super-mario/Retro-Block-Question.ico",
         "reporter": "gcsuk",
         "assignee": "gcsuk",
         "status": "In QA"
       },
       {
-        "id": "ABC-789",
-        "summary": "Yet Another issue",
+        "id": "----",
+        "summary": "Loading...",
+        "priority": "Unprioritised",
+        "priorityIcon": "http://www.iconarchive.com/download/i27101/ph03nyx/super-mario/Retro-Block-Question.ico",
+        "reporter": "gcsuk",
+        "assignee": "gcsuk",
+        "status": "In QA"
+      },
+      {
+        "id": "----",
+        "summary": "Loading...",
+        "priority": "P2",
+        "priorityIcon": "http://www.iconarchive.com/download/i27101/ph03nyx/super-mario/Retro-Block-Question.ico",
+        "reporter": "gcsuk",
+        "assignee": "gcsuk",
+        "status": "In QA"
+      },
+      {
+        "id": "----",
+        "summary": "Loading...",
         "priority": "Unprioritised",
         "priorityIcon": "http://www.iconarchive.com/download/i27101/ph03nyx/super-mario/Retro-Block-Question.ico",
         "reporter": "gcsuk",

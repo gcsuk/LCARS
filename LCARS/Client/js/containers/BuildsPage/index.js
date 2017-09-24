@@ -15,13 +15,15 @@ const Build = styled.div`
 const ProjectName = styled.span`
   display: inline-block;
   width: 300px;
+  font-size: 1.8rem;
   text-align: left
 `;
 
 const BuildStatus = styled.span`
   display: inline-block;
   padding: 3px 35px;
-  font-size: 30px;
+  width: 250px;
+  font-size: 1.8rem;
   border-radius: 20px;
   background-color: #015001
 `;

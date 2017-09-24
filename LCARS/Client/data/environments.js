@@ -1,74 +1,74 @@
 const environments = [
     {
-        "name" : "Project 1",
+        "name" : "Loading",
         "environments" : [
             {
                 "name" : "ENV01",
-                "status" :  "OK"
+                "status" :  "---"
             },
             {
                 "name" : "ENV02",
-                "status" :  "OK"
+                "status" :  "---"
             },
             {
                 "name" : "ENV03",
-                "status" :  "OK"
+                "status" :  "---"
             },
             {
                 "name" : "ENV04",
-                "status" :  "OK"
+                "status" :  "---"
             },
             {
                 "name" : "ENV05",
-                "status" :  "OK"
+                "status" :  "---"
             }]
     },
     {
-        "name" : "Project 2",
+        "name" : "Loading",
         "environments" : [
             {
                 "name" : "ENV01",
-                "status" :  "OK"
+                "status" :  "---"
             },
             {
                 "name" : "ENV02",
-                "status" :  "OK"
+                "status" :  "---"
             },
             {
                 "name" : "ENV03",
-                "status" :  "OK"
+                "status" :  "---"
             },
             {
                 "name" : "ENV04",
-                "status" :  "OK"
+                "status" :  "---"
             },
             {
                 "name" : "ENV05",
-                "status" :  "OK"
+                "status" :  "---"
             }]
     },
     {
-        "name" : "Project 3",
+        "name" : "Loading",
         "environments" : [
             {
                 "name" : "ENV01",
-                "status" :  "OK"
+                "status" :  "---"
             },
             {
                 "name" : "ENV02",
-                "status" :  "OK"
+                "status" :  "---"
             },
             {
                 "name" : "ENV03",
-                "status" :  "OK"
+                "status" :  "---"
             },
             {
                 "name" : "ENV04",
-                "status" :  "OK"
+                "status" :  "---"
             },
             {
                 "name" : "ENV05",
-                "status" :  "OK"
+                "status" :  "---"
             }]
     }
 ]
