@@ -5,6 +5,7 @@
 *.suo
 *.user
 *.sln.docstates
+.vs/
 
 # Build results
 [Dd]ebug/
@@ -188,11 +189,5 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 
-Builds.json
-Deployments.json
-Environments.json
-Issues.json
-GitHub.json
-RedAlert.json
-Screens.json
-Settings.json
+appsettings.json
+wwwroot
