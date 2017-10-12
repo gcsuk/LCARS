@@ -6,7 +6,8 @@ import { refreshBuilds, REFRESH_BUILDS } from '../actions';
 export function* buildsSaga () {
     while (true) {
         const response = yield getBuildData();
-        yield put(refreshBuilds(response));
+        const data = response.errors ? [] : response;
+        yield put(refreshBuilds(data));
         yield delay(5000);
     }
 }
@@ -19,7 +20,7 @@ function checkStatus(response) {
     if (response.ok)
       return response;
     else {
-      var error = new Error(response.statusText);
+      let error = new Error(response.statusText);
       error.response = response;
       return Promise.reject(error);
     }

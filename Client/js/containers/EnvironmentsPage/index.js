@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import {connect} from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from './state';
@@ -26,7 +26,7 @@ class EnvironmentsPage extends Component {
       <Environments>
         <thead>
           <tr>
-            <th></th>
+            <th />
             { this.props.environments[0].environments.map((item, colIndex) => (
               <th key={colIndex}>
                 {item.name}
