@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import {connect} from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from './state';
@@ -30,7 +30,7 @@ class DeploymentsPage extends Component {
       <Deployments>
         <thead>
           <tr>
-            <th></th>
+            <th />
             { this.props.deployments[0].deploys.map((item, colIndex) => (
               <th key={colIndex}>
                 {item.env}

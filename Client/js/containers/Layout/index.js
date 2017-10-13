@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link, withRouter} from 'react-router-dom';
 import Digits from '../../components/Digits';
 import {connect} from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from './state';
+import Routes from '../../components/Routes';
 
 class  Layout extends Component {
   render() {
@@ -27,10 +28,10 @@ class  Layout extends Component {
                     </div>
                 </div>
                 <div className="box-pattern">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span />
+                    <span />
+                    <span />
+                    <span />
                 </div>
             </header>
             <div className="body">
@@ -50,13 +51,13 @@ class  Layout extends Component {
                 </aside>
                 <main>
                     <div className="box-pattern">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                        <span />
+                        <span />
+                        <span />
+                        <span />
                     </div>
                     <div className="content">
-                        {this.props.children}
+                        <Routes/>
                     </div>
                 </main>
             </div>
@@ -65,7 +66,7 @@ class  Layout extends Component {
   }
 }
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Layout);
+)(Layout));

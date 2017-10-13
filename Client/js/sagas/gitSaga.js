@@ -1,6 +1,7 @@
 import { delay } from 'redux-saga';
 import fetch from 'unfetch';
 import { put } from 'redux-saga/effects';
+import { push } from 'react-router-redux';
 import { refreshGit, REFRESH_GIT } from '../actions';
 
 export function* gitSaga () {
@@ -19,7 +20,7 @@ function checkStatus(response) {
     if (response.ok)
       return response;
     else {
-      var error = new Error(response.statusText);
+      let error = new Error(response.statusText);
       error.response = response;
       return Promise.reject(error);
     }

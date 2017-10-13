@@ -1,7 +1,7 @@
 import { createStore, compose, applyMiddleware } from 'redux';
-import { syncHistoryWithStore } from 'react-router-redux';  
-import { browserHistory } from 'react-router';
 import createSagaMiddleware from 'redux-saga';
+import createHistroy from 'history/createBrowserHistory';
+import { routerMiddleware } from 'react-router-redux';
 
 import rootReducer from './reducers/index';
 import { initSagas } from './initSagas';
@@ -24,10 +24,15 @@ const defaultState = {
     alertCondition
 };
 
+export const history = createHistroy({
+    basename: '/'
+});
+const historyMiddleware = routerMiddleware(history);
 const sagaMiddleware = createSagaMiddleware();
 
 const middlewares = [
-    sagaMiddleware
+    sagaMiddleware,
+    historyMiddleware
 ];
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -39,7 +44,4 @@ const store = createStore(
 );
 
 initSagas(sagaMiddleware);
-
-export const history = syncHistoryWithStore(browserHistory, store);
-
 export default store;

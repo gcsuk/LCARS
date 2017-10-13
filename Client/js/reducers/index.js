@@ -8,7 +8,8 @@ import git from './git';
 import issues from './issues';
 import issueSummary from './issueSummary';
 import alertCondition from './alertCondition';
+import config from './config';
 
-const rootReducer = combineReducers({ builds, deployments, environments, git, issues, issueSummary, alertCondition, routing: routerReducer});
+const rootReducer = combineReducers({ config, builds, deployments, environments, git, issues, issueSummary, alertCondition, routing: routerReducer});
 
 export default rootReducer;

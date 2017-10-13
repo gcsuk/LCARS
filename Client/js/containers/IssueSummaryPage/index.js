@@ -1,11 +1,11 @@
 //@flow
 
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import {connect} from 'react-redux';
 import { mapStateToProps, mapDispatchToProps } from './state';
-import yellowAlertStyles from '../../../css/alertYellow.css'
+import yellowAlertStyles from '../../../css/alertYellow.css';
 
 const IssueSummaryContainer = styled.div`
   display: grid;
@@ -35,7 +35,7 @@ class IssueSummaryPage extends Component {
   render() {
     return (
       <IssueSummaryContainer>
-          <div></div>
+          <div />
           <IssueSummaryIcon>
             <BugIcon src="../../img/softwareBug.jpg" />
           </IssueSummaryIcon>
@@ -50,8 +50,7 @@ class IssueSummaryPage extends Component {
                   ({this.props.issueSummary.numberOfWorkingHours} hours, {this.props.issueSummary.numberOfWorkingMinutes} minutes)
               </div>
           </IssueSummary>
-          <IssueSummaryRight>
-          </IssueSummaryRight>
+          <IssueSummaryRight />
       </IssueSummaryContainer>
     );
   }
