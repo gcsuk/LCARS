@@ -1,67 +1,93 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LCARS.Repositories;
 using System.Linq;
-using LCARS.ViewModels.Environments;
-using SiteModel = LCARS.Models.Environments.Site;
-using EnvironmentModel = LCARS.Models.Environments.Environment;
 using System.Threading.Tasks;
+using LCARS.Models.Environments;
+using Refit;
 
 namespace LCARS.Services
 {
     public class EnvironmentsService : IEnvironmentsService
     {
-        private readonly IRepository<SiteModel> _repository;
+        private readonly IRepository<Site> _sitesRepository;
+        private readonly IRepository<SiteEnvironment> _environmentsRepository;
 
-        public EnvironmentsService(IRepository<SiteModel> repository)
+        public EnvironmentsService(IRepository<Site> sitesRepository, IRepository<SiteEnvironment> environmentsRepository)
         {
-            _repository = repository;
+            _sitesRepository = sitesRepository;
+            _environmentsRepository = environmentsRepository;
         }
 
         public async Task<IEnumerable<Site>> GetSites()
         {
-            return (await _repository.GetAll()).Select(t => new Site
+            var sites = await _sitesRepository.GetAll();
+
+            var environments = await _environmentsRepository.GetAll();
+
+            foreach (var site in sites)
             {
-                Id = t.Id,
-                Name = t.Name,
-                Environments = t.Environments.Select(e => new Environment
+                site.Environments = environments.Where(e => e.SiteId == site.Id).ToList();
+
+                foreach (var siteEnvironment in site.Environments)
                 {
-                    Id = e.Id,
-                    Name = e.Name,
-                    Status = e.Status
-                })
-            });
+                    try
+                    {
+                        var environmentsClient = RestService.For<IEnvironmentsClient>(siteEnvironment.SiteUrl);
+
+                        siteEnvironment.Version = (await environmentsClient.GetVersion()).Version;
+                        siteEnvironment.Status = "OK";
+                    }
+                    catch (Exception e)
+                    {
+                        siteEnvironment.Version = "";
+                        siteEnvironment.Status = "DOWN";
+                    }
+                }
+            }
+
+            return sites;
         }
 
         public async Task<Site> AddSite(Site site)
         {
-            site.Id = await _repository.Add(ConvertToModel(site));
+            site.Id = await _sitesRepository.Add(site);
+
+            foreach (var env in site.Environments)
+            {
+                env.SiteId = site.Id;
+
+                env.Id = await _environmentsRepository.Add(env);
+            }
 
             return site;
         }
 
+        public async Task<SiteEnvironment> AddEnvironment(SiteEnvironment environment)
+        {
+            environment.Id = await _environmentsRepository.Add(environment);
+
+            return environment;
+        }
+
         public async Task UpdateSite(Site site)
         {
-            await _repository.Update(ConvertToModel(site));
+            await _sitesRepository.Update(site);
+        }
+
+        public async Task UpdateEnvironment(SiteEnvironment environment)
+        {
+            await _environmentsRepository.Update(environment);
         }
 
         public async Task DeleteSite(int id)
         {
-            await _repository.Delete(id);
+            await _sitesRepository.Delete(id);
         }
 
-        private static SiteModel ConvertToModel(Site vm)
+        public async Task DeleteEnvironment(int id)
         {
-            return new SiteModel
-            {
-                Id = vm.Id,
-                Name = vm.Name,
-                Environments = vm.Environments.Select(e => new EnvironmentModel
-                {
-                    Id = e.Id,
-                    Name = e.Name,
-                    Status = e.Status
-                })
-            };
+            await _environmentsRepository.Delete(id);
         }
     }
 }

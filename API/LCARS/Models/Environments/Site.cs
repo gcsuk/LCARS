@@ -6,13 +6,13 @@ namespace LCARS.Models.Environments
 	{
 		public Site()
 		{
-			Environments = new List<Environment>();
+			Environments = new List<SiteEnvironment>();
 		}
 
 		public int Id { get; set; }
 
 		public string Name { get; set; }
 
-		public IEnumerable<Environment> Environments { get; set; }
+		public List<SiteEnvironment> Environments { get; set; }
 	}
 }

@@ -31,7 +31,9 @@ namespace LCARS
 
             services.AddTransient<IRepository<Models.GitHub.Settings>, GitHubRepository>(
                 serviceProvider => new GitHubRepository(new SqlConnection(connectionString)));
-            services.AddTransient<IRepository<Models.Environments.Site>, EnvironmentsRepository>(
+            services.AddTransient<IRepository<Models.Environments.Site>, SitesRepository>(
+                serviceProvider => new SitesRepository(new SqlConnection(connectionString)));
+            services.AddTransient<IRepository<Models.Environments.SiteEnvironment>, EnvironmentsRepository>(
                 serviceProvider => new EnvironmentsRepository(new SqlConnection(connectionString)));
             services.AddTransient<IRepository<Models.Issues.Settings>, IssueSettingsRepository>(
                 serviceProvider => new IssueSettingsRepository(new SqlConnection(connectionString)));

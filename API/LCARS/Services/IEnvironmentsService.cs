@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using LCARS.ViewModels.Environments;
 using System.Threading.Tasks;
+using LCARS.Models.Environments;
 
 namespace LCARS.Services
 {
@@ -8,7 +8,10 @@ namespace LCARS.Services
     {
         Task<IEnumerable<Site>> GetSites();
         Task<Site> AddSite(Site site);
-        Task UpdateSite(Site site);
+        Task<SiteEnvironment> AddEnvironment(SiteEnvironment environment);
+        Task UpdateSite(Site environment);
+        Task UpdateEnvironment(SiteEnvironment environment);
         Task DeleteSite(int id);
+        Task DeleteEnvironment(int id);
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LCARS.Repositories
 {
-    public class EnvironmentsRepository : IRepository<Site>
+    public class EnvironmentsRepository : IRepository<SiteEnvironment>
     {
         private readonly IDbConnection _dbConnection;
 
@@ -16,99 +16,65 @@ namespace LCARS.Repositories
             _dbConnection = dbConnection;
         }
 
-        public async Task<int> Add(Site site)
+        public async Task<int> Add(SiteEnvironment environment)
         {
             using (var dbConnection = _dbConnection)
             {
-                const string siteQuery = "INSERT INTO Sites" +
-                                         "(Name) " +
-                                         "VALUES" +
-                                         "(@Name);" +
-                                         " SELECT CAST(SCOPE_IDENTITY() AS INT)";
-
-                const string environmentsQuery = "INSERT INTO Environments" +
-                                                 "(SiteId, Name, Status) " +
-                                                 "VALUES" +
-                                                 "(@SiteId, @Name, @Status)";
+                const string query = "INSERT INTO SitesEnvironments" +
+                                     "(SiteId, Name, SiteUrl, PingUrl) " +
+                                     "VALUES" +
+                                     "(@SiteId, @Name, @SiteUrl, @PingUrl);" +
+                                     " SELECT CAST(SCOPE_IDENTITY() AS INT)";
 
                 dbConnection.Open();
-                site.Id = (await dbConnection.QueryAsync<int>(siteQuery, site)).Single();
 
-                site.Environments.ToList().ForEach(async e =>
-                {
-                    e.SiteId = site.Id;
-                    await dbConnection.ExecuteAsync(environmentsQuery, e);
-                });
+                environment.Id = (await dbConnection.QueryAsync<int>(query, environment)).Single();
 
-                return site.Id;
+                return environment.Id;
             }
         }
 
         public async Task Delete(int id)
         {
-            const string environmentsSelectSql = "SELECT * FROM Environments WHERE SiteId = @siteId";
-            const string environmentsDeleteSql = "DELETE FROM Environments WHERE ID = @id";
-            const string siteDeleteSql = "DELETE FROM Sites WHERE Id = @id; ";
+            const string query = "DELETE FROM SitesEnvironments WHERE Id = @id";
 
             using (var dbConnection = _dbConnection)
             {
-                var environments = await dbConnection.QueryAsync<Environment>(environmentsSelectSql, new { siteId = id });
-
-                environments.ToList().ForEach(async e =>
-                {
-                    await dbConnection.ExecuteAsync(environmentsDeleteSql, new {id = e.Id});
-                });
-
-                await dbConnection.ExecuteAsync(siteDeleteSql, new {id});
+                await dbConnection.ExecuteAsync(query, new {id});
             }
         }
 
-        public async Task<IEnumerable<Site>> GetAll()
+        public async Task<IEnumerable<SiteEnvironment>> GetAll()
         {
-            const string sql = @"SELECT * FROM Sites
-                        SELECT * FROM Environments";
-
             using (var dbConnection = _dbConnection)
             {
-                var result = await dbConnection.QueryMultipleAsync(sql);
-                var sites = result.Read<Site>().ToList();
-                var environments = result.Read<Environment>().ToList();
-
-                sites.ForEach(s =>
-                {
-                    s.Environments = environments.Where(e => e.SiteId == s.Id);
-                });
-
-                return sites;
+                return await dbConnection.QueryAsync<SiteEnvironment>("SELECT * FROM SitesEnvironments");
             }
         }
 
-        public async Task<Site> GetByID(int id)
-        {
-            return (await GetAll()).SingleOrDefault(s => s.Id == id);
-        }
-
-        public async Task Update(Site site)
+        public async Task<SiteEnvironment> GetByID(int id)
         {
             using (var dbConnection = _dbConnection)
             {
-                const string siteQuery = "UPDATE Sites " +
-                                         "SET Name = @Name " +
-                                         "WHERE Id = @Id";
+                const string query = "SELECT * FROM SitesEnvironments WHERE Id = @Id";
+                dbConnection.Open();
+                var settings = await dbConnection.QueryAsync<SiteEnvironment>(query, new {Id = id});
+                return settings.FirstOrDefault();
+            }
+        }
 
-                const string environmentsQuery = "UPDATE Environments " +
-                                                 "SET Name = @Name," +
-                                                 "    Status = @Status " +
-                                                 "WHERE Id = @Id";
+        public async Task Update(SiteEnvironment site)
+        {
+            using (var dbConnection = _dbConnection)
+            {
+                const string query = "UPDATE SitesEnvironments " +
+                                     "SET   Name = @Name," +
+                                     "      SiteUrl = @SiteUrl," +
+                                     "      PingUrl = @PingUrl " +
+                                     "WHERE Id = @Id";
 
                 dbConnection.Open();
-                await dbConnection.ExecuteAsync(siteQuery, site);
-
-                site.Environments.ToList().ForEach(async e =>
-                {
-                    e.SiteId = site.Id;
-                    await dbConnection.ExecuteAsync(environmentsQuery, e);
-                });
+                await dbConnection.ExecuteAsync(query, site);
             }
         }
     }
