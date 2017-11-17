@@ -3,6 +3,7 @@ export const REFRESH_DEPLOYMENTS = 'REFRESH_DEPLOYMENTS';
 export const REFRESH_ENVIRONMENTS = 'REFRESH_ENVIRONMENTS';
 export const REFRESH_GIT = 'REFRESH_GIT';
 export const UPDATE_CONFIG = 'UPDATE_CONFIG';
+export const SET_ALERT = 'SET_ALERT';
 
 export const refreshBuilds = builds => {
   return {
@@ -35,4 +36,9 @@ export const refreshGit = git => {
 export const updateConfig = config => ({
     type: UPDATE_CONFIG,
     config
+});
+
+export const setAlert = condition => ({
+  type: SET_ALERT,
+  condition
 });

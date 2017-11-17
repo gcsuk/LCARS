@@ -14,10 +14,16 @@ function* routeTimer() {
   ];
 
   while(true) {
+    const alertCondition = yield select(state => state.alertCondition);
     const { routeChangeInterval } = yield select(state => state.config);
-    const route = paths[currentIndex];
-    yield put(push(route));
-    currentIndex < paths.length ? currentIndex++ : currentIndex = 0;
+
+    if (alertCondition.condition === 'red') {
+      yield put(push('/alert'));
+    } else {
+      const route = paths[currentIndex];
+      yield put(push(route));
+      currentIndex < paths.length ? currentIndex++ : currentIndex = 0;
+    }
     yield delay(routeChangeInterval);
   }
 }
