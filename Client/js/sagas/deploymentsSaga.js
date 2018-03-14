@@ -1,11 +1,11 @@
 import { delay } from 'redux-saga';
-import fetch from 'unfetch';
-import { put } from 'redux-saga/effects';
+import getData from '../fetch';
+import { put, takeLatest } from 'redux-saga/effects';
 import { refreshDeployments, REFRESH_DEPLOYMENTS } from '../actions';
 
 export function* deploymentsSaga () {
     while (true) {
-        const response = yield getDeploymentsData();
+        const response = yield getData('deployments');
         yield put(refreshDeployments(response));
         yield delay(5000);
     }
@@ -23,9 +23,4 @@ function checkStatus(response) {
       error.response = response;
       return Promise.reject(error);
     }
-}
-
-function getDeploymentsData() {
-    return fetch('http://localhost:54359/api/deployments/')
-            .then(res => res.json());
 }
