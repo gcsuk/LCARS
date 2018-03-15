@@ -43,12 +43,15 @@ namespace LCARS
                 serviceProvider => new DeploymentsRepository(new SqlConnection(connectionString)));
             services.AddTransient<IRepository<Models.Builds.Settings>, BuildsRepository>(
                 serviceProvider => new BuildsRepository(new SqlConnection(connectionString)));
+            services.AddTransient<IRepository<Models.AlertCondition.AlertCondition>, AlertConditionRepository>(
+                serviceProvider => new AlertConditionRepository(new SqlConnection(connectionString)));
 
             services.AddTransient<IEnvironmentsService, EnvironmentsService>();
             services.AddTransient<IBuildsService, BuildsService>();
             services.AddTransient<IDeploymentsService, DeploymentsService>();
             services.AddTransient<IGitHubService, GitHubService>();
             services.AddTransient<IIssuesService, IssuesService>();
+            services.AddTransient<IAlertConditionService, AlertConditionService>();
 
             services.AddRouting(options => options.LowercaseUrls = true);
 
