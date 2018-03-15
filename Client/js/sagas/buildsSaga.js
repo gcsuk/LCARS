@@ -1,6 +1,6 @@
 import { delay } from 'redux-saga';
 import getData from '../fetch';
-import { put } from 'redux-saga/effects';
+import { put, takeLatest } from 'redux-saga/effects';
 import { refreshBuilds, REFRESH_BUILDS } from '../actions';
 
 export function* buildsSaga () {

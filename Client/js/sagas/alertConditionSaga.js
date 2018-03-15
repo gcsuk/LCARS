@@ -1,7 +1,16 @@
 import { delay } from 'redux-saga';
-import { put, fork, select } from 'redux-saga/effects';
+import getData from '../fetch';
+import { put, fork, select, takeLatest } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
-import { setAlert } from '../actions';
+import { setAlert, SET_ALERT } from '../actions';
+
+export function* alertConditionSaga () {
+  while (true) {
+    const response = yield getData('alertcondition');
+    yield put(setAlert(response.condition));
+    yield delay(5000);
+  }
+}
 
 function* countdownTimer() {
   const alertCondition = yield select(state => state.alertCondition);
@@ -26,4 +35,8 @@ function* countdownTimer() {
 
 export function* alertCondition() {
   const countdown = yield fork(countdownTimer);
+}
+
+export function* watchGetAlertCondition() {
+  yield takeLatest(SET_ALERT, alertConditionSaga);
 }

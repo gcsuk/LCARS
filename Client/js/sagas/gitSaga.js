@@ -1,7 +1,7 @@
 import { delay } from 'redux-saga';
 import getData from '../fetch';
-import { put } from 'redux-saga/effects';
-import { push, takeLatest } from 'react-router-redux';
+import { put, takeLatest } from 'redux-saga/effects';
+import { push } from 'react-router-redux';
 import { refreshGit, REFRESH_GIT } from '../actions';
 
 export function* gitSaga () {
