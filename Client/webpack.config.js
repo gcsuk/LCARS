@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const sourcePath = __dirname;
 const buildPath = path.resolve(__dirname, '../wwwroot');
 
@@ -41,13 +41,16 @@ module.exports = {
          colors: true
      },
      plugins: [
-       new webpack.HotModuleReplacementPlugin(),
-       new webpack.NoEmitOnErrorsPlugin(),
-       new HtmlWebpackPlugin({
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
+        new HtmlWebpackPlugin({
           template: path.join(sourcePath, 'index.html'),
           path: buildPath,
           filename: 'index.html'
-        })
+        }),
+        new CopyWebpackPlugin([
+          {from:'img',to: buildPath + '/img'} 
+        ]), 
      ],
      devtool: 'source-map'
  };

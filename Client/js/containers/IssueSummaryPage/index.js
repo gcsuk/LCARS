@@ -37,7 +37,7 @@ class IssueSummaryPage extends Component {
       <IssueSummaryContainer>
           <div />
           <IssueSummaryIcon>
-            <BugIcon src="../../img/softwareBug.jpg" />
+            <BugIcon src="/img/softwareBug.png" />
           </IssueSummaryIcon>
           <IssueSummary>
               <div>
