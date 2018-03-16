@@ -54,6 +54,7 @@ namespace LCARS.Controllers
                 UpdatedOn = p.UpdatedOn,
                 AuthorName = p.User.Name,
                 AuthorAvatar = p.User.Avatar,
+                Status = p.Status,
                 Comments = p.Comments?.Select(c => new Comment
                 {
                     DateCreated = c.DateCreated,

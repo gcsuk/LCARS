@@ -13,6 +13,7 @@ namespace LCARS.Models.GitHub
         [JsonProperty("Updated_At")]
         public DateTime UpdatedOn { get; set; }
         public User User { get; set; }
+        public string Status { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
     }
 }

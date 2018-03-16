@@ -13,10 +13,9 @@ namespace LCARS.ViewModels.GitHub
         public DateTime UpdatedOn { get; set; }
         public string AuthorName { get; set; }
         public string AuthorAvatar { get; set; }
+        public string Status { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
-        public bool IsShipped
-        {
-            get { return Comments != null && Comments.Any(c => c.Body.Contains(":ship")); }
-        }
+        public bool IsShipped => (Comments != null && Comments.Any(c => c.Body.Contains(":ship")))
+                                  || Status.Equals("APPROVED", StringComparison.CurrentCultureIgnoreCase);
     }
 }

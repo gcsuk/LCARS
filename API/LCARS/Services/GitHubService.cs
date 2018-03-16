@@ -32,13 +32,35 @@ namespace LCARS.Services
 
             var pullRequests = await GetData(repository, "pulls", client.GetPullRequests);
 
+            foreach (var pr in pullRequests)
+            {
+                var reviews = await GetReviews(repository, pr.Number);
+
+                if (reviews.Any(r => r.State == "CHANGES REQUESTED"))
+                    pr.Status = "Changes Requested";
+                else if (reviews.Any(r => r.State == "APPROVED"))
+                    pr.Status = "Approved";
+                else
+                    pr.Status = "Pending";
+            }
+
             if (includeComments)
                 foreach (var pr in pullRequests)
-                {
                     pr.Comments = await GetComments(repository, pr.Number);
-                }
 
             return pullRequests;
+        }
+
+        public async Task<IEnumerable<Review>> GetReviews(string repository = null, int pullRequestNumber = 0)
+        {
+            if (pullRequestNumber <= 0)
+            {
+                throw new ArgumentException("Invalid pull request number");
+            }
+
+            var client = await GetClient<Review>(repository);
+
+            return await GetData(repository, pullRequestNumber.ToString(), client.GetReviews);
         }
 
         public async Task<IEnumerable<Comment>> GetComments(string repository = null, int pullRequestNumber = 0)

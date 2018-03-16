@@ -15,5 +15,8 @@ namespace LCARS.Services
         [Get("/pulls/{type}/comments?per_page=100&page={pageNumber}")]
         Task<IEnumerable<T>> GetComments([Header("User-Agent")] string agent, [Header("Authorization")] string token, string type, int pageNumber);
 
+        [Get("/pulls/{type}/reviews?per_page=100&page={pageNumber}")]
+        Task<IEnumerable<T>> GetReviews([Header("User-Agent")] string agent, [Header("Authorization")] string token, string type, int pageNumber);
+
     }
 }
