@@ -4,13 +4,12 @@ using LCARS.Services;
 using Microsoft.AspNetCore.Mvc;
 using LCARS.ViewModels.Deployments;
 using System.Linq;
-using Microsoft.AspNetCore.Cors;
 
 namespace LCARS.Controllers
 {
-    [Route("api/[controller]")]
-    [EnableCors("AllowAll")]
-    public class DeploymentsController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class DeploymentsController : ControllerBase
     {
         private readonly IDeploymentsService _deploymentsService;
 

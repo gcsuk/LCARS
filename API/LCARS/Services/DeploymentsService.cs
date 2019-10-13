@@ -5,6 +5,7 @@ using System.Linq;
 using LCARS.Repositories;
 using Refit;
 using System.Collections.Generic;
+using LCARS.Clients;
 
 namespace LCARS.Services
 {

@@ -1,17 +1,15 @@
-﻿using System;
-using System.Data.SqlClient;
-using System.IO;
+//using System.IO;
 using LCARS.Filters;
 using LCARS.Repositories;
 using LCARS.Services;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.PlatformAbstractions;
-using Swashbuckle.Swagger.Model;
+using Microsoft.Extensions.Hosting;
+//using Microsoft.Extensions.PlatformAbstractions;
+//using Swashbuckle.Swagger.Model;
 
 namespace LCARS
 {
@@ -53,10 +51,7 @@ namespace LCARS
             services.AddTransient<IIssuesService, IssuesService>();
             services.AddTransient<IAlertConditionService, AlertConditionService>();
 
-            services.AddRouting(options => options.LowercaseUrls = true);
-
-            // Add framework services.
-            services.AddMvc(options =>
+            services.AddControllers(options =>
             {
                 options.Filters.Add(new ApiExceptionFilter());
             });
@@ -64,7 +59,7 @@ namespace LCARS
             services.AddCors(options => options.AddPolicy("AllowAll",
                 p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
-            var xmlPath = GetXmlCommentsPath();
+            /*var xmlPath = GetXmlCommentsPath();
             services.AddSwaggerGen();
             services.ConfigureSwaggerGen(options =>
             {
@@ -78,29 +73,34 @@ namespace LCARS
                 options.IncludeXmlComments(xmlPath);
                 options.DescribeAllEnumsAsStrings();
                 options.CustomSchemaIds(x => x.FullName);
-            });
+            });*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
-            app.UseSwagger();
-            app.UseSwaggerUi();
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+            /*app.UseSwagger();
+            app.UseSwaggerUi();*/
         }
 
-        private string GetXmlCommentsPath()
+        /*private static string GetXmlCommentsPath()
         {
             var app = PlatformServices.Default.Application;
             return Path.Combine(app.ApplicationBasePath, "LCARS.xml");
-        }
+        }*/
     }
 }

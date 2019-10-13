@@ -3,19 +3,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using LCARS.Services;
 using LCARS.ViewModels.Builds;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace LCARS.Controllers
 {
-    [Route("api/[controller]")]
-    [EnableCors("AllowAll")]
-    public class BuildsController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class BuildsController : ControllerBase
     {
+        private readonly ILogger<BuildsController> _logger;
         private readonly IBuildsService _buildsService;
 
-        public BuildsController(IBuildsService buildsService)
+        public BuildsController(ILogger<BuildsController> logger, IBuildsService buildsService)
         {
+            _logger = logger;
             _buildsService = buildsService;
         }
 

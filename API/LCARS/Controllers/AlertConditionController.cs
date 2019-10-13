@@ -1,14 +1,13 @@
 ﻿using System.Threading.Tasks;
 using LCARS.Services;
 using LCARS.ViewModels.AlertCondition;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LCARS.Controllers
 {
-    [Route("api/[controller]")]
-    [EnableCors("AllowAll")]
-    public class AlertConditionController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class AlertConditionController : ControllerBase
     {
         private readonly IAlertConditionService _alertConditionService;
 

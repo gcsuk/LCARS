@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LCARS.Clients;
 using LCARS.Repositories;
 using LCARS.Models.GitHub;
 using Refit;

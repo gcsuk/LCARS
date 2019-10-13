@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace LCARS.Models.Deployments
 {
@@ -16,7 +16,7 @@ namespace LCARS.Models.Deployments
 
         public IEnumerable<Environment> Environments { get; set; }
 
-        [JsonProperty(PropertyName = "Items")]
+        [JsonPropertyName("items")]
         public IEnumerable<Deployment> Deploys { get; set; }
     }
 }

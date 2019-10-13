@@ -10,7 +10,9 @@ namespace LCARS.Controllers
     /// <summary>
     /// Diagnostics for all services calling 3rd party endpoints
     /// </summary>
-    public class DiagnosticsController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class DiagnosticsController : ControllerBase
     {
         private readonly IBuildsService _buildsService;
         private readonly IDeploymentsService _deploymentsService;
@@ -102,7 +104,7 @@ namespace LCARS.Controllers
     /// <summary>
     /// Diagnostics for all services calling 3rd party endpoints
     /// </summary>
-    public class DiagnosticsController : Controller
+    public class DiagnosticsController : ControllerBase
     {
         private readonly IBuildsService _buildsService;
         private readonly IDeploymentsService _deploymentsService;

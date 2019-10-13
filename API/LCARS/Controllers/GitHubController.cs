@@ -4,13 +4,12 @@ using System.Threading.Tasks;
 using LCARS.Services;
 using LCARS.ViewModels.GitHub;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Cors;
 
 namespace LCARS.Controllers
 {
-    [Route("api/[controller]")]
-    [EnableCors("AllowAll")]
-    public class GitHubController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class GitHubController : ControllerBase
     {
         private readonly IGitHubService _gitHubService;
 

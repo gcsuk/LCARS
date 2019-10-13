@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LCARS.Models.Issues;
 using System.Linq;
+using LCARS.Clients;
 using LCARS.Repositories;
 using Refit;
 

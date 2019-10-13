@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using LCARS.Repositories;
 using System.Linq;
 using System.Threading.Tasks;
+using LCARS.Clients;
 using LCARS.Models.Environments;
 using Refit;
 
@@ -38,7 +39,7 @@ namespace LCARS.Services
                         siteEnvironment.Version = (await environmentsClient.GetVersion()).Version;
                         siteEnvironment.Status = "OK";
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
                         siteEnvironment.Version = "";
                         siteEnvironment.Status = "DOWN";

@@ -7,8 +7,9 @@ using System;
 
 namespace LCARS.Controllers
 {
-    [Route("api/[controller]")]
-    public class IssuesController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class IssuesController : ControllerBase
     {
         private readonly IIssuesService _issuesService;
 

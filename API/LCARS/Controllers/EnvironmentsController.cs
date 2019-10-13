@@ -4,14 +4,13 @@ using System.Linq;
 using LCARS.Services;
 using LCARS.ViewModels.Environments;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Cors;
 using System.Threading.Tasks;
 
 namespace LCARS.Controllers
 {
-    [Route("api/[controller]")]
-    [EnableCors("AllowAll")]
-    public class EnvironmentsController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class EnvironmentsController : ControllerBase
     {
         private readonly IEnvironmentsService _environmentsService;
 
