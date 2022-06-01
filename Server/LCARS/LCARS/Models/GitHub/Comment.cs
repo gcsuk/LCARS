@@ -2,7 +2,7 @@
 
 namespace LCARS.Models.GitHub;
 
-public class Comment
+public record Comment
 {
     [JsonProperty("created_at")]
     public DateTime DateCreated { get; set; }

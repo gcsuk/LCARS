@@ -1,6 +1,6 @@
 ﻿namespace LCARS.Models.GitHub;
 
-public class Settings
+public record Settings
 {
     public string? Username { get; set; }
     public string? Password { get; set; }

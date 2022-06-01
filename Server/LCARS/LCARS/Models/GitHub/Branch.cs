@@ -1,6 +1,6 @@
 ﻿namespace LCARS.Models.GitHub;
  
-public class Branch
+public record Branch
 {
     public string? Name { get; set; }
 }

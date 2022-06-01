@@ -23,7 +23,7 @@ namespace LCARS.Services
             var branches = new List<Branch>();
 
             foreach (var repository in _repositories)
-                branches.AddRange(await _gitHubClient.GetData<Branch>(_apiKey, _owner, repository, "branches", 1));
+                branches.AddRange(await _gitHubClient.GetBranches(_apiKey, _owner, repository, 1));
 
             return branches;
         }
@@ -34,11 +34,11 @@ namespace LCARS.Services
 
             foreach (var repository in _repositories)
             {
-                var pulls = await _gitHubClient.GetData<PullRequest>(_apiKey, _owner, repository, "pulls", 1);
+                var pulls = await _gitHubClient.GetPullRequests(_apiKey, _owner, repository, 1);
 
                 if (includeComments)
                     foreach (var pr in pulls)
-                        pr.Comments = await _gitHubClient.GetData<Comment>(_apiKey, _owner, repository, $"pulls/{pr.Number}/comments", 1);
+                        pr.Comments = await _gitHubClient.GetPullRequestComments(_apiKey, _owner, repository, pr.Number, 1);
 
                 pullRequests.AddRange(pulls);
             }

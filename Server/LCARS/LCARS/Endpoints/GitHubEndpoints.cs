@@ -22,7 +22,7 @@ public class GitHubEndpoints : IEndpoints
             .WithTags(Tag);
     }
 
-    internal static async Task<IResult> GetPullRequests(IGitHubService gitHubService) => Results.Ok(await gitHubService.GetPullRequests(false));
+    internal static async Task<IResult> GetPullRequests(IGitHubService gitHubService) => Results.Ok(await gitHubService.GetPullRequests(true));
 
     internal static async Task<IResult> GetBranches(IGitHubService gitHubService) => Results.Ok(await gitHubService.GetBranches());
 
