@@ -24,7 +24,6 @@ stages:
             inputs:
               projects: "**/*.sln"
               command: "build"
-              arguments: "--configuration $(buildConfiguration)"
 
           # Publish projects to specified folder.
           - task: DotNetCoreCLI@2
