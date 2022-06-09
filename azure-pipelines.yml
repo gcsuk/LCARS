@@ -4,39 +4,9 @@ stages:
     jobs:
       - job: build_job
         steps:
-          - task: UseDotNet@2
-            displayName: "Install .NET Core SDK"
-            inputs:
-              version: 6.x
-              performMultiLevelLookup: true
-              includePreviewVersions: true # Required for preview versions
-
-          - task: DotNetCoreCLI@2
-            displayName: "Dotnet Restore"
-            inputs:
-              command: "restore"
-              feedsToUse: "select"
-              projects: "**/*.csproj"
-              includeNuGetOrg: true
-
-          - task: DotNetCoreCLI@2
-            displayName: "Dotnet Build"
-            inputs:
-              projects: "**/*.sln"
-              command: "build"
-
-          # Publish projects to specified folder.
-          - task: DotNetCoreCLI@2
-            displayName: "Dotnet Publish"
-            inputs:
-              command: "publish"
-              publishWebProjects: true
-              projects: "**/*.csproj"
-              arguments: "-o $(Build.ArtifactStagingDirectory)"
-              zipAfterPublish: true
-              modifyOutputPath: true
-            # this code takes all the files in $(Build.ArtifactStagingDirectory) and uploads them as an artifact of your build.
-          - task: PublishPipelineArtifact@1
-            inputs:
-              targetPath: "$(Build.ArtifactStagingDirectory)"
-              artifactName: "artefactName"
+        - task: Docker@2
+          inputs:
+            containerRegistry: 'Docker Hub'
+            repository: 'lcars'
+            command: 'buildAndPush'
+            Dockerfile: '**/Dockerfile'
