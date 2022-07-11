@@ -7,14 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["LCARS/LCARS.csproj", "LCARS/"]
-RUN dotnet restore "LCARS/LCARS.csproj"
-COPY . .
-WORKDIR "/src/LCARS"
-RUN dotnet build "LCARS.csproj" -c Release -o /app/build
+COPY ./Server/LCARS/LCARS.csproj .
+RUN dotnet restore ./LCARS.csproj
+COPY ./Server/LCARS .
 
 FROM build AS publish
-RUN dotnet publish "LCARS.csproj" -c Release -o /app/publish
+WORKDIR /src
+RUN dotnet publish ./LCARS.csproj -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app

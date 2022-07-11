@@ -10,3 +10,4 @@ stages:
             repository: 'darlorob/lcars'
             command: 'buildAndPush'
             Dockerfile: '**/Dockerfile'
+            buildContext: '$(Build.Repository.LocalPath)'
