@@ -1,19 +1,15 @@
-﻿using Newtonsoft.Json;
-
-namespace LCARS.Models.GitHub;
+﻿namespace LCARS.Models.TeamCity;
 
 public record ProjectResponse
 {
-    public int Count { get; set; }
+    public int? Count { get; set; } = default;
 
     public IEnumerable<ProjectDetails> Project { get; set; } = Enumerable.Empty<ProjectDetails>();
 
     public record ProjectDetails
     {
-        [JsonProperty("id")]
-        public string Id { get; set; }
+        public string? Id { get; set; } = default;
 
-        [JsonProperty("name")]
-        public string? Name { get; set; }
+        public string? Name { get; set; } = default;
     }
 }

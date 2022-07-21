@@ -1,4 +1,4 @@
-﻿namespace LCARS.Models.GitHub;
+﻿namespace LCARS.Models.TeamCity;
 
 public record Project
 {

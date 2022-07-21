@@ -1,4 +1,4 @@
-﻿using LCARS.Models.GitHub;
+﻿using LCARS.Models.TeamCity;
 using Refit;
 
 namespace LCARS.Services.ApiClients;
@@ -8,4 +8,10 @@ public interface ITeamCityClient
 {
     [Get("/projects")]
     Task<ProjectResponse> GetProjects([Header("Authorization")] string token);
+
+    [Get("/builds")]
+    Task<BuildCompleteResponse> GetBuildsComplete([Header("Authorization")] string token);
+
+    [Get("/builds?locator=running:true")]
+    Task<BuildRunningResponse> GetBuildsRunning([Header("Authorization")] string token);
 }

@@ -1,4 +1,4 @@
-﻿using LCARS.Models.GitHub;
+﻿using LCARS.Models.TeamCity;
 using LCARS.Services.ApiClients;
 
 namespace LCARS.Services
@@ -22,6 +22,36 @@ namespace LCARS.Services
             {
                 Id = p.Id,
                 Name  = p.Name
+            });
+        }
+
+        public async Task<IEnumerable<Build>> GetBuildsComplete()
+        {
+            var response = await _teamCityClient.GetBuildsComplete(_apiKey);
+
+            return response.Build.Select(b => new Build
+            {
+                Id = b.Id,
+                Number = b.Number,
+                State = b.State,
+                Status = b.Status,
+                Branch = b.BranchName,
+                PercentageComplete = 100
+            });
+        }
+
+        public async Task<IEnumerable<Build>> GetBuildsRunning()
+        {
+            var response = await _teamCityClient.GetBuildsRunning(_apiKey);
+
+            return response.Build.Select(b => new Build
+            {
+                Id = b.Id,
+                Number = b.Number,
+                State = b.State,
+                Status = b.Status,
+                Branch = b.BranchName,
+                PercentageComplete = b.PercentageComplete
             });
         }
     }
