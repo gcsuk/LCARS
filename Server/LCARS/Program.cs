@@ -11,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddRefitClient<IGitHubClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration["GitHub:BaseUrl"]));
+builder.Services.AddRefitClient<ITeamCityClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(builder.Configuration["TeamCity:BaseUrl"]));
 
 builder.Services.AddEndpoints<Program>(builder.Configuration);
 
