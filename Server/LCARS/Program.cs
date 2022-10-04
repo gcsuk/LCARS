@@ -1,6 +1,4 @@
 using LCARS.Endpoints;
-using LCARS.Services.ApiClients;
-using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -23,6 +23,10 @@ public class JiraEndpoints : IEndpoints
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {
         services.AddRefitClient<IJiraClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(configuration["Jira:BaseUrl"]));
-        services.AddScoped<IJiraService, JiraService>();
+
+        if (Convert.ToBoolean(configuration["EnableMocks"]))
+            services.AddScoped<IJiraService, MockJiraService>();
+        else
+            services.AddScoped<IJiraService, JiraService>();
     }
 }

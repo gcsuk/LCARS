@@ -1,6 +1,7 @@
 ﻿using LCARS.Endpoints;
 using LCARS.GitHub.Models;
 using LCARS.Services.ApiClients;
+using LCARS.TeamCity;
 using Refit;
 
 namespace LCARS.GitHub;
@@ -30,6 +31,10 @@ public class GitHubEndpoints : IEndpoints
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {
         services.AddRefitClient<IGitHubClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(configuration["GitHub:BaseUrl"]));
-        services.AddScoped<IGitHubService, GitHubService>();
+
+        if (Convert.ToBoolean(configuration["EnableMocks"]))
+            services.AddScoped<IGitHubService, MockGitHubService>();
+        else
+            services.AddScoped<IGitHubService, GitHubService>();
     }
 }

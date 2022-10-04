@@ -2,7 +2,7 @@
 
 namespace LCARS.GitHub.Models;
 
-public record User
+public class User
 {
     [JsonProperty("login")]
     public string? Name { get; set; }
