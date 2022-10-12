@@ -30,7 +30,12 @@ public class GitHubEndpoints : IEndpoints
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddRefitClient<IGitHubClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(configuration["GitHub:BaseUrl"]));
+        var baseUrl = configuration["TeamCity:BaseUrl"];
+
+        if (string.IsNullOrEmpty(baseUrl))
+            return;
+
+        services.AddRefitClient<IGitHubClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(baseUrl));
 
         if (Convert.ToBoolean(configuration["EnableMocks"]))
             services.AddScoped<IGitHubService, MockGitHubService>();

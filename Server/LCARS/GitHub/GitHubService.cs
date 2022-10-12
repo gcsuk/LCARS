@@ -8,14 +8,14 @@ namespace LCARS.GitHub
         private readonly IGitHubClient _gitHubClient;
         private readonly string _apiKey;
         private readonly string _owner;
-        private readonly List<string> _repositories;
+        private readonly IEnumerable<string> _repositories;
 
         public GitHubService(IConfiguration configuration, IGitHubClient gitHubClient)
         {
             _gitHubClient = gitHubClient;
             _apiKey = $"Bearer {configuration["GitHub:Key"]}";
-            _owner = configuration["GitHub:Owner"];
-            _repositories = configuration.GetSection("GitHub:Repositories").Get<List<string>>();
+            _owner = configuration["GitHub:Owner"] ?? "";
+            _repositories = configuration.GetSection("GitHub:Repositories").Get<List<string>>() ?? Enumerable.Empty<string>();
         }
 
         public async Task<IEnumerable<Branch>> GetBranches()

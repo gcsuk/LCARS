@@ -36,7 +36,12 @@ public class TeamCityEndpoints : IEndpoints
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddRefitClient<ITeamCityClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(configuration["TeamCity:BaseUrl"]));
+        var baseUrl = configuration["TeamCity:BaseUrl"];
+
+        if (string.IsNullOrEmpty(baseUrl))
+            return;
+
+        services.AddRefitClient<ITeamCityClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(baseUrl));
 
         if (Convert.ToBoolean(configuration["EnableMocks"]))
             services.AddScoped<ITeamCityService, MockTeamCityService>();
