@@ -1,7 +1,7 @@
 ﻿using LCARS.Jira.Models;
 using Refit;
 
-namespace LCARS.Services.ApiClients;
+namespace LCARS.Jira;
 
 public interface IJiraClient
 {

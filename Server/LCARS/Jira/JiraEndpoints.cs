@@ -1,6 +1,5 @@
 ﻿using LCARS.Endpoints;
 using LCARS.Jira.Models;
-using LCARS.Services.ApiClients;
 using Refit;
 
 namespace LCARS.Jira;

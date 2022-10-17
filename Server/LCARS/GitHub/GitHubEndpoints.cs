@@ -1,7 +1,5 @@
 ﻿using LCARS.Endpoints;
 using LCARS.GitHub.Models;
-using LCARS.Services.ApiClients;
-using LCARS.TeamCity;
 using Refit;
 
 namespace LCARS.GitHub;
@@ -14,12 +12,12 @@ public class GitHubEndpoints : IEndpoints
     public static void DefineEndpoints(IEndpointRouteBuilder app)
     {
         app.MapGet($"{BaseRoute}/pullrequests", GetPullRequests)
-            .WithName("GetPullRequests")
+            .WithName("GetGitHubPullRequests")
             .Produces<IEnumerable<PullRequest>>(200)
             .WithTags(Tag);
 
         app.MapGet($"{BaseRoute}/branches", GetBranches)
-            .WithName("GetBranches")
+            .WithName("GetGitHubBranches")
             .Produces<IEnumerable<Branch>>(200)
             .WithTags(Tag);
     }

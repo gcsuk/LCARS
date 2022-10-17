@@ -1,7 +1,7 @@
 ﻿using LCARS.TeamCity.Models;
 using Refit;
 
-namespace LCARS.Services.ApiClients;
+namespace LCARS.TeamCity;
 
 [Headers(new[] { "Accept: application/json" })]
 public interface ITeamCityClient

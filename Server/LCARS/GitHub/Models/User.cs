@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace LCARS.GitHub.Models;
 
 public class User
 {
-    [JsonProperty("login")]
+    [JsonPropertyName("login")]
     public string? Name { get; set; }
 
-    [JsonProperty("avatar_url")]
+    [JsonPropertyName("avatar_url")]
     public string? Avatar { get; set; }
 }

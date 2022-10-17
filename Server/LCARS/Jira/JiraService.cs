@@ -1,5 +1,4 @@
 ﻿using LCARS.Jira.Models;
-using LCARS.Services.ApiClients;
 
 namespace LCARS.Jira
 {

@@ -1,5 +1,4 @@
 ﻿using LCARS.TeamCity.Models;
-using LCARS.Services.ApiClients;
 
 namespace LCARS.TeamCity
 {

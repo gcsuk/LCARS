@@ -1,5 +1,4 @@
 ﻿using LCARS.GitHub.Models;
-using LCARS.Services.ApiClients;
 
 namespace LCARS.GitHub
 {

@@ -1,7 +1,7 @@
 ﻿using LCARS.GitHub.Models;
 using Refit;
 
-namespace LCARS.Services.ApiClients;
+namespace LCARS.GitHub;
 
 [Headers(new[] { "User-Agent: LCARS" })]
 public interface IGitHubClient
