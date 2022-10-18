@@ -1,4 +1,5 @@
-﻿using LCARS.BitBucket.Responses;
+﻿using LCARS.BitBucket.Models;
+using LCARS.BitBucket.Responses;
 
 namespace LCARS.BitBucket;
 
@@ -27,13 +28,25 @@ public class BitBucketService : IBitBucketService
 
         foreach (var repository in _repositories)
         {
-            var branchSet = await _bitBucketClient.GetBranches(accessToken, _owner, repository, 10, 1);
+            var page = 1;
 
-            branches.AddRange(branchSet.Values.Select(b => new Branch
+            while (true)
             {
-                Repository = repository,
-                BranchName = b.Name
-            }));
+                var branchSet = await _bitBucketClient.GetBranches(accessToken, _owner, repository, 100, page);
+
+                if (!branchSet.Values.Any())
+                    break;
+
+                branches.AddRange(branchSet.Values.Select(b => new Branch
+                {
+                    Repository = repository,
+                    BranchName = b.Name,
+                    DateCreated = b.Target.Date,
+                    User = b.Target?.Author?.User?.Name
+                }));
+
+                page++;
+            }
         }
 
         return branches;
@@ -47,19 +60,29 @@ public class BitBucketService : IBitBucketService
 
         foreach (var repository in _repositories)
         {
-            var pulls = await _bitBucketClient.GetPullRequests(accessToken, _owner, repository, 10, 1);
+            var page = 1;
 
-            pullRequests.AddRange(pulls.Values.Select(p => new PullRequest
+            while (true)
             {
-                Number = p.Number,
-                Title = p.Title,
-                Description = p.Description,
-                State = p.State,
-                CreatedOn = p.CreatedOn,
-                UpdatedOn = p.UpdatedOn,
-                CommentCount = p.CommentCount,
-                Author = p.User.Name
-            }));
+                var pulls = await _bitBucketClient.GetPullRequests(accessToken, _owner, repository, 50, page);
+
+                if (!pulls.Values.Any())
+                    break;
+
+                pullRequests.AddRange(pulls.Values.Select(p => new PullRequest
+                {
+                    Number = p.Number,
+                    Title = p.Title,
+                    Description = p.Description,
+                    State = p.State,
+                    CreatedOn = p.CreatedOn,
+                    UpdatedOn = p.UpdatedOn,
+                    CommentCount = p.CommentCount,
+                    Author = p.User.Name
+                }));
+
+                page++;
+            }
         }
 
         return pullRequests;

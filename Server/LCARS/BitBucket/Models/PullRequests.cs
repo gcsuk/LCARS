@@ -24,7 +24,7 @@ public record PullRequests
 
         public record AuthorModel
         {
-            [JsonPropertyName("display_name")]
+            [JsonPropertyName("nickname")]
             public string? Name { get; set; }
         }
     }
