@@ -1,4 +1,4 @@
-﻿using LCARS.GitHub.Models;
+﻿using LCARS.GitHub.Responses;
 
 namespace LCARS.GitHub;
 

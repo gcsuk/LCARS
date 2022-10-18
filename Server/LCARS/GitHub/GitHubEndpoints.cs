@@ -28,7 +28,7 @@ public class GitHubEndpoints : IEndpoints
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {
-        var baseUrl = configuration["TeamCity:BaseUrl"];
+        var baseUrl = configuration["GitHub:BaseUrl"];
 
         if (string.IsNullOrEmpty(baseUrl))
             return;

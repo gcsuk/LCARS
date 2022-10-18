@@ -71,6 +71,7 @@ public class BitBucketService : IBitBucketService
 
                 pullRequests.AddRange(pulls.Values.Select(p => new PullRequest
                 {
+                    Repository = repository,
                     Number = p.Number,
                     Title = p.Title,
                     Description = p.Description,
