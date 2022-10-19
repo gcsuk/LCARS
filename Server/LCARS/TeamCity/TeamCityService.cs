@@ -1,4 +1,4 @@
-﻿using LCARS.TeamCity.Models;
+﻿using LCARS.TeamCity.Responses;
 
 namespace LCARS.TeamCity
 {
@@ -17,7 +17,7 @@ namespace LCARS.TeamCity
         {
             var response = await _teamCityClient.GetProjects(_apiKey);
 
-            return response.Project.Select(p => new Project
+            return response.ProjectData.Select(p => new Project
             {
                 Id = p.Id,
                 Name = p.Name

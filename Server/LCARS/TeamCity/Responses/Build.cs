@@ -1,4 +1,4 @@
-﻿namespace LCARS.TeamCity.Models;
+﻿namespace LCARS.TeamCity.Responses;
 
 public record Build
 {

@@ -7,11 +7,11 @@ namespace LCARS.TeamCity;
 public interface ITeamCityClient
 {
     [Get("/projects")]
-    Task<ProjectResponse> GetProjects([Header("Authorization")] string token);
+    Task<Project> GetProjects([Header("Authorization")] string token);
 
     [Get("/builds")]
-    Task<BuildCompleteResponse> GetBuildsComplete([Header("Authorization")] string token);
+    Task<BuildComplete> GetBuildsComplete([Header("Authorization")] string token);
 
     [Get("/builds?locator=running:true")]
-    Task<BuildRunningResponse> GetBuildsRunning([Header("Authorization")] string token);
+    Task<BuildRunning> GetBuildsRunning([Header("Authorization")] string token);
 }

@@ -1,8 +1,18 @@
-﻿namespace LCARS.TeamCity.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace LCARS.TeamCity.Models;
 
 public record Project
 {
-    public string? Id { get; set; }
-    
-    public string? Name { get; set; }
+    public int? Count { get; set; } = default;
+
+    [JsonPropertyName("project")]
+    public IEnumerable<ProjectDetails> ProjectData { get; set; } = Enumerable.Empty<ProjectDetails>();
+
+    public record ProjectDetails
+    {
+        public string? Id { get; set; } = default;
+
+        public string? Name { get; set; } = default;
+    }
 }

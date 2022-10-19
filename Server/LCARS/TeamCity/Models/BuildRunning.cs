@@ -1,6 +1,6 @@
 ﻿namespace LCARS.TeamCity.Models;
 
-public record BuildRunningResponse
+public record BuildRunning
 {
     public int? Count { get; set; } = default;
 

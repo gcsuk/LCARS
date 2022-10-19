@@ -6,5 +6,5 @@ namespace LCARS.Jira;
 public interface IJiraClient
 {
     [Get("/search?jql=project=lcar&fields=status,issuetype,summary,description")]
-    Task<IssueResponse> GetIssues([Header("Authorization")] string token);
+    Task<Issue> GetIssues([Header("Authorization")] string token);
 }

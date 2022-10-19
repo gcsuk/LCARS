@@ -1,4 +1,4 @@
-﻿using LCARS.TeamCity.Models;
+﻿using LCARS.TeamCity.Responses;
 
 namespace LCARS.TeamCity
 {

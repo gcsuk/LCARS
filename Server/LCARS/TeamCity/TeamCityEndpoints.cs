@@ -1,5 +1,5 @@
 ﻿using LCARS.Endpoints;
-using LCARS.TeamCity.Models;
+using LCARS.TeamCity.Responses;
 using Refit;
 
 namespace LCARS.TeamCity;

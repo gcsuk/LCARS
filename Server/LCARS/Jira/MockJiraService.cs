@@ -1,4 +1,4 @@
-﻿using LCARS.Jira.Models;
+﻿using LCARS.Jira.Responses;
 
 namespace LCARS.Jira
 {

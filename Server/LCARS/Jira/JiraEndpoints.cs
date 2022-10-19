@@ -1,5 +1,5 @@
 ﻿using LCARS.Endpoints;
-using LCARS.Jira.Models;
+using LCARS.Jira.Responses;
 using Refit;
 
 namespace LCARS.Jira;
