@@ -1,5 +1,4 @@
 ﻿using LCARS.Endpoints;
-using LCARS.BitBucket.Responses;
 using Refit;
 
 namespace LCARS.BitBucket;
@@ -41,9 +40,9 @@ public class BitBucketEndpoints : IEndpoints
         services.AddRefitClient<IBitBucketAuthClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(authUrl));
         services.AddRefitClient<IBitBucketClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(baseUrl));
 
-        //if (Convert.ToBoolean(configuration["EnableMocks"]))
-          //  services.AddScoped<IBitBucketService, MockBitBucketService>();
-        //else
+        if (Convert.ToBoolean(configuration["EnableMocks"]))
+            services.AddScoped<IBitBucketService, MockBitBucketService>();
+        else
             services.AddScoped<IBitBucketService, BitBucketService>();
     }
 }
