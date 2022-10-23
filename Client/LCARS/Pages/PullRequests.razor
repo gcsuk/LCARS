@@ -1,0 +1,44 @@
+﻿@page "/pullrequests"
+
+<PageTitle>LCARS | Pull Requests</PageTitle>
+
+@using LCARS.Data
+@inject PullRequestService pullRequestService
+
+<Header Text="Pull Requests" />
+
+@if (pullRequests == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="container">
+        <div class="header">
+            <div class="date">Date Created</div>
+            <div class="repository">Repository</div>
+            <div class="title">Title</div>
+            <div class="author">Author</div>
+            <div class="comments">Comments</div>
+        </div>
+        <div class="data">
+            @foreach (var pr in pullRequests)
+            {
+                <div class="date">@pr.CreatedOn</div>
+                <div class="repository">@pr.Repository</div>
+                <div class="title">@pr.Title</div>
+                <div class="author">@pr.Author</div>
+                <div class="comments">@pr.CommentCount</div>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    private IEnumerable<PullRequest>? pullRequests;
+
+    protected override async Task OnInitializedAsync()
+    {
+        pullRequests = await pullRequestService.GetPullRequestsAsync();
+    }
+}

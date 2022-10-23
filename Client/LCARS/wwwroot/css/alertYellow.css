@@ -1,0 +1,51 @@
+.condition-yellow header {
+  background-color: #DAD81D;
+}
+
+  .condition-yellow header .left {
+    background-color: #DAD81D
+  }
+
+  .condition-yellow header .middle tr {
+    color: #fff!important
+  }
+
+  .condition-yellow header .middle tr.white {
+    color: #DAD81D!important
+  }
+
+  .condition-yellow header .right .buttons div {
+    background-color: #DAD81D!important
+  }
+
+  .condition-yellow header .right .title {
+    color: #DAD81D!important
+  }
+
+  .condition-yellow header .right .title span {
+    color: #DAD81D!important
+  }
+
+  .condition-yellow header .box-pattern span {
+    background-color: #DAD81D!important
+  }
+
+.condition-yellow .body  {
+  background-color: #DAD81D
+}
+
+.condition-yellow aside div {
+  background-color: #DAD81D!important
+}
+
+.condition-yellow main {
+  background-color: #DAD81D;
+}
+
+  .condition-yellow main .box-pattern {
+    background-color: #DAD81D
+  }
+
+    .condition-yellow main .box-pattern span {
+      background-color: #DAD81D!important
+    }
