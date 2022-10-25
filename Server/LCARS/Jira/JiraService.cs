@@ -1,29 +1,35 @@
-﻿using LCARS.Jira.Responses;
+﻿using LCARS.Configuration.Models;
+using LCARS.Jira.Responses;
 
 namespace LCARS.Jira
 {
     public class JiraService : IJiraService
     {
-        private readonly string _apiKey;
         private readonly IJiraClient _jiraClient;
 
-        public JiraService(IConfiguration configuration, IJiraClient jiraClient)
+        public JiraService(IJiraClient jiraClient)
         {
-            _apiKey = $"Bearer {configuration["Jira:AccessToken"]}";
             _jiraClient = jiraClient;
         }
 
-        public async Task<IEnumerable<Issue>> GetIssues()
+        public async Task<IEnumerable<Issue>> GetIssues(JiraSettings settings)
         {
-            var response = await _jiraClient.GetIssues(_apiKey);
+            List<Issue> issues = new();
 
-            return response.Issues.Select(i => new Issue
+            foreach (var project in settings.Projects)
             {
-                Name = i.Fields?.Summary,
-                IssueType = i?.Fields?.IssueType?.Name,
-                Description = i?.Fields?.Description,
-                Status = i?.Fields?.Status?.Name,
-            });
+                var response = await _jiraClient.GetIssues(settings.AccessToken, project);
+
+                issues.AddRange(response.Issues.Select(i => new Issue
+                {
+                    Name = i.Fields?.Summary,
+                    IssueType = i?.Fields?.IssueType?.Name,
+                    Description = i?.Fields?.Description,
+                    Status = i?.Fields?.Status?.Name,
+                }));
+            }
+
+            return issues;
         }
     }
 }

@@ -1,12 +1,13 @@
-﻿using LCARS.TeamCity.Responses;
+﻿using LCARS.Configuration.Models;
+using LCARS.TeamCity.Responses;
 
 namespace LCARS.TeamCity;
 
 public interface ITeamCityService
 {
-    Task<IEnumerable<Project>> GetProjects();
+    Task<IEnumerable<Project>> GetProjects(TeamCitySettings settings);
 
-    Task<IEnumerable<Build>> GetBuildsComplete();
+    Task<IEnumerable<Build>> GetBuildsComplete(TeamCitySettings settings);
 
-    Task<IEnumerable<Build>> GetBuildsRunning();
+    Task<IEnumerable<Build>> GetBuildsRunning(TeamCitySettings settings);
 }

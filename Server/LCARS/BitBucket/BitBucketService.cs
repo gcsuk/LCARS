@@ -1,38 +1,32 @@
-﻿using LCARS.BitBucket.Models;
-using LCARS.BitBucket.Responses;
+﻿using LCARS.BitBucket.Responses;
+using LCARS.Configuration.Models;
 
 namespace LCARS.BitBucket;
 
 public class BitBucketService : IBitBucketService
 {
-    private readonly IConfiguration _configuration;
     private readonly IBitBucketAuthClient _bitBucketAuthClient;
     private readonly IBitBucketClient _bitBucketClient;
-    private readonly string _owner;
-    private readonly IEnumerable<string> _repositories;
 
-    public BitBucketService(IConfiguration configuration, IBitBucketAuthClient bitBucketAuthClient, IBitBucketClient bitBucketClient)
+    public BitBucketService(IBitBucketAuthClient bitBucketAuthClient, IBitBucketClient bitBucketClient)
     {
-        _configuration = configuration;
         _bitBucketAuthClient = bitBucketAuthClient;
         _bitBucketClient = bitBucketClient;
-        _owner = configuration["BitBucket:Owner"] ?? "";
-        _repositories = configuration.GetSection("BitBucket:Repositories").Get<List<string>>() ?? Enumerable.Empty<string>();
     }
 
-    public async Task<IEnumerable<Branch>> GetBranches()
+    public async Task<IEnumerable<Branch>> GetBranches(BitBucketSettings settings)
     {
-        var accessToken = await GetAccessToken();
+        var accessToken = await GetAccessToken(settings);
 
         var branches = new List<Branch>();
 
-        foreach (var repository in _repositories)
+        foreach (var repository in settings.Repositories)
         {
             var page = 1;
 
             while (true)
             {
-                var branchSet = await _bitBucketClient.GetBranches(accessToken, _owner, repository, 100, page);
+                var branchSet = await _bitBucketClient.GetBranches(accessToken, settings.Owner, repository, 100, page);
 
                 if (!branchSet.Values.Any())
                     break;
@@ -52,19 +46,19 @@ public class BitBucketService : IBitBucketService
         return branches;
     }
 
-    public async Task<IEnumerable<PullRequest>> GetPullRequests()
+    public async Task<IEnumerable<PullRequest>> GetPullRequests(BitBucketSettings settings)
     {
-        var accessToken = await GetAccessToken();
+        var accessToken = await GetAccessToken(settings);
 
         var pullRequests = new List<PullRequest>();
 
-        foreach (var repository in _repositories)
+        foreach (var repository in settings.Repositories)
         {
             var page = 1;
 
             while (true)
             {
-                var pulls = await _bitBucketClient.GetPullRequests(accessToken, _owner, repository, 50, page);
+                var pulls = await _bitBucketClient.GetPullRequests(accessToken, settings.Owner, repository, 50, page);
 
                 if (!pulls.Values.Any())
                     break;
@@ -89,9 +83,9 @@ public class BitBucketService : IBitBucketService
         return pullRequests;
     }
 
-    private async Task<string> GetAccessToken()
+    private async Task<string> GetAccessToken(BitBucketSettings settings)
     {
-        var authenticationString = $"{_configuration["BitBucket:Username"]}:{_configuration["BitBucket:Password"]}";
+        var authenticationString = $"{settings.Username}:{settings.Password}";
         var base64EncodedAuthenticationString = $"Basic {Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(authenticationString))}";
 
         var content = new FormUrlEncodedContent(new List<KeyValuePair<string, string>>

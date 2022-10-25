@@ -1,4 +1,5 @@
-﻿using LCARS.Endpoints;
+﻿using LCARS.Configuration;
+using LCARS.Endpoints;
 using LCARS.TeamCity.Responses;
 using Refit;
 
@@ -27,11 +28,32 @@ public class TeamCityEndpoints : IEndpoints
             .WithTags(Tag);
     }
 
-    internal static async Task<IResult> GetProjects(ITeamCityService teamCityService) => Results.Ok(await teamCityService.GetProjects());
+    internal static async Task<IResult> GetProjects(ITeamCityService teamCityService, ISettingsService settingsService)
+    {
+        var settings = await settingsService.GetTeamCitySettings();
 
-    internal static async Task<IResult> GetBuildsComplete(ITeamCityService teamCityService) => Results.Ok(await teamCityService.GetBuildsComplete());
+        var projects = await teamCityService.GetProjects(settings);
 
-    internal static async Task<IResult> GetBuildsRunning(ITeamCityService teamCityService) => Results.Ok(await teamCityService.GetBuildsRunning());
+        return Results.Ok();
+    }
+
+    internal static async Task<IResult> GetBuildsComplete(ITeamCityService teamCityService, ISettingsService settingsService)
+    {
+        var settings = await settingsService.GetTeamCitySettings();
+
+        var builds = await teamCityService.GetBuildsComplete(settings);
+
+        return Results.Ok();
+    }
+
+    internal static async Task<IResult> GetBuildsRunning(ITeamCityService teamCityService, ISettingsService settingsService)
+    {
+        var settings = await settingsService.GetTeamCitySettings();
+
+        var builds = await teamCityService.GetBuildsRunning(settings);
+
+        return Results.Ok();
+    }
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {

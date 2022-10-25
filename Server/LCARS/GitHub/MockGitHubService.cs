@@ -1,10 +1,11 @@
-﻿using LCARS.GitHub.Responses;
+﻿using LCARS.Configuration.Models;
+using LCARS.GitHub.Responses;
 
 namespace LCARS.GitHub;
 
 public class MockGitHubService : IGitHubService
 {
-    public async Task<IEnumerable<Branch>> GetBranches() => await Task.FromResult(new List<Branch>
+    public async Task<IEnumerable<Branch>> GetBranches(GitHubSettings settings) => await Task.FromResult(new List<Branch>
     {
         new Branch { Repository = "my-repo", BranchName = "branch-1" },
         new Branch { Repository = "my-repo", BranchName = "branch-2" },
@@ -18,7 +19,7 @@ public class MockGitHubService : IGitHubService
         new Branch { Repository = "my-repo", BranchName = "branch-10" }
     });
 
-    public async Task<IEnumerable<PullRequest>> GetPullRequests(bool includeComments = false) => await Task.FromResult(new List<PullRequest>
+    public async Task<IEnumerable<PullRequest>> GetPullRequests(GitHubSettings settings, bool includeComments = false) => await Task.FromResult(new List<PullRequest>
     {
         new PullRequest
         {

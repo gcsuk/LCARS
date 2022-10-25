@@ -1,10 +1,11 @@
-﻿using LCARS.Jira.Responses;
+﻿using LCARS.Configuration.Models;
+using LCARS.Jira.Responses;
 
 namespace LCARS.Jira
 {
     public class MockJiraService : IJiraService
     {
-        public async Task<IEnumerable<Issue>> GetIssues() => await Task.FromResult(new List<Issue> {
+        public async Task<IEnumerable<Issue>> GetIssues(JiraSettings settings) => await Task.FromResult(new List<Issue> {
             new Issue
             {
                 Name = "A User Story",

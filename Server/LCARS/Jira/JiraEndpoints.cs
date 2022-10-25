@@ -1,4 +1,5 @@
-﻿using LCARS.Endpoints;
+﻿using LCARS.Configuration;
+using LCARS.Endpoints;
 using LCARS.Jira.Responses;
 using Refit;
 
@@ -17,7 +18,14 @@ public class JiraEndpoints : IEndpoints
             .WithTags(Tag);
     }
 
-    internal static async Task<IResult> GetIssues(IJiraService jiraService) => Results.Ok(await jiraService.GetIssues());
+    internal static async Task<IResult> GetIssues(IJiraService jiraService, ISettingsService settingsService)
+    {
+        var settings = await settingsService.GetJiraSettings();
+
+        var issues = await jiraService.GetIssues(settings);
+
+        return Results.Ok(issues);
+    }
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {

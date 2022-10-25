@@ -1,21 +1,20 @@
-﻿using LCARS.TeamCity.Responses;
+﻿using LCARS.Configuration.Models;
+using LCARS.TeamCity.Responses;
 
 namespace LCARS.TeamCity
 {
     public class TeamCityService : ITeamCityService
     {
         private readonly ITeamCityClient _teamCityClient;
-        private readonly string _apiKey;
 
-        public TeamCityService(IConfiguration configuration, ITeamCityClient teamCityClient)
+        public TeamCityService(ITeamCityClient teamCityClient)
         {
             _teamCityClient = teamCityClient;
-            _apiKey = $"Bearer {configuration["TeamCity:AccessToken"]}";
         }
 
-        public async Task<IEnumerable<Project>> GetProjects()
+        public async Task<IEnumerable<Project>> GetProjects(TeamCitySettings settings)
         {
-            var response = await _teamCityClient.GetProjects(_apiKey);
+            var response = await _teamCityClient.GetProjects(settings.AccessToken);
 
             return response.ProjectData.Select(p => new Project
             {
@@ -24,9 +23,9 @@ namespace LCARS.TeamCity
             });
         }
 
-        public async Task<IEnumerable<Build>> GetBuildsComplete()
+        public async Task<IEnumerable<Build>> GetBuildsComplete(TeamCitySettings settings)
         {
-            var response = await _teamCityClient.GetBuildsComplete(_apiKey);
+            var response = await _teamCityClient.GetBuildsComplete(settings.AccessToken);
 
             return response.Build.Select(b => new Build
             {
@@ -39,9 +38,9 @@ namespace LCARS.TeamCity
             });
         }
 
-        public async Task<IEnumerable<Build>> GetBuildsRunning()
+        public async Task<IEnumerable<Build>> GetBuildsRunning(TeamCitySettings settings)
         {
-            var response = await _teamCityClient.GetBuildsRunning(_apiKey);
+            var response = await _teamCityClient.GetBuildsRunning(settings.AccessToken);
 
             return response.Build.Select(b => new Build
             {

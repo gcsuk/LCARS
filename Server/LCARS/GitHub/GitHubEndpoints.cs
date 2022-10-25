@@ -1,4 +1,5 @@
-﻿using LCARS.Endpoints;
+﻿using LCARS.Configuration;
+using LCARS.Endpoints;
 using LCARS.GitHub.Models;
 using Refit;
 
@@ -22,9 +23,23 @@ public class GitHubEndpoints : IEndpoints
             .WithTags(Tag);
     }
 
-    internal static async Task<IResult> GetPullRequests(IGitHubService gitHubService) => Results.Ok(await gitHubService.GetPullRequests(true));
+    internal static async Task<IResult> GetPullRequests(IGitHubService gitHubService, ISettingsService settingsService)
+    {
+        var settings = await settingsService.GetGitHubSettings();
 
-    internal static async Task<IResult> GetBranches(IGitHubService gitHubService) => Results.Ok(await gitHubService.GetBranches());
+        var pullRequests = await gitHubService.GetPullRequests(settings, true);
+
+        return Results.Ok(pullRequests);
+    }
+
+    internal static async Task<IResult> GetBranches(IGitHubService gitHubService, ISettingsService settingsService)
+    {
+        var settings = await settingsService.GetGitHubSettings();
+
+        var branches = await gitHubService.GetBranches(settings);
+
+        return Results.Ok(branches);
+    }
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {

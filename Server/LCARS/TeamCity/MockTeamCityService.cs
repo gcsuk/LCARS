@@ -1,10 +1,11 @@
-﻿using LCARS.TeamCity.Responses;
+﻿using LCARS.Configuration.Models;
+using LCARS.TeamCity.Responses;
 
 namespace LCARS.TeamCity
 {
     public class MockTeamCityService : ITeamCityService
     {
-        public async Task<IEnumerable<Project>> GetProjects() => await Task.FromResult(new List<Project> {
+        public async Task<IEnumerable<Project>> GetProjects(TeamCitySettings settings) => await Task.FromResult(new List<Project> {
             new Project
             {
                 Id = "1",
@@ -32,7 +33,7 @@ namespace LCARS.TeamCity
             }
         });
 
-        public async Task<IEnumerable<Build>> GetBuildsComplete() => await Task.FromResult(new List<Build> {
+        public async Task<IEnumerable<Build>> GetBuildsComplete(TeamCitySettings settings) => await Task.FromResult(new List<Build> {
             new Build
             {
                 Id = 1,
@@ -44,7 +45,7 @@ namespace LCARS.TeamCity
             }
         });
 
-        public async Task<IEnumerable<Build>> GetBuildsRunning() => await Task.FromResult(new List<Build> {
+        public async Task<IEnumerable<Build>> GetBuildsRunning(TeamCitySettings settings) => await Task.FromResult(new List<Build> {
             new Build
             {
                 Id = 1,

@@ -1,10 +1,11 @@
 ﻿using LCARS.BitBucket.Responses;
+using LCARS.Configuration.Models;
 
 namespace LCARS.BitBucket;
 
 public class MockBitBucketService : IBitBucketService
 {
-    public async Task<IEnumerable<Branch>> GetBranches() => await Task.FromResult(new List<Branch>
+    public async Task<IEnumerable<Branch>> GetBranches(BitBucketSettings settings) => await Task.FromResult(new List<Branch>
     {
         new Branch { Repository = "my-repo", BranchName = "branch-1", DateCreated = DateTime.Now.AddDays(-1), User = "User 1" },
         new Branch { Repository = "my-repo", BranchName = "branch-2", DateCreated = DateTime.Now.AddDays(-2), User = "User 1" },
@@ -18,7 +19,7 @@ public class MockBitBucketService : IBitBucketService
         new Branch { Repository = "my-repo", BranchName = "branch-10", DateCreated = DateTime.Now, User = "User 4" }
     });
 
-    public async Task<IEnumerable<PullRequest>> GetPullRequests() => await Task.FromResult(new List<PullRequest>
+    public async Task<IEnumerable<PullRequest>> GetPullRequests(BitBucketSettings settings) => await Task.FromResult(new List<PullRequest>
     {
         new PullRequest
         {

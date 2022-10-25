@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using LCARS.Configuration;
+using System.Reflection;
 
 namespace LCARS.Endpoints;
 

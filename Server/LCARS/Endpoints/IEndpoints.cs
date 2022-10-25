@@ -1,4 +1,6 @@
-﻿namespace LCARS.Endpoints;
+﻿using LCARS.Configuration;
+
+namespace LCARS.Endpoints;
 
 public interface IEndpoints
 {

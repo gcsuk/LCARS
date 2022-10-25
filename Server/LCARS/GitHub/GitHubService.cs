@@ -1,34 +1,28 @@
-﻿using LCARS.GitHub.Responses;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using LCARS.Configuration.Models;
+using LCARS.GitHub.Responses;
 
 namespace LCARS.GitHub
 {
     public class GitHubService : IGitHubService
     {
         private readonly IGitHubClient _gitHubClient;
-        private readonly string _apiKey;
-        private readonly string _owner;
-        private readonly IEnumerable<string> _repositories;
 
-        public GitHubService(IConfiguration configuration, IGitHubClient gitHubClient)
+        public GitHubService(IGitHubClient gitHubClient)
         {
             _gitHubClient = gitHubClient;
-            _apiKey = $"Bearer {configuration["GitHub:Key"]}";
-            _owner = configuration["GitHub:Owner"] ?? "";
-            _repositories = configuration.GetSection("GitHub:Repositories").Get<List<string>>() ?? Enumerable.Empty<string>();
         }
 
-        public async Task<IEnumerable<Branch>> GetBranches()
+        public async Task<IEnumerable<Branch>> GetBranches(GitHubSettings settings)
         {
             var branches = new List<Branch>();
 
-            foreach (var repository in _repositories)
+            foreach (var repository in settings.Repositories)
             {
                 var page = 1;
 
                 while (true)
                 {
-                    var branchSet = await _gitHubClient.GetBranches(_apiKey, _owner, repository, page);
+                    var branchSet = await _gitHubClient.GetBranches(settings.Key, settings.Owner, repository, page);
 
                     if (!branchSet.Any())
                         break;
@@ -46,17 +40,17 @@ namespace LCARS.GitHub
             return branches;
         }
 
-        public async Task<IEnumerable<PullRequest>> GetPullRequests(bool includeComments = false)
+        public async Task<IEnumerable<PullRequest>> GetPullRequests(GitHubSettings settings, bool includeComments = false)
         {
             var pullRequests = new List<PullRequest>();
 
-            foreach (var repository in _repositories)
+            foreach (var repository in settings.Repositories)
             {
                 var page = 1;
 
                 while (true)
                 {
-                    var pulls = await _gitHubClient.GetPullRequests(_apiKey, _owner, repository, page);
+                    var pulls = await _gitHubClient.GetPullRequests(settings.Key, settings.Owner, repository, page);
 
                     if (!pulls.Any())
                         break;
@@ -84,7 +78,7 @@ namespace LCARS.GitHub
 
                     while (true)
                     {
-                        var comments = await _gitHubClient.GetPullRequestComments(_apiKey, _owner, pr.Repository, pr.Number, page);
+                        var comments = await _gitHubClient.GetPullRequestComments(settings.Key, settings.Owner, pr.Repository, pr.Number, page);
 
                         if (!comments.Any())
                             break;
