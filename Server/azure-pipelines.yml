@@ -9,5 +9,5 @@ stages:
             containerRegistry: 'Docker Hub'
             repository: 'darlorob/lcars'
             command: 'buildAndPush'
-            Dockerfile: '**/Dockerfile'
+            Dockerfile: '**/Server/**/Dockerfile'
             buildContext: '$(Build.Repository.LocalPath)'
