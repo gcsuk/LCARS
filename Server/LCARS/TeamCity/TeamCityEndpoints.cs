@@ -17,13 +17,8 @@ public class TeamCityEndpoints : IEndpoints
             .Produces<IEnumerable<Project>>(200)
             .WithTags(Tag);
 
-        app.MapGet($"{BaseRoute}/builds/complete", GetBuildsComplete)
-            .WithName("GetBuildsComplete")
-            .Produces<IEnumerable<Build>>(200)
-            .WithTags(Tag);
-
-        app.MapGet($"{BaseRoute}/builds/running", GetBuildsRunning)
-            .WithName("GetBuildsRunning")
+        app.MapGet($"{BaseRoute}/builds", GetBuilds)
+            .WithName("GetBuilds")
             .Produces<IEnumerable<Build>>(200)
             .WithTags(Tag);
     }
@@ -34,25 +29,16 @@ public class TeamCityEndpoints : IEndpoints
 
         var projects = await teamCityService.GetProjects(settings);
 
-        return Results.Ok();
+        return Results.Ok(projects);
     }
 
-    internal static async Task<IResult> GetBuildsComplete(ITeamCityService teamCityService, ISettingsService settingsService)
+    internal static async Task<IResult> GetBuilds(ITeamCityService teamCityService, ISettingsService settingsService)
     {
         var settings = await settingsService.GetTeamCitySettings();
 
-        var builds = await teamCityService.GetBuildsComplete(settings);
+        var builds = await teamCityService.GetBuilds(settings);
 
-        return Results.Ok();
-    }
-
-    internal static async Task<IResult> GetBuildsRunning(ITeamCityService teamCityService, ISettingsService settingsService)
-    {
-        var settings = await settingsService.GetTeamCitySettings();
-
-        var builds = await teamCityService.GetBuildsRunning(settings);
-
-        return Results.Ok();
+        return Results.Ok(builds);
     }
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)

@@ -33,28 +33,33 @@ namespace LCARS.TeamCity
             }
         });
 
-        public async Task<IEnumerable<Build>> GetBuildsComplete(TeamCitySettings settings) => await Task.FromResult(new List<Build> {
-            new Build
-            {
-                Id = 1,
-                Number = "1",
-                State = "SUCCESS",
-                Status = "Complete",
-                Branch = "branch-1",
-                PercentageComplete = 100
-            }
-        });
+        public async Task<IEnumerable<Build>> GetBuilds(TeamCitySettings settings)
+        {
+            var builds = new List<Build>();
+            var random = new Random();
 
-        public async Task<IEnumerable<Build>> GetBuildsRunning(TeamCitySettings settings) => await Task.FromResult(new List<Build> {
-            new Build
+            for (var i = 1; i <= 50; i++)
             {
-                Id = 1,
-                Number = "1",
-                State = "BUILDING",
-                Status = "Complete",
-                Branch = "branch-1",
-                PercentageComplete = new Random().Next(100)
+                var isSuccess = random.Next(0, 2) == 1;
+                var isRunning = random.Next(0, 2) == 1;
+
+                builds.Add(new Build
+                {
+                    BuildTypeId = $"BuildType{i}",
+                    BuildNumber = i.ToString(),
+                    State = isSuccess ? "SUCCESS" : "FAILURE",
+                    Status = isRunning ? "running" : "finished",
+                    Branch = $"branch-{i}",
+                    PercentageComplete = isRunning ? random.Next(0, 100) : 100,
+                    EstimatedTotalSeconds = random.Next(1, 120),
+                    ElapsedSeconds = random.Next(1, 60),
+                    ProbablyHanging = false,
+                    CurrentStageText = "Some stage text",
+                    WebUrl = $"https://teamcity/builds/id:{i}"
+                });
             }
-        });
+
+            return await Task.FromResult(builds);
+        }
     }
 }

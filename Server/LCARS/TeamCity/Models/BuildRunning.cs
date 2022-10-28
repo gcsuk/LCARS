@@ -1,23 +1,31 @@
-﻿namespace LCARS.TeamCity.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace LCARS.TeamCity.Models;
 
 public record BuildRunning
 {
-    public int? Count { get; set; } = default;
+    public string? BuildTypeId { get; set; }
 
-    public IEnumerable<BuildRunningDetails> Build { get; set; } = Enumerable.Empty<BuildRunningDetails>();
+    public string? Number { get; set; }
 
-    public record BuildRunningDetails
+    public string? BranchName { get; set; }
+
+    public string? Status { get; set; }
+
+    public string? State { get; set; }
+
+    public string? WebUrl{ get; set; }
+
+
+    [JsonPropertyName("running-info")]
+    public RunningInfoModel RunningInfo { get; set; } = new RunningInfoModel();
+
+    public record RunningInfoModel
     {
-        public int? Id { get; set; } = default;
-
-        public string? Number { get; set; } = default;
-
-        public string? BranchName { get; set; } = default;
-
-        public string? Status { get; set; } = default;
-
-        public string? State { get; set; } = default;
-
-        public int? PercentageComplete { get; set; } = default;
+        public int PercentageComplete { get; set; }
+        public int ElapsedSeconds { get; set; }
+        public int EstimatedTotalSeconds { get; set; }
+        public string? CurrentStageText { get; set; }
+        public bool ProbablyHanging { get; set; }
     }
 }

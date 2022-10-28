@@ -2,20 +2,22 @@
 
 public record BuildComplete
 {
-    public int? Count { get; set; } = default;
+    public int? Count { get; set; }
 
     public IEnumerable<BuildDetails> Build { get; set; } = Enumerable.Empty<BuildDetails>();
 
     public record BuildDetails
     {
-        public int? Id { get; set; } = default;
+        public string? BuildTypeId { get; set; }
 
-        public string? Number { get; set; } = default;
+        public string? Number { get; set; }
 
-        public string? BranchName { get; set; } = default;
+        public string? BranchName { get; set; }
 
-        public string? Status { get; set; } = default;
+        public string? Status { get; set; }
 
-        public string? State { get; set; } = default;
+        public string? State { get; set; }
+
+        public string? WebUrl { get; set; }
     }
 }

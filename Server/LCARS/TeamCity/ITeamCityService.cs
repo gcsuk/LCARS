@@ -7,7 +7,5 @@ public interface ITeamCityService
 {
     Task<IEnumerable<Project>> GetProjects(TeamCitySettings settings);
 
-    Task<IEnumerable<Build>> GetBuildsComplete(TeamCitySettings settings);
-
-    Task<IEnumerable<Build>> GetBuildsRunning(TeamCitySettings settings);
+    Task<IEnumerable<Build>> GetBuilds(TeamCitySettings settings);
 }

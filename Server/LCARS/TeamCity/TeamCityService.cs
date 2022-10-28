@@ -1,5 +1,6 @@
 ﻿using LCARS.Configuration.Models;
 using LCARS.TeamCity.Responses;
+using Refit;
 
 namespace LCARS.TeamCity
 {
@@ -23,34 +24,58 @@ namespace LCARS.TeamCity
             });
         }
 
-        public async Task<IEnumerable<Build>> GetBuildsComplete(TeamCitySettings settings)
+        public async Task<IEnumerable<Build>> GetBuilds(TeamCitySettings settings)
         {
-            var response = await _teamCityClient.GetBuildsComplete(settings.AccessToken);
+            if (!settings.Enabled)
+                return Enumerable.Empty<Build>();
 
-            return response.Build.Select(b => new Build
+            var builds = new List<Build>();
+
+            foreach (var buildTypeId in settings.BuildTypeIds ?? Enumerable.Empty<string>())
             {
-                Id = b.Id,
-                Number = b.Number,
-                State = b.State,
-                Status = b.Status,
-                Branch = b.BranchName,
-                PercentageComplete = 100
-            });
-        }
+                var build = (await _teamCityClient.GetBuilds(settings.AccessToken, buildTypeId))?.Build.FirstOrDefault();
 
-        public async Task<IEnumerable<Build>> GetBuildsRunning(TeamCitySettings settings)
-        {
-            var response = await _teamCityClient.GetBuildsRunning(settings.AccessToken);
+                if (build == null)
+                    continue;
 
-            return response.Build.Select(b => new Build
-            {
-                Id = b.Id,
-                Number = b.Number,
-                State = b.State,
-                Status = b.Status,
-                Branch = b.BranchName,
-                PercentageComplete = b.PercentageComplete
-            });
+                try
+                {
+                    var runningBuild = await _teamCityClient.GetBuildRunning(settings.AccessToken, buildTypeId);
+
+                    builds.Add(new Build
+                    {
+                        BuildTypeId = runningBuild.BuildTypeId,
+                        BuildNumber = runningBuild.Number,
+                        State = runningBuild.State,
+                        Status = runningBuild.Status,
+                        Branch = runningBuild.BranchName,
+                        PercentageComplete = runningBuild.RunningInfo.PercentageComplete,
+                        ElapsedSeconds = runningBuild.RunningInfo.ElapsedSeconds,
+                        CurrentStageText = runningBuild.RunningInfo.CurrentStageText,
+                        EstimatedTotalSeconds = runningBuild.RunningInfo.EstimatedTotalSeconds,
+                        ProbablyHanging = runningBuild.RunningInfo.ProbablyHanging,
+                        WebUrl = runningBuild.WebUrl,
+                    });
+                }
+                catch (ApiException ex)
+                {
+                    if (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+                        builds.Add(new Build
+                        {
+                            BuildTypeId = build.BuildTypeId,
+                            BuildNumber = build.Number,
+                            State = build.State,
+                            Status = build.Status,
+                            Branch = build.BranchName,
+                            PercentageComplete = 100,
+                            WebUrl = build.WebUrl,
+                        });
+                    else
+                        throw;
+                }
+            }
+
+            return builds;
         }
     }
 }

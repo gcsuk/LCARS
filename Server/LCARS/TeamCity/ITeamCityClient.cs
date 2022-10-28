@@ -9,9 +9,9 @@ public interface ITeamCityClient
     [Get("/projects")]
     Task<Project> GetProjects([Header("Authorization")] string token);
 
-    [Get("/builds")]
-    Task<BuildComplete> GetBuildsComplete([Header("Authorization")] string token);
+    [Get("/buildTypes/id:{buildTypeId}/builds")]
+    Task<BuildComplete> GetBuilds([Header("Authorization")] string token, string buildTypeId);
 
-    [Get("/builds?locator=running:true")]
-    Task<BuildRunning> GetBuildsRunning([Header("Authorization")] string token);
+    [Get("/buildTypes/id:{buildTypeId}/builds/running:true")]
+    Task<BuildRunning> GetBuildRunning([Header("Authorization")] string token, string buildTypeId);
 }

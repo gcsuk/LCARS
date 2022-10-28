@@ -16,7 +16,7 @@ namespace LCARS.GitHub
         {
             var branches = new List<Branch>();
 
-            foreach (var repository in settings.Repositories)
+            foreach (var repository in settings.Repositories ?? Enumerable.Empty<string>())
             {
                 var page = 1;
 

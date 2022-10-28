@@ -2,9 +2,9 @@
 
 public record Build
 {
-    public int? Id { get; set; } = default;
+    public string? BuildTypeId { get; set; } = default;
 
-    public string? Number { get; set; } = default;
+    public string? BuildNumber { get; set; } = default;
 
     public string? Branch { get; set; } = default;
 
@@ -12,5 +12,15 @@ public record Build
 
     public string? State { get; set; } = default;
 
-    public int? PercentageComplete { get; set; } = default;
+    public int PercentageComplete { get; set; } = 100;
+
+    public int ElapsedSeconds { get; set; }
+
+    public int EstimatedTotalSeconds { get; set; }
+
+    public string? CurrentStageText { get; set; }
+
+    public bool ProbablyHanging { get; set; }
+
+    public string? WebUrl { get; set; }
 }
