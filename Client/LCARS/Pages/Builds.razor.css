@@ -1,0 +1,47 @@
+﻿.container {
+    width: 100%;
+    font-size: 1.8rem;
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.build {
+    width: 350px;
+    display: grid;
+    grid-template-columns: 20px 210px 100px 20px;
+    color: #000;
+}
+
+.left {
+    border-radius: 20px 0 0 20px;
+    background-color: #ff9966;
+}
+
+.label {
+    background-color: #ff9966;
+}
+
+.data {
+    text-align: center;
+    border-left: solid 5px #000;
+    border-right: solid 5px #000;
+}
+
+.right {
+    border-radius: 0 20px 20px 0;
+    background-color: #ff9966;
+}
+
+.red {
+    background-color: #cc6666;
+}
+
+.yellow {
+    background-color: #ff9900;
+}
+
+.green {
+    background-color: #41863e;
+}

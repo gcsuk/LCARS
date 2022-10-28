@@ -23,9 +23,6 @@ public interface IApiClient
     [Get("/teamcity/projects")]
     Task<IEnumerable<Project>> GetTeamCityProjects();
 
-    [Get("/teamcity/builds/complete")]
-    Task<IEnumerable<Build>> GetTeamCityBuildsComplete();
-
-    [Get("/teamcity/builds/running")]
-    Task<IEnumerable<Build>> GetTeamCityBuildsRunning();
+    [Get("/teamcity/builds")]
+    Task<IEnumerable<Build>> GetTeamCityBuilds();
 }

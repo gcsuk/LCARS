@@ -1,23 +1,20 @@
 using LCARS.Services;
 
-namespace LCARS.Data
+namespace LCARS.Data;
+
+public class PullRequestService
 {
-    public class PullRequestService
+    private readonly IApiClient _apiClient;
+
+    public PullRequestService(IApiClient apiClient)
     {
-        private readonly IApiClient _apiClient;
+        _apiClient = apiClient;
+    }
 
-        public PullRequestService(IApiClient apiClient)
-        {
-            _apiClient = apiClient;
-        }
+    public async Task<IEnumerable<PullRequest>> GetPullRequestsAsync()
+    {
+        var pullRequests = await _apiClient.GetGitHubPullRequests();
 
-        public async Task<IEnumerable<PullRequest>> GetPullRequestsAsync()
-        {
-            var pullRequests = await _apiClient.GetGitHubPullRequests();
-
-
-
-            return pullRequests;
-        }
+        return pullRequests;
     }
 }

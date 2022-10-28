@@ -1,0 +1,52 @@
+﻿@page "/builds"
+
+<PageTitle>LCARS | Builds</PageTitle>
+
+@using LCARS.Data
+@inject BuildsService buildsService
+
+<Header Text="Builds" />
+
+@if (builds == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="container">
+        @foreach (var build in builds)
+        {
+            <div class="build">
+                <div class="left"></div>
+                <div class="label">@build.BuildTypeId</div>
+                <div class="data @GetStatusColor(build)">@GetBuildStatus(build)</div>
+                <div class="right"></div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private IEnumerable<Build>? builds;
+
+    protected override async Task OnInitializedAsync()
+    {
+        builds = await buildsService.GetBuildsAsync();
+    }
+
+    private string GetBuildStatus(Build build)
+    {
+        if (build.Status == "finished")
+            return build.State == "SUCCESS" ? build.BuildNumber: "FAILED";
+        else // running
+            return $"{build.PercentageComplete}%";
+    }
+
+    private string GetStatusColor(Build build)
+    {
+        if (build.Status == "finished")
+            return build.State == "SUCCESS" ? "green" : "red";
+        else // running
+            return "yellow";
+    }
+}
