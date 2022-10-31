@@ -25,4 +25,7 @@ public interface IApiClient
 
     [Get("/teamcity/builds")]
     Task<IEnumerable<Build>> GetTeamCityBuilds();
+
+    [Get("/settings/settings")]
+    Task<Settings> GetAllSettings();
 }

@@ -7,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddSingleton<SettingsService>();
 builder.Services.AddSingleton<PullRequestService>();
+builder.Services.AddSingleton<BranchService>();
 builder.Services.AddSingleton<BuildsService>();
 
 var baseUrl = builder.Configuration["Api:BaseUrl"];

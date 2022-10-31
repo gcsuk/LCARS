@@ -1,0 +1,28 @@
+﻿@using LCARS.Data
+
+@if (Data == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="container">
+        <div class="header">
+            <div class="repository">Repository</div>
+            <div class="name">Name</div>
+        </div>
+        <div class="data">
+            @foreach (var branch in Data)
+            {
+                <div class="repository">@branch.Repository</div>
+                <div class="name">@branch.BranchName</div>
+            }
+        </div>
+        <div class="footer"></div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public IEnumerable<Branch>? Data { get; set; }
+}

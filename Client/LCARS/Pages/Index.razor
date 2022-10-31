@@ -1,9 +1,17 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+@using LCARS.Data
 
-<h1>Hello, world!</h1>
+@inject NavigationManager NavManager
+@inject SettingsService settingsService
 
-Welcome to your new app.
+<PageTitle>Loading...</PageTitle>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var screen = await settingsService.GetScreen();
+
+        NavManager.NavigateTo(screen.Path);
+    }
+}

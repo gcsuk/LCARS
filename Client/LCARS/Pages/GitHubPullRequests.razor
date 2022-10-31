@@ -1,0 +1,19 @@
+﻿@page "/github/pullrequests"
+
+<PageTitle>LCARS | GitHub | Pull Requests</PageTitle>
+
+@using LCARS.Data
+@inject PullRequestService pullRequestService
+
+<Header Text="Pull Requests" />
+
+<PullRequests Data="@pullRequests"/>
+
+@code {
+    private IEnumerable<PullRequest>? pullRequests;
+
+    protected override async Task OnInitializedAsync()
+    {
+        pullRequests = await pullRequestService.GetGitHubPullRequestsAsync();
+    }
+}

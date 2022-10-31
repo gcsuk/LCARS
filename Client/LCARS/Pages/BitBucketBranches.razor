@@ -1,0 +1,19 @@
+﻿@page "/bitbucket/branches"
+
+<PageTitle>LCARS | BitBucket | Branches</PageTitle>
+
+@using LCARS.Data
+@inject BranchService branchService
+
+<Header Text="Branches" />
+
+<Branches Data="@branches"/>
+
+@code {
+    private IEnumerable<Branch>? branches;
+
+    protected override async Task OnInitializedAsync()
+    {
+        branches = await branchService.GetBitBucketBranchesAsync();
+    }
+}
