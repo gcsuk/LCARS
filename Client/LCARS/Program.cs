@@ -16,6 +16,8 @@ var baseUrl = builder.Configuration["Api:BaseUrl"];
 
 builder.Services.AddRefitClient<IApiClient>().ConfigureHttpClient(c => c.BaseAddress = new Uri(baseUrl));
 
+builder.Services.AddMemoryCache();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
