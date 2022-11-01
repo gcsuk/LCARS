@@ -1,0 +1,51 @@
+﻿@page "/alert"
+
+<PageTitle>LCARS | Red Alert</PageTitle>
+
+@inject IJSRuntime JSRuntime;
+
+@using LCARS.Data
+
+<div class="destruct">
+    <div class="bar large"></div>
+    <div class="bar medium"></div>
+    <div class="bar small"></div>
+    <div class="clock">
+        Red Alert<br />
+        @hours : @minutes : @seconds : @milliseconds
+    </div>
+    <div class="bar small"></div>
+    <div class="bar medium"></div>
+    <div class="bar large"></div>
+</div>
+
+@code {
+    private string hours = "00";
+    private string minutes = "00";
+    private string seconds = "00";
+    private string milliseconds = "000";
+
+    private DateTime TargetDate;
+
+    protected override async Task OnInitializedAsync()
+    {
+        TargetDate = DateTime.Now.AddDays(2);
+
+        var clock = new System.Threading.Timer((_) =>
+        {
+            var remainingTime = TargetDate.Subtract(DateTime.Now);
+
+            hours = remainingTime.Hours.ToString("00");
+            minutes = remainingTime.Minutes.ToString("00");
+            seconds = remainingTime.Seconds.ToString("00");
+            milliseconds = remainingTime.Milliseconds.ToString("000");
+
+            InvokeAsync(StateHasChanged);
+        }, null, 0, 1);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JSRuntime.InvokeVoidAsync("redAlert");
+    }
+}

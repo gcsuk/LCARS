@@ -28,3 +28,15 @@
     border-radius: 0 20px 20px 0;
     background-color: #c9c;
 }
+
+.condition-yellow .left,
+.condition-yellow .spacer,
+.condition-yellow .right {
+    background-color: #dad81d;
+}
+
+.condition-red .left,
+.condition-red .spacer,
+.condition-red .right {
+    background-color: #940606;
+}

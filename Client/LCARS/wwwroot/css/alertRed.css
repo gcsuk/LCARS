@@ -7,19 +7,19 @@
   }
 
   .condition-red header .middle tr {
-    color: #fff!important
+    color: #fff;
   }
 
   .condition-red header .middle tr.white {
-    color: #940606!important
+    color: #940606;
   }
 
   .condition-red header .right .buttons div {
-    background-color: #940606!important
+    background-color: #940606;
   }
 
   .condition-red header .right .title {
-    color: #940606!important
+    color: #940606;
   }
 
   .condition-red header .box-pattern span:nth-child(1) {
@@ -81,23 +81,6 @@
     .condition-red main .box-pattern span:nth-child(4) {
       animation: pulseTemplate9 1s infinite
     }
-
-@keyframes pulseBar1 {
-  0%, 100% { background-color: #f00; }
-  25% { background-color: #940606; }
-}
-@keyframes pulseBar2 {
-  0%, 100% { background-color: #f00; }
-  50% { background-color: #940606; }
-}
-@keyframes pulseBar3 {
-  0%, 100% { background-color: #f00; }
-  75% { background-color: #940606; }
-}
-@keyframes pulseClock {
-  0% { color: #f00; }
-  100% { color: #940606; }
-}
 
 @keyframes pulseTemplate1 {
   0%, 100% { background-color: #fff; }

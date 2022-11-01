@@ -10,6 +10,7 @@
         <base href="~/" />
         <link href="css/site.css" rel="stylesheet" />
         <link href="css/alertRed.css" rel="stylesheet" />
+        <link href="css/alertYellow.css" rel="stylesheet" />
         <link href="LCARS.styles.css" rel="stylesheet" />
         <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
     </head>
@@ -28,5 +29,13 @@
         </div>
 
         <script src="_framework/blazor.server.js"></script>
+        <script type="text/javascript">
+            function redAlert() {
+                document.querySelector("body").classList.add("condition-red");
+            }
+            function yellowAlert() {
+                document.querySelector("body").classList.add("condition-yellow");
+            }
+        </script>
     </body>
 </html>

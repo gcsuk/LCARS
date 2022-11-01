@@ -78,3 +78,23 @@
     height: 40px;
     margin-top: 5px;
 }
+
+.condition-yellow .header .date,
+.condition-yellow .header .repository,
+.condition-yellow .header .title,
+.condition-yellow .header .author,
+.condition-yellow .header .comments,
+.condition-yellow .data div,
+.condition-yellow .footer {
+    background-color: #dad81d;
+}
+
+.condition-red .header .date,
+.condition-red .header .repository,
+.condition-red .header .title,
+.condition-red .header .author,
+.condition-red .header .comments,
+.condition-red .data div,
+.condition-red .footer {
+    background-color: #940606;
+}

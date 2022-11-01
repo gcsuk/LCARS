@@ -1,0 +1,77 @@
+﻿/* RED ALERT */
+
+.destruct {
+    width: 90%;
+    margin: 20px;
+    text-align: center;
+    color: #940606;
+    position: relative -50px
+}
+
+.bar {
+    margin: 10px auto;
+    height: 20px;
+    background-color: #940606
+}
+
+.large {
+    width: 90%;
+    animation: pulseBar1 1s infinite;
+}
+
+.medium {
+    width: 75%;
+    animation: pulseBar2 1s infinite;
+}
+
+.small {
+    width: 60%;
+    animation: pulseBar3 1s infinite;
+}
+
+.clock {
+    font-size: 120px;
+    line-height: 1;
+    animation: pulseClock 1s infinite;
+}
+
+
+@keyframes pulseBar1 {
+    0%, 100% {
+        background-color: #c62929;
+    }
+
+    25% {
+        background-color: #940606;
+    }
+}
+
+@keyframes pulseBar2 {
+    0%, 100% {
+        background-color: #c62929;
+    }
+
+    50% {
+        background-color: #940606;
+    }
+}
+
+@keyframes pulseBar3 {
+    0%, 100% {
+        background-color: #c62929;
+    }
+
+    75% {
+        background-color: #940606;
+    }
+}
+
+@keyframes pulseClock {
+    0% {
+        color: #c62929;
+    }
+
+    100% {
+        color: #940606;
+    }
+}

@@ -1,5 +1,7 @@
 ﻿@using LCARS.Data
 
+@inject IJSRuntime JSRuntime;
+
 @if (Data == null)
 {
     <Loading />
@@ -31,4 +33,10 @@ else
 @code {
     [Parameter]
     public IEnumerable<PullRequest>? Data { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (Data?.Count() > 10)
+            await JSRuntime.InvokeVoidAsync("yellowAlert");
+    }
 }
