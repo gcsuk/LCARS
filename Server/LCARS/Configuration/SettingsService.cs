@@ -16,6 +16,7 @@ public class SettingsService : ISettingsService
         GitHubSettings = await GetGitHubSettings(),
         BitBucketSettings = await GetBitBucketSettings(),
         TeamCitySettings = await GetTeamCitySettings(),
+        OctopusSettings = await GetOctopusSettings(),
         JiraSettings = await GetJiraSettings(),
     };
 
@@ -159,6 +160,36 @@ public class SettingsService : ISettingsService
             AccessToken = settings.AccessToken,
             BaseUrl = settings.BaseUrl,
             BuildTypeIds = string.Join(",", settings.BuildTypeIds ?? Enumerable.Empty<string>()),
+            Enabled = settings.Enabled,
+        });
+    }
+
+    public async Task<OctopusSettings> GetOctopusSettings()
+    {
+        var settings = await _settingsRepository.GetSingle("1", "Octopus");
+
+        if (settings == null)
+            return new OctopusSettings();
+
+        return new OctopusSettings
+        {
+            Enabled = settings.Enabled,
+            BaseUrl = settings.BaseUrl ?? "",
+            ApiKey = settings.AccessToken,
+        };
+    }
+
+    public async Task UpdateOctopusSettings(OctopusSettings settings)
+    {
+        if (settings == null)
+            return;
+
+        await _settingsRepository.Upsert(new SettingsEntity
+        {
+            PartitionKey = "1",
+            RowKey = "Octopus",
+            BaseUrl = settings.BaseUrl,
+            AccessToken = settings.ApiKey,
             Enabled = settings.Enabled,
         });
     }

@@ -2,8 +2,9 @@
 
 public record Settings
 {
-    public GitHubSettings GitHubSettings { get; set; } = new GitHubSettings();
-    public BitBucketSettings BitBucketSettings { get; set; } = new BitBucketSettings();
-    public TeamCitySettings TeamCitySettings { get; set; } = new TeamCitySettings();
-    public JiraSettings JiraSettings { get; set; } = new JiraSettings();
+    public GitHubSettings? GitHubSettings { get; set; }
+    public BitBucketSettings? BitBucketSettings { get; set; }
+    public TeamCitySettings? TeamCitySettings { get; set; }
+    public OctopusSettings? OctopusSettings { get; set; }
+    public JiraSettings? JiraSettings { get; set; }
 }

@@ -7,10 +7,12 @@ public interface ISettingsService
     Task<Settings> GetAllSettings();
     Task<BitBucketSettings> GetBitBucketSettings();
     Task<GitHubSettings> GetGitHubSettings();
-    Task<JiraSettings> GetJiraSettings();
     Task<TeamCitySettings> GetTeamCitySettings();
+    Task<OctopusSettings> GetOctopusSettings();
+    Task<JiraSettings> GetJiraSettings();
     Task UpdateBitBucketSettings(BitBucketSettings settings);
     Task UpdateGitHubSettings(GitHubSettings settings);
-    Task UpdateJiraSettings(JiraSettings settings);
     Task UpdateTeamCitySettings(TeamCitySettings settings);
+    Task UpdateOctopusSettings(OctopusSettings settings);
+    Task UpdateJiraSettings(JiraSettings settings);
 }

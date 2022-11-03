@@ -30,6 +30,11 @@ public class SettingsEndpoints : IEndpoints
             .Produces(204)
             .WithTags(Tag);
 
+        app.MapPost($"{BaseRoute}/settings/octopus", UpdateOctopusSettings)
+            .WithName("UpdateOctopusSettings")
+            .Produces(204)
+            .WithTags(Tag);
+
         app.MapPost($"{BaseRoute}/settings/jira", UpdateJiraSettings)
             .WithName("UpdateJiraSettings")
             .Produces(204)
@@ -55,6 +60,13 @@ public class SettingsEndpoints : IEndpoints
     internal static async Task<IResult> UpdateTeamCitySettings(ISettingsService settingsService, TeamCitySettings settings)
     {
         await settingsService.UpdateTeamCitySettings(settings);
+
+        return Results.NoContent();
+    }
+
+    internal static async Task<IResult> UpdateOctopusSettings(ISettingsService settingsService, OctopusSettings settings)
+    {
+        await settingsService.UpdateOctopusSettings(settings);
 
         return Results.NoContent();
     }
