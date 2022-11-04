@@ -1,0 +1,85 @@
+﻿@page "/deployments"
+
+<PageTitle>LCARS | Deployments</PageTitle>
+
+@using LCARS.Data
+@inject DeploymentsService deploymentsService
+
+<Header Text="Deployments" />
+
+@if (deployments == null)
+{
+    <Loading />
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>
+                </th>
+
+                @foreach (var environment in deployments.ToList()[0].Environments)
+                {
+                    <th>
+                        <div class="environment">
+                            <div class="left"></div>
+                            <div class="label">@environment</div>
+                            <div class="right"></div>
+                        </div>
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var project in deployments)
+            {
+                <tr>
+                    <td class="projectName">
+                        @project.ProjectName
+                    </td>
+
+                    @foreach (var deployment in project.Deployments)
+                    {
+                        var color = "green";
+
+                        @if (deployment.State != "Success")
+                        {
+                            color = "red";
+                        }
+                        else if (deployment.HasWarningsOrErrors)
+                        {
+                            color = "yellow";
+                        }
+
+                        <td>
+                            <div class="deployment">
+                                <div class="left"></div>
+                                <div class="label @color" title="@deployment.State">@deployment.ReleaseVersion</div>
+                                <div class="right"></div>
+                            </div>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<ProjectDeployment>? deployments;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var timer = new System.Threading.Timer(async (_) =>
+        {
+            await RefreshDeployments();
+            await InvokeAsync(StateHasChanged);
+        }, null, 0, 5000);
+    }
+
+    private async Task RefreshDeployments()
+    {
+        deployments = await deploymentsService.GetDeploymentsAsync();
+    }
+}

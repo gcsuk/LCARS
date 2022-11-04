@@ -31,6 +31,15 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        var timer = new System.Threading.Timer(async (_) =>
+        {
+            await RefreshBuilds();
+            await InvokeAsync(StateHasChanged);
+        }, null, 0, 5000);
+    }
+
+    private async Task RefreshBuilds()
+    {
         builds = await buildsService.GetBuildsAsync();
     }
 

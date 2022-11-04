@@ -14,6 +14,15 @@
 
     protected override async Task OnInitializedAsync()
     {
+        var timer = new System.Threading.Timer(async (_) =>
+        {
+            await RefreshBranches();
+            await InvokeAsync(StateHasChanged);
+        }, null, 0, 10000);
+    }
+
+    private async Task RefreshBranches()
+    {
         branches = await branchService.GetGitHubBranchesAsync();
     }
 }

@@ -11,6 +11,7 @@ builder.Services.AddSingleton<SettingsService>();
 builder.Services.AddSingleton<PullRequestService>();
 builder.Services.AddSingleton<BranchService>();
 builder.Services.AddSingleton<BuildsService>();
+builder.Services.AddSingleton<DeploymentsService>();
 
 var baseUrl = builder.Configuration["Api:BaseUrl"];
 

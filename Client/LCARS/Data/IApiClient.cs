@@ -26,6 +26,9 @@ public interface IApiClient
     [Get("/teamcity/builds")]
     Task<IEnumerable<Build>> GetTeamCityBuilds();
 
+    [Get("/octopus")]
+    Task<IEnumerable<ProjectDeployment>> GetOctopusDeployments();
+
     [Get("/settings/settings")]
     Task<Settings> GetAllSettings();
 }
