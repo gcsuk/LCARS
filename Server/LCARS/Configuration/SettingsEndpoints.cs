@@ -11,8 +11,13 @@ public class SettingsEndpoints : IEndpoints
     public static void DefineEndpoints(IEndpointRouteBuilder app)
     {
         app.MapGet($"{BaseRoute}/settings", GetAllSettings)
-            .WithName("GetSettings")
+            .WithName("GetAllSettings")
             .Produces<IEnumerable<Settings>>(200)
+            .WithTags(Tag);
+
+        app.MapGet($"{BaseRoute}/settings/redalert", GetRedAlertSettings)
+            .WithName("GetRedAlertSettings")
+            .Produces<RedAlertSettings>(200)
             .WithTags(Tag);
 
         app.MapPost($"{BaseRoute}/settings/github", UpdateGitHubSettings)
@@ -39,9 +44,16 @@ public class SettingsEndpoints : IEndpoints
             .WithName("UpdateJiraSettings")
             .Produces(204)
             .WithTags(Tag);
+
+        app.MapPost($"{BaseRoute}/settings/redalert", UpdateRedAlertSettings)
+            .WithName("UpdateRedAlertSettings")
+            .Produces(204)
+            .WithTags(Tag);
     }
 
     internal static async Task<IResult> GetAllSettings(ISettingsService settingsService) => Results.Ok(await settingsService.GetAllSettings());
+
+    internal static async Task<IResult> GetRedAlertSettings(ISettingsService settingsService) => Results.Ok(await settingsService.GetRedAlertSettings());
 
     internal static async Task<IResult> UpdateGitHubSettings(ISettingsService settingsService, GitHubSettings settings)
     {
@@ -74,6 +86,13 @@ public class SettingsEndpoints : IEndpoints
     internal static async Task<IResult> UpdateJiraSettings(ISettingsService settingsService, JiraSettings settings)
     {
         await settingsService.UpdateJiraSettings(settings);
+
+        return Results.NoContent();
+    }
+
+    internal static async Task<IResult> UpdateRedAlertSettings(ISettingsService settingsService, RedAlertSettings settings)
+    {
+        await settingsService.UpdateRedAlertSettings(settings);
 
         return Results.NoContent();
     }

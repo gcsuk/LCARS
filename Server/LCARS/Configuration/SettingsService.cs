@@ -18,6 +18,7 @@ public class SettingsService : ISettingsService
         TeamCitySettings = await GetTeamCitySettings(),
         OctopusSettings = await GetOctopusSettings(),
         JiraSettings = await GetJiraSettings(),
+        RedAlertSettings = await GetRedAlertSettings(),
     };
 
     public async Task<GitHubSettings> GetGitHubSettings()
@@ -32,7 +33,7 @@ public class SettingsService : ISettingsService
             BaseUrl = settings.BaseUrl,
             BranchThreshold = settings.BranchThreshold ?? 0,
             Enabled = settings.Enabled,
-            Key = settings.Key,
+            Key = settings.AccessToken,
             Owner = settings.Owner,
             PullRequestThreshold = settings.PullRequestThreshold ?? 0,
             Repositories = settings.Repositories?.Split(",", StringSplitOptions.RemoveEmptyEntries),
@@ -51,7 +52,7 @@ public class SettingsService : ISettingsService
             BaseUrl = settings.BaseUrl,
             BranchThreshold = settings.BranchThreshold,
             Enabled = settings.Enabled,
-            Key = settings.Key,
+            AccessToken = settings.Key,
             Owner = settings.Owner,
             PullRequestThreshold = settings.PullRequestThreshold,
             Repositories = string.Join(",", settings.Repositories ?? Enumerable.Empty<string>()),
@@ -72,7 +73,7 @@ public class SettingsService : ISettingsService
             BranchThreshold = settings.BranchThreshold ?? 0,
             Enabled = settings.Enabled,
             Owner = settings.Owner,
-            Password = settings.Password,
+            Password = settings.AccessToken,
             PullRequestThreshold = settings.PullRequestThreshold ?? 0,
             Repositories = settings.Repositories?.Split(",", StringSplitOptions.RemoveEmptyEntries),
             Username = settings.Username,
@@ -93,7 +94,7 @@ public class SettingsService : ISettingsService
             BranchThreshold = settings.BranchThreshold,
             Enabled = settings.Enabled,
             Owner = settings.Owner,
-            Password = settings.Password,
+            AccessToken = settings.Password,
             PullRequestThreshold = settings.PullRequestThreshold,
             Repositories = string.Join(",", settings.Repositories ?? Enumerable.Empty<string>()),
             Username = settings.Username,
@@ -191,6 +192,36 @@ public class SettingsService : ISettingsService
             BaseUrl = settings.BaseUrl,
             AccessToken = settings.ApiKey,
             Enabled = settings.Enabled,
+        });
+    }
+
+    public async Task<RedAlertSettings> GetRedAlertSettings()
+    {
+        var settings = await _settingsRepository.GetSingle("1", "RedAlert");
+
+        if (settings == null)
+            return new RedAlertSettings();
+
+        return new RedAlertSettings
+        {
+            Enabled = settings.Enabled,
+            AlertType = settings.AlertType,
+            EndTime = settings.AlertEndTime
+        };
+    }
+
+    public async Task UpdateRedAlertSettings(RedAlertSettings settings)
+    {
+        if (settings == null)
+            return;
+
+        await _settingsRepository.Upsert(new SettingsEntity
+        {
+            PartitionKey = "1",
+            RowKey = "RedAlert",
+            Enabled = settings.Enabled,
+            AlertType = settings.AlertType,
+            AlertEndTime = settings.EndTime
         });
     }
 }

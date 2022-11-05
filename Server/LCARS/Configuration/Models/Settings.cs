@@ -7,4 +7,5 @@ public record Settings
     public TeamCitySettings? TeamCitySettings { get; set; }
     public OctopusSettings? OctopusSettings { get; set; }
     public JiraSettings? JiraSettings { get; set; }
+    public RedAlertSettings? RedAlertSettings { get; set; }
 }
