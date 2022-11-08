@@ -221,7 +221,7 @@ public class SettingsService : ISettingsService
             RowKey = "RedAlert",
             Enabled = settings.Enabled,
             AlertType = settings.AlertType,
-            AlertEndTime = settings.EndTime
+            AlertEndTime = settings.EndTime == null ? null : new DateTime(settings.EndTime.Value.Ticks, DateTimeKind.Utc)
         });
     }
 }
