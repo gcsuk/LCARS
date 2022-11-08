@@ -10,42 +10,42 @@ public class SettingsEndpoints : IEndpoints
 
     public static void DefineEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapGet($"{BaseRoute}/settings", GetAllSettings)
+        app.MapGet($"{BaseRoute}", GetAllSettings)
             .WithName("GetAllSettings")
             .Produces<IEnumerable<Settings>>(200)
             .WithTags(Tag);
 
-        app.MapGet($"{BaseRoute}/settings/redalert", GetRedAlertSettings)
+        app.MapGet($"{BaseRoute}/redalert", GetRedAlertSettings)
             .WithName("GetRedAlertSettings")
             .Produces<RedAlertSettings>(200)
             .WithTags(Tag);
 
-        app.MapPost($"{BaseRoute}/settings/github", UpdateGitHubSettings)
+        app.MapPost($"{BaseRoute}/github", UpdateGitHubSettings)
             .WithName("UpdateGitHubSettings")
             .Produces(204)
             .WithTags(Tag);
 
-        app.MapPost($"{BaseRoute}/settings/bitbucket", UpdateBitBucketSettings)
+        app.MapPost($"{BaseRoute}/bitbucket", UpdateBitBucketSettings)
             .WithName("UpdateBitBucketSettings")
             .Produces(204)
             .WithTags(Tag);
 
-        app.MapPost($"{BaseRoute}/settings/teamcity", UpdateTeamCitySettings)
+        app.MapPost($"{BaseRoute}/teamcity", UpdateTeamCitySettings)
             .WithName("UpdateTeamCitySettings")
             .Produces(204)
             .WithTags(Tag);
 
-        app.MapPost($"{BaseRoute}/settings/octopus", UpdateOctopusSettings)
+        app.MapPost($"{BaseRoute}/octopus", UpdateOctopusSettings)
             .WithName("UpdateOctopusSettings")
             .Produces(204)
             .WithTags(Tag);
 
-        app.MapPost($"{BaseRoute}/settings/jira", UpdateJiraSettings)
+        app.MapPost($"{BaseRoute}/jira", UpdateJiraSettings)
             .WithName("UpdateJiraSettings")
             .Produces(204)
             .WithTags(Tag);
 
-        app.MapPost($"{BaseRoute}/settings/redalert", UpdateRedAlertSettings)
+        app.MapPost($"{BaseRoute}/redalert", UpdateRedAlertSettings)
             .WithName("UpdateRedAlertSettings")
             .Produces(204)
             .WithTags(Tag);
