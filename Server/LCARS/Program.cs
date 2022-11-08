@@ -1,4 +1,5 @@
 using LCARS.Endpoints;
+using LCARS.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddEndpoints<Program>(builder.Configuration);
 
 var app = builder.Build();
+
+app.UseExceptionHandling();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
