@@ -1,3 +1,6 @@
+trigger:
+  - master
+
 stages:
   - stage: build_stage
     displayName: "Build"
