@@ -14,32 +14,18 @@ public class BitBucketEndpoints : IEndpoints
     {
         app.MapGet($"{BaseRoute}/pullrequests", GetPullRequests)
             .WithName("GetBitBucketPullRequests")
-            //.Produces<IEnumerable<PullRequest>>(200)
+            .Produces<IEnumerable<BitBucketPullRequest>>(200)
             .WithTags(Tag);
 
         app.MapGet($"{BaseRoute}/branches", GetBranches)
             .WithName("GetBitBucketBranches")
-            //.Produces<IEnumerable<Branch>>(200)
+            .Produces<IEnumerable<BitBucketBranchSummary>>(200)
             .WithTags(Tag);
     }
 
-    internal static async Task<IResult> GetPullRequests(IBitBucketService bitBucketService, ISettingsService settingsService)
-    {
-        var settings = await settingsService.GetBitBucketSettings();
+    internal static async Task<IResult> GetPullRequests(IBitBucketService bitBucketService, ISettingsService settingsService) => Results.Ok(await bitBucketService.GetPullRequests());
 
-        var pullRequests = await bitBucketService.GetPullRequests(settings);
-
-        return Results.Ok(pullRequests);
-    }
-
-    internal static async Task<IResult> GetBranches(IBitBucketService bitBucketService, ISettingsService settingsService)
-    {
-        var settings = await settingsService.GetBitBucketSettings();
-
-        var branches = await bitBucketService.GetBranches(settings);
-
-        return Results.Ok(branches);
-    }
+    internal static async Task<IResult> GetBranches(IBitBucketService bitBucketService, ISettingsService settingsService) => Results.Ok(await bitBucketService.GetBranches());
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {

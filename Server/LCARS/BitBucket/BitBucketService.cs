@@ -1,27 +1,37 @@
 ﻿using LCARS.BitBucket.Responses;
+using LCARS.Configuration;
 using LCARS.Configuration.Models;
 
 namespace LCARS.BitBucket;
 
 public class BitBucketService : IBitBucketService
 {
+    private readonly ISettingsService _settingsService;
     private readonly IBitBucketAuthClient _bitBucketAuthClient;
     private readonly IBitBucketClient _bitBucketClient;
 
-    public BitBucketService(IBitBucketAuthClient bitBucketAuthClient, IBitBucketClient bitBucketClient)
+    public BitBucketService(ISettingsService settingsService, IBitBucketAuthClient bitBucketAuthClient, IBitBucketClient bitBucketClient)
     {
+        _settingsService = settingsService;
         _bitBucketAuthClient = bitBucketAuthClient;
         _bitBucketClient = bitBucketClient;
     }
 
-    public async Task<IEnumerable<Branch>> GetBranches(BitBucketSettings settings)
+    public async Task<IEnumerable<BitBucketBranchSummary>> GetBranches()
     {
+        var settings = await _settingsService.GetBitBucketSettings();
+
         var accessToken = await GetAccessToken(settings);
 
-        var branches = new List<Branch>();
+        var summary = new List<BitBucketBranchSummary>();
 
         foreach (var repository in settings.Repositories)
         {
+            var branches = new BitBucketBranchSummary
+            {
+                Repository = repository
+            };
+
             var page = 1;
 
             while (true)
@@ -31,26 +41,29 @@ public class BitBucketService : IBitBucketService
                 if (!branchSet.Values.Any())
                     break;
 
-                branches.AddRange(branchSet.Values.Select(b => new Branch
+                branches.Branches.AddRange(branchSet.Values.Select(b => new BitBucketBranchSummary.BitBucketBranchModel
                 {
-                    Repository = repository,
-                    BranchName = b.Name,
+                    Name = b.Name,
                     DateCreated = b.Target.Date,
                     User = b.Target?.Author?.User?.Name
                 }));
 
                 page++;
             }
+
+            summary.Add(branches);
         }
 
-        return branches;
+        return summary;
     }
 
-    public async Task<IEnumerable<PullRequest>> GetPullRequests(BitBucketSettings settings)
+    public async Task<IEnumerable<BitBucketPullRequest>> GetPullRequests()
     {
+        var settings = await _settingsService.GetBitBucketSettings();
+
         var accessToken = await GetAccessToken(settings);
 
-        var pullRequests = new List<PullRequest>();
+        var pullRequests = new List<BitBucketPullRequest>();
 
         foreach (var repository in settings.Repositories)
         {
@@ -63,7 +76,7 @@ public class BitBucketService : IBitBucketService
                 if (!pulls.Values.Any())
                     break;
 
-                pullRequests.AddRange(pulls.Values.Select(p => new PullRequest
+                pullRequests.AddRange(pulls.Values.Select(p => new BitBucketPullRequest
                 {
                     Repository = repository,
                     Number = p.Number,

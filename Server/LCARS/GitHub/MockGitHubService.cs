@@ -1,27 +1,60 @@
-﻿using LCARS.Configuration.Models;
-using LCARS.GitHub.Responses;
+﻿using LCARS.GitHub.Responses;
 
 namespace LCARS.GitHub;
 
 public class MockGitHubService : IGitHubService
 {
-    public async Task<IEnumerable<Branch>> GetBranches(GitHubSettings settings) => await Task.FromResult(new List<Branch>
+    public async Task<IEnumerable<GitHubBranchSummary>> GetBranches() => await Task.FromResult(new List<GitHubBranchSummary>
     {
-        new Branch { Repository = "my-repo", BranchName = "branch-1" },
-        new Branch { Repository = "my-repo", BranchName = "branch-2" },
-        new Branch { Repository = "my-repo", BranchName = "branch-3" },
-        new Branch { Repository = "my-repo", BranchName = "branch-4" },
-        new Branch { BranchName = "branch-5" },
-        new Branch { Repository = "my-repo", BranchName = "branch-6" },
-        new Branch { Repository = "my-repo", BranchName = "branch-7" },
-        new Branch { Repository = "my-repo", BranchName = "branch-8" },
-        new Branch { Repository = "my-repo", BranchName = "branch-9" },
-        new Branch { Repository = "my-repo", BranchName = "branch-10" }
+        new GitHubBranchSummary
+        {
+            Repository = "my-repo",
+            Branches = new List<GitHubBranchSummary.GitHubBranchModel>
+            {
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-1" },
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-2" },
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-3" },
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-4" }
+            }
+        },
+        new GitHubBranchSummary
+        {
+            Repository = "my-repo-2",
+            Branches = new List<GitHubBranchSummary.GitHubBranchModel>
+            {
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-1" },
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-2" },
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-3" },
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-4" },
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-5" },
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-6" },
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-7" },
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-8" }
+            }
+        },
+        new GitHubBranchSummary
+        {
+            Repository = "my-repo-3",
+            Branches = new List<GitHubBranchSummary.GitHubBranchModel>
+            {
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-1" },
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-2" },
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-3" },
+            }
+        },
+        new GitHubBranchSummary
+        {
+            Repository = "my-repo-4",
+            Branches = new List<GitHubBranchSummary.GitHubBranchModel>
+            {
+                new GitHubBranchSummary.GitHubBranchModel { Name = "branch-1" }
+            }
+        },
     });
 
-    public async Task<IEnumerable<PullRequest>> GetPullRequests(GitHubSettings settings, bool includeComments = false) => await Task.FromResult(new List<PullRequest>
+    public async Task<IEnumerable<GitHubPullRequest>> GetPullRequests() => await Task.FromResult(new List<GitHubPullRequest>
     {
-        new PullRequest
+        new GitHubPullRequest
         {
             Repository = "my-repo",
             State = "OPEN",
@@ -33,7 +66,7 @@ public class MockGitHubService : IGitHubService
             Author = "User1",
             CommentCount = 0
         },
-        new PullRequest
+        new GitHubPullRequest
         {
             Repository = "my-repo",
             State = "OPEN",

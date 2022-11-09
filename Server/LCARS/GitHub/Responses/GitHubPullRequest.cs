@@ -1,8 +1,8 @@
-﻿namespace LCARS.BitBucket.Responses;
+﻿namespace LCARS.GitHub.Responses;
 
-public record PullRequest
+public record GitHubPullRequest
 {
-    public string? Repository { get; set; }
+    public string? Repository{ get; set; }
     public int Number { get; set; }
     public string? Title { get; set; }
     public string? Description { get; set; }

@@ -1,23 +1,33 @@
-﻿using LCARS.Configuration.Models;
+﻿using LCARS.Configuration;
+using LCARS.Configuration.Models;
 using LCARS.GitHub.Responses;
 
 namespace LCARS.GitHub
 {
     public class GitHubService : IGitHubService
     {
+        private readonly ISettingsService _settingsService;
         private readonly IGitHubClient _gitHubClient;
 
-        public GitHubService(IGitHubClient gitHubClient)
+        public GitHubService(ISettingsService settingsService, IGitHubClient gitHubClient)
         {
+            _settingsService = settingsService;
             _gitHubClient = gitHubClient;
         }
 
-        public async Task<IEnumerable<Branch>> GetBranches(GitHubSettings settings)
+        public async Task<IEnumerable<GitHubBranchSummary>> GetBranches()
         {
-            var branches = new List<Branch>();
+            var settings = await _settingsService.GetGitHubSettings();
+
+            var summary = new List<GitHubBranchSummary>();
 
             foreach (var repository in settings.Repositories ?? Enumerable.Empty<string>())
             {
+                var branches = new GitHubBranchSummary
+                {
+                    Repository = repository
+                };
+
                 var page = 1;
 
                 while (true)
@@ -27,22 +37,25 @@ namespace LCARS.GitHub
                     if (!branchSet.Any())
                         break;
 
-                    branches.AddRange(branchSet.Select(b => new Branch
+                    branches.Branches.AddRange(branchSet.Select(b => new GitHubBranchSummary.GitHubBranchModel
                     {
-                        Repository = repository,
-                        BranchName = b.Name
+                        Name = b.Name
                     }));
 
                     page++;
                 }
+
+                summary.Add(branches);
             }
 
-            return branches;
+            return summary;
         }
 
-        public async Task<IEnumerable<PullRequest>> GetPullRequests(GitHubSettings settings, bool includeComments = false)
+        public async Task<IEnumerable<GitHubPullRequest>> GetPullRequests()
         {
-            var pullRequests = new List<PullRequest>();
+            var settings = await _settingsService.GetGitHubSettings();
+
+            var pullRequests = new List<GitHubPullRequest>();
 
             foreach (var repository in settings.Repositories)
             {
@@ -55,7 +68,7 @@ namespace LCARS.GitHub
                     if (!pulls.Any())
                         break;
 
-                    pullRequests.AddRange(pulls.Select(p => new PullRequest
+                    pullRequests.AddRange(pulls.Select(p => new GitHubPullRequest
                     {
                         Repository = repository,
                         Number = p.Number,
@@ -71,23 +84,22 @@ namespace LCARS.GitHub
                 }
             }
 
-            if (includeComments)
-                foreach (var pr in pullRequests)
+            foreach (var pr in pullRequests)
+            {
+                var page = 1;
+
+                while (true)
                 {
-                    var page = 1;
+                    var comments = await _gitHubClient.GetPullRequestComments(settings.Key, settings.Owner, pr.Repository, pr.Number, page);
 
-                    while (true)
-                    {
-                        var comments = await _gitHubClient.GetPullRequestComments(settings.Key, settings.Owner, pr.Repository, pr.Number, page);
+                    if (!comments.Any())
+                        break;
 
-                        if (!comments.Any())
-                            break;
+                    pr.CommentCount += comments.Count();
 
-                        pr.CommentCount += comments.Count();
-
-                        page++;
-                    }
+                    page++;
                 }
+            }
 
             return pullRequests;
         }

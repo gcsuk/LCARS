@@ -1,27 +1,26 @@
 ﻿using LCARS.BitBucket.Responses;
-using LCARS.Configuration.Models;
 
 namespace LCARS.BitBucket;
 
 public class MockBitBucketService : IBitBucketService
 {
-    public async Task<IEnumerable<Branch>> GetBranches(BitBucketSettings settings) => await Task.FromResult(new List<Branch>
+    public async Task<IEnumerable<BitBucketBranchSummary>> GetBranches() => await Task.FromResult(new List<BitBucketBranchSummary>
     {
-        new Branch { Repository = "my-repo", BranchName = "branch-1", DateCreated = DateTime.Now.AddDays(-1), User = "User 1" },
-        new Branch { Repository = "my-repo", BranchName = "branch-2", DateCreated = DateTime.Now.AddDays(-2), User = "User 1" },
-        new Branch { Repository = "my-repo", BranchName = "branch-3", DateCreated = DateTime.Now.AddDays(-3), User = "User 2" },
-        new Branch { Repository = "my-repo", BranchName = "branch-4", DateCreated = DateTime.Now.AddDays(-4), User = "User 2" },
-        new Branch { Repository = "my-repo", BranchName = "branch-5", DateCreated = DateTime.Now.AddDays(-5), User = "User 2" },
-        new Branch { Repository = "my-repo", BranchName = "branch-6", DateCreated = DateTime.Now.AddDays(-6), User = "User 3" },
-        new Branch { Repository = "my-repo", BranchName = "branch-7", DateCreated = DateTime.Now.AddDays(-7), User = "User 4" },
-        new Branch { Repository = "my-repo", BranchName = "branch-8", DateCreated = DateTime.Now.AddDays(-8), User = "User 4" },
-        new Branch { Repository = "my-repo", BranchName = "branch-9", DateCreated = DateTime.Now.AddDays(-9), User = "User 4" },
-        new Branch { Repository = "my-repo", BranchName = "branch-10", DateCreated = DateTime.Now, User = "User 4" }
+        new BitBucketBranchSummary { Repository = "my-repo", Branches = new List<BitBucketBranchSummary.BitBucketBranchModel> { new BitBucketBranchSummary.BitBucketBranchModel { Name = "branch-1", DateCreated = DateTime.Now.AddDays(-1), User = "User 1" } } },
+        new BitBucketBranchSummary { Repository = "my-repo", Branches = new List<BitBucketBranchSummary.BitBucketBranchModel> { new BitBucketBranchSummary.BitBucketBranchModel { Name = "branch-2", DateCreated = DateTime.Now.AddDays(-2), User = "User 1" } } },
+        new BitBucketBranchSummary { Repository = "my-repo", Branches = new List<BitBucketBranchSummary.BitBucketBranchModel> { new BitBucketBranchSummary.BitBucketBranchModel { Name = "branch-3", DateCreated = DateTime.Now.AddDays(-3), User = "User 2" } } },
+        new BitBucketBranchSummary { Repository = "my-repo", Branches = new List<BitBucketBranchSummary.BitBucketBranchModel> { new BitBucketBranchSummary.BitBucketBranchModel { Name = "branch-4", DateCreated = DateTime.Now.AddDays(-4), User = "User 2" } } },
+        new BitBucketBranchSummary { Repository = "my-repo", Branches = new List<BitBucketBranchSummary.BitBucketBranchModel> { new BitBucketBranchSummary.BitBucketBranchModel { Name = "branch-5", DateCreated = DateTime.Now.AddDays(-5), User = "User 2" } } },
+        new BitBucketBranchSummary { Repository = "my-repo", Branches = new List<BitBucketBranchSummary.BitBucketBranchModel> { new BitBucketBranchSummary.BitBucketBranchModel { Name = "branch-6", DateCreated = DateTime.Now.AddDays(-6), User = "User 3" } } },
+        new BitBucketBranchSummary { Repository = "my-repo", Branches = new List<BitBucketBranchSummary.BitBucketBranchModel> { new BitBucketBranchSummary.BitBucketBranchModel { Name = "branch-7", DateCreated = DateTime.Now.AddDays(-7), User = "User 4" } } },
+        new BitBucketBranchSummary { Repository = "my-repo", Branches = new List<BitBucketBranchSummary.BitBucketBranchModel> { new BitBucketBranchSummary.BitBucketBranchModel { Name = "branch-8", DateCreated = DateTime.Now.AddDays(-8), User = "User 4" } } },
+        new BitBucketBranchSummary { Repository = "my-repo", Branches = new List<BitBucketBranchSummary.BitBucketBranchModel> { new BitBucketBranchSummary.BitBucketBranchModel { Name = "branch-9", DateCreated = DateTime.Now.AddDays(-9), User = "User 4" } } },
+        new BitBucketBranchSummary { Repository = "my-repo", Branches = new List<BitBucketBranchSummary.BitBucketBranchModel> { new BitBucketBranchSummary.BitBucketBranchModel { Name = "branch-10", DateCreated = DateTime.Now, User = "User 4" } } }
     });
 
-    public async Task<IEnumerable<PullRequest>> GetPullRequests(BitBucketSettings settings) => await Task.FromResult(new List<PullRequest>
+    public async Task<IEnumerable<BitBucketPullRequest>> GetPullRequests() => await Task.FromResult(new List<BitBucketPullRequest>
     {
-        new PullRequest
+        new BitBucketPullRequest
         {
             Repository = "Some Repository",
             Number = 1,
@@ -33,7 +32,7 @@ public class MockBitBucketService : IBitBucketService
             Author = "User1",
             CommentCount = 0
         },
-        new PullRequest
+        new BitBucketPullRequest
         {
             Repository = "Some Repository",
             Number = 1,
