@@ -1,0 +1,42 @@
+﻿@using LCARS.Data
+
+@inject IJSRuntime JSRuntime;
+
+@if (Data == null)
+{
+    <Loading />
+}
+else
+{
+    <div class="container">
+        <div class="header">
+            <div class="date">Date Created</div>
+            <div class="repository">Repository</div>
+            <div class="title">Title</div>
+            <div class="author">Author</div>
+            <div class="comments">Comments</div>
+        </div>
+        <div class="data">
+            @foreach (var pr in Data.PullRequests)
+            {
+                <div class="date">@pr.CreatedOn</div>
+                <div class="repository">@pr.Repository</div>
+                <div class="title">@pr.Title</div>
+                <div class="author">@pr.Author</div>
+                <div class="comments">@pr.CommentCount</div>
+            }
+        </div>
+        <div class="footer"></div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public PullRequestSummary? Data { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (Data?.PullRequests?.Count() > Data?.Threshold)
+            await JSRuntime.InvokeVoidAsync("yellowAlert");
+    }
+}

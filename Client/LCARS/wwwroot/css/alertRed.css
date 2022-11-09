@@ -1,0 +1,120 @@
+.condition-red header {
+  animation: pulseTemplate5 1s infinite
+}
+
+  .condition-red header .left {
+    animation: pulseTemplate4 1s infinite
+  }
+
+  .condition-red header .middle tr {
+    color: #fff;
+  }
+
+  .condition-red header .middle tr.white {
+    color: #940606;
+  }
+
+  .condition-red header .right .buttons div {
+    background-color: #940606;
+  }
+
+  .condition-red header .right .title {
+    color: #940606;
+  }
+
+  .condition-red header .box-pattern span:nth-child(1) {
+    animation: pulseTemplate6 1s infinite
+  }
+
+  .condition-red header .box-pattern span:nth-child(2) {
+    animation: pulseTemplate7 1s infinite
+  }
+
+  .condition-red header .box-pattern span:nth-child(3) {
+    animation: pulseTemplate8 1s infinite
+  }
+
+  .condition-red header .box-pattern span:nth-child(4) {
+    animation: pulseTemplate9 1s infinite
+  }
+
+.condition-red .body {
+  animation: pulseTemplate5 1s infinite
+}
+
+.condition-red aside div:nth-child(1) {
+  animation: pulseTemplate4 1s infinite
+}
+
+.condition-red aside div:nth-child(2) {
+  animation: pulseTemplate3 1s infinite
+}
+
+.condition-red aside div:nth-child(3) {
+  animation: pulseTemplate2 1s infinite
+}
+
+.condition-red aside div:nth-child(4) {
+  animation: pulseTemplate1 1s infinite
+}
+
+.condition-red main {
+  animation: pulseTemplate5 1s infinite
+}
+
+  .condition-red main .box-pattern {
+    background-color: #940606
+  }
+
+    .condition-red main .box-pattern span:nth-child(1) {
+      animation: pulseTemplate6 1s infinite
+    }
+
+    .condition-red main .box-pattern span:nth-child(2) {
+      animation: pulseTemplate7 1s infinite
+    }
+
+    .condition-red main .box-pattern span:nth-child(3) {
+      animation: pulseTemplate8 1s infinite
+    }
+
+    .condition-red main .box-pattern span:nth-child(4) {
+      animation: pulseTemplate9 1s infinite
+    }
+
+@keyframes pulseTemplate1 {
+  0%, 100% { background-color: #fff; }
+  11% { background-color: #940606; }
+}
+@keyframes pulseTemplate2 {
+  0%, 100% { background-color: #fff; }
+  22% { background-color: #940606; }
+}
+@keyframes pulseTemplate3 {
+  0%, 100% { background-color: #fff; }
+  33% { background-color: #940606; }
+}
+@keyframes pulseTemplate4 {
+  0%, 100% { background-color: #fff; }
+  44% { background-color: #940606; }
+}
+@keyframes pulseTemplate5 {
+  0%, 100% { background-color: #fff; }
+  55% { background-color: #940606; }
+}
+@keyframes pulseTemplate6 {
+  0%, 100% { background-color: #fff; }
+  66% { background-color: #940606; }
+}
+@keyframes pulseTemplate7 {
+  0%, 100% { background-color: #fff; }
+  77% { background-color: #940606; }
+}
+@keyframes pulseTemplate8 {
+  0%, 100% { background-color: #fff; }
+  88% { background-color: #940606; }
+}
+@keyframes pulseTemplate9 {
+  0% { background-color: #fff; }
+  100% { background-color: #940606; }
+}

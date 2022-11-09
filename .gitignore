@@ -15,6 +15,7 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+.vs
 
 # Roslyn cache directories
 *.ide/
@@ -187,12 +188,3 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
-
-Builds.json
-Deployments.json
-Environments.json
-Issues.json
-GitHub.json
-RedAlert.json
-Screens.json
-Settings.json

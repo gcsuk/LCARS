@@ -1,0 +1,38 @@
+﻿@using LCARS.Data
+
+@inject IJSRuntime JSRuntime;
+
+@if (Data == null)
+{
+     <Loading />
+}
+else
+{
+    <div class="container">
+        @foreach (var repository in Data.Repositories)
+        {
+            <div class="repository">
+                <div class="left"></div>
+                <div class="label">@repository.Repository</div>
+                <div class="data @GetStatus(repository.Branches.Count())">@repository.Branches.Count()</div>
+                <div class="right"></div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public BranchSummary? Data { get; set; }
+
+    private string GetStatus(int branchCount) =>
+        branchCount > Data?.Threshold ? "red"
+            : branchCount > (decimal)(Data?.Threshold ?? 0) * 0.9M ? "yellow"
+            : "green";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (Data?.Repositories.Count(r => r.Branches.Count() > Data?.Threshold) > (decimal)(Data?.Repositories?.Count() ?? 0) * 0.75M)
+            await JSRuntime.InvokeVoidAsync("yellowAlert");
+    }
+}

@@ -1,0 +1,54 @@
+﻿table {
+    width: 100%;
+    font-size: 1.8rem;
+    margin-top: 15px;
+}
+
+.environment {
+    margin: 5px;
+    display: grid;
+    grid-template-columns: 30px 1fr 30px;
+    grid-gap: 10px;
+}
+
+.projectName {
+    vertical-align: middle;
+}
+
+.deployment {
+    margin: 5px;
+    display: grid;
+    grid-template-columns: 30px 1fr 30px;
+    grid-gap: 10px;
+}
+
+.environment .label {
+    color: #000;
+    background-color: #ff9966;
+}
+
+.left {
+    background-color: #ff9966;
+    border-radius: 20px 0 0 20px;
+}
+
+.deployment .label {
+    text-align: center;
+}
+
+.right {
+    border-radius: 0 20px 20px 0;
+    background-color: #ff9966;
+}
+
+.red {
+    background-color: #cc6666;
+}
+
+.yellow {
+    background-color: #ff9900;
+}
+
+.green {
+    background-color: #41863e;
+}

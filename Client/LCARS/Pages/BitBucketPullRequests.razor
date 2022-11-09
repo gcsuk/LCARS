@@ -1,0 +1,30 @@
+﻿@page "/bitbucket/pullrequests"
+
+<PageTitle>LCARS | BitBucket | Pull Requests</PageTitle>
+
+@using LCARS.Data
+@inject PullRequestService pullRequestService
+
+<Header Text="Pull Requests" />
+
+<PullRequests Data="@pullRequests"/>
+
+@code {
+    private PullRequestSummary? pullRequests;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshPullRequests();
+
+        var refreshTimer = new System.Timers.Timer(10000);
+
+        refreshTimer.Elapsed += async (sender, e) => await RefreshPullRequests();
+        refreshTimer.Enabled = true;
+    }
+
+    private async Task RefreshPullRequests()
+    {
+        pullRequests = await pullRequestService.GetBitBucketPullRequestsAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+}

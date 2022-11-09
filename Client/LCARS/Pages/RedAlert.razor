@@ -1,0 +1,100 @@
+﻿@page "/redalert"
+
+<PageTitle>LCARS | Red Alert</PageTitle>
+
+@inject NavigationManager navManager
+@inject IJSRuntime JSRuntime;
+@inject SettingsService settingsService;
+
+@using LCARS.Data
+
+<div class="destruct">
+    <div class="bar large"></div>
+    <div class="bar medium"></div>
+    <div class="bar small"></div>
+    <div class="clock">
+        @(_settings?.RedAlertSettings?.AlertType ?? "") Alert<br />
+        @hours : @minutes : @seconds : @milliseconds
+    </div>
+    <div class="bar small"></div>
+    <div class="bar medium"></div>
+    <div class="bar large"></div>
+</div>
+
+@code {
+    private string hours = "00";
+    private string minutes = "00";
+    private string seconds = "00";
+    private string milliseconds = "00";
+
+    private Settings? _settings;
+    private System.Timers.Timer? _clockTimer;
+    private System.Timers.Timer? _deactivationCheckTimer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _settings = await settingsService.GetSettings();
+
+        if (AlertDisabled)
+            navManager.NavigateTo("/", true, true);
+
+        _clockTimer = new(25);
+        _clockTimer.Elapsed += async (sender, e) => await RefreshClock();
+        _clockTimer.Enabled = true;
+
+        _deactivationCheckTimer = new(5000);
+        _deactivationCheckTimer.Elapsed += async (sender, e) => await DeactivatedCheckTimerElapsedHandler();
+        _deactivationCheckTimer.Enabled = true;
+    }
+
+    private async Task RefreshClock()
+    {
+        if (_settings?.RedAlertSettings?.EndTime == null)
+            return;
+
+        var remainingTime = _settings.RedAlertSettings.EndTime.Value.Subtract(DateTime.UtcNow);
+
+        if (remainingTime.TotalMilliseconds >= 0)
+        {
+            hours = remainingTime.Hours.ToString("00");
+            minutes = remainingTime.Minutes.ToString("00");
+            seconds = remainingTime.Seconds.ToString("00");
+            milliseconds = Math.Abs(remainingTime.Milliseconds).ToString("000").Substring(0, 2);
+        }
+
+        if (AlertDisabled)
+            _clockTimer.Enabled = false;
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task DeactivatedCheckTimerElapsedHandler()
+    {
+        if (!_deactivationCheckTimer.Enabled)
+            return;
+
+        _settings = await settingsService.GetSettings();
+
+        if (AlertDisabled)
+        {
+            _deactivationCheckTimer.Enabled = false;
+            await settingsService.UpdateRedAlertSettings(new Settings.RedAlertSettingsModel());
+            navManager.NavigateTo("/", true, true);
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private bool AlertDisabled => !(_settings?.RedAlertSettings?.Enabled ?? false) || _settings?.RedAlertSettings?.EndTime == null || _settings.RedAlertSettings.EndTime < DateTime.UtcNow;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JSRuntime.InvokeVoidAsync("redAlert");
+    }
+
+    public void Dispose()
+    {
+        _clockTimer?.Dispose();
+        _deactivationCheckTimer?.Dispose();
+    }
+}

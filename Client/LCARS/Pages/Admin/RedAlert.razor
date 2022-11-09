@@ -1,0 +1,85 @@
+﻿@page "/admin/redalert"
+
+@inject SettingsService settingsService;
+
+@using LCARS.Data
+@using System.ComponentModel.DataAnnotations
+
+@if (settings == null)
+{
+    <Loading />
+}
+else
+{
+    if (error != null)
+    {
+        <InputError Text="@error" />
+    }
+    <EditForm Model=@settings OnValidSubmit=@FormSubmitted OnInvalidSubmit=@InvalidFormSubmitted>
+        <DataAnnotationsValidator />
+        <div>
+            <label>Enabled</label>
+            <InputCheckbox @bind-Value=settings.Enabled />
+        </div>
+        <div>
+            <label>Alert Type</label>
+            <InputText @bind-Value=settings.AlertType />
+        </div>
+        <div>
+            <label>End Date</label>
+            <InputDate @bind-Value=settings.EndDate/>
+        </div>
+        <div>
+            <label>End Time</label>
+            <InputText @bind-Value=settings.EndTime/>
+        </div>
+        <input type="submit" value="Save" />
+    </EditForm>
+}
+
+@code {
+    string? error;
+    SettingsModel settings = new();
+
+    public record SettingsModel
+    {
+        public bool Enabled { get; set; }
+        [Required]
+        public string AlertType { get; set; }
+        public DateTime? EndDate { get; set; }
+        public string? EndTime { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var currentSettings = await settingsService.GetSettings();
+
+        settings = new()
+            {
+                Enabled = currentSettings.RedAlertSettings.Enabled,
+                AlertType = currentSettings.RedAlertSettings.AlertType,
+                EndDate = currentSettings.RedAlertSettings.EndTime,
+                EndTime = currentSettings.RedAlertSettings.EndTime.Value.ToString("HH:mm")
+            };
+    }
+
+    async Task FormSubmitted(EditContext editContext)
+    {
+        string endDateTimeString = settings.EndDate.Value.ToString("yyyy-MM-dd") + "T" + settings.EndTime + ":00.000Z";
+
+        if (DateTime.TryParse(endDateTimeString, out var endDateTime))
+            await settingsService.UpdateRedAlertSettings(new Settings.RedAlertSettingsModel
+                {
+                    AlertType = settings.AlertType,
+                    Enabled = settings.Enabled,
+                    EndTime = endDateTime
+                });
+        else
+            error = "Invalid End Time. Please Try Again";
+    }
+
+    void InvalidFormSubmitted(EditContext editContext)
+    {
+        error = "Invalid. Please Try Again.";
+    }
+}

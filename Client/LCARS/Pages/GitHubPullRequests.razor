@@ -1,0 +1,30 @@
+﻿@page "/github/pullrequests"
+
+<PageTitle>LCARS | GitHub | Pull Requests</PageTitle>
+
+@using LCARS.Data
+@inject PullRequestService pullRequestService
+
+<Header Text="Pull Requests" />
+
+<PullRequests Data="@pullRequests"/>
+
+@code {
+    private PullRequestSummary? pullRequests;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshPullRequests();
+
+        var refreshTimer = new System.Timers.Timer(5000);
+
+        refreshTimer.Elapsed += async (sender, e) => await RefreshPullRequests();
+        refreshTimer.Enabled = true;
+    }
+
+    private async Task RefreshPullRequests()
+    {
+        pullRequests = await pullRequestService.GetGitHubPullRequestsAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+}

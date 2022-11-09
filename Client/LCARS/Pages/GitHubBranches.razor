@@ -1,0 +1,30 @@
+﻿@page "/github/branches"
+
+<PageTitle>LCARS | GitHub | Branches</PageTitle>
+
+@using LCARS.Data
+@inject BranchService branchService
+
+<Header Text="GitHub Branches" />
+
+<Branches Data="@branches"/>
+
+@code {
+    private BranchSummary? branches;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshBranches();
+
+        var refreshTimer = new System.Timers.Timer(5000);
+
+        refreshTimer.Elapsed += async (sender, e) => await RefreshBranches();
+        refreshTimer.Enabled = true;
+    }
+
+    private async Task RefreshBranches()
+    {
+        branches = await branchService.GetGitHubBranchesAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+}

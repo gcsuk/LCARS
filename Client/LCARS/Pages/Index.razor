@@ -1,0 +1,16 @@
+﻿@page "/"
+
+@using LCARS.Data
+
+@inject SettingsService settingsService
+
+<PageTitle>Loading...</PageTitle>
+
+<Loading />
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await settingsService.SelectScreen();
+    }
+}
