@@ -7,11 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<SettingsService>();
-builder.Services.AddSingleton<PullRequestService>();
-builder.Services.AddSingleton<BranchService>();
-builder.Services.AddSingleton<BuildsService>();
-builder.Services.AddSingleton<DeploymentsService>();
+builder.Services.AddLocalization();
+builder.Services.AddScoped<SettingsService>();
+builder.Services.AddScoped<PullRequestService>();
+builder.Services.AddScoped<BranchService>();
+builder.Services.AddScoped<BuildsService>();
+builder.Services.AddScoped<DeploymentsService>();
 
 var baseUrl = builder.Configuration["Api:BaseUrl"];
 
@@ -30,6 +31,8 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRequestLocalization("en-GB");
 
 app.UseStaticFiles();
 

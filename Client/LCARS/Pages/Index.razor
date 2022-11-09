@@ -2,16 +2,15 @@
 
 @using LCARS.Data
 
-@inject NavigationManager NavManager
 @inject SettingsService settingsService
 
 <PageTitle>Loading...</PageTitle>
 
+<Loading />
+
 @code {
     protected override async Task OnInitializedAsync()
     {
-        var screen = await settingsService.GetScreen();
-
-        NavManager.NavigateTo(screen.Path);
+        await settingsService.SelectScreen();
     }
 }

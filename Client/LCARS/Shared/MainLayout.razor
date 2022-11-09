@@ -33,7 +33,7 @@
 <div class="body">
     <aside>
         <div>
-            <span><a href="/admin">CONFIG</a></span>
+            <span><a href="/admin/redalert">CONFIG</a></span>
         </div>
         <div>
             <span>STATUS</span>
@@ -62,7 +62,17 @@
     private Random randomiser = new Random();
     private MarkupString output = new MarkupString();
 
-    private void RenderDigits()
+    protected override async Task OnInitializedAsync()
+    {
+        await RenderDigits();
+
+        var refreshTimer = new System.Timers.Timer(2000);
+
+        refreshTimer.Elapsed += async (sender, e) => await RenderDigits();
+        refreshTimer.Enabled = true;
+    }
+
+    private async Task RenderDigits()
     {
         const int colCount = 13;
         const int rowCount = 6;
@@ -85,18 +95,7 @@
         html.Append("</tbody>");
 
         output = new MarkupString(html.ToString());
-    }
 
-    protected override Task OnInitializedAsync()
-    {
-        RenderDigits();
-
-        var timer = new System.Threading.Timer((_) =>
-        {
-            RenderDigits();
-            InvokeAsync(StateHasChanged);
-        }, null, 0, 2000);
-
-        return Task.CompletedTask;
+        await InvokeAsync(StateHasChanged);
     }
 }

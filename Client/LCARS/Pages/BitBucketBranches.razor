@@ -5,24 +5,26 @@
 @using LCARS.Data
 @inject BranchService branchService
 
-<Header Text="Branches" />
+<Header Text="BitBucket Branches" />
 
 <Branches Data="@branches"/>
 
 @code {
-    private IEnumerable<Branch>? branches;
+    private BranchSummary? branches;
 
     protected override async Task OnInitializedAsync()
     {
-        var timer = new System.Threading.Timer(async (_) =>
-        {
-            await RefreshBranches();
-            await InvokeAsync(StateHasChanged);
-        }, null, 0, 10000);
+        await RefreshBranches();
+
+        var refreshTimer = new System.Timers.Timer(10000);
+
+        refreshTimer.Elapsed += async (sender, e) => await RefreshBranches();
+        refreshTimer.Enabled = true;
     }
 
     private async Task RefreshBranches()
     {
         branches = await branchService.GetBitBucketBranchesAsync();
+        await InvokeAsync(StateHasChanged);
     }
 }

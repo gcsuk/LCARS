@@ -4,24 +4,38 @@ namespace LCARS.Data;
 
 public class BranchService
 {
+    private readonly SettingsService _settingsService;
     private readonly IApiClient _apiClient;
 
-    public BranchService(IApiClient apiClient)
+    public BranchService(SettingsService settingsService, IApiClient apiClient)
     {
+        _settingsService = settingsService;
         _apiClient = apiClient;
     }
 
-    public async Task<IEnumerable<Branch>> GetGitHubBranchesAsync()
+    public async Task<BranchSummary> GetGitHubBranchesAsync()
     {
-        var branches = await _apiClient.GetGitHubBranches();
+        var settings = await _settingsService.GetSettings();
 
-        return branches;
+        var summary = new BranchSummary
+        {
+            Threshold = settings.GitHubSettings.BranchThreshold,
+            Repositories = await _apiClient.GetGitHubBranches()
+        };
+
+        return summary;
     }
 
-    public async Task<IEnumerable<Branch>> GetBitBucketBranchesAsync()
+    public async Task<BranchSummary> GetBitBucketBranchesAsync()
     {
-        var branches = await _apiClient.GetBitBucketBranches();
+        var settings = await _settingsService.GetSettings();
 
-        return branches;
+        var summary = new BranchSummary
+        {
+            Threshold = settings.BitBucketSettings.BranchThreshold,
+            Repositories = await _apiClient.GetBitBucketBranches()
+        };
+
+        return summary;
     }
 }

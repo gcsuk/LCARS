@@ -1,5 +1,6 @@
 using LCARS.Services;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.AspNetCore.Components;
 
 namespace LCARS.Data;
 
@@ -7,25 +8,23 @@ public class SettingsService
 {
     private readonly IApiClient _apiClient;
     private readonly IMemoryCache _memoryCache;
+    private readonly NavigationManager _navigationManager;
 
-    public SettingsService(IApiClient apiClient, IMemoryCache memoryCache)
+    public SettingsService(IApiClient apiClient, IMemoryCache memoryCache, NavigationManager navigationManager)
     {
         _apiClient = apiClient;
         _memoryCache = memoryCache;
+        _navigationManager = navigationManager;
     }
 
-    public async Task<ScreenPicker> GetScreen()
+    public async Task SelectScreen()
     {
-        var success = _memoryCache.TryGetValue("Settings", out Settings settings);
-
-        if (!success)
-        {
-            settings = await _apiClient.GetAllSettings();
-
-            _memoryCache.Set("Settings", settings, DateTime.Now.AddMinutes(60));
-        }
+        var settings = await GetSettings();
 
         var screens = new List<ScreenPicker>();
+
+        if (settings.RedAlertSettings?.Enabled ?? false && settings.RedAlertSettings?.EndTime > DateTime.UtcNow)
+            _navigationManager.NavigateTo("/redalert");
 
         if (settings.BitBucketSettings.Enabled)
         {
@@ -45,6 +44,33 @@ public class SettingsService
         if (settings.JiraSettings.Enabled)
             screens.Add(new ScreenPicker("Jira", "/jira"));
 
-        return screens[new Random().Next(0, screens.Count - 1)];
+        var selectedScreen = screens[new Random().Next(0, screens.Count - 1)];
+
+        _navigationManager.NavigateTo(selectedScreen.Path);
+    }
+
+    public async Task<Settings> GetSettings()
+    {
+        var success = _memoryCache.TryGetValue("Settings", out Settings settings);
+
+        if (!success)
+        {
+            settings = await _apiClient.GetAllSettings();
+
+            _memoryCache.Set("Settings", settings, DateTime.Now.AddMinutes(60));
+        }
+
+        return settings;
+    }
+
+    public void ClearSettingsCache()
+    {
+        _memoryCache.Remove("Settings");
+    }
+
+    public async Task UpdateRedAlertSettings(Settings.RedAlertSettingsModel settings)
+    {
+        await _apiClient.UpdateRedAlertSettings(settings);
+        ClearSettingsCache();
     }
 }

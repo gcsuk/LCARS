@@ -71,15 +71,17 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var timer = new System.Threading.Timer(async (_) =>
-        {
-            await RefreshDeployments();
-            await InvokeAsync(StateHasChanged);
-        }, null, 0, 5000);
+        await RefreshDeployments();
+
+        var refreshTimer = new System.Timers.Timer(5000);
+
+        refreshTimer.Elapsed += async (sender, e) => await RefreshDeployments();
+        refreshTimer.Enabled = true;
     }
 
     private async Task RefreshDeployments()
     {
         deployments = await deploymentsService.GetDeploymentsAsync();
+        await InvokeAsync(StateHasChanged);
     }
 }

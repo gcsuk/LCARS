@@ -17,7 +17,7 @@ else
             <div class="comments">Comments</div>
         </div>
         <div class="data">
-            @foreach (var pr in Data)
+            @foreach (var pr in Data.PullRequests)
             {
                 <div class="date">@pr.CreatedOn</div>
                 <div class="repository">@pr.Repository</div>
@@ -32,11 +32,11 @@ else
 
 @code {
     [Parameter]
-    public IEnumerable<PullRequest>? Data { get; set; }
+    public PullRequestSummary? Data { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (Data?.Count() > 10)
+        if (Data?.PullRequests?.Count() > Data?.Threshold)
             await JSRuntime.InvokeVoidAsync("yellowAlert");
     }
 }

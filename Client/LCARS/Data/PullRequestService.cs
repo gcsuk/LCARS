@@ -4,24 +4,38 @@ namespace LCARS.Data;
 
 public class PullRequestService
 {
+    private readonly SettingsService _settingsService;
     private readonly IApiClient _apiClient;
 
-    public PullRequestService(IApiClient apiClient)
+    public PullRequestService(SettingsService settingsService, IApiClient apiClient)
     {
+        _settingsService = settingsService;
         _apiClient = apiClient;
     }
 
-    public async Task<IEnumerable<PullRequest>> GetGitHubPullRequestsAsync()
+    public async Task<PullRequestSummary> GetGitHubPullRequestsAsync()
     {
-        var pullRequests = await _apiClient.GetGitHubPullRequests();
+        var settings = await _settingsService.GetSettings();
 
-        return pullRequests;
+        var summary = new PullRequestSummary
+        {
+            Threshold = settings.GitHubSettings.PullRequestThreshold,
+            PullRequests = await _apiClient.GetGitHubPullRequests()
+        };
+
+        return summary;
     }
 
-    public async Task<IEnumerable<PullRequest>> GetBitBucketPullRequestsAsync()
+    public async Task<PullRequestSummary> GetBitBucketPullRequestsAsync()
     {
-        var pullRequests = await _apiClient.GetBitBucketPullRequests();
+        var settings = await _settingsService.GetSettings();
 
-        return pullRequests;
+        var summary = new PullRequestSummary
+        {
+            Threshold = settings.BitBucketSettings.PullRequestThreshold,
+            PullRequests = await _apiClient.GetBitBucketPullRequests()
+        };
+
+        return summary;
     }
 }

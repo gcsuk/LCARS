@@ -1,4 +1,5 @@
 ﻿using LCARS.Data;
+using LCARS.Pages;
 using Refit;
 
 namespace LCARS.Services;
@@ -6,16 +7,16 @@ namespace LCARS.Services;
 public interface IApiClient
 {
     [Get("/bitbucket/branches")]
-    Task<IEnumerable<Branch>> GetBitBucketBranches();
+    Task<IEnumerable<BranchSummary.RepositoryModel>> GetBitBucketBranches();
 
     [Get("/bitbucket/pullrequests")]
-    Task<IEnumerable<PullRequest>> GetBitBucketPullRequests();
+    Task<IEnumerable<PullRequestSummary.PullRequestModel>> GetBitBucketPullRequests();
 
     [Get("/github/branches")]
-    Task<IEnumerable<Branch>> GetGitHubBranches();
+    Task<IEnumerable<BranchSummary.RepositoryModel>> GetGitHubBranches();
 
     [Get("/github/pullrequests")]
-    Task<IEnumerable<PullRequest>> GetGitHubPullRequests();
+    Task<IEnumerable<PullRequestSummary.PullRequestModel>> GetGitHubPullRequests();
 
     [Get("/jira/issues")]
     Task<IEnumerable<Issue>> GetJiraIssues();
@@ -29,6 +30,9 @@ public interface IApiClient
     [Get("/octopus")]
     Task<IEnumerable<ProjectDeployment>> GetOctopusDeployments();
 
-    [Get("/settings/settings")]
+    [Get("/settings")]
     Task<Settings> GetAllSettings();
+
+    [Post("/settings/redalert")]
+    Task UpdateRedAlertSettings(Settings.RedAlertSettingsModel settings);
 }

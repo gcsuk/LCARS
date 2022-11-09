@@ -10,19 +10,21 @@
 <PullRequests Data="@pullRequests"/>
 
 @code {
-    private IEnumerable<PullRequest>? pullRequests;
+    private PullRequestSummary? pullRequests;
 
     protected override async Task OnInitializedAsync()
     {
-        var timer = new System.Threading.Timer(async (_) =>
-        {
-            await RefreshPullRequests();
-            await InvokeAsync(StateHasChanged);
-        }, null, 0, 10000);
+        await RefreshPullRequests();
+
+        var refreshTimer = new System.Timers.Timer(5000);
+
+        refreshTimer.Elapsed += async (sender, e) => await RefreshPullRequests();
+        refreshTimer.Enabled = true;
     }
 
     private async Task RefreshPullRequests()
     {
         pullRequests = await pullRequestService.GetGitHubPullRequestsAsync();
+        await InvokeAsync(StateHasChanged);
     }
 }
