@@ -24,7 +24,10 @@ public class SettingsService
         var screens = new List<ScreenPicker>();
 
         if (settings.RedAlertSettings?.Enabled ?? false && settings.RedAlertSettings?.EndTime > DateTime.UtcNow)
+        {
             _navigationManager.NavigateTo("/redalert");
+            return;
+        }
 
         if (settings.BitBucketSettings.Enabled)
         {

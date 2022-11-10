@@ -2,6 +2,7 @@
 
 <PageTitle>LCARS | Red Alert</PageTitle>
 
+@implements IDisposable
 @inject NavigationManager navManager
 @inject IJSRuntime JSRuntime;
 @inject SettingsService settingsService;
@@ -28,8 +29,8 @@
     private string milliseconds = "00";
 
     private Settings? _settings;
-    private System.Timers.Timer? _clockTimer;
-    private System.Timers.Timer? _deactivationCheckTimer;
+    private System.Timers.Timer? _clockTimer = new(25);
+    private System.Timers.Timer? _deactivationCheckTimer = new(5000);
 
     protected override async Task OnInitializedAsync()
     {
@@ -38,11 +39,9 @@
         if (AlertDisabled)
             navManager.NavigateTo("/", true, true);
 
-        _clockTimer = new(25);
         _clockTimer.Elapsed += async (sender, e) => await RefreshClock();
         _clockTimer.Enabled = true;
 
-        _deactivationCheckTimer = new(5000);
         _deactivationCheckTimer.Elapsed += async (sender, e) => await DeactivatedCheckTimerElapsedHandler();
         _deactivationCheckTimer.Enabled = true;
     }
@@ -92,7 +91,7 @@
         await JSRuntime.InvokeVoidAsync("redAlert");
     }
 
-    public void Dispose()
+    void IDisposable.Dispose()
     {
         _clockTimer?.Dispose();
         _deactivationCheckTimer?.Dispose();
