@@ -42,12 +42,15 @@ public class SettingsService
         }
 
         if (settings.TeamCitySettings.Enabled)
-            screens.Add(new ScreenPicker("TeamCity", "/teamcity"));
+            screens.Add(new ScreenPicker("TeamCity", "/builds"));
+
+        if (settings.OctopusSettings.Enabled)
+            screens.Add(new ScreenPicker("Octopus", "/deployments"));
 
         if (settings.JiraSettings.Enabled)
             screens.Add(new ScreenPicker("Jira", "/jira"));
 
-        var selectedScreen = screens[new Random().Next(0, screens.Count - 1)];
+        var selectedScreen = screens[new Random().Next(0, screens.Count)];
 
         _navigationManager.NavigateTo(selectedScreen.Path);
     }

@@ -2,11 +2,12 @@
 
 public record Settings
 {
-    public RedAlertSettingsModel RedAlertSettings { get; set; } = new RedAlertSettingsModel();
-    public GitHubSettingsModel GitHubSettings { get; set; } = new GitHubSettingsModel();
-    public BitBucketSettingsModel BitBucketSettings { get; set; } = new BitBucketSettingsModel();
-    public TeamCitySettingsModel TeamCitySettings { get; set; } = new TeamCitySettingsModel();
-    public JiraSettingsModel JiraSettings { get; set; } = new JiraSettingsModel();
+    public RedAlertSettingsModel RedAlertSettings { get; set; } = new();
+    public GitHubSettingsModel GitHubSettings { get; set; } = new();
+    public BitBucketSettingsModel BitBucketSettings { get; set; } = new();
+    public TeamCitySettingsModel TeamCitySettings { get; set; } = new();
+    public OctopusSettingsModel OctopusSettings { get; set; } = new();
+    public JiraSettingsModel JiraSettings { get; set; } = new();
 
     public record RedAlertSettingsModel
     {
@@ -35,6 +36,11 @@ public record Settings
     }
 
     public record TeamCitySettingsModel
+    {
+        public bool Enabled { get; set; }
+    }
+
+    public record OctopusSettingsModel
     {
         public bool Enabled { get; set; }
     }
