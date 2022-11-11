@@ -3,20 +3,21 @@
 <PageTitle>LCARS | GitHub | Pull Requests</PageTitle>
 
 @using LCARS.Data
+
+@implements IDisposable
 @inject PullRequestService pullRequestService
 
-<Header Text="Pull Requests" />
+<Header Text="GitHub Pull Requests" />
 
 <PullRequests Data="@pullRequests"/>
 
 @code {
     private PullRequestSummary? pullRequests;
+    private System.Timers.Timer refreshTimer = new(10000);
 
     protected override async Task OnInitializedAsync()
     {
         await RefreshPullRequests();
-
-        var refreshTimer = new System.Timers.Timer(5000);
 
         refreshTimer.Elapsed += async (sender, e) => await RefreshPullRequests();
         refreshTimer.Enabled = true;
@@ -26,5 +27,11 @@
     {
         pullRequests = await pullRequestService.GetGitHubPullRequestsAsync();
         await InvokeAsync(StateHasChanged);
+    }
+
+    void IDisposable.Dispose()
+    {
+        refreshTimer.Enabled = false;
+        refreshTimer.Dispose();
     }
 }

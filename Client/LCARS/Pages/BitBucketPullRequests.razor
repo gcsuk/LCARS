@@ -3,20 +3,21 @@
 <PageTitle>LCARS | BitBucket | Pull Requests</PageTitle>
 
 @using LCARS.Data
+
+@implements IDisposable
 @inject PullRequestService pullRequestService
 
-<Header Text="Pull Requests" />
+<Header Text="BitBucket Pull Requests" />
 
 <PullRequests Data="@pullRequests"/>
 
 @code {
     private PullRequestSummary? pullRequests;
+    private System.Timers.Timer refreshTimer = new(10000);
 
     protected override async Task OnInitializedAsync()
     {
         await RefreshPullRequests();
-
-        var refreshTimer = new System.Timers.Timer(10000);
 
         refreshTimer.Elapsed += async (sender, e) => await RefreshPullRequests();
         refreshTimer.Enabled = true;
@@ -26,5 +27,11 @@
     {
         pullRequests = await pullRequestService.GetBitBucketPullRequestsAsync();
         await InvokeAsync(StateHasChanged);
+    }
+
+    void IDisposable.Dispose()
+    {
+        refreshTimer.Enabled = false;
+        refreshTimer.Dispose();
     }
 }

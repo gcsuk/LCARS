@@ -3,6 +3,8 @@
 <PageTitle>LCARS | BitBucket | Branches</PageTitle>
 
 @using LCARS.Data
+
+@implements IDisposable
 @inject BranchService branchService
 
 <Header Text="BitBucket Branches" />
@@ -11,12 +13,11 @@
 
 @code {
     private BranchSummary? branches;
+    private System.Timers.Timer refreshTimer = new(10000);
 
     protected override async Task OnInitializedAsync()
     {
         await RefreshBranches();
-
-        var refreshTimer = new System.Timers.Timer(10000);
 
         refreshTimer.Elapsed += async (sender, e) => await RefreshBranches();
         refreshTimer.Enabled = true;
@@ -26,5 +27,11 @@
     {
         branches = await branchService.GetBitBucketBranchesAsync();
         await InvokeAsync(StateHasChanged);
+    }
+
+    void IDisposable.Dispose()
+    {
+        refreshTimer.Enabled = false;
+        refreshTimer.Dispose();
     }
 }

@@ -3,6 +3,8 @@
 <PageTitle>LCARS | Builds</PageTitle>
 
 @using LCARS.Data
+
+@implements IDisposable
 @inject BuildsService buildsService
 
 <Header Text="Builds" />
@@ -28,12 +30,11 @@ else
 
 @code {
     private IEnumerable<Build>? builds;
+    private System.Timers.Timer refreshTimer = new(5000);
 
     protected override async Task OnInitializedAsync()
     {
         await RefreshBuilds();
-
-        var refreshTimer = new System.Timers.Timer(5000);
 
         refreshTimer.Elapsed += async (sender, e) => await RefreshBuilds();
         refreshTimer.Enabled = true;
@@ -59,5 +60,11 @@ else
             return build.State == "SUCCESS" ? "green" : "red";
         else // running
             return "yellow";
+    }
+
+    void IDisposable.Dispose()
+    {
+        refreshTimer.Enabled = false;
+        refreshTimer.Dispose();
     }
 }

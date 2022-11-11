@@ -30,11 +30,15 @@
 
         <script src="_framework/blazor.server.js"></script>
         <script type="text/javascript">
-            function redAlert() {
+            function activateRedAlert() {
                 document.querySelector("body").classList.add("condition-red");
             }
-            function yellowAlert() {
+            function activateYellowAlert() {
                 document.querySelector("body").classList.add("condition-yellow");
+            }
+            function deactivateAlerts() {
+                document.querySelector("body").classList.remove("condition-red");
+                document.querySelector("body").classList.remove("condition-yellow");
             }
         </script>
     </body>

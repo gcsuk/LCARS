@@ -37,6 +37,6 @@ else
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (Data?.PullRequests?.Count() > Data?.Threshold)
-            await JSRuntime.InvokeVoidAsync("yellowAlert");
+            await JSRuntime.InvokeVoidAsync("activateYellowAlert");
     }
 }

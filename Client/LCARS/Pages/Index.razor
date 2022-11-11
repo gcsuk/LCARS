@@ -2,6 +2,7 @@
 
 @using LCARS.Data
 
+@inject IJSRuntime JSRuntime
 @inject SettingsService settingsService
 
 <PageTitle>Loading...</PageTitle>
@@ -11,6 +12,8 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
+        await JSRuntime.InvokeVoidAsync("deactivateAlerts");
+
         await settingsService.SelectScreen();
     }
 }
