@@ -1,0 +1,58 @@
+﻿@inject NavigationManager navigationManager
+@inherits LayoutComponentBase
+@layout MainLayout
+
+<SubPageLayout Title="Admin">
+    <Menu>
+        <div class="menu-item">
+            <div class="numbers @SetMenuHighlight(0)-text">22</div>
+            <div class="gap @SetMenuHighlight(0)-bg"></div>
+            <div class="label @SetMenuHighlight(0)-bg"><a href="/admin/github">GitHub</a></div>
+        </div>
+        <div class="menu-item">
+            <div class="numbers @SetMenuHighlight(1)-text">8</div>
+            <div class="gap @SetMenuHighlight(1)-bg"></div>
+            <div class="label @SetMenuHighlight(1)-bg"><a href="/admin/bitbucket">BitBucket</a></div>
+        </div>
+        <div class="menu-item">
+            <div class="numbers @SetMenuHighlight(2)-text">21</div>
+            <div class="gap @SetMenuHighlight(2)-bg"></div>
+            <div class="label @SetMenuHighlight(2)-bg"><a href="/admin/builds">Builds</a></div>
+        </div>
+        <div class="menu-item">
+            <div class="numbers @SetMenuHighlight(3)-text">4</div>
+            <div class="gap @SetMenuHighlight(3)-bg"></div>
+            <div class="label @SetMenuHighlight(3)-bg"><a href="/admin/deployments">Deployments</a></div>
+        </div>
+        <div class="menu-item">
+            <div class="numbers @SetMenuHighlight(4)-text">59</div>
+            <div class="gap @SetMenuHighlight(4)-bg"></div>
+            <div class="label @SetMenuHighlight(4)-bg"><a href="/admin/jira">Jira</a></div>
+        </div>
+        <div class="menu-item">
+            <div class="numbers @SetMenuHighlight(5)-text">94</div>
+            <div class="gap @SetMenuHighlight(5)-bg"></div>
+            <div class="label @SetMenuHighlight(5)-bg"><a href="/admin/redalert">Red Alert</a></div>
+        </div>
+    </Menu>
+    <PageContent>
+        @Body
+    </PageContent>
+</SubPageLayout>
+
+@code {
+    private string SetMenuHighlight(int index)
+    {
+        var path = navigationManager.Uri;
+
+        return index switch
+        {
+            0 => path.Contains("github") ? "blue" : "purple",
+            1 => path.Contains("bitbucket") ? "blue" : "peach",
+            2 => path.Contains("builds") ? "blue" : "redish",
+            3 => path.Contains("deployments") ? "blue" : "purple",
+            4 => path.Contains("jira") ? "blue" : "peach",
+            _ => path.Contains("redalert") ? "blue" : "redish"
+        };
+    }
+}

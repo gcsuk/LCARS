@@ -33,6 +33,18 @@ public interface IApiClient
     [Get("/settings")]
     Task<Settings> GetAllSettings();
 
+    [Post("/settings/github")]
+    Task UpdateGitHubSettings(Settings.GitHubSettingsModel settings);
+
+    [Post("/settings/bitbucket")]
+    Task UpdateBitBucketSettings(Settings.BitBucketSettingsModel settings);
+
+    [Post("/settings/teamcity")]
+    Task UpdateTeamCitySettings(Settings.TeamCitySettingsModel settings);
+
+    [Post("/settings/octopus")]
+    Task UpdateOctopusSettings(Settings.OctopusSettingsModel settings);
+
     [Post("/settings/redalert")]
     Task UpdateRedAlertSettings(Settings.RedAlertSettingsModel settings);
 }

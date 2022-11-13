@@ -1,0 +1,100 @@
+﻿.container {
+    width: 100%;
+    font-size: 1.8rem;
+    margin-top: 15px;
+}
+
+.header {
+    color: #000;
+    display: grid;
+    grid-template-columns: 150px 1fr 1fr 200px 100px;
+    grid-column-gap: 5px;
+}
+
+    .header .date {
+        border-radius: 20px 0 0 0;
+        background-color: #ff9900;
+        padding-left: 15px;
+    }
+
+    .header .repository,
+    .header .title,
+    .header .author {
+        background-color: #ff9900;
+        padding-left: 10px;
+    }
+
+    .header .comments {
+        border-radius: 0 20px 0 0;
+        background-color: #ff9900;
+    }
+
+.data {
+    color: #000;
+    display: grid;
+    grid-template-columns: 150px 1fr 1fr 200px 100px;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+    margin-top: 5px;
+}
+
+    .data div {
+        background-color: #ff9966;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+.date {
+    padding-left: 15px;
+}
+
+.repository {
+    grid-column: 2 / 3;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.title {
+    grid-column: 3 / 4;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.author {
+    grid-column: 4 / 5;
+    text-align: left;
+    padding-left: 10px;
+    
+}
+
+.comments {
+    grid-column: 5 / 6;
+    text-align: center;
+}
+
+.footer {
+    border-radius: 0 0 20px 20px;
+    background-color: #ff9900;
+    height: 40px;
+    margin-top: 5px;
+}
+
+.condition-yellow .header .date,
+.condition-yellow .header .repository,
+.condition-yellow .header .title,
+.condition-yellow .header .author,
+.condition-yellow .header .comments,
+.condition-yellow .data div,
+.condition-yellow .footer {
+    background-color: #dad81d;
+}
+
+.condition-red .header .date,
+.condition-red .header .repository,
+.condition-red .header .title,
+.condition-red .header .author,
+.condition-red .header .comments,
+.condition-red .data div,
+.condition-red .footer {
+    background-color: #940606;
+}

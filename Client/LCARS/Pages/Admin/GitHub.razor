@@ -1,0 +1,103 @@
+﻿@page "/admin/github"
+
+@inject SettingsService settingsService;
+
+@using LCARS.Data
+@using System.ComponentModel.DataAnnotations
+
+@if (settings == null)
+{
+    <Loading />
+}
+else
+{
+    if (error != null)
+    {
+        <InputError Text="@error" />
+    }
+    else
+    {
+        <Header Text="GitHub Admin" />
+    }
+    <EditForm Model=@settings OnValidSubmit=@FormSubmitted OnInvalidSubmit=@InvalidFormSubmitted>
+        <DataAnnotationsValidator />
+        <div>
+            <label>Enabled</label>
+            <InputCheckbox @bind-Value=settings.Enabled />
+        </div>
+        <div>
+            <label>Key</label>
+            <InputText @bind-Value=settings.Key />
+        </div>
+        <div>
+            <label>Owner</label>
+            <InputText @bind-Value=settings.Owner />
+        </div>
+        <div>
+            <label>Repositories</label>
+            <InputTextArea @bind-Value=settings.Repositories />
+        </div>
+        <div>
+            <label>Branch Threshold</label>
+            <InputNumber @bind-Value=settings.BranchThreshold />
+        </div>
+        <div>
+            <label>Pull Request Threshold</label>
+            <InputNumber @bind-Value=settings.PullRequestThreshold />
+        </div>
+        <SaveButton />
+    </EditForm>
+}
+
+@code {
+    string? error;
+    GitHubModel settings = new();
+
+    public record GitHubModel
+    {
+        public bool Enabled { get; set; }
+        [Required]
+        public string Key { get; set; }
+        [Required]
+        public string Owner { get; set; }
+        [Required]
+        public string Repositories { get; set; }
+        [Required]
+        public int PullRequestThreshold { get; set; }
+        [Required]
+        public int BranchThreshold { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var currentSettings = await settingsService.GetSettings();
+
+        settings = new()
+            {
+                Enabled = currentSettings.GitHubSettings.Enabled,
+                Key = currentSettings.GitHubSettings.Key,
+                Owner = currentSettings.GitHubSettings.Owner,
+                Repositories = string.Join(",", currentSettings.GitHubSettings.Repositories),
+                PullRequestThreshold = currentSettings.GitHubSettings.PullRequestThreshold,
+                BranchThreshold = currentSettings.GitHubSettings.BranchThreshold,
+            };
+    }
+
+    async Task FormSubmitted(EditContext editContext)
+    {
+        await settingsService.UpdateGitHubSettings(new Settings.GitHubSettingsModel
+            {
+                Enabled = settings.Enabled,
+                Key = settings.Key,
+                Owner = settings.Owner,
+                Repositories = settings.Repositories.Split(",", StringSplitOptions.RemoveEmptyEntries),
+                BranchThreshold = settings.BranchThreshold,
+                PullRequestThreshold = settings.PullRequestThreshold
+            });
+    }
+
+    void InvalidFormSubmitted(EditContext editContext)
+    {
+        error = "Invalid. Please Try Again.";
+    }
+}

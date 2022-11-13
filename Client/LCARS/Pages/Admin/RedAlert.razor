@@ -15,6 +15,10 @@ else
     {
         <InputError Text="@error" />
     }
+    else
+    {
+        <Header Text="Red Alert Admin" />
+    }
     <EditForm Model=@settings OnValidSubmit=@FormSubmitted OnInvalidSubmit=@InvalidFormSubmitted>
         <DataAnnotationsValidator />
         <div>
@@ -33,7 +37,7 @@ else
             <label>End Time</label>
             <InputText @bind-Value=settings.EndTime/>
         </div>
-        <input type="submit" value="Save" />
+        <SaveButton />
     </EditForm>
 }
 

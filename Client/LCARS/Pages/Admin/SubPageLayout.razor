@@ -1,0 +1,20 @@
+﻿<div class="container">
+    <div class="sidebar">
+        @Menu
+    </div>
+    <div class="main">
+        @PageContent
+    </div>
+</div>
+
+@code
+{
+    [Parameter]
+    public string Title { get; set; } = String.Empty;
+
+    [Parameter]
+    public RenderFragment? Menu { get; set; }
+
+    [Parameter]
+    public RenderFragment? PageContent { get; set; }
+}

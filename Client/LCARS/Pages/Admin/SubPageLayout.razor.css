@@ -1,0 +1,15 @@
+﻿.container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 350px auto;
+}
+
+.sidebar {
+
+}
+
+.main {
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+    margin-left: 20px;
+}

@@ -342,3 +342,43 @@ main {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.pink-bg {
+    background-color: #c9c
+}
+
+.pink-text {
+    color: #c9c
+}
+
+.blue-bg {
+    background-color: #99f
+}
+
+.blue-text {
+    color: #99f
+}
+
+.redish-bg {
+    background-color: #cc6666
+}
+
+.redish-text {
+    color: #cc6666
+}
+
+.purple-bg {
+    background-color: #cc99cc
+}
+
+.purple-text {
+    color: #cc99cc
+}
+
+.peach-bg {
+    background-color: #ff9966
+}
+
+.peach-text {
+    color: #ff9966
+}

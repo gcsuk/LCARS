@@ -1,0 +1,70 @@
+﻿@page "/admin/deployments"
+
+@inject SettingsService settingsService;
+
+@using LCARS.Data
+@using System.ComponentModel.DataAnnotations
+
+@if (settings == null)
+{
+    <Loading />
+}
+else
+{
+    if (error != null)
+    {
+        <InputError Text="@error" />
+    }else
+    {
+        <Header Text="Octopus Admin" />
+    }
+    <EditForm Model=@settings OnValidSubmit=@FormSubmitted OnInvalidSubmit=@InvalidFormSubmitted>
+        <DataAnnotationsValidator />
+        <div>
+            <label>Enabled</label>
+            <InputCheckbox @bind-Value=settings.Enabled />
+        </div>
+        <div>
+            <label>Api Key</label>
+            <InputText @bind-Value=settings.ApiKey />
+        </div>
+        <SaveButton />
+    </EditForm>
+}
+
+@code {
+    string? error;
+    GitHubModel settings = new();
+
+    public record GitHubModel
+    {
+        public bool Enabled { get; set; }
+        [Required]
+        public string ApiKey { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var currentSettings = await settingsService.GetSettings();
+
+        settings = new()
+            {
+                Enabled = currentSettings.OctopusSettings.Enabled,
+                ApiKey = currentSettings.OctopusSettings?.ApiKey ?? "",
+            };
+    }
+
+    async Task FormSubmitted(EditContext editContext)
+    {
+        await settingsService.UpdateOctopusSettings(new Settings.OctopusSettingsModel
+            {
+                Enabled = settings.Enabled,
+                ApiKey = settings.ApiKey,
+            });
+    }
+
+    void InvalidFormSubmitted(EditContext editContext)
+    {
+        error = "Invalid. Please Try Again.";
+    }
+}

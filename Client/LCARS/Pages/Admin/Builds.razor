@@ -1,0 +1,79 @@
+﻿@page "/admin/builds"
+
+@inject SettingsService settingsService;
+
+@using LCARS.Data
+@using System.ComponentModel.DataAnnotations
+
+@if (settings == null)
+{
+    <Loading />
+}
+else
+{
+    if (error != null)
+    {
+        <InputError Text="@error" />
+    }
+    else
+    {
+        <Header Text="Team City Admin" />
+    }
+    <EditForm Model=@settings OnValidSubmit=@FormSubmitted OnInvalidSubmit=@InvalidFormSubmitted>
+        <DataAnnotationsValidator />
+        <div>
+            <label>Enabled</label>
+            <InputCheckbox @bind-Value=settings.Enabled />
+        </div>
+        <div>
+            <label>Access Token</label>
+            <InputText @bind-Value=settings.AccessToken />
+        </div>
+        <div>
+            <label>Build Type IDs</label>
+            <InputTextArea @bind-Value=settings.BuildTypeIds />
+        </div>
+        <SaveButton />
+    </EditForm>
+}
+
+@code {
+    string? error;
+    BuildsModel settings = new();
+
+    public record BuildsModel
+    {
+        public bool Enabled { get; set; }
+        [Required]
+        public string AccessToken { get; set; }
+        [Required]
+        public string BuildTypeIds { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var currentSettings = await settingsService.GetSettings();
+
+        settings = new()
+            {
+                Enabled = currentSettings.TeamCitySettings.Enabled,
+                AccessToken = currentSettings?.TeamCitySettings?.AccessToken ?? "",
+                BuildTypeIds = string.Join(",", currentSettings.TeamCitySettings.BuildTypeIds),
+            };
+    }
+
+    async Task FormSubmitted(EditContext editContext)
+    {
+        await settingsService.UpdateTeamCitySettings(new Settings.TeamCitySettingsModel
+            {
+                Enabled = settings.Enabled,
+                AccessToken = settings.AccessToken,
+                BuildTypeIds = settings.BuildTypeIds.Split(",", StringSplitOptions.RemoveEmptyEntries),
+            });
+    }
+
+    void InvalidFormSubmitted(EditContext editContext)
+    {
+        error = "Invalid. Please Try Again.";
+    }
+}

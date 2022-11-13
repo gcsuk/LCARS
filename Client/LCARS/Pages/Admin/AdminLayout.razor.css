@@ -1,0 +1,22 @@
+﻿.menu-item {
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 50px 20px auto;
+    grid-gap: 10px;
+}
+
+.numbers {
+    text-align: right;
+    font-size: 2rem;
+}
+
+.gap {
+    grid-column: 2 / 3;
+}
+
+.label {
+    grid-column: 3 / 4;
+    border-radius: 0 20px 20px 0;
+    padding: 5px 10px;
+    color: #000;
+}

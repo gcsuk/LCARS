@@ -19,6 +19,9 @@ public record Settings
     public record GitHubSettingsModel
     {
         public bool Enabled { get; set; }
+        public string? Key { get; set; }
+        public string? Owner { get; set; }
+        public IEnumerable<string> Repositories { get; set; } = Enumerable.Empty<string>();
         public int BranchThreshold { get; set; }
         public int PullRequestThreshold { get; set; }
     }
@@ -26,6 +29,10 @@ public record Settings
     public record BitBucketSettingsModel
     {
         public bool Enabled { get; set; }
+        public string? Username { get; set; }
+        public string? Password { get; set; }
+        public string? Owner { get; set; }
+        public IEnumerable<string> Repositories { get; set; } = Enumerable.Empty<string>();
         public int BranchThreshold { get; set; }
         public int PullRequestThreshold { get; set; }
     }
@@ -38,10 +45,13 @@ public record Settings
     public record TeamCitySettingsModel
     {
         public bool Enabled { get; set; }
+        public string? AccessToken { get; set; }
+        public IEnumerable<string> BuildTypeIds { get; set; } = Enumerable.Empty<string>();
     }
 
     public record OctopusSettingsModel
     {
         public bool Enabled { get; set; }
+        public string? ApiKey { get; set; }
     }
 }

@@ -74,6 +74,30 @@ public class SettingsService
         _memoryCache.Remove("Settings");
     }
 
+    public async Task UpdateGitHubSettings(Settings.GitHubSettingsModel settings)
+    {
+        await _apiClient.UpdateGitHubSettings(settings);
+        ClearSettingsCache();
+    }
+
+    public async Task UpdateBitBucketSettings(Settings.BitBucketSettingsModel settings)
+    {
+        await _apiClient.UpdateBitBucketSettings(settings);
+        ClearSettingsCache();
+    }
+
+    public async Task UpdateTeamCitySettings(Settings.TeamCitySettingsModel settings)
+    {
+        await _apiClient.UpdateTeamCitySettings(settings);
+        ClearSettingsCache();
+    }
+
+    public async Task UpdateOctopusSettings(Settings.OctopusSettingsModel settings)
+    {
+        await _apiClient.UpdateOctopusSettings(settings);
+        ClearSettingsCache();
+    }
+
     public async Task UpdateRedAlertSettings(Settings.RedAlertSettingsModel settings)
     {
         await _apiClient.UpdateRedAlertSettings(settings);
