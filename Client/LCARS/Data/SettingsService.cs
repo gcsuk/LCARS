@@ -98,6 +98,12 @@ public class SettingsService
         ClearSettingsCache();
     }
 
+    public async Task UpdateJiraSettings(Settings.JiraSettingsModel settings)
+    {
+        await _apiClient.UpdateJiraSettings(settings);
+        ClearSettingsCache();
+    }
+
     public async Task UpdateRedAlertSettings(Settings.RedAlertSettingsModel settings)
     {
         await _apiClient.UpdateRedAlertSettings(settings);

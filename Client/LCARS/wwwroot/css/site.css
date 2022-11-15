@@ -382,3 +382,51 @@ main {
 .peach-text {
     color: #ff9966
 }
+
+/* ADMIN */
+
+label {
+    display: inline-block;
+    width: 200px;
+    vertical-align: top;
+    padding: 3px 10px;
+    color: #000;
+    background-color: #c9c;
+    border-radius: 20px 0 0 20px;
+}
+
+form div {
+    display: block;
+    min-height: 40px;
+    margin-bottom: 10px;
+    vertical-align: middle;
+}
+
+input:not([type]), input[type=number], input[type=date], textarea {
+    font-family: lcars;
+    font-size: 1.4rem;
+    width: 50%;
+    padding: 5px;
+    background-color: #ff9966;
+    border-radius: 0 20px 20px 0;
+}
+
+input[type=text] span:before {
+    display: block;
+    width: 5px;
+    height: 5px;
+    background-color: red;
+    border-radius: 3px;
+}
+
+input[type=checkbox] {
+}
+
+input[type=checkbox]:checked {
+    content: "\2713";
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+    font-size: 15px;
+    color: #f3f3f3;
+    text-align: center;
+    line-height: 15px;
+}

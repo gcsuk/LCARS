@@ -1,4 +1,4 @@
-﻿@page "/admin/builds"
+﻿@page "/admin/jira"
 
 @inject SettingsService settingsService;
 
@@ -17,12 +17,13 @@ else
     }
     else
     {
-        <Header Text="Builds Admin" />
+        <Header Text="Jira Admin" />
     }
     <EditForm Model=@settings OnValidSubmit=@FormSubmitted OnInvalidSubmit=@InvalidFormSubmitted>
         <DataAnnotationsValidator />
         <div>
             <label>Enabled</label>
+            <span></span>
             <InputCheckbox @bind-Value=settings.Enabled />
         </div>
         <div>
@@ -30,8 +31,8 @@ else
             <InputText @bind-Value=settings.AccessToken />
         </div>
         <div>
-            <label>Build Type IDs</label>
-            <InputTextArea @bind-Value=settings.BuildTypeIds />
+            <label>Projects</label>
+            <InputTextArea @bind-Value=settings.Projects/>
         </div>
         <SaveButton />
     </EditForm>
@@ -39,15 +40,15 @@ else
 
 @code {
     string? error;
-    BuildsModel settings = new();
+    JiraModel settings = new();
 
-    public record BuildsModel
+    public record JiraModel
     {
         public bool Enabled { get; set; }
         [Required]
-        public string AccessToken { get; set; }
+        public string? AccessToken { get; set; }
         [Required]
-        public string BuildTypeIds { get; set; }
+        public string? Projects { get; set; }
     }
 
     protected override async Task OnInitializedAsync()
@@ -56,19 +57,19 @@ else
 
         settings = new()
             {
-                Enabled = currentSettings.TeamCitySettings.Enabled,
-                AccessToken = currentSettings?.TeamCitySettings?.AccessToken ?? "",
-                BuildTypeIds = string.Join(",", currentSettings.TeamCitySettings.BuildTypeIds),
+                Enabled = currentSettings?.JiraSettings?.Enabled ?? false,
+                AccessToken = currentSettings?.JiraSettings?.AccessToken ?? "",
+                Projects = string.Join(",", currentSettings?.JiraSettings?.Projects ?? Enumerable.Empty<string>()),
             };
     }
 
     async Task FormSubmitted(EditContext editContext)
     {
-        await settingsService.UpdateTeamCitySettings(new Settings.TeamCitySettingsModel
+        await settingsService.UpdateJiraSettings(new Settings.JiraSettingsModel
             {
                 Enabled = settings.Enabled,
                 AccessToken = settings.AccessToken,
-                BuildTypeIds = settings.BuildTypeIds.Split(",", StringSplitOptions.RemoveEmptyEntries),
+                Projects = settings.Projects.Split(",", StringSplitOptions.RemoveEmptyEntries),
             });
     }
 

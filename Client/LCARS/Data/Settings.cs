@@ -40,6 +40,8 @@ public record Settings
     public record JiraSettingsModel
     {
         public bool Enabled { get; set; }
+        public string? AccessToken { get; set; }
+        public IEnumerable<string> Projects { get; set; } = Enumerable.Empty<string>();
     }
 
     public record TeamCitySettingsModel

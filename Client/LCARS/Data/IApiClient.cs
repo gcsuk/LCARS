@@ -45,6 +45,9 @@ public interface IApiClient
     [Post("/settings/octopus")]
     Task UpdateOctopusSettings(Settings.OctopusSettingsModel settings);
 
+    [Post("/settings/jira")]
+    Task UpdateJiraSettings(Settings.JiraSettingsModel settings);
+
     [Post("/settings/redalert")]
     Task UpdateRedAlertSettings(Settings.RedAlertSettingsModel settings);
 }
