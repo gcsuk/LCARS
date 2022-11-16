@@ -1,4 +1,6 @@
 ﻿using LCARS.Configuration.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace LCARS.Configuration;
 
@@ -144,7 +146,7 @@ public class SettingsService : ISettingsService
         {
             AccessToken = settings.AccessToken,
             BaseUrl = settings.BaseUrl ?? "",
-            BuildTypeIds = settings.BuildTypeIds?.Split(",", StringSplitOptions.RemoveEmptyEntries),
+            Builds = settings.Projects == null ? null : JsonSerializer.Deserialize<IEnumerable<TeamCitySettings.TeamCityBuild>>(settings.Projects),
             Enabled = settings.Enabled,
         };
     }
@@ -160,7 +162,7 @@ public class SettingsService : ISettingsService
             RowKey = "TeamCity",
             AccessToken = settings.AccessToken,
             BaseUrl = settings.BaseUrl,
-            BuildTypeIds = string.Join(",", settings.BuildTypeIds ?? Enumerable.Empty<string>()),
+            Projects = JsonSerializer.Serialize(settings.Builds ?? Enumerable.Empty<TeamCitySettings.TeamCityBuild>()),
             Enabled = settings.Enabled,
         });
     }

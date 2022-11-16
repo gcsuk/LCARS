@@ -31,19 +31,20 @@ namespace LCARS.TeamCity
 
             var builds = new List<Build>();
 
-            foreach (var buildTypeId in settings.BuildTypeIds ?? Enumerable.Empty<string>())
+            foreach (var buildItem in settings.Builds ?? Enumerable.Empty<TeamCitySettings.TeamCityBuild>())
             {
-                var build = (await _teamCityClient.GetBuilds(settings.AccessToken, buildTypeId))?.Build.FirstOrDefault();
+                var build = (await _teamCityClient.GetBuilds(settings.AccessToken, buildItem.BuildTypeId))?.Build.FirstOrDefault();
 
                 if (build == null)
                     continue;
 
                 try
                 {
-                    var runningBuild = await _teamCityClient.GetBuildRunning(settings.AccessToken, buildTypeId);
+                    var runningBuild = await _teamCityClient.GetBuildRunning(settings.AccessToken, buildItem.BuildTypeId);
 
                     builds.Add(new Build
                     {
+                        DisplayName = buildItem.DisplayName,
                         BuildTypeId = runningBuild.BuildTypeId,
                         BuildNumber = runningBuild.Number,
                         State = runningBuild.State,
@@ -62,6 +63,7 @@ namespace LCARS.TeamCity
                     if (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
                         builds.Add(new Build
                         {
+                            DisplayName = buildItem.DisplayName,
                             BuildTypeId = build.BuildTypeId,
                             BuildNumber = build.Number,
                             State = build.State,

@@ -22,8 +22,6 @@ public record SettingsEntity : ITableEntity
     public string? AuthUrl { get; set; }
     public string? Username { get; set; }
 
-    public string? BuildTypeIds { get; set; }
-
     public string? Projects { get; set; }
 
     public string? AlertType { get; set; }
