@@ -20,32 +20,36 @@ namespace LCARS.Octopus
 
             var environments = dashboard.Environments;
             var projects = dashboard.Projects;
+            var tenants = dashboard.Tenants;
 
             foreach (var project in projects)
             {
-                var projectDeployments = new List<ProjectDeployments.DeploymentModel>();
-
-                foreach (var item in dashboard.Items.Where(i => i.ProjectId == project.Id))
+                foreach (var tenant in tenants)
                 {
-                    var environment = environments.SingleOrDefault(e => e.Id == item.EnvironmentId);
+                    var projectDeployments = new List<ProjectDeployments.DeploymentModel>();
 
-                    if (environment == null)
-                        continue;
-
-                    projectDeployments.Add(new ProjectDeployments.DeploymentModel
+                    foreach (var item in dashboard.Items.Where(i => i.ProjectId == project.Id && i.TenantId == tenant.Id))
                     {
-                        Environment = environment.Name,
-                        ReleaseVersion = item.ReleaseVersion,
-                        HasWarningsOrErrors = item.HasWarningsOrErrors,
-                        State = item.State
+                        var environment = environments.SingleOrDefault(e => e.Id == item.EnvironmentId);
+
+                        if (environment == null)
+                            continue;
+
+                        projectDeployments.Add(new ProjectDeployments.DeploymentModel
+                        {
+                            Environment = environment.Name,
+                            ReleaseVersion = item.ReleaseVersion,
+                            HasWarningsOrErrors = item.HasWarningsOrErrors,
+                            State = item.State
+                        });
+                    }
+
+                    summary.Add(new ProjectDeployments
+                    {
+                        ProjectName = $"{project.Name} {tenant.Name}",
+                        Deployments = projectDeployments,
                     });
                 }
-
-                summary.Add(new ProjectDeployments
-                {
-                    ProjectName = project.Name,
-                    Deployments = projectDeployments,
-                });
             }
 
             return summary;

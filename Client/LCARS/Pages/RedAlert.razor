@@ -37,7 +37,7 @@
         _settings = await settingsService.GetSettings();
 
         if (AlertDisabled)
-            navManager.NavigateTo("/", true, true);
+            navManager.NavigateTo("", true, true);
 
         _clockTimer.Elapsed += async (sender, e) => await RefreshClock();
         _clockTimer.Enabled = true;
@@ -78,7 +78,7 @@
         {
             _deactivationCheckTimer.Enabled = false;
             await settingsService.UpdateRedAlertSettings(new Settings.RedAlertSettingsModel());
-            navManager.NavigateTo("/", true, true);
+            navManager.NavigateTo("", true, true);
         }
 
         await InvokeAsync(StateHasChanged);

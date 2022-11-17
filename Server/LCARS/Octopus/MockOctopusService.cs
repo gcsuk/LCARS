@@ -16,30 +16,38 @@ namespace LCARS.Octopus
 
             var projects = new List<string>
             {
-                "Project 1", "Project 2", "Project 3", "Project 4", "Project 5"
+                "Project 1", "Project 2"
+            };
+
+            var tenants = new List<string>
+            {
+                "Tenant 1", "Tenant 2", "Tenant 3", "Tenant 4", "Tenant 5"
             };
 
             var random = new Random();
 
-            for (var i = 0; i < 5; i++)
+            for (var projectIndex = 0; projectIndex < projects.Count; projectIndex++)
             {
-                var projectDeployment = new ProjectDeployments
+                for (var tenantIndex = 0; tenantIndex < tenants.Count; tenantIndex++)
                 {
-                    ProjectName = projects[i]
-                };
-
-                for (int j = 0; j < 4; j++)
-                {
-                    projectDeployment.Deployments.Add(new ProjectDeployments.DeploymentModel
+                    var projectDeployment = new ProjectDeployments
                     {
-                        Environment = environments[j],
-                        ReleaseVersion = $"{random.Next(1, 4)}.{random.Next(1, 20)}.{random.Next(1, 50)}.0",
-                        State = random.Next(0, 2) == 0 ? "Success" : "Failure",
-                        HasWarningsOrErrors = random.Next(0, 2) == 0,
-                    });
-                }
+                        ProjectName = $"{projects[projectIndex]} {tenants[tenantIndex]}",
+                    };
 
-                deployments.Add(projectDeployment);
+                    for (int deploymentIndex = 0; deploymentIndex < environments.Count; deploymentIndex++)
+                    {
+                        projectDeployment.Deployments.Add(new ProjectDeployments.DeploymentModel
+                        {
+                            Environment = environments[deploymentIndex],
+                            ReleaseVersion = $"{random.Next(1, 4)}.{random.Next(1, 20)}.{random.Next(1, 50)}.0",
+                            State = random.Next(0, 2) == 0 ? "Success" : "Failure",
+                            HasWarningsOrErrors = random.Next(0, 2) == 0,
+                        });
+                    }
+
+                    deployments.Add(projectDeployment);
+                }
             }
 
             return await Task.FromResult(deployments);

@@ -45,6 +45,7 @@ namespace LCARS.TeamCity
 
                 builds.Add(new Build
                 {
+                    DisplayName = $"Build {i}",
                     BuildTypeId = $"BuildType{i}",
                     BuildNumber = i.ToString(),
                     State = isSuccess ? "SUCCESS" : "FAILURE",
