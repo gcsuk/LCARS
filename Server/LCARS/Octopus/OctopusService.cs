@@ -44,11 +44,12 @@ namespace LCARS.Octopus
                         });
                     }
 
-                    summary.Add(new ProjectDeployments
-                    {
-                        ProjectName = $"{project.Name} {tenant.Name}",
-                        Deployments = projectDeployments,
-                    });
+                    if (projectDeployments.Any())
+                        summary.Add(new ProjectDeployments
+                        {
+                            ProjectName = $"{project.Name} {tenant.Name}",
+                            Deployments = projectDeployments,
+                        });
                 }
             }
 
