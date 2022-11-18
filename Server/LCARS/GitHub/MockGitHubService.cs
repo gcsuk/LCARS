@@ -61,8 +61,8 @@ public class MockGitHubService : IGitHubService
             Number = 1,
             Title = "Some PR Title",
             Description = "Some description",
-            CreatedOn = "2022-01-01",
-            UpdatedOn = "2022-01-02",
+            CreatedOn = new DateTime(2022, 1, 1),
+            UpdatedOn = new DateTime(2022, 1, 2),
             Author = "User1",
             CommentCount = 0
         },
@@ -73,8 +73,8 @@ public class MockGitHubService : IGitHubService
             Number = 1,
             Title = "Some PR Title",
             Description = "Another description",
-            CreatedOn = "2022-01-01",
-            UpdatedOn = "2022-01-02",
+            CreatedOn = new DateTime(2022, 1, 1),
+            UpdatedOn = new DateTime(2022, 1, 2),
             Author = "User1",
             CommentCount = 2
         }

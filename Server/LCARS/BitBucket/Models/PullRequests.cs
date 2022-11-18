@@ -14,9 +14,9 @@ public record PullRequests
         public string? Description { get; set; }
         public string? State { get; set; }
         [JsonPropertyName("created_on")]
-        public string? CreatedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
         [JsonPropertyName("updated_on")]
-        public string? UpdatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
         [JsonPropertyName("author")]
         public AuthorModel User { get; set; } = new AuthorModel();
         [JsonPropertyName("comment_count")]
