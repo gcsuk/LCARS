@@ -19,7 +19,7 @@ else
         <div class="data">
             @foreach (var pr in Data.PullRequests)
             {
-                <div class="date">@pr.CreatedOn</div>
+                <div class="date">@pr.CreatedOn.ToString("dd-MM-yyyy")</div>
                 <div class="repository">@pr.Repository</div>
                 <div class="title">@pr.Title</div>
                 <div class="author">@pr.Author</div>
