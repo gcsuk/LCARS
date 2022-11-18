@@ -21,7 +21,7 @@ else
             <div class="build">
                 <div class="left"></div>
                 <div class="label">@build.DisplayName</div>
-                <div class="data @GetStatusColor(build)">@GetBuildStatus(build)</div>
+                <div class="data @GetStatusColor(build)"><a href="@build.WebUrl" target="_blank">@GetBuildStatus(build)</a></div>
                 <div class="right"></div>
             </div>
         }

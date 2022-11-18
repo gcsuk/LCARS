@@ -43,6 +43,7 @@ namespace LCARS.Octopus
                             ReleaseVersion = $"{random.Next(1, 4)}.{random.Next(1, 20)}.{random.Next(1, 50)}.0",
                             State = random.Next(0, 2) == 0 ? "Success" : "Failure",
                             HasWarningsOrErrors = random.Next(0, 2) == 0,
+                            WebUrl = "http://tempuri.org",
                         });
                     }
 

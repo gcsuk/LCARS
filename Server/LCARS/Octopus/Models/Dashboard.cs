@@ -9,6 +9,8 @@ public record Dashboard
         public string? Id { get; set; }
 
         public string? Name { get; set; }
+
+        public string? Slug { get; set; }
     }
 
     public IEnumerable<Environment> Environments { get; set; } = Enumerable.Empty<Environment>();
@@ -33,6 +35,7 @@ public record Dashboard
 
     public record Deployment
     {
+        public string? Id { get; set; }
         public string? ProjectId { get; set; }
         public string? EnvironmentId { get; set; }
         public string? TenantId { get; set; }

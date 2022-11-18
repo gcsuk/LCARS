@@ -6,10 +6,11 @@ namespace LCARS.Octopus
     public class OctopusService : IOctopusService
     {
         private readonly IOctopusClient _octopusClient;
-
-        public OctopusService(IOctopusClient octopusClient)
+        private readonly IConfiguration _configuration;
+        public OctopusService(IOctopusClient octopusClient, IConfiguration configuration)
         {
-            _octopusClient= octopusClient;
+            _octopusClient = octopusClient;
+            _configuration = configuration;
         }
 
         public async Task<IEnumerable<ProjectDeployments>> GetDeployments(OctopusSettings settings)
@@ -21,6 +22,7 @@ namespace LCARS.Octopus
             var environments = dashboard.Environments;
             var projects = dashboard.Projects;
             var tenants = dashboard.Tenants;
+            var octopusBaseUrl = _configuration["Octopus:BaseUrl"];
 
             foreach (var project in projects)
             {
@@ -40,7 +42,8 @@ namespace LCARS.Octopus
                             Environment = environment.Name,
                             ReleaseVersion = item.ReleaseVersion,
                             HasWarningsOrErrors = item.HasWarningsOrErrors,
-                            State = item.State
+                            State = item.State,
+                            WebUrl = $"{octopusBaseUrl}/app#/projects/{project.Slug}/deployments/releases/{item.ReleaseVersion}/deployments/{item.Id}"
                         });
                     }
 

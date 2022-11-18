@@ -12,5 +12,6 @@ public record ProjectDeployments
         public string? ReleaseVersion { get; set; }
         public string? State { get; set; }
         public bool HasWarningsOrErrors { get; set; }
+        public string? WebUrl { get; set; }
     }
 }

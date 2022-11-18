@@ -5,6 +5,6 @@ namespace LCARS.Octopus;
 
 public interface IOctopusClient
 {
-    [Get("/dashboard")]
+    [Get("/api/dashboard")]
     Task<Dashboard> GetDashboard([Header("X-Octopus-ApiKey")] string apiKey);
 }
