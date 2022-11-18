@@ -29,16 +29,30 @@ else
             <label>Access Token</label>
             <InputText @bind-Value=settings.AccessToken />
         </div>
-        <div>
-            <label>Build Type IDs</label>
-            <InputTextArea @bind-Value=settings.BuildTypeIds />
-        </div>
         <SaveButton />
+        <hr />
+        <div>
+            <label>Display Text</label>
+            <InputText @bind-Value=DisplayName />
+        </div>
+        <div>
+            <label>Build Type ID</label>
+            <InputText @bind-Value=BuildTypeId />
+        </div>
+        <button @onclick="AddBuild" class="add">Add</button>
+        <hr />
+        @foreach (var item in settings.Builds)
+        {
+            <div><button @onclick="() => DeleteBuild(item)" class="delete">Delete</button> @item.DisplayName : @item.BuildTypeId </div>
+        }
+        <hr />
     </EditForm>
 }
 
 @code {
     string? error;
+    string? DisplayName;
+    string? BuildTypeId;
     BuildsModel settings = new();
 
     public record BuildsModel
@@ -46,8 +60,8 @@ else
         public bool Enabled { get; set; }
         [Required]
         public string AccessToken { get; set; }
-        [Required]
-        public string BuildTypeIds { get; set; }
+        public List<Data.Settings.TeamCitySettingsModel.TeamCityBuild> Builds { get; set; } = new();
+
     }
 
     protected override async Task OnInitializedAsync()
@@ -58,8 +72,24 @@ else
             {
                 Enabled = currentSettings.TeamCitySettings.Enabled,
                 AccessToken = currentSettings?.TeamCitySettings?.AccessToken ?? "",
-                BuildTypeIds = string.Join(",", currentSettings.TeamCitySettings.BuildTypeIds),
+                Builds = currentSettings.TeamCitySettings.Builds.ToList(),
             };
+    }
+
+    async Task AddBuild()
+    {
+        settings.Builds.Add(new Settings.TeamCitySettingsModel.TeamCityBuild
+        {
+            DisplayName = DisplayName,
+            BuildTypeId = BuildTypeId
+        });
+        StateHasChanged();
+    }
+
+    async Task DeleteBuild(Settings.TeamCitySettingsModel.TeamCityBuild build)
+    {
+        settings.Builds.Remove(build);
+        StateHasChanged();
     }
 
     async Task FormSubmitted(EditContext editContext)
@@ -68,7 +98,7 @@ else
             {
                 Enabled = settings.Enabled,
                 AccessToken = settings.AccessToken,
-                BuildTypeIds = settings.BuildTypeIds.Split(",", StringSplitOptions.RemoveEmptyEntries),
+                Builds = settings.Builds
             });
     }
 

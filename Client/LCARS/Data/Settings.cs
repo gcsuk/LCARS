@@ -48,7 +48,13 @@ public record Settings
     {
         public bool Enabled { get; set; }
         public string? AccessToken { get; set; }
-        public IEnumerable<string> BuildTypeIds { get; set; } = Enumerable.Empty<string>();
+        public IEnumerable<TeamCityBuild>? Builds { get; set; } = Enumerable.Empty<TeamCityBuild>();
+
+        public record TeamCityBuild
+        {
+            public string? DisplayName { get; set; }
+            public string? BuildTypeId { get; set; }
+        }
     }
 
     public record OctopusSettingsModel
