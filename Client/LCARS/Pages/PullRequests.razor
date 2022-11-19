@@ -1,6 +1,6 @@
 ﻿@using LCARS.Data
 
-@inject IJSRuntime JSRuntime;
+@inject AlertState alertState;
 
 @if (Data == null)
 {
@@ -37,6 +37,6 @@ else
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (Data?.PullRequests?.Count() > Data?.Threshold)
-            await JSRuntime.InvokeVoidAsync("activateYellowAlert");
+            alertState.SetAlertState("yellow");
     }
 }

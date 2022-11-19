@@ -1,66 +1,70 @@
 ﻿
 @inherits LayoutComponentBase
+@inject Data.AlertState alertState;
+@implements IDisposable
 
 <PageTitle>LCARS</PageTitle>
 
-<header>
-    <div id="header-left" class="left">
-        @DateTime.Now.ToString("dd-MM-yyyy")
-    </div>
-    <div class="middle">
-        <table>
-            @output
-        </table>
-    </div>
-    <div class="right">
-        <div class="title">
-            LCARS OPERATIONS <span>ONLINE</span>
+<body class="@alertState.State">
+    <header>
+        <div id="header-left" class="left">
+            @DateTime.Now.ToString("dd-MM-yyyy")
         </div>
-        <div class="buttons">
-            <div><a href="">07-3215</a></div>
-            <div><a href="">08-5012</a></div>
-            <div><a href="">09-3123</a></div>
-            <div><a href="">10-2415</a></div>
+        <div class="middle">
+            <table>
+                @output
+            </table>
         </div>
-    </div>
-    <div class="box-pattern">
-        <span />
-        <span />
-        <span />
-        <span />
-    </div>
-</header>
-<div class="body">
-    <aside>
-        <div>
-            <span><a href="admin/github">CONFIG</a></span>
+        <div class="right">
+            <div class="title">
+                LCARS OPERATIONS <span>ONLINE</span>
+            </div>
+            <div class="buttons">
+                <div><a href="">07-3215</a></div>
+                <div><a href="">08-5012</a></div>
+                <div><a href="">09-3123</a></div>
+                <div><a href="">10-2415</a></div>
+            </div>
         </div>
-        <div>
-            <span><a href="">STATUS</a></span>
-        </div>
-        <div>
-            <span><a href="">05-32456</a></span>
-        </div>
-        <div>
-            <span><a href="">06-15868</a></span>
-        </div>
-    </aside>
-    <main>
         <div class="box-pattern">
             <span />
             <span />
             <span />
             <span />
         </div>
-        <div class="content">
-            @Body
-        </div>
-    </main>
-</div>
+    </header>
+    <div class="body">
+        <aside>
+            <div>
+                <span><a href="admin/github">CONFIG</a></span>
+            </div>
+            <div>
+                <span><a href="">STATUS</a></span>
+            </div>
+            <div>
+                <span><a href="">05-32456</a></span>
+            </div>
+            <div>
+                <span><a href="">06-15868</a></span>
+            </div>
+        </aside>
+        <main>
+            <div class="box-pattern">
+                <span />
+                <span />
+                <span />
+                <span />
+            </div>
+            <div class="content">
+                @Body
+            </div>
+        </main>
+    </div>
+</body>
 
 @code {
-    private Random randomiser = new Random();
-    private MarkupString output = new MarkupString();
+    private Random randomiser = new();
+    private MarkupString output = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -70,6 +74,8 @@
 
         refreshTimer.Elapsed += async (sender, e) => await RenderDigits();
         refreshTimer.Enabled = true;
+
+        alertState.OnChange += StateHasChanged;
     }
 
     private async Task RenderDigits()
@@ -97,5 +103,10 @@
         output = new MarkupString(html.ToString());
 
         await InvokeAsync(StateHasChanged);
+    }
+
+    void IDisposable.Dispose()
+    {
+        alertState.OnChange -= StateHasChanged;
     }
 }

@@ -4,7 +4,7 @@
 
 @implements IDisposable
 @inject NavigationManager navManager
-@inject IJSRuntime JSRuntime;
+@inject AlertState alertState;
 @inject SettingsService settingsService;
 
 @using LCARS.Data
@@ -88,7 +88,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await JSRuntime.InvokeVoidAsync("activateRedAlert");
+        alertState.SetAlertState("red");
     }
 
     void IDisposable.Dispose()

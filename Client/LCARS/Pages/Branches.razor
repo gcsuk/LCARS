@@ -1,6 +1,6 @@
 ﻿@using LCARS.Data
 
-@inject IJSRuntime JSRuntime;
+@inject AlertState alertState;
 
 @if (Data == null)
 {
@@ -33,6 +33,6 @@ else
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (Data?.Repositories.Count(r => r.Branches.Count() > Data?.Threshold) > (decimal)(Data?.Repositories?.Count() ?? 0) * 0.75M)
-            await JSRuntime.InvokeVoidAsync("activateYellowAlert");
+            alertState.SetAlertState("yellow");
     }
 }

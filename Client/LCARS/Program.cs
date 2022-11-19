@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddLocalization();
+builder.Services.AddScoped<AlertState>();
 builder.Services.AddScoped<SettingsService>();
 builder.Services.AddScoped<PullRequestService>();
 builder.Services.AddScoped<BranchService>();
