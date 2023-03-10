@@ -5,7 +5,7 @@
 @using LCARS.Data
 
 @implements IDisposable
-@inject DeploymentsService deploymentsService
+@inject HttpClient Http
 
 <Header Text="Deployments" />
 
@@ -82,7 +82,7 @@ else
 
     private async Task RefreshDeployments()
     {
-        deployments = await deploymentsService.GetDeploymentsAsync();
+        deployments = await Http.GetFromJsonAsync<IEnumerable<ProjectDeployment>>("/octopus");
         await InvokeAsync(StateHasChanged);
     }
 

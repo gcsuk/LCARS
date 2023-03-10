@@ -1,6 +1,6 @@
 ﻿@page "/admin/bitbucket"
 
-@inject SettingsService settingsService;
+@inject HttpClient Http
 
 @using LCARS.Data
 @using System.ComponentModel.DataAnnotations
@@ -76,7 +76,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var currentSettings = await settingsService.GetSettings();
+        var currentSettings = await Http.GetFromJsonAsync<Settings>("settings");
 
         settings = new()
             {
@@ -92,7 +92,7 @@ else
 
     async Task FormSubmitted(EditContext editContext)
     {
-        await settingsService.UpdateBitBucketSettings(new Settings.BitBucketSettingsModel
+        await Http.PostAsJsonAsync<Settings.BitBucketSettingsModel>("settings/bitbucket", new Settings.BitBucketSettingsModel
             {
                 Enabled = settings.Enabled,
                 Username = settings.Username,

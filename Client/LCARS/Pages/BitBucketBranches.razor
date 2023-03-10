@@ -5,7 +5,7 @@
 @using LCARS.Data
 
 @implements IDisposable
-@inject BranchService branchService
+@inject HttpClient Http
 
 <Header Text="BitBucket Branches" />
 
@@ -25,8 +25,16 @@
 
     private async Task RefreshBranches()
     {
-        branches = await branchService.GetBitBucketBranchesAsync();
-        await InvokeAsync(StateHasChanged);
+        var settings = await Http.GetFromJsonAsync<Settings>("settings");
+        var branchData = await Http.GetFromJsonAsync<IEnumerable<BranchSummary.RepositoryModel>>("/bitbucket/branches");
+
+        branches = new BranchSummary
+            {
+                Threshold = settings.BitBucketSettings.BranchThreshold,
+                Repositories = branchData
+            };
+
+        StateHasChanged();
     }
 
     void IDisposable.Dispose()

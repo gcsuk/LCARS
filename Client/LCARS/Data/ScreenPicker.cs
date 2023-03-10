@@ -1,3 +1,3 @@
-﻿namespace LCARS.Data;
+﻿ namespace LCARS.Data;
 
 public record ScreenPicker (string Name, string Path);

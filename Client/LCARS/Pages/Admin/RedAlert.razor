@@ -1,6 +1,6 @@
 ﻿@page "/admin/redalert"
 
-@inject SettingsService settingsService;
+@inject HttpClient Http
 
 @using LCARS.Data
 @using System.ComponentModel.DataAnnotations
@@ -56,7 +56,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var currentSettings = await settingsService.GetSettings();
+        var currentSettings = await Http.GetFromJsonAsync<Settings>("settings");
 
         settings = new()
             {
@@ -72,7 +72,7 @@ else
         string endDateTimeString = settings.EndDate.Value.ToString("yyyy-MM-dd") + "T" + settings.EndTime + ":00.000Z";
 
         if (DateTime.TryParse(endDateTimeString, out var endDateTime))
-            await settingsService.UpdateRedAlertSettings(new Settings.RedAlertSettingsModel
+            await Http.PostAsJsonAsync<Settings.RedAlertSettingsModel>("settings/redalert", new Settings.RedAlertSettingsModel
                 {
                     AlertType = settings.AlertType,
                     Enabled = settings.Enabled,

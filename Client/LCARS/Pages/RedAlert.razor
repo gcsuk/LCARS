@@ -3,9 +3,9 @@
 <PageTitle>LCARS | Red Alert</PageTitle>
 
 @implements IDisposable
+@inject HttpClient Http
 @inject NavigationManager navManager
 @inject AlertState alertState;
-@inject SettingsService settingsService;
 
 @using LCARS.Data
 
@@ -34,7 +34,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _settings = await settingsService.GetSettings();
+        _settings = await Http.GetFromJsonAsync<Settings>("settings");
 
         if (AlertDisabled)
             navManager.NavigateTo("", true, true);
@@ -72,12 +72,12 @@
         if (!_deactivationCheckTimer.Enabled)
             return;
 
-        _settings = await settingsService.GetSettings();
+        _settings = await Http.GetFromJsonAsync<Settings>("settings");
 
         if (AlertDisabled)
         {
             _deactivationCheckTimer.Enabled = false;
-            await settingsService.UpdateRedAlertSettings(new Settings.RedAlertSettingsModel());
+            await Http.PostAsJsonAsync<Settings.RedAlertSettingsModel>("settings/redalert", new Settings.RedAlertSettingsModel());
             navManager.NavigateTo("", true, true);
         }
 

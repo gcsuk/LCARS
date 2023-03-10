@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33402.96
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCARS", "LCARS.csproj", "{C77C7430-BB84-46E3-AE76-E18F85074F4A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C77C7430-BB84-46E3-AE76-E18F85074F4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C77C7430-BB84-46E3-AE76-E18F85074F4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C77C7430-BB84-46E3-AE76-E18F85074F4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C77C7430-BB84-46E3-AE76-E18F85074F4A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8C3EB0BE-EE87-45CD-8A1F-760A08A0E44F}
+	EndGlobalSection
+EndGlobal

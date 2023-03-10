@@ -5,7 +5,7 @@
 @using LCARS.Data
 
 @implements IDisposable
-@inject BuildsService buildsService
+@inject HttpClient Http
 
 <Header Text="Builds" />
 
@@ -42,7 +42,7 @@ else
 
     private async Task RefreshBuilds()
     {
-        builds = await buildsService.GetBuildsAsync();
+        builds = await Http.GetFromJsonAsync<IEnumerable<Build>>("/teamcity/builds");
         await InvokeAsync(StateHasChanged);
     }
 

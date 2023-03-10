@@ -5,7 +5,7 @@
 @using LCARS.Data
 
 @implements IDisposable
-@inject BranchService branchService
+@inject HttpClient Http
 
 <Header Text="GitHub Branches" />
 
@@ -25,8 +25,16 @@
 
     private async Task RefreshBranches()
     {
-        branches = await branchService.GetGitHubBranchesAsync();
-        await InvokeAsync(StateHasChanged);
+        var settings = await Http.GetFromJsonAsync<Settings>("settings");
+        var branchData = await Http.GetFromJsonAsync<IEnumerable<BranchSummary.RepositoryModel>>("/github/branches");
+
+        branches = new BranchSummary
+            {
+                Repositories = branchData,
+                Threshold = settings.GitHubSettings.BranchThreshold
+            };
+
+        StateHasChanged();
     }
 
     void IDisposable.Dispose()

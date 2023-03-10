@@ -1,6 +1,6 @@
 ﻿@page "/admin/jira"
 
-@inject SettingsService settingsService;
+@inject HttpClient Http
 
 @using LCARS.Data
 @using System.ComponentModel.DataAnnotations
@@ -53,7 +53,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var currentSettings = await settingsService.GetSettings();
+        var currentSettings = await Http.GetFromJsonAsync<Settings>("settings");
 
         settings = new()
             {
@@ -65,7 +65,7 @@ else
 
     async Task FormSubmitted(EditContext editContext)
     {
-        await settingsService.UpdateJiraSettings(new Settings.JiraSettingsModel
+        await Http.PostAsJsonAsync<Settings.JiraSettingsModel>("settings/jira", new Settings.JiraSettingsModel
             {
                 Enabled = settings.Enabled,
                 AccessToken = settings.AccessToken,

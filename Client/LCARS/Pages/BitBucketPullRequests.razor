@@ -5,7 +5,7 @@
 @using LCARS.Data
 
 @implements IDisposable
-@inject PullRequestService pullRequestService
+@inject HttpClient Http
 
 <Header Text="BitBucket Pull Requests" />
 
@@ -25,8 +25,16 @@
 
     private async Task RefreshPullRequests()
     {
-        pullRequests = await pullRequestService.GetBitBucketPullRequestsAsync();
-        await InvokeAsync(StateHasChanged);
+        var settings = await Http.GetFromJsonAsync<Settings>("settings");
+        var pullRequestData = await Http.GetFromJsonAsync<IEnumerable<PullRequestSummary.PullRequestModel>>("/bitbucket/pullrequests");
+
+        pullRequests = new PullRequestSummary
+            {
+                Threshold = settings.BitBucketSettings.PullRequestThreshold,
+                PullRequests = pullRequestData
+            };
+
+        StateHasChanged();
     }
 
     void IDisposable.Dispose()

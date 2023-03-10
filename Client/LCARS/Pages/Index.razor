@@ -2,6 +2,7 @@
 
 @using LCARS.Data
 
+@inject HttpClient Http
 @inject AlertState alertState
 @inject SettingsService settingsService
 
@@ -12,7 +13,8 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
+        var settings = await Http.GetFromJsonAsync<Settings>("settings");
         alertState.SetAlertState("");
-        await settingsService.SelectScreen();
+        await settingsService.SelectScreen(settings);
     }
 }
