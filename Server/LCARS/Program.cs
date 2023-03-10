@@ -9,6 +9,7 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddEndpoints<Program>(builder.Configuration);
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -24,5 +25,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseEndpoints<Program>();
+
+app.UseHealthChecks("/ping");
 
 app.Run();

@@ -23,9 +23,9 @@ public class GitHubEndpoints : IEndpoints
             .WithTags(Tag);
     }
 
-    internal static async Task<IResult> GetPullRequests(IGitHubService gitHubService, ISettingsService settingsService) => Results.Ok(await gitHubService.GetPullRequests());
+    internal static async Task<IEnumerable<GitHubPullRequest>> GetPullRequests(IGitHubService gitHubService, ISettingsService settingsService) => await gitHubService.GetPullRequests();
 
-    internal static async Task<IResult> GetBranches(IGitHubService gitHubService, ISettingsService settingsService) => Results.Ok(await gitHubService.GetBranches());
+    internal static async Task<IEnumerable<GitHubBranchSummary>> GetBranches(IGitHubService gitHubService, ISettingsService settingsService) => await gitHubService.GetBranches();
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {

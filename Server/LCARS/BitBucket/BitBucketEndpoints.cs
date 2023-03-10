@@ -23,9 +23,9 @@ public class BitBucketEndpoints : IEndpoints
             .WithTags(Tag);
     }
 
-    internal static async Task<IResult> GetPullRequests(IBitBucketService bitBucketService, ISettingsService settingsService) => Results.Ok(await bitBucketService.GetPullRequests());
+    internal static async Task<IEnumerable<BitBucketPullRequest>> GetPullRequests(IBitBucketService bitBucketService, ISettingsService settingsService) => await bitBucketService.GetPullRequests();
 
-    internal static async Task<IResult> GetBranches(IBitBucketService bitBucketService, ISettingsService settingsService) => Results.Ok(await bitBucketService.GetBranches());
+    internal static async Task<IEnumerable<BitBucketBranchSummary>> GetBranches(IBitBucketService bitBucketService, ISettingsService settingsService) => await bitBucketService.GetBranches();
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {

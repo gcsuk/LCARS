@@ -18,13 +18,11 @@ public class JiraEndpoints : IEndpoints
             .WithTags(Tag);
     }
 
-    internal static async Task<IResult> GetIssues(IJiraService jiraService, ISettingsService settingsService)
+    internal static async Task<IEnumerable<Issue>> GetIssues(IJiraService jiraService, ISettingsService settingsService)
     {
         var settings = await settingsService.GetJiraSettings();
 
-        var issues = await jiraService.GetIssues(settings);
-
-        return Results.Ok(issues);
+        return await jiraService.GetIssues(settings);
     }
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)

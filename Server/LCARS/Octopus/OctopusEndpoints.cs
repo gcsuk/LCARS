@@ -19,13 +19,11 @@ public class OctopusEndpoints : IEndpoints
             .WithTags(Tag);
     }
 
-    internal static async Task<IResult> GetDeployments(IOctopusService octopusService, ISettingsService settingsService)
+    internal static async Task<IEnumerable<ProjectDeployments>> GetDeployments(IOctopusService octopusService, ISettingsService settingsService)
     {
         var settings = await settingsService.GetOctopusSettings();
 
-        var deployments= await octopusService.GetDeployments(settings);
-
-        return Results.Ok(deployments);
+        return await octopusService.GetDeployments(settings);
     }
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)

@@ -23,22 +23,18 @@ public class TeamCityEndpoints : IEndpoints
             .WithTags(Tag);
     }
 
-    internal static async Task<IResult> GetProjects(ITeamCityService teamCityService, ISettingsService settingsService)
+    internal static async Task<IEnumerable<Project>> GetProjects(ITeamCityService teamCityService, ISettingsService settingsService)
     {
         var settings = await settingsService.GetTeamCitySettings();
 
-        var projects = await teamCityService.GetProjects(settings);
-
-        return Results.Ok(projects);
+        return await teamCityService.GetProjects(settings);
     }
 
-    internal static async Task<IResult> GetBuilds(ITeamCityService teamCityService, ISettingsService settingsService)
+    internal static async Task<IEnumerable<Build>> GetBuilds(ITeamCityService teamCityService, ISettingsService settingsService)
     {
         var settings = await settingsService.GetTeamCitySettings();
 
-        var builds = await teamCityService.GetBuilds(settings);
-
-        return Results.Ok(builds);
+        return await teamCityService.GetBuilds(settings);
     }
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)

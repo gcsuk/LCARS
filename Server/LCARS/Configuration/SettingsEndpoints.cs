@@ -12,7 +12,7 @@ public class SettingsEndpoints : IEndpoints
     {
         app.MapGet($"{BaseRoute}", GetAllSettings)
             .WithName("GetAllSettings")
-            .Produces<IEnumerable<Settings>>(200)
+            .Produces<Settings>(200)
             .WithTags(Tag);
 
         app.MapGet($"{BaseRoute}/redalert", GetRedAlertSettings)
@@ -51,51 +51,21 @@ public class SettingsEndpoints : IEndpoints
             .WithTags(Tag);
     }
 
-    internal static async Task<IResult> GetAllSettings(ISettingsService settingsService) => Results.Ok(await settingsService.GetAllSettings());
+    internal static async Task<Settings> GetAllSettings(ISettingsService settingsService) => await settingsService.GetAllSettings();
 
-    internal static async Task<IResult> GetRedAlertSettings(ISettingsService settingsService) => Results.Ok(await settingsService.GetRedAlertSettings());
+    internal static async Task<RedAlertSettings> GetRedAlertSettings(ISettingsService settingsService) => await settingsService.GetRedAlertSettings();
 
-    internal static async Task<IResult> UpdateGitHubSettings(ISettingsService settingsService, GitHubSettings settings)
-    {
-        await settingsService.UpdateGitHubSettings(settings);
+    internal static async Task UpdateGitHubSettings(ISettingsService settingsService, GitHubSettings settings) => await settingsService.UpdateGitHubSettings(settings);
 
-        return Results.NoContent();
-    }
+    internal static async Task UpdateBitBucketSettings(ISettingsService settingsService, BitBucketSettings settings) => await settingsService.UpdateBitBucketSettings(settings);
 
-    internal static async Task<IResult> UpdateBitBucketSettings(ISettingsService settingsService, BitBucketSettings settings)
-    {
-        await settingsService.UpdateBitBucketSettings(settings);
+    internal static async Task UpdateTeamCitySettings(ISettingsService settingsService, TeamCitySettings settings) => await settingsService.UpdateTeamCitySettings(settings);
 
-        return Results.NoContent();
-    }
+    internal static async Task UpdateOctopusSettings(ISettingsService settingsService, OctopusSettings settings) => await settingsService.UpdateOctopusSettings(settings);
 
-    internal static async Task<IResult> UpdateTeamCitySettings(ISettingsService settingsService, TeamCitySettings settings)
-    {
-        await settingsService.UpdateTeamCitySettings(settings);
+    internal static async Task UpdateJiraSettings(ISettingsService settingsService, JiraSettings settings) => await settingsService.UpdateJiraSettings(settings);
 
-        return Results.NoContent();
-    }
-
-    internal static async Task<IResult> UpdateOctopusSettings(ISettingsService settingsService, OctopusSettings settings)
-    {
-        await settingsService.UpdateOctopusSettings(settings);
-
-        return Results.NoContent();
-    }
-
-    internal static async Task<IResult> UpdateJiraSettings(ISettingsService settingsService, JiraSettings settings)
-    {
-        await settingsService.UpdateJiraSettings(settings);
-
-        return Results.NoContent();
-    }
-
-    internal static async Task<IResult> UpdateRedAlertSettings(ISettingsService settingsService, RedAlertSettings settings)
-    {
-        await settingsService.UpdateRedAlertSettings(settings);
-
-        return Results.NoContent();
-    }
+    internal static async Task UpdateRedAlertSettings(ISettingsService settingsService, RedAlertSettings settings) => await settingsService.UpdateRedAlertSettings(settings);
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {
