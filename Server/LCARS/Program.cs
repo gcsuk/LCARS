@@ -8,7 +8,7 @@ if (builder.Environment.IsDevelopment())
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddEndpoints<Program>(builder.Configuration);
+builder.Services.AddEndpoints(builder.Configuration);
 builder.Services.AddHealthChecks();
 builder.Services.AddCors(options =>
 {
@@ -35,7 +35,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 
-app.UseEndpoints<Program>();
+app.UseEndpoints();
 
 app.UseHealthChecks("/ping");
 
