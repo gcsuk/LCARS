@@ -1,6 +1,7 @@
 ﻿using LCARS.BitBucket.Responses;
 using LCARS.Configuration;
 using LCARS.Endpoints;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Refit;
 
 namespace LCARS.BitBucket;
@@ -12,20 +13,15 @@ public class BitBucketEndpoints : IEndpoints
 
     public static void DefineEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapGet($"{BaseRoute}/pullrequests", GetPullRequests)
-            .WithName("GetBitBucketPullRequests")
-            .Produces<IEnumerable<BitBucketPullRequest>>(200)
-            .WithTags(Tag);
-
-        app.MapGet($"{BaseRoute}/branches", GetBranches)
-            .WithName("GetBitBucketBranches")
-            .Produces<IEnumerable<BitBucketBranchSummary>>(200)
-            .WithTags(Tag);
+        app.MapGet($"{BaseRoute}/pullrequests", GetPullRequests).WithTags(Tag);
+        app.MapGet($"{BaseRoute}/branches", GetBranches).WithTags(Tag);
     }
 
-    internal static async Task<IEnumerable<BitBucketPullRequest>> GetPullRequests(IBitBucketService bitBucketService, ISettingsService settingsService) => await bitBucketService.GetPullRequests();
+    internal static async Task<Ok<IEnumerable<BitBucketPullRequest>>> GetPullRequests(IBitBucketService bitBucketService, ISettingsService settingsService)
+        => TypedResults.Ok(await bitBucketService.GetPullRequests());
 
-    internal static async Task<IEnumerable<BitBucketBranchSummary>> GetBranches(IBitBucketService bitBucketService, ISettingsService settingsService) => await bitBucketService.GetBranches();
+    internal static async Task<Ok<IEnumerable<BitBucketBranchSummary>>> GetBranches(IBitBucketService bitBucketService, ISettingsService settingsService) 
+        => TypedResults.Ok(await bitBucketService.GetBranches());
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {

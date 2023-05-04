@@ -1,5 +1,6 @@
 ﻿using LCARS.Configuration.Models;
 using LCARS.Endpoints;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace LCARS.Configuration;
 
@@ -10,62 +11,72 @@ public class SettingsEndpoints : IEndpoints
 
     public static void DefineEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapGet($"{BaseRoute}", GetAllSettings)
-            .WithName("GetAllSettings")
-            .Produces<Settings>(200)
-            .WithTags(Tag);
-
-        app.MapGet($"{BaseRoute}/redalert", GetRedAlertSettings)
-            .WithName("GetRedAlertSettings")
-            .Produces<RedAlertSettings>(200)
-            .WithTags(Tag);
-
-        app.MapPost($"{BaseRoute}/github", UpdateGitHubSettings)
-            .WithName("UpdateGitHubSettings")
-            .Produces(204)
-            .WithTags(Tag);
-
-        app.MapPost($"{BaseRoute}/bitbucket", UpdateBitBucketSettings)
-            .WithName("UpdateBitBucketSettings")
-            .Produces(204)
-            .WithTags(Tag);
-
-        app.MapPost($"{BaseRoute}/teamcity", UpdateTeamCitySettings)
-            .WithName("UpdateTeamCitySettings")
-            .Produces(204)
-            .WithTags(Tag);
-
-        app.MapPost($"{BaseRoute}/octopus", UpdateOctopusSettings)
-            .WithName("UpdateOctopusSettings")
-            .Produces(204)
-            .WithTags(Tag);
-
-        app.MapPost($"{BaseRoute}/jira", UpdateJiraSettings)
-            .WithName("UpdateJiraSettings")
-            .Produces(204)
-            .WithTags(Tag);
-
-        app.MapPost($"{BaseRoute}/redalert", UpdateRedAlertSettings)
-            .WithName("UpdateRedAlertSettings")
-            .Produces(204)
-            .WithTags(Tag);
+        app.MapGet($"{BaseRoute}", GetAllSettings).WithTags(Tag);
+        app.MapGet($"{BaseRoute}/redalert", GetRedAlertSettings).WithTags(Tag);
+        app.MapPost($"{BaseRoute}/github", UpdateGitHubSettings).WithTags(Tag);
+        app.MapPost($"{BaseRoute}/bitbucket", UpdateBitBucketSettings).WithTags(Tag);
+        app.MapPost($"{BaseRoute}/teamcity", UpdateTeamCitySettings).WithTags(Tag);
+        app.MapPost($"{BaseRoute}/octopus", UpdateOctopusSettings).WithTags(Tag);
+        app.MapPost($"{BaseRoute}/jira", UpdateJiraSettings).WithTags(Tag);
+        app.MapPost($"{BaseRoute}/redalert", UpdateRedAlertSettings).WithTags(Tag);
     }
 
-    internal static async Task<Settings> GetAllSettings(ISettingsService settingsService) => await settingsService.GetAllSettings();
+    internal static async Task<Ok<Settings>> GetAllSettings(ISettingsService settingsService)
+        => TypedResults.Ok(await settingsService.GetAllSettings());
 
-    internal static async Task<RedAlertSettings> GetRedAlertSettings(ISettingsService settingsService) => await settingsService.GetRedAlertSettings();
+    internal static async Task<Ok<RedAlertSettings>> GetRedAlertSettings(ISettingsService settingsService)
+        => TypedResults.Ok(await settingsService.GetRedAlertSettings());
 
-    internal static async Task UpdateGitHubSettings(ISettingsService settingsService, GitHubSettings settings) => await settingsService.UpdateGitHubSettings(settings);
+    internal static async Task<Results<NoContent, BadRequest<string>>> UpdateGitHubSettings(ISettingsService settingsService, GitHubSettings settings)
+    {
+        await settingsService.UpdateGitHubSettings(settings);
+        return TypedResults.NoContent();
+    }
 
-    internal static async Task UpdateBitBucketSettings(ISettingsService settingsService, BitBucketSettings settings) => await settingsService.UpdateBitBucketSettings(settings);
+    internal static async Task<Results<NoContent, BadRequest<string>>> UpdateBitBucketSettings(ISettingsService settingsService, BitBucketSettings settings)
+    {
+        if (settings is null)
+            return TypedResults.BadRequest("Invalid configuration");
 
-    internal static async Task UpdateTeamCitySettings(ISettingsService settingsService, TeamCitySettings settings) => await settingsService.UpdateTeamCitySettings(settings);
+        await settingsService.UpdateBitBucketSettings(settings);
+        return TypedResults.NoContent();
+    }
 
-    internal static async Task UpdateOctopusSettings(ISettingsService settingsService, OctopusSettings settings) => await settingsService.UpdateOctopusSettings(settings);
+    internal static async Task<Results<NoContent, BadRequest<string>>> UpdateTeamCitySettings(ISettingsService settingsService, TeamCitySettings settings)
+    {
+        if (settings is null)
+            return TypedResults.BadRequest("Invalid configuration");
 
-    internal static async Task UpdateJiraSettings(ISettingsService settingsService, JiraSettings settings) => await settingsService.UpdateJiraSettings(settings);
+        await settingsService.UpdateTeamCitySettings(settings);
+        return TypedResults.NoContent();
+    }
 
-    internal static async Task UpdateRedAlertSettings(ISettingsService settingsService, RedAlertSettings settings) => await settingsService.UpdateRedAlertSettings(settings);
+    internal static async Task<Results<NoContent, BadRequest<string>>> UpdateOctopusSettings(ISettingsService settingsService, OctopusSettings settings)
+    {
+        if (settings is null)
+            return TypedResults.BadRequest("Invalid configuration");
+
+        await settingsService.UpdateOctopusSettings(settings);
+        return TypedResults.NoContent();
+    }
+
+    internal static async Task<Results<NoContent, BadRequest<string>>> UpdateJiraSettings(ISettingsService settingsService, JiraSettings settings)
+    {
+        if (settings is null)
+            return TypedResults.BadRequest("Invalid configuration");
+
+        await settingsService.UpdateJiraSettings(settings);
+        return TypedResults.NoContent();
+    }
+
+    internal static async Task<Results<NoContent, BadRequest<string>>> UpdateRedAlertSettings(ISettingsService settingsService, RedAlertSettings settings)
+    {
+        if (settings is null)
+            return TypedResults.BadRequest("Invalid configuration");
+
+        await settingsService.UpdateRedAlertSettings(settings);
+        return TypedResults.NoContent();
+    }
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {

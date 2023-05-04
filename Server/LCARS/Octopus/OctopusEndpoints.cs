@@ -1,6 +1,7 @@
 ﻿using LCARS.Configuration;
 using LCARS.Endpoints;
 using LCARS.Octopus.Responses;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Refit;
 
 namespace LCARS.Octopus;
@@ -12,18 +13,14 @@ public class OctopusEndpoints : IEndpoints
 
     public static void DefineEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapGet($"{BaseRoute}", GetDeployments)
-            .WithName("GetDeployments")
-            .Produces<IEnumerable<ProjectDeployments>>(200)
-            .Produces(200)
-            .WithTags(Tag);
+        app.MapGet($"{BaseRoute}", GetDeployments).WithTags(Tag);
     }
 
-    internal static async Task<IEnumerable<ProjectDeployments>> GetDeployments(IOctopusService octopusService, ISettingsService settingsService)
+    internal static async Task<Ok<IEnumerable<ProjectDeployments>>> GetDeployments(IOctopusService octopusService, ISettingsService settingsService)
     {
         var settings = await settingsService.GetOctopusSettings();
 
-        return await octopusService.GetDeployments(settings);
+        return TypedResults.Ok(await octopusService.GetDeployments(settings));
     }
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)

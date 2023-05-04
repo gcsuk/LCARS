@@ -1,6 +1,7 @@
 ﻿using LCARS.Configuration;
 using LCARS.Endpoints;
 using LCARS.TeamCity.Responses;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Refit;
 
 namespace LCARS.TeamCity;
@@ -12,29 +13,22 @@ public class TeamCityEndpoints : IEndpoints
 
     public static void DefineEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapGet($"{BaseRoute}/projects", GetProjects)
-            .WithName("GetProjects")
-            .Produces<IEnumerable<Project>>(200)
-            .WithTags(Tag);
-
-        app.MapGet($"{BaseRoute}/builds", GetBuilds)
-            .WithName("GetBuilds")
-            .Produces<IEnumerable<Build>>(200)
-            .WithTags(Tag);
+        app.MapGet($"{BaseRoute}/projects", GetProjects).WithTags(Tag);
+        app.MapGet($"{BaseRoute}/builds", GetBuilds).WithTags(Tag);
     }
 
-    internal static async Task<IEnumerable<Project>> GetProjects(ITeamCityService teamCityService, ISettingsService settingsService)
+    internal static async Task<Ok<IEnumerable<Project>>> GetProjects(ITeamCityService teamCityService, ISettingsService settingsService)
     {
         var settings = await settingsService.GetTeamCitySettings();
 
-        return await teamCityService.GetProjects(settings);
+        return TypedResults.Ok(await teamCityService.GetProjects(settings));
     }
 
-    internal static async Task<IEnumerable<Build>> GetBuilds(ITeamCityService teamCityService, ISettingsService settingsService)
+    internal static async Task<Ok<IEnumerable<Build>>> GetBuilds(ITeamCityService teamCityService, ISettingsService settingsService)
     {
         var settings = await settingsService.GetTeamCitySettings();
 
-        return await teamCityService.GetBuilds(settings);
+        return TypedResults.Ok(await teamCityService.GetBuilds(settings));
     }
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)

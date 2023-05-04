@@ -1,6 +1,7 @@
 ﻿using LCARS.Configuration;
 using LCARS.Endpoints;
 using LCARS.GitHub.Responses;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Refit;
 
 namespace LCARS.GitHub;
@@ -12,20 +13,15 @@ public class GitHubEndpoints : IEndpoints
 
     public static void DefineEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapGet($"{BaseRoute}/pullrequests", GetPullRequests)
-            .WithName("GetGitHubPullRequests")
-            .Produces<IEnumerable<GitHubPullRequest>>(200)
-            .WithTags(Tag);
-
-        app.MapGet($"{BaseRoute}/branches", GetBranches)
-            .WithName("GetGitHubBranches")
-            .Produces<IEnumerable<GitHubBranchSummary>>(200)
-            .WithTags(Tag);
+        app.MapGet($"{BaseRoute}/pullrequests", GetPullRequests).WithTags(Tag);
+        app.MapGet($"{BaseRoute}/branches", GetBranches).WithTags(Tag);
     }
 
-    internal static async Task<IEnumerable<GitHubPullRequest>> GetPullRequests(IGitHubService gitHubService, ISettingsService settingsService) => await gitHubService.GetPullRequests();
+    internal static async Task<Ok<IEnumerable<GitHubPullRequest>>> GetPullRequests(IGitHubService gitHubService, ISettingsService settingsService)
+        => TypedResults.Ok(await gitHubService.GetPullRequests());
 
-    internal static async Task<IEnumerable<GitHubBranchSummary>> GetBranches(IGitHubService gitHubService, ISettingsService settingsService) => await gitHubService.GetBranches();
+    internal static async Task<Ok<IEnumerable<GitHubBranchSummary>>> GetBranches(IGitHubService gitHubService, ISettingsService settingsService) 
+        => TypedResults.Ok(await gitHubService.GetBranches());
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
     {

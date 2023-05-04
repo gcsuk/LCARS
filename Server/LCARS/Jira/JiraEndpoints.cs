@@ -1,6 +1,7 @@
 ﻿using LCARS.Configuration;
 using LCARS.Endpoints;
 using LCARS.Jira.Responses;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Refit;
 
 namespace LCARS.Jira;
@@ -12,17 +13,14 @@ public class JiraEndpoints : IEndpoints
 
     public static void DefineEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapGet($"{BaseRoute}/issues", GetIssues)
-            .WithName("GetIssues")
-            .Produces<IEnumerable<Issue>>(200)
-            .WithTags(Tag);
+        app.MapGet($"{BaseRoute}/issues", GetIssues).WithTags(Tag);
     }
 
-    internal static async Task<IEnumerable<Issue>> GetIssues(IJiraService jiraService, ISettingsService settingsService)
+    internal static async Task<Ok<IEnumerable<Issue>>> GetIssues(IJiraService jiraService, ISettingsService settingsService)
     {
         var settings = await settingsService.GetJiraSettings();
 
-        return await jiraService.GetIssues(settings);
+        return TypedResults.Ok(await jiraService.GetIssues(settings));
     }
 
     public static void AddServices(IServiceCollection services, IConfiguration configuration)
