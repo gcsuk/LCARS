@@ -49,7 +49,7 @@ else
     private string GetBuildStatus(Build build)
     {
         if (build.Status == "finished")
-            return build.State == "SUCCESS" ? $"v{build.BuildNumber}" : "FAILED";
+            return build.State == "SUCCESS" ? build.BuildNumber : "FAILED";
         else // running
             return $"{build.PercentageComplete}%";
     }
