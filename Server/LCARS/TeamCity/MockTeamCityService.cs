@@ -42,12 +42,15 @@ namespace LCARS.TeamCity
             {
                 var isSuccess = random.Next(0, 2) == 1;
                 var isRunning = random.Next(0, 2) == 1;
+                var major = random.Next(0, 6);
+                var minor = random.Next(0, 100);
+                var patch = random.Next(0, 30);
 
                 builds.Add(new Build
                 {
                     DisplayName = $"Build {i}",
                     BuildTypeId = $"BuildType{i}",
-                    BuildNumber = i.ToString(),
+                    BuildNumber = $"{major}.{minor}.{patch}.0",
                     State = isSuccess ? "SUCCESS" : "FAILURE",
                     Status = isRunning ? "running" : "finished",
                     Branch = $"branch-{i}",

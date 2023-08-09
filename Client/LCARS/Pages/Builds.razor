@@ -48,16 +48,16 @@ else
 
     private string GetBuildStatus(Build build)
     {
-        if (build.State == "finished")
-            return build.Status == "SUCCESS" ? build.BuildNumber : "FAILED";
+        if (build.Status == "finished")
+            return build.State == "SUCCESS" ? $"v{build.BuildNumber}" : "FAILED";
         else // running
             return $"{build.PercentageComplete}%";
     }
 
     private string GetStatusColor(Build build)
     {
-        if (build.State  == "finished")
-            return build.Status == "SUCCESS" ? "green" : "red";
+        if (build.Status == "finished")
+            return build.State == "SUCCESS" ? "green" : "red";
         else // running
             return "yellow";
     }
