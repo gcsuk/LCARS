@@ -48,10 +48,10 @@
 
     private async Task RefreshClock()
     {
-        if (_settings?.RedAlertSettings?.EndTime == null)
+        if (_settings?.RedAlertSettings?.EndTime is null)
             return;
 
-        var remainingTime = _settings.RedAlertSettings.EndTime.Value.Subtract(DateTime.UtcNow);
+        var remainingTime = _settings.RedAlertSettings.EndTime.Value.Subtract(DateTime.Now);
 
         if (remainingTime.TotalMilliseconds >= 0)
         {
@@ -84,11 +84,12 @@
         await InvokeAsync(StateHasChanged);
     }
 
-    private bool AlertDisabled => !(_settings?.RedAlertSettings?.Enabled ?? false) || _settings?.RedAlertSettings?.EndTime == null || _settings.RedAlertSettings.EndTime < DateTime.UtcNow;
+    private bool AlertDisabled => !(_settings?.RedAlertSettings?.Enabled ?? false) || _settings?.RedAlertSettings?.EndTime is null || _settings.RedAlertSettings.EndTime < DateTime.Now;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override void OnAfterRender(bool firstRender)
     {
-        alertState.SetAlertState("red");
+        if (firstRender)
+            alertState.SetAlertState("red");
     }
 
     void IDisposable.Dispose()

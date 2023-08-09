@@ -5,13 +5,13 @@
 @using LCARS.Data
 @using System.ComponentModel.DataAnnotations
 
-@if (settings == null)
+@if (settings is null)
 {
     <Loading />
 }
 else
 {
-    if (error != null)
+    if (error is not null)
     {
         <InputError Text="@error" />
     }
