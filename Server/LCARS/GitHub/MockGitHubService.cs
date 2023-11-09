@@ -54,29 +54,49 @@ public class MockGitHubService : IGitHubService
 
     public async Task<IEnumerable<GitHubPullRequest>> GetPullRequests() => await Task.FromResult(new List<GitHubPullRequest>
     {
-        new GitHubPullRequest
-        {
+        new() {
             Repository = "my-repo",
             State = "OPEN",
             Number = 1,
             Title = "Some PR Title",
             Description = "Some description",
-            CreatedOn = new DateTime(2022, 1, 1),
-            UpdatedOn = new DateTime(2022, 1, 2),
+            CreatedOn = new DateTime(2023, 1, 1),
+            UpdatedOn = new DateTime(2023, 1, 2),
             Author = "User1",
             CommentCount = 0
         },
-        new GitHubPullRequest
-        {
+        new() {
             Repository = "my-repo",
             State = "OPEN",
             Number = 1,
-            Title = "Some PR Title",
+            Title = "Another PR Title",
             Description = "Another description",
-            CreatedOn = new DateTime(2022, 1, 1),
-            UpdatedOn = new DateTime(2022, 1, 2),
+            CreatedOn = new DateTime(2023, 2, 14),
+            UpdatedOn = new DateTime(2023, 2, 15),
             Author = "User1",
             CommentCount = 2
+        },
+        new() {
+            Repository = "my-repo",
+            State = "OPEN",
+            Number = 1,
+            Title = "Yet Another PR Title",
+            Description = "Another description",
+            CreatedOn = new DateTime(2023, 6, 30),
+            UpdatedOn = new DateTime(2023, 6, 30),
+            Author = "User2",
+            CommentCount = 0
+        },
+        new() {
+            Repository = "my-repo",
+            State = "OPEN",
+            Number = 1,
+            Title = "Fourth PR Title",
+            Description = "Another description",
+            CreatedOn = new DateTime(2023, 11, 4),
+            UpdatedOn = new DateTime(2023, 11, 4),
+            Author = "User3",
+            CommentCount = 8
         }
     });
 }
