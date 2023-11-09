@@ -43,7 +43,7 @@ else
 
 @code {
     string? error;
-    SettingsModel settings = new();
+    SettingsModel? settings;
 
     public record SettingsModel
     {
@@ -58,21 +58,21 @@ else
     {
         var currentSettings = await Http.GetFromJsonAsync<Settings>("settings");
 
-        settings = new()
-            {
-                Enabled = currentSettings.RedAlertSettings.Enabled,
-                AlertType = currentSettings.RedAlertSettings.AlertType,
-                EndDate = currentSettings.RedAlertSettings.EndTime,
-                EndTime = currentSettings.RedAlertSettings.EndTime.Value.ToString("HH:mm")
-            };
+        settings = new SettingsModel
+        {
+            Enabled = currentSettings.RedAlertSettings.Enabled,
+            AlertType = currentSettings.RedAlertSettings.AlertType,
+            EndDate = currentSettings.RedAlertSettings.EndTime,
+            EndTime = currentSettings.RedAlertSettings.EndTime.Value.ToString("HH:mm")
+        };
     }
 
     async Task FormSubmitted(EditContext editContext)
     {
-        string endDateTimeString = settings.EndDate.Value.ToString("yyyy-MM-dd") + "T" + settings.EndTime + ":00.000Z";
+        var endDateTimeString = settings.EndDate.Value.ToString("yyyy-MM-dd") + "T" + settings.EndTime + ":00.000Z";
 
         if (DateTime.TryParse(endDateTimeString, out var endDateTime))
-            await Http.PostAsJsonAsync<Settings.RedAlertSettingsModel>("settings/redalert", new Settings.RedAlertSettingsModel
+            await Http.PostAsJsonAsync("settings/redalert", new Settings.RedAlertSettingsModel
                 {
                     AlertType = settings.AlertType,
                     Enabled = settings.Enabled,
