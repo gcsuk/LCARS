@@ -1,12 +1,10 @@
 ﻿@page "/builds"
-@attribute [RenderModeInteractiveWebAssembly]
-
-<PageTitle>LCARS | Builds</PageTitle>
-
 @using LCARS.Data
 
 @implements IDisposable
 @inject HttpClient Http
+
+<PageTitle>LCARS | Builds</PageTitle>
 
 <Header Text="Builds" />
 
@@ -44,7 +42,7 @@ else
     private async Task RefreshBuilds()
     {
         builds = await Http.GetFromJsonAsync<IEnumerable<Build>>("/teamcity/builds");
-        await InvokeAsync(StateHasChanged);
+        StateHasChanged();
     }
 
     private string GetBuildStatus(Build build)

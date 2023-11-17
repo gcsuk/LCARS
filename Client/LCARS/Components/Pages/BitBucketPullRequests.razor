@@ -1,15 +1,14 @@
 ﻿@page "/bitbucket/pullrequests"
-
-<PageTitle>LCARS | BitBucket | Pull Requests</PageTitle>
-
 @using LCARS.Data
 
 @implements IDisposable
 @inject HttpClient Http
 
+<PageTitle>LCARS | BitBucket | Pull Requests</PageTitle>
+
 <Header Text="BitBucket Pull Requests" />
 
-<PullRequests Data="@pullRequests"/>
+<PullRequests Data="@pullRequests" @rendermode=InteractiveAuto />
 
 @code {
     private PullRequestSummary? pullRequests;

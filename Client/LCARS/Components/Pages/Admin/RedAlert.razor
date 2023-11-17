@@ -19,25 +19,26 @@ else
     {
         <Header Text="Red Alert Admin" />
     }
-    <EditForm Model=@settings OnValidSubmit=@FormSubmitted OnInvalidSubmit=@InvalidFormSubmitted>
+    <EditForm Model="settings" method="post" FormName="editRedAlert" OnValidSubmit="FormSubmitted" OnInvalidSubmit="InvalidFormSubmitted">
         <DataAnnotationsValidator />
         <div>
             <label>Enabled</label>
-            <InputCheckbox @bind-Value=settings.Enabled />
+            <InputCheckbox @bind-Value="settings.Enabled" />
         </div>
         <div>
             <label>Alert Type</label>
-            <InputText @bind-Value=settings.AlertType />
+            <InputText @bind-Value="settings.AlertType" />
         </div>
         <div>
             <label>End Date</label>
-            <InputDate @bind-Value=settings.EndDate/>
+            <InputDate @bind-Value="settings.EndDate"/>
         </div>
         <div>
             <label>End Time</label>
-            <InputText @bind-Value=settings.EndTime/>
+            <InputText @bind-Value="settings.EndTime"/>
         </div>
         <SaveButton />
+        <ValidationSummary/>
     </EditForm>
 }
 
@@ -67,7 +68,7 @@ else
         };
     }
 
-    async Task FormSubmitted(EditContext editContext)
+    async Task FormSubmitted()
     {
         var endDateTimeString = settings.EndDate.Value.ToString("yyyy-MM-dd") + "T" + settings.EndTime + ":00.000Z";
 

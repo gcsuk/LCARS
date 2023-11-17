@@ -61,7 +61,6 @@
             milliseconds = Math.Abs(remainingTime.Milliseconds).ToString("000").Substring(0, 2);
         }
 
-        if (AlertDisabled)
             _clockTimer.Enabled = false;
 
         await InvokeAsync(StateHasChanged);

@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject Data.AlertState alertState;
+@attribute [StreamRendering(true)]
 
 <body class="@alertState.State">
     <header>

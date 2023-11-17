@@ -1,13 +1,13 @@
-﻿@page "/bitbucket/branches"
-
-<PageTitle>LCARS | BitBucket | Branches</PageTitle>
+﻿@page "/github/branches"
 
 @using LCARS.Data
 
 @implements IDisposable
 @inject HttpClient Http
 
-<Header Text="BitBucket Branches" />
+<PageTitle>LCARS | GitHub | Branches</PageTitle>
+
+<Header Text="GitHub Branches" />
 
 <Branches Data="@branches"/>
 
@@ -26,12 +26,12 @@
     private async Task RefreshBranches()
     {
         var settings = await Http.GetFromJsonAsync<Settings>("settings");
-        var branchData = await Http.GetFromJsonAsync<IEnumerable<BranchSummary.RepositoryModel>>("/bitbucket/branches");
+        var branchData = await Http.GetFromJsonAsync<IEnumerable<BranchSummary.RepositoryModel>>("/github/branches");
 
         branches = new BranchSummary
             {
-                Threshold = settings.BitBucketSettings.BranchThreshold,
-                Repositories = branchData
+                Repositories = branchData,
+                Threshold = settings.GitHubSettings.BranchThreshold
             };
 
         StateHasChanged();

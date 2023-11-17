@@ -1,11 +1,11 @@
 ﻿@page "/deployments"
 
-<PageTitle>LCARS | Deployments</PageTitle>
-
 @using LCARS.Data
 
 @implements IDisposable
 @inject HttpClient Http
+
+<PageTitle>LCARS | Deployments</PageTitle>
 
 <Header Text="Deployments" />
 
@@ -77,7 +77,7 @@ else
         await RefreshDeployments();
 
         refreshTimer.Elapsed += async (sender, e) => await RefreshDeployments();
-        refreshTimer.Enabled = true;
+        //refreshTimer.Enabled = true;
     }
 
     private async Task RefreshDeployments()
