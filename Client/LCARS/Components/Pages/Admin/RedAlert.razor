@@ -19,31 +19,32 @@ else
     {
         <Header Text="Red Alert Admin" />
     }
-    <EditForm Model=@settings OnValidSubmit=@FormSubmitted OnInvalidSubmit=@InvalidFormSubmitted>
+    <EditForm Model="settings" method="post" FormName="editRedAlert" OnValidSubmit="FormSubmitted" OnInvalidSubmit="InvalidFormSubmitted">
         <DataAnnotationsValidator />
         <div>
             <label>Enabled</label>
-            <InputCheckbox @bind-Value=settings.Enabled />
+            <InputCheckbox @bind-Value="settings.Enabled" />
         </div>
         <div>
             <label>Alert Type</label>
-            <InputText @bind-Value=settings.AlertType />
+            <InputText @bind-Value="settings.AlertType" />
         </div>
         <div>
             <label>End Date</label>
-            <InputDate @bind-Value=settings.EndDate/>
+            <InputDate @bind-Value="settings.EndDate"/>
         </div>
         <div>
             <label>End Time</label>
-            <InputText @bind-Value=settings.EndTime/>
+            <InputText @bind-Value="settings.EndTime"/>
         </div>
         <SaveButton />
+        <ValidationSummary/>
     </EditForm>
 }
 
 @code {
     string? error;
-    SettingsModel settings = new();
+    SettingsModel? settings;
 
     public record SettingsModel
     {
@@ -58,21 +59,21 @@ else
     {
         var currentSettings = await Http.GetFromJsonAsync<Settings>("settings");
 
-        settings = new()
-            {
-                Enabled = currentSettings.RedAlertSettings.Enabled,
-                AlertType = currentSettings.RedAlertSettings.AlertType,
-                EndDate = currentSettings.RedAlertSettings.EndTime,
-                EndTime = currentSettings.RedAlertSettings.EndTime.Value.ToString("HH:mm")
-            };
+        settings = new SettingsModel
+        {
+            Enabled = currentSettings.RedAlertSettings.Enabled,
+            AlertType = currentSettings.RedAlertSettings.AlertType,
+            EndDate = currentSettings.RedAlertSettings.EndTime,
+            EndTime = currentSettings.RedAlertSettings.EndTime.Value.ToString("HH:mm")
+        };
     }
 
-    async Task FormSubmitted(EditContext editContext)
+    async Task FormSubmitted()
     {
-        string endDateTimeString = settings.EndDate.Value.ToString("yyyy-MM-dd") + "T" + settings.EndTime + ":00.000Z";
+        var endDateTimeString = settings.EndDate.Value.ToString("yyyy-MM-dd") + "T" + settings.EndTime + ":00.000Z";
 
         if (DateTime.TryParse(endDateTimeString, out var endDateTime))
-            await Http.PostAsJsonAsync<Settings.RedAlertSettingsModel>("settings/redalert", new Settings.RedAlertSettingsModel
+            await Http.PostAsJsonAsync("settings/redalert", new Settings.RedAlertSettingsModel
                 {
                     AlertType = settings.AlertType,
                     Enabled = settings.Enabled,

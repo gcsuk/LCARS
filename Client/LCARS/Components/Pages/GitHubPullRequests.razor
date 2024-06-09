@@ -1,15 +1,15 @@
 ﻿@page "/github/pullrequests"
 
-<PageTitle>LCARS | GitHub | Pull Requests</PageTitle>
-
 @using LCARS.Data
 
 @implements IDisposable
 @inject HttpClient Http
 
+<PageTitle>LCARS | GitHub | Pull Requests</PageTitle>
+
 <Header Text="GitHub Pull Requests" />
 
-<PullRequests Data="@pullRequests"/>
+<PullRequests Data="@pullRequests" @rendermode=InteractiveAuto />
 
 @code {
     private PullRequestSummary? pullRequests;
